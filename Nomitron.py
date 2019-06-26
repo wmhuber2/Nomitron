@@ -4,7 +4,7 @@ import shutil, os, sys
 if __name__ == "__main__":
     gitLogin = open('/home/nomitron/gitSecret.psk','r').read().strip()
     print( gitLogin )
-    rw_dir = 'https://'+gitLogin+'@github.com/wmhuber2/NomitronDiscordBot'
+    rw_dir = 'https://'+gitLogin+'@github.com/wmhuber2/Nomitron'
     dir = os.getcwd()
 
     while 1:
@@ -34,7 +34,7 @@ if __name__ == "__main__":
                     os.remove(dst_file)
 
                 shutil.move(src_file, dst_dir)
-        os.system('python'+str(sys.version_info.major) + '.' +str(sys.version_info.minor) + ' '+os.path.join(dir,'DiscordBot.py') + " 2>&1 | tee /home/nomitron/log.txt")
+        os.system('python'+str(sys.version_info.major) + '.' +str(sys.version_info.minor) + ' '+os.path.join(dir,'DiscordBot.py') + " 2>&1 | tee log.txt")
 
 
 
