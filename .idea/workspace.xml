@@ -28,8 +28,8 @@
         <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="435">
-                <caret line="29" selection-start-line="29" selection-end-line="29" />
+              <first_editor relative-caret-position="210">
+                <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
               </first_editor>
               <second_editor />
             </state>
@@ -74,10 +74,10 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="51" />
-    <option name="y" value="30" />
-    <option name="width" value="1506" />
-    <option name="height" value="1050" />
+    <option name="x" value="1967" />
+    <option name="y" value="25" />
+    <option name="width" value="1873" />
+    <option name="height" value="1055" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -265,20 +265,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00034" summary="Cosmetic Fixes and Additional Boot Info.">
-      <created>1561164992320</created>
-      <option name="number" value="00034" />
-      <option name="presentableId" value="LOCAL-00034" />
-      <option name="project" value="LOCAL" />
-      <updated>1561164992320</updated>
-    </task>
-    <task id="LOCAL-00035" summary="Cosmetic Fixes and Additional Boot Info.">
-      <created>1561165159461</created>
-      <option name="number" value="00035" />
-      <option name="presentableId" value="LOCAL-00035" />
-      <option name="project" value="LOCAL" />
-      <updated>1561165159461</updated>
     </task>
     <task id="LOCAL-00036" summary="Added Ian TO Admin">
       <created>1561172154231</created>
@@ -609,7 +595,21 @@
       <option name="project" value="LOCAL" />
       <updated>1561517107256</updated>
     </task>
-    <option name="localTasksCounter" value="83" />
+    <task id="LOCAL-00083" summary="Added Open Source">
+      <created>1561517180921</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1561517180921</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Edited Readme">
+      <created>1561522183463</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1561522183463</updated>
+    </task>
+    <option name="localTasksCounter" value="85" />
     <servers />
   </component>
   <component name="TodoView">
@@ -622,7 +622,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="47" y="25" width="1873" height="1055" extended-state="6" />
+    <frame x="1967" y="25" width="1873" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4773218" visible="true" weight="0.17567568" />
@@ -655,8 +655,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add A log file to nomitron folder." />
-    <MESSAGE value="Added Rules Instructions in Readme." />
     <MESSAGE value="Removed Data files from git to preserve local data files." />
     <MESSAGE value="Added help to admin to respond with Readme.txt" />
     <MESSAGE value="Made All Keys Secret. Only print Voting reacts." />
@@ -680,7 +678,9 @@
     <MESSAGE value="Update Map Image." />
     <MESSAGE value="git pswd hide" />
     <MESSAGE value="Fixing Git Pull URL" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing Git Pull URL" />
+    <MESSAGE value="Added Open Source" />
+    <MESSAGE value="Edited Readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="Edited Readme" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tmp/Admin.py" />
@@ -768,8 +768,8 @@
     <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="435">
-            <caret line="29" selection-start-line="29" selection-end-line="29" />
+          <first_editor relative-caret-position="210">
+            <caret line="14" column="26" lean-forward="true" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
           </first_editor>
           <second_editor />
         </state>
