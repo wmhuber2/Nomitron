@@ -12,7 +12,7 @@ Rules:
 +        Rule: N/A
 
 Map:
--    !start {coordinates} {color} 
+-    !start {coordinates} {color name} 
 +        Allowed Channels: actions
 +        Add Capital to map at desired coordiantes (row,col order doesnt matter)
 +        and declare your color.
