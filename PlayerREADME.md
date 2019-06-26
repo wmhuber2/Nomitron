@@ -25,3 +25,6 @@ Map:
 +        Allowed Channels: ALL 
 +        Display Current Map.
 +        Rule: 312
+
+This Bot's Code May Be Found At:
+https://github.com/wmhuber2/Nomitron/
