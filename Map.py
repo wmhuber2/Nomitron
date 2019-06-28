@@ -14,6 +14,7 @@ channels   = {}
 logChannel = ""
 Data = {}
 savefile =str(__name__) + '_Data.pickle'
+print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
 
 import itertools
@@ -64,67 +65,68 @@ async def run(payload, message):
 
             if payload['Author'] in Data[guild]['Players'].keys():
                 await message.channel.send("Silly Rabbit. You already established a Capital.")
-
-            coords = extractCoords(splitContent[1], message.channel)
-            if coords is not None:
-                xcord, xcordAlpha, ycord = coords
-
-                if not Data[guild]['Image'].isTileType(xcord , ycord, 'LAND'):
-                    await message.channel.send("Please seek more advanced technology to claim Water Tiles.")
-                elif splitContent[2].lower() in mcd.CSS4_COLORS:
-                    Data[guild]['Players'][payload['Author']] = {}
-                    Data[guild]['Players'][payload['Author']]['Claimed Today'] = False
-                    Data[guild]['Players'][payload['Author']]['Color'] = splitContent[2].lower()
-                    Data[guild]['Players'][payload['Author']]['Markers'] = {}
-                    Data[guild]['Players'][payload['Author']]['Markers']['Location'] = [[xcord, ycord]]
-                    Data[guild]['Players'][payload['Author']]['Markers']['Shape']    = ['Capital']
-                    Data[guild]['Players'][payload['Author']]['Inventory'] = {'BF': 0, }
-                    await plotMap(message.channel)
-                    Data[guild]['Log'].append('New Player {0} Added to Map with color {1} and capital at {2}. {3}'.format(
-                        payload['Author'], splitContent[2].lower(), (xcordAlpha, ycord+1), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
-                else:
-                    await message.channel.send('Color ' + splitContent[2] + ' is unavailable. Sorry.')
+            else:
+                coords = await extractCoords(splitContent[1], message.channel)
+                if coords is not None:
+                    xcord, xcordAlpha, ycord = coords
+                    if not isTileType(Data[guild]['Image'], xcord , ycord, 'LAND'):
+                        await message.channel.send("Please seek more advanced technology to claim Water Tiles.")
+                    elif splitContent[2].lower() in mcd.CSS4_COLORS:
+                        Data[guild]['Players'][payload['Author']] = {}
+                        Data[guild]['Players'][payload['Author']]['Claimed Today'] = False
+                        Data[guild]['Players'][payload['Author']]['Color'] = splitContent[2].lower()
+                        Data[guild]['Players'][payload['Author']]['Markers'] = {}
+                        Data[guild]['Players'][payload['Author']]['Markers']['Location']   = [[xcord, ycord]]
+                        Data[guild]['Players'][payload['Author']]['Markers']['Shape']      = ['Capital']
+                        Data[guild]['Players'][payload['Author']]['Markers']['Properties'] = [{}]
+                        Data[guild]['Players'][payload['Author']]['Inventory'] = {'BF': 0, }
+                        await plotMap(message.channel)
+                        Data[guild]['Log'].append('New Player {0} Added to Map with color {1} and capital at {2}. {3}'.format(
+                            payload['Author'], splitContent[2].lower(), (xcordAlpha, ycord+1), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
+                    else:
+                        await message.channel.send('Color ' + splitContent[2] + ' is unavailable. Sorry.')
 
         if splitContent[0] == '!claim' and len(splitContent) == 2:
             if payload['Author'] not in Data[guild]['Players'].keys():
                 await message.channel.send("You havent established a capital yet.")
+            else:
+                coords = await extractCoords(splitContent[1], message.channel)
+                if coords is not None:
+                    xcord, xcordAlpha, ycord = coords
 
-            coords = extractCoords(splitContent[1], message.channel)
-            if coords is not None:
-                xcord, xcordAlpha, ycord = coords
+                    if not isTileType(Data[guild]['Image'],xcord , ycord, 'LAND'):
+                        await message.channel.send("Please seek more advanced technology to claim Water Tiles.")
 
-                if not Data[guild]['Image'].isTileType(xcord , ycord, 'LAND'):
-                    await message.channel.send("Please seek more advanced technology to claim Water Tiles.")
+                    elif Data[guild]['Players'][payload['Author']]['Claimed Today']:
+                        await message.channel.send("You have already purchased a claim today. Please wait until tomorrow to claim again. Have a nice day. :v:")
 
-                elif Data[guild]['Players'][payload['Author']]['Claimed Today']:
-                    await message.channel.send("You have already purchased a claim today. Please wait until tomorrow to claim again. Have a nice day. :v:")
+                    elif[xcord+1, ycord+1] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
+                        [xcord+1, ycord  ] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
+                        [xcord+1, ycord-1] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
+                        [xcord  , ycord+1] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
+                        [xcord  , ycord-1] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
+                        [xcord-1, ycord+1] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
+                        [xcord-1, ycord  ] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
+                        [xcord-1, ycord-1] in Data[guild]['Players'][payload['Author']]['Markers']['Location']:
 
-                elif[xcord+1, ycord+1] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
-                    [xcord+1, ycord  ] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
-                    [xcord+1, ycord-1] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
-                    [xcord  , ycord+1] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
-                    [xcord  , ycord-1] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
-                    [xcord-1, ycord+1] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
-                    [xcord-1, ycord  ] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
-                    [xcord-1, ycord-1] in Data[guild]['Players'][payload['Author']]['Markers']['Location']:
+                        isClaimed = False
+                        for player in Data[guild]['Players']:
+                            isClaimed = isClaimed or ([xcord  , ycord] in Data[guild]['Players'][player]['Markers']['Location'])
 
-                    isClaimed = False
-                    for player in Data[guild]['Players']:
-                        isClaimed = isClaimed or ([xcord  , ycord] in Data[guild]['Players'][player]['Markers']['Location'])
-
-                    if isClaimed:
-                        await message.channel.send("You cannot claim this location. It is already claimed.")
+                        if isClaimed:
+                            await message.channel.send("You cannot claim this location. It is already claimed.")
+                        else:
+                            print(xcord, ycord)
+                            Data[guild]['Players'][payload['Author']]['Markers']['Location'].append([xcord, ycord])
+                            Data[guild]['Players'][payload['Author']]['Markers']['Properties'].append({})
+                            Data[guild]['Players'][payload['Author']]['Markers']['Shape'].append('Claim')
+                            Data[guild]['Players'][payload['Author']]['Claimed Today'] = True
+                            await message.channel.send("You have claimed the location. ")
+                            Data[guild]['Log'].append('Player {0} claimed location {1} at {2}'.format(
+                                payload['Author'],(xcordAlpha, ycord+1),datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
+                            await plotMap(message.channel)
                     else:
-                        print(xcord, ycord)
-                        Data[guild]['Players'][payload['Author']]['Markers']['Location'].append([xcord, ycord])
-                        Data[guild]['Players'][payload['Author']]['Markers']['Shape'].append('Claim')
-                        Data[guild]['Players'][payload['Author']]['Claimed Today'] = True
-                        await message.channel.send("You have claimed the location. ")
-                        Data[guild]['Log'].append('Player {0} claimed location {1} at {2}'.format(
-                            payload['Author'],(xcordAlpha, ycord+1),datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
-                        await plotMap(message.channel)
-                else:
-                    await message.channel.send("You cannot claim this location as you have no adjacent markers.")
+                        await message.channel.send("You cannot claim this location as you have no adjacent markers.")
 
         if splitContent[0] == '!harvest' and len(splitContent) == 3:
             if payload['Author'] not in Data[guild]['Players'].keys():
@@ -139,7 +141,7 @@ async def run(payload, message):
 
 
 
-                coords = extractCoords(splitContent[1], message.channel)
+                coords = await extractCoords(splitContent[1], message.channel)
                 if coords is not None:
                     xcord, xcordAlpha, ycord = coords
 
@@ -148,12 +150,17 @@ async def run(payload, message):
                         if Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index].get('Harvest'):
                             await message.channel.send("This locations is already being hravested. (Fuck Spelling)")
                         else:
-
+                            typeHarv = 'Perpetual'
+                            if splitContent[2].lower() in ['non-perpetual', 'n']:
+                                typeHarv = 'Non Perpetual'
                             Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest'] = {
                                 'age':  0,
-                                'type': splitContent[2][0].lower()
+                                'type': typeHarv
                             }
                             print('Harvesting',xcord, ycord)
+                            Data[guild]['Log'].append('Player {0} is harvesting location {1} for {2} Resources at {3}'.format(
+                                payload['Author'], (xcordAlpha, ycord + 1), typeHarv,
+                                datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
                             await message.channel.send("Location set to Harvest. Resources Will Be Given At The Start Of The Next Turn")
                             await plotMap(message.channel)
                     else:
@@ -179,7 +186,7 @@ async def run(payload, message):
 
         if payload['Content'] == '!getData':
             await sendMapData()
-            print( "sending Mad_Data File")
+            print("sending Map_Data File")
 
         if splitContent[0] == '!remove' and len(splitContent) == 2:
             player = message.guild.get_member(int(splitContent[1][2:-1]))
@@ -193,28 +200,44 @@ async def run(payload, message):
             else:
                 await message.channel.send('Player with id:' + splitContent[1][2:-1] + ' cannot be found.')
 
-        if splitContent[0] == '!set' and len(splitContent) == 4:
-            if len(splitContent[1]) > 4 or len(splitContent[1]) < 3:
-                await message.channel.send("Incorrect Coordinate Formatting.")
-            else:
-                xcord = None
-                ycord = None
-                if splitContent[1][:2].upper() in labels:
-                    xcord = splitContent[1][0:2].upper()
-                    xcord = int(labels.index(xcord))
-                    ycord = int(splitContent[1][2:]) - 1
-                elif splitContent[1][-2:].upper() in labels:
-                    xcord = splitContent[1][-2:].upper()
-                    xcord = int(labels.index(xcord))
-                    ycord = int(splitContent[1][:-2]) - 1
-                else:
-                    await message.channel.send("Incorrect Coordinate Formatting.")
+        if splitContent[0] == '!setColor' and len(splitContent) == 3:
+            if splitContent[1].lower() in mcd.CSS4_COLORS:
+                splitContent[1] ,splitContent[2] = splitContent[2] ,splitContent[1]
 
-                if xcord is None and ycord is None:
-                    pass
-                elif ycord >= n or ycord < 0:
-                    await message.channel.send("That is outside the map.")
-                elif splitContent[2].lower() in mcd.CSS4_COLORS:
+            player = message.guild.get_member(int(splitContent[1][2:-1]))
+
+            if splitContent[2].lower() not in mcd.CSS4_COLORS:
+                await message.channel.send('Color ' + splitContent[2] + ' is unavailable. Sorry.')
+            elif player is not None:
+                playerName = player.name + "#" + str(player.discriminator)
+                if playerName in Data[guild]['Players']:
+                    Data[guild]['Players'][playerName]['Color'] = splitContent[2].lower()
+                    await message.channel.send('Player ' + playerName + ' is now '+splitContent[2].lower())
+                else:
+                    await message.channel.send('Player ' + playerName + ' is not on the Map.')
+            else:
+                await message.channel.send('Player with id:' + splitContent[1][2:-1] + ' cannot be found.')
+
+        if splitContent[0] == '!getTile' and len(splitContent) == 2:
+            coords = await extractCoords(splitContent[1], message.channel)
+            if coords is not None:
+                xcord, xcordAlpha, ycord = coords
+                msg = "Tile Data:\n"
+                for player in Data[guild]['Players'].keys():
+                    try:
+                        index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
+                        msg += '-'+player + ": "+str(Data[guild]['Players'][player]['Markers']['Shape'][index])
+                        for prop in Data[guild]['Players'][player]['Markers']['Properties'][index].keys():
+                            msg += '\n\t'+prop+': '+str(Data[guild]['Players'][player]['Markers']['Properties'][index][prop])
+                    except ValueError: pass
+                await message.channel.send(msg)
+
+        if splitContent[0] == '!setTile' and len(splitContent) == 4:
+            coords = await extractCoords(splitContent[1], message.channel)
+            if coords is not None:
+                xcord, xcordAlpha, ycord = coords
+
+                if splitContent[2].lower() in mcd.CSS4_COLORS:
                     Color = splitContent[2].lower()
                     for player in Data[guild]['Players'].keys():
                         if Data[guild]['Players'][player]['Color'] == Color:
@@ -249,21 +272,10 @@ async def run(payload, message):
                     await message.channel.send('Color ' + splitContent[2] + ' is unavailable. Sorry.')
 
         if splitContent[0] == '!resetTimer':
-            if len(splitContent) == 1:
-                await message.channel.send("Admin Resetting Claim Timers... Day " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
-                for player in Data[guild]['Players']:
-                    Data[guild]['Players'][player]['Claimed Today'] = False
+            playerid = None
             if len(splitContent) == 2:
-                player = message.guild.get_member(int(splitContent[1][2:-1]))
-                if player is not None:
-                    playerName = player.name + "#" + str(player.discriminator)
-
-                    await message.channel.send("Resetting Claim Timer for "+playerName)
-                    Data[guild]['Players'][playerName]['Claimed Today'] = False
-                else:
-                    await message.channel.send("User with id: {0} not found".format(splitContent[1][2:-1]))
-
-
+                playerid = splitContent[1][2:-1]
+            await resetTimers(message.guild, playerid = playerid, channel = message.channel)
 
     await saveData()
 
@@ -275,13 +287,19 @@ async def update(server):
     # Do Stuff Here
     guild = server.id
     if datetime.datetime.now().strftime("%Y-%m-%d") != Data[guild]['Date']:
-        await log("Resetting Claim Timers... Day "+ datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
-        for player in Data[guild]['Players']:
-            Data[guild]['Players'][player]['Claimed Today'] = False
-        Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
-        await sendMapData()
+        await onDayChange(server)
     await saveData()
 
+"""
+Reset All Claim Timers
+"""
+async def onDayChange(server):
+    guild = server.id
+    print ('Day Changing...')
+    await log("Day " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+    await resetTimers(server)
+    Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
+    await sendMapData()
 
 """
 Called On Turn Change
@@ -289,32 +307,65 @@ Called On Turn Change
 async def onTurnChange(server):
     global Data
     guild = server.id
+    msg = "Players Now Have The Following:\n"
     for player in Data[guild]['Players']:
-        for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shapes'])):
-            if Data[guild]['Players'][player]['Markers']['Properties'].get('Harvest') is not None:
+        print(Data[guild]['Players'][player]['Markers'])
+        for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
+            if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Harvest') is not None:
                 xcord, ycord = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
 
-                if Data[guild]['Image'].isTileType(xcord, ycord, 'LAND') and \
-                        Data[guild]['Players'][player]['Markers']['Properties']['Type'] == 'p':
-                    Data[guild]['Players'][player]['Inventory'].addItem('Corn', 5)
+                if isTileType(Data[guild]['Image'],xcord, ycord, 'LAND') and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Perpetual':
+                    addItem(Data[guild]['Players'][player]['Inventory'],'Corn', 5)
 
-                if Data[guild]['Image'].isTileType(xcord, ycord, 'WATER') and \
-                        Data[guild]['Players'][player]['Markers']['Properties']['Type'] == 'p':
-                    Data[guild]['Players'][player]['Inventory'].addItem('Fish', 5)
+                if isTileType(Data[guild]['Image'],xcord, ycord, 'WATER') and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Perpetual':
+                    addItem(Data[guild]['Players'][player]['Inventory'],'Fish', 5)
 
-                if Data[guild]['Image'].isTileType(xcord, ycord, 'LAND') and \
-                        Data[guild]['Players'][player]['Markers']['Properties']['Type'] == 'n':
-                    Data[guild]['Players'][player]['Inventory'].addItem('Steal', 1)
+                if isTileType(Data[guild]['Image'],xcord, ycord, 'LAND') and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Non Perpetual':
+                    addItem(Data[guild]['Players'][player]['Inventory'],'Steal', 1)
 
-                if Data[guild]['Image'].isTileType(xcord, ycord, 'WATER') and \
-                        Data[guild]['Players'][player]['Markers']['Properties']['Type'] == 'n':
-                    Data[guild]['Players'][player]['Inventory'].addItem('Oil', 1)
+                if isTileType(Data[guild]['Image'],xcord, ycord, 'WATER') and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Non Perpetual':
+                    addItem(Data[guild]['Players'][player]['Inventory'],'Oil', 1)
 
-                Data[guild]['Players'][player]['Markers']['Properties']['Harvest']['age'] += 1
-                if Data[guild]['Players'][player]['Markers']['Properties']['Harvest']['type'] == 'n' and \
-                        Data[guild]['Players'][player]['Markers']['Properties']['Harvest']['type'] >= 5:
-                    del Data[guild]['Players'][player]['Markers']['Properties']['Harvest']
+                Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] += 1
+                if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Non Perpetual' and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] >= 5:
+                    del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']
 
+        msg += player+" - "+Data[guild]['Players'][player]['Color'].upper()+":\n"
+        for item in Data[guild]['Players'][player]['Inventory']:
+            msg += "\t"+item+': '+str(Data[guild]['Players'][player]['Inventory'][item])+'\n'
+
+    tosend = ""
+    for line in msg:
+        if len(tosend + line) > 1900:
+            await log('```'+ tosend + '```')
+            tosend = ""
+        tosend = tosend + '\n\n' + line
+    if msg != "":
+        await log('```' + msg + '```')
+
+async def resetTimers(server, channel = None, playerid = None):
+    if channel is None: channel = channels[logChannel]
+    guild = server.id
+
+    if playerid is None:
+        for player in Data[guild]['Players']:
+            Data[guild]['Players'][player]['Claimed Today'] = False
+        await channel.send("Resetting Claim Timer for Everyone")
+
+    else:
+        player = server.get_member(int(playerid))
+        if player is not None:
+            playerName = player.name + "#" + str(player.discriminator)
+            Data[guild]['Players'][playerName]['Claimed Today'] = False
+            await channel.send("Resetting Claim Timer for " + playerName)
+
+        else:
+            await channel.send("User with id: {0} not found".format(playerid[2:-1]))
 
 
 """
@@ -348,17 +399,37 @@ async def extractCoords(coords, channel):
 
         return xcord, xcordAlpha, ycord
 
-def sendMapData():
+"""
+Send Map Data File
+"""
+async def sendMapData():
     await channels[logChannel].send('Save File Backup:', file=discord.File(open('Map_Data.pickle', 'br')))
 
-
+"""
+Is The Tile Of Type as x,y in image
+"""
 def isTileType(image, x, y, type):
    return np.all(image[x, y] == TILES[type.upper()])
 
+
+'''
+Add item of count N to player's inventory inv.
+'''
 def addItem(inv, item, count):
     if inv.get(item) is None: inv[item] = 0
     inv[item] += count
     if inv[item] == 0: del inv[item]
+
+
+"""
+Update Messages In Annoncements
+"""
+async def updateInAnnouncements(server):
+    guild = server.id
+    if Data[guild]['Announcements']['Map'] is None:
+        pass
+    if Data[guild]['Announcements']['Items'] is None:
+        pass
 
 
 """
@@ -381,6 +452,10 @@ async def setup(chans, logchan, server):
     # Do Stuff Here
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
     if Data.get(guild) is None: Data[guild] = {}
+    if Data[guild].get('Announcements') is None: Data[guild]['Announcements'] = {
+        'Map':None,
+        'Items':None
+    }
     if Data[guild].get('Players') is None: Data[guild]['Players'] = {}
     if Data[guild].get('Date') is None: Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
     if Data[guild].get('Log') is None: Data[guild]['Log'] = []
@@ -405,8 +480,10 @@ async def setup(chans, logchan, server):
     for player in Data[guild]['Players'].keys():
         if Data[guild]['Players'][player].get('Inventory') is None:
             Data[guild]['Players'][player]['Inventory'] = {'BF':0, }
+
         if Data[guild]['Players'][player]['Markers'].get('Properties') is None:
             Data[guild]['Players'][player]['Markers']['Properties'] = []
+
             for tile in Data[guild]['Players'][player]['Markers']['Shape']:
                 Data[guild]['Players'][player]['Markers']['Properties'].append({})
 
@@ -415,61 +492,65 @@ async def setup(chans, logchan, server):
 
 
 async def plotMap(channel = None):
-    global Data
-    guild = channel.guild.id
-    async with channel.typing():
-        if channel is None: channel = channels[logChannel]
-        fig, ax = plt.subplots()
-        axisn = np.arange(0, n, 1)
-        plt.xticks(axisn + 0.5)
-        plt.yticks(axisn + 0.5)
+    try:
+        global Data
+        guild = channel.guild.id
+        async with channel.typing():
+            if channel is None: channel = channels[logChannel]
+            fig, ax = plt.subplots()
+            axisn = np.arange(0, n, 1)
+            plt.xticks(axisn + 0.5)
+            plt.yticks(axisn + 0.5)
 
-        for player in Data[guild]['Players'].keys():
-            player = Data[guild]['Players'][player]
-            color = player['Color']
+            for player in Data[guild]['Players'].keys():
+                print('Player:'+player)
+                player = Data[guild]['Players'][player]
+                color = player['Color']
 
-            x, y = np.asarray(player['Markers']['Location']).T
-            obj  = np.asarray(player['Markers']['Shape'])
+                x, y = np.asarray(player['Markers']['Location']).T
+                obj  = np.asarray(player['Markers']['Shape'])
 
-            obj[obj == 'Claim'] = '.'
-            obj[obj == 'Capital'] = '*'
-
-            for i in range(obj.shape[0]):
-                if player['Markers']['Properties'].get('Harvest'):
-                    if player['Markers']['Properties']['Harvest']['type'] == 'p':
-                        ax.scatter(x[i], y[i], c='none', s=15, edgecolors=color, marker='x')
-                    if player['Markers']['Properties']['Harvest']['type'] == 'n':
-                        ax.scatter(x[i], y[i], c='none', s=15, edgecolors=color, marker='X')
-
-
-                if color != 'black':
-                    ax.scatter(x[i], y[i], c='black', s=8, edgecolors='none', marker=obj[i])
-                if color == 'black':
-                    ax.scatter(x[i], y[i], c='white', s=8, edgecolors='none', marker=obj[i])
-
-                ax.scatter(x[i], y[i], c=color,   s=5, edgecolors='none', marker = obj[i])
+                obj[obj == 'Claim'] = '.'
+                obj[obj == 'Capital'] = '*'
+                for i in range(obj.shape[0]):
+                    print()
+                    if player['Markers']['Properties'][i].get('Harvest') is not None:
+                        if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
+                            ax.scatter(x[i], y[i], c="none", edgecolors=color,
+                                       linewidths=0.2 ,s=10, marker='s', alpha = 0.7)
+                        if player['Markers']['Properties'][i]['Harvest']['type'] == 'Non Perpetual':
+                            ax.scatter(x[i], y[i], c="none", edgecolors=color,
+                                       linewidths=0.65, s=8.5, marker='s',alpha = 0.7)
 
 
+                    if color != 'black':
+                        ax.scatter(x[i], y[i], c='black', s=9, edgecolors='none', marker=obj[i])
+                    if color == 'black':
+                        ax.scatter(x[i], y[i], c='white', s=9, edgecolors='none', marker=obj[i])
 
-        ax.yaxis.set_major_formatter(ticker.NullFormatter())
-        ax.yaxis.set_minor_locator(ticker.FixedLocator(axisn))
-        ax.yaxis.set_minor_formatter(ticker.FixedFormatter(axisn+1))
+                    ax.scatter(x[i], y[i], c=color,   s=4.5, edgecolors='none', marker = obj[i])
 
-        ax.xaxis.set_major_formatter(ticker.NullFormatter())
-        ax.xaxis.set_minor_locator(ticker.FixedLocator(axisn))
-        ax.xaxis.set_minor_formatter(ticker.FixedFormatter(plotLables))
 
-        ax.tick_params(axis='both', which='minor', labelsize=2.5)
-        ax.tick_params(axis='both', which='minor', width=1)
-        ax.tick_params(axis='both', which='minor', length=3)
-        ax.tick_params(axis='both', which='major', length=0)
 
-        plt.grid(color='k', linestyle='-', linewidth=0.25, alpha = 0.5)
-        ax.imshow(Data[guild]['Image'].transpose(1,0,2), interpolation='nearest')
+            ax.yaxis.set_major_formatter(ticker.NullFormatter())
+            ax.yaxis.set_minor_locator(ticker.FixedLocator(axisn))
+            ax.yaxis.set_minor_formatter(ticker.FixedFormatter(axisn+1))
 
-        plt.savefig('tmpgrid.png', format='png', dpi = 600, bbox_inches="tight")
-        await channel.send('World Map:', file=discord.File(open('tmpgrid.png', 'br')))
+            ax.xaxis.set_major_formatter(ticker.NullFormatter())
+            ax.xaxis.set_minor_locator(ticker.FixedLocator(axisn))
+            ax.xaxis.set_minor_formatter(ticker.FixedFormatter(plotLables))
 
+            ax.tick_params(axis='both', which='minor', labelsize=2.5)
+            ax.tick_params(axis='both', which='minor', width=1)
+            ax.tick_params(axis='both', which='minor', length=3)
+            ax.tick_params(axis='both', which='major', length=0)
+
+            plt.grid(color='k', linestyle='-', linewidth=0.25, alpha = 0.5)
+            ax.imshow(Data[guild]['Image'].transpose(1,0,2), interpolation='nearest')
+            plt.savefig('tmpgrid.png', format='png', dpi = 600, bbox_inches="tight")
+            await channel.send('World Map:', file=discord.File(open('tmpgrid.png', 'br')))
+    except Exception as e:
+        print(e)
 
 #####################################################
 #  Necessary Module Functions
@@ -507,9 +588,12 @@ async def loadData():
 
 
 '''
-
 Data = {
     server1 : {
+        'Announcements': {
+            'Map': message.id
+            'Items': message.id
+        }
         'Image': np.array([col,row])
         'Date': "2019-06-29
         'Log':["logmsg1", "logmsg2" .... , "logmsg3"]
@@ -534,14 +618,14 @@ Data = {
                     {
                         'Harvest': {
                             'age': 5
-                            'type': 'p'
+                            'type': 'Perpetual'
                         }
                         
                     },
                     {'
                         Harvest': {
                             'age': 5
-                            'type': 'n'
+                            'type': 'Non Perpetual'
                         }
                     },
                     .

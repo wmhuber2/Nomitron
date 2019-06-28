@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
+    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="Added Helper Funtions Finished Plot. Added End Turn COmmand">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DiscordBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/DiscordBot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayerREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/PlayerREADME.md" afterDir="false" />
     </list>
     <ignored path="Paint.py" />
     <ignored mask="*_Data.pickle" />
@@ -19,8 +21,8 @@
         <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="240">
-                <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+              <first_editor relative-caret-position="289">
+                <caret line="41" column="8" selection-end-line="73" selection-end-column="37" />
               </first_editor>
               <second_editor />
             </state>
@@ -30,25 +32,34 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="270" column="19" selection-start-line="270" selection-start-column="19" selection-end-line="270" selection-end-column="19" />
+            <state relative-caret-position="140">
+              <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
               <folding>
                 <element signature="e#614#667#0" />
                 <element signature="e#763#816#0" />
-                <element signature="e#1248#3921#0" />
-                <element signature="e#2957#5808#0" />
-                <element signature="e#7702#11227#0" />
-                <element signature="e#7712#8074#0" />
-                <element signature="e#8550#8603#0" />
-                <element signature="e#8672#8711#0" />
-                <element signature="e#8164#8795#0" />
-                <element signature="e#8874#12193#0" />
-                <element signature="e#12252#13078#0" />
-                <element signature="e#14669#15262#0" />
-                <element signature="e#19249#21638#0" />
-                <element signature="e#17413#17449#0" />
-                <element signature="e#17560#17664#0" />
-                <element signature="e#17777#18008#0" />
+                <element signature="e#1248#2974#0" />
+                <element signature="e#3148#6126#0" />
+                <element signature="e#8347#8709#0" />
+                <element signature="e#8768#8831#0" />
+                <element signature="e#8890#8952#0" />
+                <element signature="e#9035#9666#0" />
+                <element signature="e#10398#11376#0" />
+                <element signature="e#10807#11615#0" />
+                <element signature="e#11698#14194#0" />
+                <element signature="e#15336#17854#0" />
+                <element signature="e#17611#18211#0" />
+                <element signature="e#17047#17965#0" />
+                <element signature="e#17996#18098#0" />
+                <element signature="e#18139#18188#0" />
+                <element signature="e#18225#18324#0" />
+                <element signature="e#18478#18625#0" />
+                <element signature="e#18540#20392#0" />
+                <element signature="e#19194#19216#0" />
+                <element signature="e#19257#19850#0" />
+                <element signature="e#20434#23260#0" />
+                <element signature="e#23529#23565#0" />
+                <element signature="e#23676#23780#0" />
+                <element signature="e#23893#24124#0" />
               </folding>
             </state>
           </provider>
@@ -57,8 +68,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiscordBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="792">
-              <caret line="228" column="15" selection-start-line="228" selection-start-column="15" selection-end-line="228" selection-end-column="15" />
+            <state relative-caret-position="224">
+              <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+              <folding>
+                <element signature="e#2597#3414#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -71,6 +85,13 @@
       <find>Data['Log']</find>
       <find>self.channels</find>
       <find>Data['</find>
+      <find>sendMapData</find>
+      <find>extractCoords</find>
+      <find>resetTimers</find>
+      <find>'Harvest'</find>
+      <find>'n'</find>
+      <find>'p'</find>
+      <find>.server</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -98,18 +119,18 @@
         <option value="$PROJECT_DIR$/Blank.py" />
         <option value="$PROJECT_DIR$/Rules.py" />
         <option value="$PROJECT_DIR$/Admin.py" />
-        <option value="$PROJECT_DIR$/DiscordBot.py" />
-        <option value="$PROJECT_DIR$/PlayerREADME.md" />
         <option value="$PROJECT_DIR$/Nomitron.py" />
+        <option value="$PROJECT_DIR$/PlayerREADME.md" />
+        <option value="$PROJECT_DIR$/DiscordBot.py" />
         <option value="$PROJECT_DIR$/Map.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2921" />
-    <option name="y" value="80" />
-    <option name="width" value="901" />
-    <option name="height" value="475" />
+    <option name="x" value="617" />
+    <option name="y" value="62" />
+    <option name="width" value="846" />
+    <option name="height" value="508" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -117,17 +138,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="Nomitron" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="$PROJECT_DIR$" type="442cc68d:ScopeViewTreeModel$RootNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -139,13 +149,24 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="Nomitron" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="$PROJECT_DIR$" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.tabs" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -164,7 +185,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Nomitron">
+  <component name="RunManager" selected="Python.DiscordBot">
     <configuration name="Admin" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Nomitron" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -193,7 +214,7 @@
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="$PROJECT_DIR$/../../../venv/bin/python" />
+      <option name="SDK_HOME" value="$PROJECT_DIR$/../../../Eclipse/venv/bin/python" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -279,8 +300,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Nomitron" />
         <item itemvalue="Python.DiscordBot" />
+        <item itemvalue="Python.Nomitron" />
         <item itemvalue="Python.Paint" />
         <item itemvalue="Python.Admin" />
         <item itemvalue="Python.Rules" />
@@ -297,13 +318,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00038" summary="Fixed DiscordBot Enable Bug">
-      <created>1561268185644</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1561268185644</updated>
     </task>
     <task id="LOCAL-00039" summary="Added Channel To Admin Reaction Post">
       <created>1561268675852</created>
@@ -641,7 +655,14 @@
       <option name="project" value="LOCAL" />
       <updated>1561691339558</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="Added Helper Funtions Finished Plot. Added End Turn COmmand">
+      <created>1561694000030</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1561694000030</updated>
+    </task>
+    <option name="localTasksCounter" value="88" />
     <servers />
   </component>
   <component name="TodoView">
@@ -654,12 +675,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2921" y="80" width="901" height="982" extended-state="6" />
+    <frame x="617" y="62" width="846" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4773218" weight="0.2888128" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4751693" visible="true" weight="0.3861145" />
       <window_info id="Structure" order="1" sideWeight="0.50108224" side_tool="true" weight="0.27243245" />
-      <window_info id="Run" order="2" sideWeight="0.5226782" side_tool="true" weight="0.17567568" />
+      <window_info active="true" id="Run" order="2" sideWeight="0.5248307" side_tool="true" visible="true" weight="0.3861145" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
@@ -687,7 +708,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Made All Keys Secret. Only print Voting reacts." />
     <MESSAGE value="Made All Keys Secret." />
     <MESSAGE value="Removed Clean :)" />
     <MESSAGE value="Map Implemented" />
@@ -712,7 +732,8 @@
     <MESSAGE value="Edited Readme" />
     <MESSAGE value="Upgrade Players To New Data Structure&#10;Add Commands To Harvest" />
     <MESSAGE value="Modified Plot For Harvest" />
-    <option name="LAST_COMMIT_MESSAGE" value="Modified Plot For Harvest" />
+    <MESSAGE value="Added Helper Funtions Finished Plot. Added End Turn COmmand" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Helper Funtions Finished Plot. Added End Turn COmmand" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tmp/Admin.py" />
@@ -783,11 +804,21 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Rules_Data.pickle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="34" lean-forward="true" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Map_Data.pickle">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="240">
-            <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+          <first_editor relative-caret-position="289">
+            <caret line="41" column="8" selection-end-line="73" selection-end-column="37" />
           </first_editor>
           <second_editor />
         </state>
@@ -795,32 +826,44 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DiscordBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="228" column="15" selection-start-line="228" selection-start-column="15" selection-end-line="228" selection-end-column="15" />
+        <state relative-caret-position="224">
+          <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+          <folding>
+            <element signature="e#2597#3414#0" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="270" column="19" selection-start-line="270" selection-start-column="19" selection-end-line="270" selection-end-column="19" />
+        <state relative-caret-position="140">
+          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
           <folding>
             <element signature="e#614#667#0" />
             <element signature="e#763#816#0" />
-            <element signature="e#1248#3921#0" />
-            <element signature="e#2957#5808#0" />
-            <element signature="e#7702#11227#0" />
-            <element signature="e#7712#8074#0" />
-            <element signature="e#8550#8603#0" />
-            <element signature="e#8672#8711#0" />
-            <element signature="e#8164#8795#0" />
-            <element signature="e#8874#12193#0" />
-            <element signature="e#12252#13078#0" />
-            <element signature="e#14669#15262#0" />
-            <element signature="e#19249#21638#0" />
-            <element signature="e#17413#17449#0" />
-            <element signature="e#17560#17664#0" />
-            <element signature="e#17777#18008#0" />
+            <element signature="e#1248#2974#0" />
+            <element signature="e#3148#6126#0" />
+            <element signature="e#8347#8709#0" />
+            <element signature="e#8768#8831#0" />
+            <element signature="e#8890#8952#0" />
+            <element signature="e#9035#9666#0" />
+            <element signature="e#10398#11376#0" />
+            <element signature="e#10807#11615#0" />
+            <element signature="e#11698#14194#0" />
+            <element signature="e#15336#17854#0" />
+            <element signature="e#17611#18211#0" />
+            <element signature="e#17047#17965#0" />
+            <element signature="e#17996#18098#0" />
+            <element signature="e#18139#18188#0" />
+            <element signature="e#18225#18324#0" />
+            <element signature="e#18478#18625#0" />
+            <element signature="e#18540#20392#0" />
+            <element signature="e#19194#19216#0" />
+            <element signature="e#19257#19850#0" />
+            <element signature="e#20434#23260#0" />
+            <element signature="e#23529#23565#0" />
+            <element signature="e#23676#23780#0" />
+            <element signature="e#23893#24124#0" />
           </folding>
         </state>
       </provider>

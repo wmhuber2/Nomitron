@@ -126,7 +126,7 @@ class DiscordNomicBot():
             if name in self.Data['disabled'][message.guild.id]: continue
             if hasattr(mod, 'run'):
                 tasks.append(mod.run(payload,message))
-        await asyncio.gather(*tasks)
+        await asyncio.gather(*tasks,return_exceptions=True)
         self.loadData()
 
 
@@ -184,7 +184,7 @@ class DiscordNomicBot():
             await channels[self.logChannel].send(msg)
 
         while 1:
-            await asyncio.sleep(10)
+            await asyncio.sleep(30)
             tasks = []
 
             for mod, name in zip(self.modules, self.moduleNames):
@@ -192,7 +192,7 @@ class DiscordNomicBot():
                     if name in self.Data['disabled'][server.id]: continue
                     if hasattr(mod, 'update'):
                         tasks.append(mod.update(server))
-            await asyncio.gather(*tasks)
+            await asyncio.gather(*tasks,return_exceptions=True)
 
 
 
@@ -209,7 +209,7 @@ class DiscordNomicBot():
             if name in self.Data['disabled'][msg.guild.id]: continue
             if hasattr(mod, 'reaction'):
                 tasks.append(mod.reaction(mode, user, msg, payload.emoji))
-        await asyncio.gather(*tasks)
+        await asyncio.gather(*tasks,return_exceptions=True)
 
 
     """
