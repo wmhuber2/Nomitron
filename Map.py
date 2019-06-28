@@ -89,12 +89,12 @@ async def run(payload, message):
                     await message.channel.send("That is outside the map.")
                 elif splitContent[2].lower() in mcd.CSS4_COLORS:
                     Data[guild]['Players'][payload['Author']] = {}
-
                     Data[guild]['Players'][payload['Author']]['Claimed Today'] = False
                     Data[guild]['Players'][payload['Author']]['Color'] = splitContent[2].lower()
                     Data[guild]['Players'][payload['Author']]['Markers'] = {}
                     Data[guild]['Players'][payload['Author']]['Markers']['Location'] = [[xcord, ycord]]
                     Data[guild]['Players'][payload['Author']]['Markers']['Shape']    = ['Capital']
+                    Data[guild]['Players'][payload['Author']]['Inventory'] = {'BF': 0, }
                     await plotMap(message.channel)
                     Data[guild]['Log'].append('New Player {0} Added to Map with color {1} and capital at {2}. {3}'.format(
                         payload['Author'], splitContent[2].lower(), (xcordAlpha, ycord+1), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
@@ -161,6 +161,58 @@ async def run(payload, message):
                         await plotMap(message.channel)
                 else:
                     await message.channel.send("You cannot claim this location as you have no adjacent markers.")
+
+        if splitContent[0] == '!harvest' and len(splitContent) == 3:
+            if payload['Author'] not in Data[guild]['Players'].keys():
+                await message.channel.send("You havent established a capital yet.")
+            elif splitContent[2].lower() not in ['perpetual', 'non-perpetual', 'p', 'n'] and \
+                 splitContent[1].lower() not in ['perpetual', 'non-perpetual', 'p', 'n']:
+                 await message.channel.send("That is not a valid harvesting method. \n"
+                                            "If like me you cant spell, just use n (non perpetual) or p (perpetual) in your command.")
+            else:
+                if splitContent[1].lower() in ['perpetual', 'non-perpetual', 'p', 'n']:
+                    splitContent[1], splitContent[2] = splitContent[2], splitContent[1]
+
+                if len(splitContent[1]) > 4 or len(splitContent[1]) < 3:
+                    await message.channel.send("Incorrect Coordinate Formatting.")
+                else:
+                    xcord = None
+                    xcordAlpha = None
+                    ycord = None
+                    if splitContent[1][:2].upper() in labels:
+                        xcordAlpha = splitContent[1][0:2].upper()
+                        xcord = int(labels.index(xcordAlpha))
+                        ycord = int(splitContent[1][2:]) - 1
+                    elif splitContent[1][-2:].upper() in labels:
+                        xcordAlpha = splitContent[1][-2:].upper()
+                        xcord = int(labels.index(xcordAlpha))
+                        ycord = int(splitContent[1][:-2]) - 1
+                    else:
+                        await message.channel.send("Incorrect Coordinate Formatting.")
+
+
+                    if xcord is None and ycord is None:
+                        pass
+
+                    elif ycord >= n  or ycord < 0 or xcord >= n  or xcord < 0:
+                        await message.channel.send("That is outside the map.")
+
+                    elif [xcord, ycord] in Data[guild]['Players'][payload['Author']]['Markers']['Location']:
+                        index = Data[guild]['Players'][payload['Author']]['Markers']['Location'].index([xcord, ycord])
+                        if Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index].get('Harvest'):
+                            await message.channel.send("This locations is already being hravested. (Fuck Spelling)")
+                        else:
+
+                            Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest'] = {
+                                'age':  0,
+                                'type': splitContent[2][0].lower()
+                            }
+                            print('Harvesting',xcord, ycord)
+                            await message.channel.send("Location set to Harvest. Resources Will Be Given At The Start Of The Next Turn")
+                            await plotMap(message.channel)
+                    else:
+                        await message.channel.send("You cannot harvest this location until you have claimed it.")
+
 
 
     if payload['Author'] in Admins and payload['Channel'].lower() in ['actions','action', 'mod-lounge', 'bot-lounge']:
@@ -275,6 +327,11 @@ async def update(server):
 
     await saveData()
 
+async def onTurnChange(server):
+    global Data
+    guild = server.id
+    for player in Data[guild]['Players']:
+        for tileIndex in range(len(Data[guild]['Players'][player]['Markers']))
 
 
 """
@@ -317,6 +374,14 @@ async def setup(chans, logchan, server):
             Data[guild]['Image'] = data
         except ImportError:
             await log("Error Initializing the Map: PIL and/or Numpy Not Available")
+
+    for player in Data[guild]['Players'].keys():
+        if Data[guild]['Players'][player].get('Inventory') is None:
+            Data[guild]['Players'][player]['Inventory'] = {'BF':0, }
+        if Data[guild]['Players'][player]['Markers'].get('Properties') is None:
+            Data[guild]['Players'][player]['Markers']['Properties'] = []
+            for tile in Data[guild]['Players'][player]['Markers']['Shape']:
+                Data[guild]['Players'][player]['Markers']['Properties'].append({})
 
     #await plotMap()
     await saveData()
@@ -401,3 +466,71 @@ async def loadData():
             pickle.dump(Data, handle)
 
 
+'''
+
+Data = {
+    server1 : {
+        'Image': np.array([col,row])
+        'Date': "2019-06-29
+        'Log':["logmsg1", "logmsg2" .... , "logmsg3"]
+        'Players': {
+            Player1#0001: {
+                'Markers':{
+                    'Location': [
+                        (23,76), 
+                        (74,1),
+                        .
+                        .
+                        (row,col)
+                    ]
+                    'Shape': [
+                        'Claim',
+                        'Capital',
+                        .
+                        .
+                        'Claim',
+                    ]
+                    'Properties':[
+                    {
+                        'Harvest': {
+                            'age': 5
+                            'type': 'p'
+                        }
+                        
+                    },
+                    {'
+                        Harvest': {
+                            'age': 5
+                            'type': 'n'
+                        }
+                    },
+                    .
+                    .
+                    {}
+                    ]
+                
+                }
+                'Color': 'red'
+                'Claimed Today': False
+                'Inventory': {
+                    'BF': 25
+                    'Wood': 5
+                    .
+                    .
+                    'Item': 999
+                }
+            }
+            Player2#0002: {...}
+            .
+            .
+        }
+
+    },
+    
+    server2: {...},
+    .
+    .
+    .
+    serverN : {...}
+}
+'''
