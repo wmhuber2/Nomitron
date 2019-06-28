@@ -400,13 +400,26 @@ async def plotMap(channel = None):
         for player in Data[guild]['Players'].keys():
             player = Data[guild]['Players'][player]
             color = player['Color']
+
             x, y = np.asarray(player['Markers']['Location']).T
             obj  = np.asarray(player['Markers']['Shape'])
 
             obj[obj == 'Claim'] = '.'
             obj[obj == 'Capital'] = '*'
+
+
             for i in range(obj.shape[0]):
-                ax.scatter(x[i], y[i], c='black', s=7, edgecolors='none', marker = obj[i])
+                if player['Markers']['Properties'].get('Harvest'):
+                    if player['Markers']['Properties']['Harvest']['type'] == 'p':
+                        ax.scatter(x[i], y[i], c='none', s=15, edgecolors=color, marker='x')
+                    if player['Markers']['Properties']['Harvest']['type'] == 'n':
+                        ax.scatter(x[i], y[i], c='none', s=15, edgecolors=color, marker='X')
+
+                if color != 'black':
+                    ax.scatter(x[i], y[i], c='black', s=8, edgecolors='none', marker=obj[i])
+                if color == 'black':
+                    ax.scatter(x[i], y[i], c='white', s=8, edgecolors='none', marker=obj[i])
+                
                 ax.scatter(x[i], y[i], c=color,   s=5, edgecolors='none', marker = obj[i])
 
 
