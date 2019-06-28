@@ -30,18 +30,25 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="298">
-              <caret line="451" column="35" selection-start-line="451" selection-start-column="35" selection-end-line="451" selection-end-column="35" />
+            <state relative-caret-position="316">
+              <caret line="270" column="19" selection-start-line="270" selection-start-column="19" selection-end-line="270" selection-end-column="19" />
               <folding>
                 <element signature="e#614#667#0" />
                 <element signature="e#763#816#0" />
-                <element signature="e#1052#1107#0" />
-                <element signature="e#3843#7619#0" />
+                <element signature="e#1248#3921#0" />
+                <element signature="e#2957#5808#0" />
+                <element signature="e#7702#11227#0" />
                 <element signature="e#7712#8074#0" />
+                <element signature="e#8550#8603#0" />
+                <element signature="e#8672#8711#0" />
                 <element signature="e#8164#8795#0" />
                 <element signature="e#8874#12193#0" />
                 <element signature="e#12252#13078#0" />
                 <element signature="e#14669#15262#0" />
+                <element signature="e#19249#21638#0" />
+                <element signature="e#17413#17449#0" />
+                <element signature="e#17560#17664#0" />
+                <element signature="e#17777#18008#0" />
               </folding>
             </state>
           </provider>
@@ -69,6 +76,11 @@
   <component name="Git.Settings">
     <option name="UPDATE_TYPE" value="REBASE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="PUSH_TAGS">
       <GitPushTagMode />
     </option>
@@ -285,20 +297,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00036" summary="Added Ian TO Admin">
-      <created>1561172154231</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1561172154231</updated>
-    </task>
-    <task id="LOCAL-00037" summary="Added enable and disable to admin and dicrodbot. expanded clean command. and added Paint to test. feel free to diable it.">
-      <created>1561267366307</created>
-      <option name="number" value="00037" />
-      <option name="presentableId" value="LOCAL-00037" />
-      <option name="project" value="LOCAL" />
-      <updated>1561267366307</updated>
     </task>
     <task id="LOCAL-00038" summary="Fixed DiscordBot Enable Bug">
       <created>1561268185644</created>
@@ -629,7 +627,21 @@
       <option name="project" value="LOCAL" />
       <updated>1561522183463</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="Upgrade Players To New Data Structure&#10;Add Commands To Harvest">
+      <created>1561690624773</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1561690624774</updated>
+    </task>
+    <task id="LOCAL-00086" summary="Modified Plot For Harvest">
+      <created>1561691339558</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1561691339558</updated>
+    </task>
+    <option name="localTasksCounter" value="87" />
     <servers />
   </component>
   <component name="TodoView">
@@ -675,8 +687,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Removed Data files from git to preserve local data files." />
-    <MESSAGE value="Added help to admin to respond with Readme.txt" />
     <MESSAGE value="Made All Keys Secret. Only print Voting reacts." />
     <MESSAGE value="Made All Keys Secret." />
     <MESSAGE value="Removed Clean :)" />
@@ -700,7 +710,9 @@
     <MESSAGE value="Fixing Git Pull URL" />
     <MESSAGE value="Added Open Source" />
     <MESSAGE value="Edited Readme" />
-    <option name="LAST_COMMIT_MESSAGE" value="Edited Readme" />
+    <MESSAGE value="Upgrade Players To New Data Structure&#10;Add Commands To Harvest" />
+    <MESSAGE value="Modified Plot For Harvest" />
+    <option name="LAST_COMMIT_MESSAGE" value="Modified Plot For Harvest" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tmp/Admin.py" />
@@ -790,18 +802,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="298">
-          <caret line="451" column="35" selection-start-line="451" selection-start-column="35" selection-end-line="451" selection-end-column="35" />
+        <state relative-caret-position="316">
+          <caret line="270" column="19" selection-start-line="270" selection-start-column="19" selection-end-line="270" selection-end-column="19" />
           <folding>
             <element signature="e#614#667#0" />
             <element signature="e#763#816#0" />
-            <element signature="e#1052#1107#0" />
-            <element signature="e#3843#7619#0" />
+            <element signature="e#1248#3921#0" />
+            <element signature="e#2957#5808#0" />
+            <element signature="e#7702#11227#0" />
             <element signature="e#7712#8074#0" />
+            <element signature="e#8550#8603#0" />
+            <element signature="e#8672#8711#0" />
             <element signature="e#8164#8795#0" />
             <element signature="e#8874#12193#0" />
             <element signature="e#12252#13078#0" />
             <element signature="e#14669#15262#0" />
+            <element signature="e#19249#21638#0" />
+            <element signature="e#17413#17449#0" />
+            <element signature="e#17560#17664#0" />
+            <element signature="e#17777#18008#0" />
           </folding>
         </state>
       </provider>

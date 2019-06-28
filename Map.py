@@ -64,29 +64,13 @@ async def run(payload, message):
 
             if payload['Author'] in Data[guild]['Players'].keys():
                 await message.channel.send("Silly Rabbit. You already established a Capital.")
-            elif len(splitContent[1]) > 4 or len(splitContent[1]) < 3:
-                await message.channel.send("Incorrect Coordinate Formatting.")
-            else:
-                xcord = None
-                xcordAlpha = None
-                ycord = None
-                if splitContent[1][:2].upper() in labels:
-                    xcordAlpha = splitContent[1][0:2].upper()
-                    xcord = int(labels.index(xcordAlpha))
-                    ycord = int(splitContent[1][2:]) - 1
-                elif splitContent[1][-2:].upper() in labels:
-                    xcordAlpha = splitContent[1][-2:].upper()
-                    xcord = int(labels.index(xcordAlpha))
-                    ycord = int(splitContent[1][:-2]) - 1
-                else:
-                    await message.channel.send("Incorrect Coordinate Formatting.")
 
-                if xcord is None and ycord is None:
-                    pass
-                elif not np.all(Data[guild]['Image'][xcord , ycord] == TILES['LAND']):
+            coords = extractCoords(splitContent[1], message.channel)
+            if coords is not None:
+                xcord, xcordAlpha, ycord = coords
+
+                if not Data[guild]['Image'].isTileType(xcord , ycord, 'LAND'):
                     await message.channel.send("Please seek more advanced technology to claim Water Tiles.")
-                elif ycord >= n  or ycord < 0:
-                    await message.channel.send("That is outside the map.")
                 elif splitContent[2].lower() in mcd.CSS4_COLORS:
                     Data[guild]['Players'][payload['Author']] = {}
                     Data[guild]['Players'][payload['Author']]['Claimed Today'] = False
@@ -98,38 +82,18 @@ async def run(payload, message):
                     await plotMap(message.channel)
                     Data[guild]['Log'].append('New Player {0} Added to Map with color {1} and capital at {2}. {3}'.format(
                         payload['Author'], splitContent[2].lower(), (xcordAlpha, ycord+1), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
-
                 else:
                     await message.channel.send('Color ' + splitContent[2] + ' is unavailable. Sorry.')
 
         if splitContent[0] == '!claim' and len(splitContent) == 2:
             if payload['Author'] not in Data[guild]['Players'].keys():
                 await message.channel.send("You havent established a capital yet.")
-            elif len(splitContent[1]) > 4 or len(splitContent[1]) < 3:
-                await message.channel.send("Incorrect Coordinate Formatting.")
-            else:
-                xcord = None
-                xcordAlpha = None
-                ycord = None
-                if splitContent[1][:2].upper() in labels:
-                    xcordAlpha = splitContent[1][0:2].upper()
-                    xcord = int(labels.index(xcordAlpha))
-                    ycord = int(splitContent[1][2:]) - 1
-                elif splitContent[1][-2:].upper() in labels:
-                    xcordAlpha = splitContent[1][-2:].upper()
-                    xcord = int(labels.index(xcordAlpha))
-                    ycord = int(splitContent[1][:-2]) - 1
-                else:
-                    await message.channel.send("Incorrect Coordinate Formatting.")
 
+            coords = extractCoords(splitContent[1], message.channel)
+            if coords is not None:
+                xcord, xcordAlpha, ycord = coords
 
-                if xcord is None and ycord is None:
-                    pass
-
-                elif ycord >= n  or ycord < 0 or xcord >= n  or xcord < 0:
-                    await message.channel.send("That is outside the map.")
-
-                elif not np.all(Data[guild]['Image'][xcord , ycord] == TILES['LAND']):
+                if not Data[guild]['Image'].isTileType(xcord , ycord, 'LAND'):
                     await message.channel.send("Please seek more advanced technology to claim Water Tiles.")
 
                 elif Data[guild]['Players'][payload['Author']]['Claimed Today']:
@@ -173,31 +137,13 @@ async def run(payload, message):
                 if splitContent[1].lower() in ['perpetual', 'non-perpetual', 'p', 'n']:
                     splitContent[1], splitContent[2] = splitContent[2], splitContent[1]
 
-                if len(splitContent[1]) > 4 or len(splitContent[1]) < 3:
-                    await message.channel.send("Incorrect Coordinate Formatting.")
-                else:
-                    xcord = None
-                    xcordAlpha = None
-                    ycord = None
-                    if splitContent[1][:2].upper() in labels:
-                        xcordAlpha = splitContent[1][0:2].upper()
-                        xcord = int(labels.index(xcordAlpha))
-                        ycord = int(splitContent[1][2:]) - 1
-                    elif splitContent[1][-2:].upper() in labels:
-                        xcordAlpha = splitContent[1][-2:].upper()
-                        xcord = int(labels.index(xcordAlpha))
-                        ycord = int(splitContent[1][:-2]) - 1
-                    else:
-                        await message.channel.send("Incorrect Coordinate Formatting.")
 
 
-                    if xcord is None and ycord is None:
-                        pass
+                coords = extractCoords(splitContent[1], message.channel)
+                if coords is not None:
+                    xcord, xcordAlpha, ycord = coords
 
-                    elif ycord >= n  or ycord < 0 or xcord >= n  or xcord < 0:
-                        await message.channel.send("That is outside the map.")
-
-                    elif [xcord, ycord] in Data[guild]['Players'][payload['Author']]['Markers']['Location']:
+                    if [xcord, ycord] in Data[guild]['Players'][payload['Author']]['Markers']['Location']:
                         index = Data[guild]['Players'][payload['Author']]['Markers']['Location'].index([xcord, ycord])
                         if Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index].get('Harvest'):
                             await message.channel.send("This locations is already being hravested. (Fuck Spelling)")
@@ -226,7 +172,15 @@ async def run(payload, message):
             if msg != "":
                 await message.channel.send('```'+msg+'```')
             Data[guild]['Log'] = []
-        
+
+        if payload['Content'] == '!newTurn':
+            await onTurnChange(message.guild)
+            print('New Turn')
+
+        if payload['Content'] == '!getData':
+            await sendMapData()
+            print( "sending Mad_Data File")
+
         if splitContent[0] == '!remove' and len(splitContent) == 2:
             player = message.guild.get_member(int(splitContent[1][2:-1]))
             if player is not None:
@@ -309,6 +263,8 @@ async def run(payload, message):
                 else:
                     await message.channel.send("User with id: {0} not found".format(splitContent[1][2:-1]))
 
+
+
     await saveData()
 
 """
@@ -323,15 +279,86 @@ async def update(server):
         for player in Data[guild]['Players']:
             Data[guild]['Players'][player]['Claimed Today'] = False
         Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
-        await channels[logChannel].send('Save File Backup:', file=discord.File(open('Map_Data.pickle', 'br')))
-
+        await sendMapData()
     await saveData()
 
+
+"""
+Called On Turn Change
+"""
 async def onTurnChange(server):
     global Data
     guild = server.id
     for player in Data[guild]['Players']:
-        for tileIndex in range(len(Data[guild]['Players'][player]['Markers']))
+        for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shapes'])):
+            if Data[guild]['Players'][player]['Markers']['Properties'].get('Harvest') is not None:
+                xcord, ycord = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
+
+                if Data[guild]['Image'].isTileType(xcord, ycord, 'LAND') and \
+                        Data[guild]['Players'][player]['Markers']['Properties']['Type'] == 'p':
+                    Data[guild]['Players'][player]['Inventory'].addItem('Corn', 5)
+
+                if Data[guild]['Image'].isTileType(xcord, ycord, 'WATER') and \
+                        Data[guild]['Players'][player]['Markers']['Properties']['Type'] == 'p':
+                    Data[guild]['Players'][player]['Inventory'].addItem('Fish', 5)
+
+                if Data[guild]['Image'].isTileType(xcord, ycord, 'LAND') and \
+                        Data[guild]['Players'][player]['Markers']['Properties']['Type'] == 'n':
+                    Data[guild]['Players'][player]['Inventory'].addItem('Steal', 1)
+
+                if Data[guild]['Image'].isTileType(xcord, ycord, 'WATER') and \
+                        Data[guild]['Players'][player]['Markers']['Properties']['Type'] == 'n':
+                    Data[guild]['Players'][player]['Inventory'].addItem('Oil', 1)
+
+                Data[guild]['Players'][player]['Markers']['Properties']['Harvest']['age'] += 1
+                if Data[guild]['Players'][player]['Markers']['Properties']['Harvest']['type'] == 'n' and \
+                        Data[guild]['Players'][player]['Markers']['Properties']['Harvest']['type'] >= 5:
+                    del Data[guild]['Players'][player]['Markers']['Properties']['Harvest']
+
+
+
+"""
+Extracts Coordinates From String. 
+"""
+async def extractCoords(coords, channel):
+    if len(coords) > 4 or len(coords) < 3:
+        await channel.send("Incorrect Coordinate Formatting.")
+        return None
+    else:
+        xcord = None
+        xcordAlpha = None
+        ycord = None
+        if coords[:2].upper() in labels:
+            xcordAlpha = coords[0:2].upper()
+            xcord = int(labels.index(xcordAlpha))
+            ycord = int(coords[2:]) - 1
+        elif coords[-2:].upper() in labels:
+            xcordAlpha = coords[-2:].upper()
+            xcord = int(labels.index(xcordAlpha))
+            ycord = int(coords[:-2]) - 1
+        else:
+            await channel.send("Incorrect Coordinate Formatting.")
+            return None
+
+        if xcord is None and ycord is None:
+            return None
+        elif ycord >= n or ycord < 0 or xcord >= n or xcord < 0:
+            await channel.send("That is outside the map.")
+            return None
+
+        return xcord, xcordAlpha, ycord
+
+def sendMapData():
+    await channels[logChannel].send('Save File Backup:', file=discord.File(open('Map_Data.pickle', 'br')))
+
+
+def isTileType(image, x, y, type):
+   return np.all(image[x, y] == TILES[type.upper()])
+
+def addItem(inv, item, count):
+    if inv.get(item) is None: inv[item] = 0
+    inv[item] += count
+    if inv[item] == 0: del inv[item]
 
 
 """
@@ -407,7 +434,6 @@ async def plotMap(channel = None):
             obj[obj == 'Claim'] = '.'
             obj[obj == 'Capital'] = '*'
 
-
             for i in range(obj.shape[0]):
                 if player['Markers']['Properties'].get('Harvest'):
                     if player['Markers']['Properties']['Harvest']['type'] == 'p':
@@ -415,11 +441,12 @@ async def plotMap(channel = None):
                     if player['Markers']['Properties']['Harvest']['type'] == 'n':
                         ax.scatter(x[i], y[i], c='none', s=15, edgecolors=color, marker='X')
 
+
                 if color != 'black':
                     ax.scatter(x[i], y[i], c='black', s=8, edgecolors='none', marker=obj[i])
                 if color == 'black':
                     ax.scatter(x[i], y[i], c='white', s=8, edgecolors='none', marker=obj[i])
-                
+
                 ax.scatter(x[i], y[i], c=color,   s=5, edgecolors='none', marker = obj[i])
 
 
