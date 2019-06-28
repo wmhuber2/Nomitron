@@ -308,7 +308,7 @@ async def run(payload, message):
                 try:
                     amount = float(splitContent[2])
                 except:
-                    await message.channel.send(splitContent[2] + ' cannot be quantified.')
+                    await message.channel.send(splitContent[2] + ' cannot be quantified into an amount.')
                 if amount is not None:
                     if playerName in Data[guild]['Players']:
                         Data[guild]['Players'][playerName]['Color'] = splitContent[2].lower()
