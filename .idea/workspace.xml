@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="Added Helper Funtions Finished Plot. Added End Turn COmmand">
+    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DiscordBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/DiscordBot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlayerREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/PlayerREADME.md" afterDir="false" />
     </list>
     <ignored path="Paint.py" />
     <ignored mask="*_Data.pickle" />
@@ -21,8 +19,8 @@
         <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="289">
-                <caret line="41" column="8" selection-end-line="73" selection-end-column="37" />
+              <first_editor relative-caret-position="247">
+                <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
               </first_editor>
               <second_editor />
             </state>
@@ -32,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+            <state relative-caret-position="367">
+              <caret line="156" column="125" selection-start-line="156" selection-start-column="125" selection-end-line="156" selection-end-column="125" />
               <folding>
                 <element signature="e#614#667#0" />
                 <element signature="e#763#816#0" />
@@ -46,6 +44,7 @@
                 <element signature="e#10398#11376#0" />
                 <element signature="e#10807#11615#0" />
                 <element signature="e#11698#14194#0" />
+                <element signature="e#14260#14456#0" />
                 <element signature="e#15336#17854#0" />
                 <element signature="e#17611#18211#0" />
                 <element signature="e#17047#17965#0" />
@@ -68,8 +67,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiscordBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+            <state relative-caret-position="280">
+              <caret line="25" column="27" lean-forward="true" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
               <folding>
                 <element signature="e#2597#3414#0" />
               </folding>
@@ -91,6 +90,7 @@
       <find>'Harvest'</find>
       <find>'n'</find>
       <find>'p'</find>
+      <find>Non-Perpetual</find>
       <find>.server</find>
     </findStrings>
   </component>
@@ -120,8 +120,9 @@
         <option value="$PROJECT_DIR$/Rules.py" />
         <option value="$PROJECT_DIR$/Admin.py" />
         <option value="$PROJECT_DIR$/Nomitron.py" />
-        <option value="$PROJECT_DIR$/PlayerREADME.md" />
         <option value="$PROJECT_DIR$/DiscordBot.py" />
+        <option value="$PROJECT_DIR$/AdminREADME.md" />
+        <option value="$PROJECT_DIR$/PlayerREADME.md" />
         <option value="$PROJECT_DIR$/Map.py" />
       </list>
     </option>
@@ -318,13 +319,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00039" summary="Added Channel To Admin Reaction Post">
-      <created>1561268675852</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1561268675852</updated>
     </task>
     <task id="LOCAL-00040" summary="Added Secret Token Reader THing.">
       <created>1561269698725</created>
@@ -662,7 +656,14 @@
       <option name="project" value="LOCAL" />
       <updated>1561694000030</updated>
     </task>
-    <option name="localTasksCounter" value="88" />
+    <task id="LOCAL-00088" summary="Added Helper Funtions Finished Plot. Added End Turn COmmand">
+      <created>1561759887902</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1561759887902</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TodoView">
@@ -675,12 +676,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="617" y="62" width="846" height="1000" extended-state="6" />
+    <frame x="713" y="62" width="942" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4751693" visible="true" weight="0.3861145" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4751693" visible="true" weight="0.39040348" />
       <window_info id="Structure" order="1" sideWeight="0.50108224" side_tool="true" weight="0.27243245" />
-      <window_info active="true" id="Run" order="2" sideWeight="0.5248307" side_tool="true" visible="true" weight="0.3861145" />
+      <window_info active="true" id="Run" order="2" sideWeight="0.5248307" side_tool="true" visible="true" weight="0.39040348" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
@@ -814,11 +815,21 @@
     <entry file="file://$PROJECT_DIR$/Map_Data.pickle">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/AdminREADME.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="504">
+            <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="289">
-            <caret line="41" column="8" selection-end-line="73" selection-end-column="37" />
+          <first_editor relative-caret-position="247">
+            <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
           </first_editor>
           <second_editor />
         </state>
@@ -826,8 +837,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DiscordBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="21" column="25" lean-forward="true" selection-start-line="21" selection-start-column="25" selection-end-line="21" selection-end-column="25" />
+        <state relative-caret-position="280">
+          <caret line="25" column="27" lean-forward="true" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
           <folding>
             <element signature="e#2597#3414#0" />
           </folding>
@@ -836,8 +847,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="10" column="1" lean-forward="true" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+        <state relative-caret-position="367">
+          <caret line="156" column="125" selection-start-line="156" selection-start-column="125" selection-end-line="156" selection-end-column="125" />
           <folding>
             <element signature="e#614#667#0" />
             <element signature="e#763#816#0" />
@@ -850,6 +861,7 @@
             <element signature="e#10398#11376#0" />
             <element signature="e#10807#11615#0" />
             <element signature="e#11698#14194#0" />
+            <element signature="e#14260#14456#0" />
             <element signature="e#15336#17854#0" />
             <element signature="e#17611#18211#0" />
             <element signature="e#17047#17965#0" />

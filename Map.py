@@ -10,6 +10,7 @@ TILES = {
     'WATER' :[49,108,237,255],
 }
 
+
 channels   = {}
 logChannel = ""
 Data = {}
@@ -148,7 +149,28 @@ async def run(payload, message):
                     if [xcord, ycord] in Data[guild]['Players'][payload['Author']]['Markers']['Location']:
                         index = Data[guild]['Players'][payload['Author']]['Markers']['Location'].index([xcord, ycord])
                         if Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index].get('Harvest'):
-                            await message.channel.send("This locations is already being hravested. (Fuck Spelling)")
+                            typeHarv = None
+
+                            #Changing Harvest Type
+                            if Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest']['type'] == 'Perpetual' \
+                                    and splitContent[2].lower() in ['non-perpetual', 'n']:typeHarv = 'Non Perpetual'
+                            elif Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest']['type'] == 'Non Perpetual' \
+                                    and splitContent[2].lower() in ['perpetual', 'p']: typeHarv = 'Perpetual'
+                            else:   await message.channel.send("This locations is already being harvested in that method.")
+
+                            if typeHarv is not None:
+                                Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest'] = {
+                                    'age': 0,
+                                    'type': typeHarv
+                                }
+                                Data[guild]['Log'].append(
+                                    'Player {0} changed harvesting location {1} to {2} Resources at {3}'.format(
+                                        payload['Author'], (xcordAlpha, ycord + 1), typeHarv,
+                                        datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
+                                await message.channel.send(
+                                    "Location Harvest Changed. Resources Will Be Given At The Start Of The Next Turn")
+                                await plotMap(message.channel)
+
                         else:
                             typeHarv = 'Perpetual'
                             if splitContent[2].lower() in ['non-perpetual', 'n']:
@@ -276,6 +298,25 @@ async def run(payload, message):
             if len(splitContent) == 2:
                 playerid = splitContent[1][2:-1]
             await resetTimers(message.guild, playerid = playerid, channel = message.channel)
+
+        if splitContent[0] == '!give' and len(splitContent) == 4:
+
+            player = message.guild.get_member(int(splitContent[1][2:-1]))
+            if player is not None:
+                playerName = player.name + "#" + str(player.discriminator)
+                amount = None
+                try:
+                    amount = float(splitContent[2])
+                except:
+                    await message.channel.send(splitContent[2] + ' cannot be quantified.')
+                if amount is not None:
+                    if playerName in Data[guild]['Players']:
+                        Data[guild]['Players'][playerName]['Color'] = splitContent[2].lower()
+                        await message.channel.send('Player ' + playerName + ' is now ' + splitContent[2].lower())
+                    else:
+                        await message.channel.send('Player ' + playerName + ' is not on the Map.')
+            else:
+                await message.channel.send('Player with id:' + splitContent[1][2:-1] + ' cannot be found.')
 
     await saveData()
 
