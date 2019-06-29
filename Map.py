@@ -354,7 +354,7 @@ Reset All Claim Timers
 async def onDayChange(server):
     guild = server.id
     print ('Day Changing...')
-    await log("Day " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+    await log(guild,"Day " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
     await resetTimers(server)
     Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
     await sendMapData()
@@ -401,7 +401,7 @@ async def onTurnChange(server):
     await updateInAnnouncements(server)
 
 async def resetTimers(server, channel = None, playerid = None):
-    if channel is None: channel = channels[logChannel]
+    if channel is None: channel = channels[server.id][logChannel]
     guild = server.id
 
     if playerid is None:
@@ -454,8 +454,8 @@ async def extractCoords(coords, channel):
 """
 Send Map Data File
 """
-async def sendMapData():
-    await channels[logChannel].send('Save File Backup:', file=discord.File(open('Map_Data.pickle', 'br')))
+async def sendMapData(guild):
+    await channels[guild][logChannel].send('Save File Backup:', file=discord.File(open('Map_Data.pickle', 'br')))
 
 """
 Is The Tile Of Type as x,y in image
@@ -490,23 +490,23 @@ async def updateInAnnouncements(server):
     global Data
     guild = server.id
     targetChannel = "changelog-live"
-    await plotMap(channels[logChannel])
+    await plotMap(channels[server.id][logChannel])
 
     # Update Map
     if Data[guild]['Announcements']['Map'] is None:
-        Data[guild]['Announcements']['Map'] = await channels[targetChannel].send(
+        Data[guild]['Announcements']['Map'] = await channels[server.id][targetChannel].send(
             'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
         Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
     else:
         msg = None
-        try: msg = await channels[targetChannel].fetch_message(Data[guild]['Announcements']['Map'])
+        try: msg = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Map'])
         except: msg = None
         if msg is None:
-            Data[guild]['Announcements']['Map'] = await channels[targetChannel].send(
+            Data[guild]['Announcements']['Map'] = await channels[server.id][targetChannel].send(
                 'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
             Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
         else:
-            junkmsg = await channels[logChannel].send(
+            junkmsg = await channels[server.id][logChannel].send(
                 'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
             content = junkmsg.content
             await msg.edit(
@@ -519,7 +519,7 @@ async def updateInAnnouncements(server):
     if isinstance(Data[guild]['Announcements']['Items'], (list,)):
         for msgid in Data[guild]['Announcements']['Items']:
             post = None
-            try: post = await channels[targetChannel].fetch_message(msgid)
+            try: post = await channels[server.id][targetChannel].fetch_message(msgid)
             except: pass
             if post is not None: await post.delete()
     Data[guild]['Announcements']['Items'] = []
@@ -548,8 +548,8 @@ async def updateInAnnouncements(server):
         for item in Data[guild]['Players'][player]['Inventory']:
             msg += "\n\t"+item+': '+str(Data[guild]['Players'][player]['Inventory'][item])
 
-        await channels[logChannel].send('```' + msg + '```')
-        post = await channels[targetChannel].send('```'+msg+'```')
+        await channels[server.id][logChannel].send('```' + msg + '```')
+        post = await channels[server.id][targetChannel].send('```'+msg+'```')
         Data[guild]['Announcements']['Items'].append(post.id)
 
 
@@ -567,7 +567,7 @@ async def setup(chans, logchan, server):
     import matplotlib._color_data as mcd
 
 
-    channels = chans
+    channels[server.id] = chans
     logChannel = logchan
     guild = server.id
     await loadData()
@@ -597,7 +597,7 @@ async def setup(chans, logchan, server):
                         data[r, c] = [45, 84, 55,255]
             Data[guild]['Image'] = data
         except ImportError:
-            await log("Error Initializing the Map: PIL and/or Numpy Not Available")
+            await log(guild,"Error Initializing the Map: PIL and/or Numpy Not Available")
 
     for player in Data[guild]['Players'].keys():
         if Data[guild]['Players'][player].get('Inventory') is None:
@@ -618,7 +618,7 @@ async def plotMap(channel, postReply = True):
         global Data
         guild = channel.guild.id
         async with channel.typing():
-            if channel is None: channel = channels[logChannel]
+            if channel is None: channel = channels[guild][logChannel]
             fig, ax = plt.subplots()
             axisn = np.arange(0, n, 1)
             plt.xticks(axisn + 0.5)
@@ -681,8 +681,8 @@ async def plotMap(channel, postReply = True):
 Log Bot Activity To The Specified Guild/Server
 Dont Modify Unless You Really Want To I Guess...
 """
-async def log(msg):
-    await channels[logChannel].send(msg)
+async def log(guild,msg):
+    await channels[guild][logChannel].send(msg)
 
 
 """
