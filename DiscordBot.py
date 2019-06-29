@@ -166,8 +166,9 @@ class DiscordNomicBot():
             for mod, name in zip(self.modules, self.moduleNames):
                 if name in self.Data['disabled']: continue
                 if hasattr(mod, 'setup'):
+                    await mod.setup(channels, self.logChannel, server)
                     try:
-                        await mod.setup(channels,self.logChannel,server)
+                        pass#await mod.setup(channels,self.logChannel,server)
                     except Exception as e:
                         print ("Exception On Startup")
                         try:
