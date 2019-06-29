@@ -492,7 +492,7 @@ async def updateInAnnouncements(server):
     targetChannel = "changelog-live"
     if targetChannel not in channels[guild]:
         targetChannel = 'bot-lounge'
-    await plotMap(channels[server.id][logChannel])
+    await plotMap(channels[server.id][logChannel],False)
 
     # Update Map
     if Data[guild]['Announcements']['Map'] is None:
