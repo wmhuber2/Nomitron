@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
     </list>
     <ignored path="Paint.py" />
     <ignored mask="*_Data.pickle" />
@@ -18,7 +19,7 @@
         <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="149">
+              <first_editor relative-caret-position="434">
                 <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
               </first_editor>
               <second_editor />
@@ -29,37 +30,49 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="493" column="36" lean-forward="true" selection-start-line="493" selection-start-column="36" selection-end-line="493" selection-end-column="36" />
+            <state relative-caret-position="468">
+              <caret line="300" column="38" selection-start-line="300" selection-start-column="38" selection-end-line="300" selection-end-column="38" />
               <folding>
-                <element signature="e#614#667#0" />
-                <element signature="e#763#816#0" />
-                <element signature="e#912#18952#0" />
-                <element signature="e#1052#1107#0" />
-                <element signature="e#1248#2974#0" />
-                <element signature="e#8347#8709#0" />
-                <element signature="e#8768#8831#0" />
-                <element signature="e#8890#8952#0" />
-                <element signature="e#9035#9666#0" />
-                <element signature="e#10398#11376#0" />
-                <element signature="e#10807#11615#0" />
-                <element signature="e#11698#14194#0" />
-                <element signature="e#14260#14456#0" />
-                <element signature="e#14053#14524#0" />
-                <element signature="e#19294#19588#0" />
-                <element signature="e#19694#21957#0" />
-                <element signature="e#17611#18211#0" />
-                <element signature="e#17047#17965#0" />
-                <element signature="e#17996#18098#0" />
-                <element signature="e#18139#18188#0" />
-                <element signature="e#24380#24682#0" />
-                <element signature="e#28200#30240#0" />
-                <element signature="e#19194#19216#0" />
-                <element signature="e#20434#23260#0" />
-                <element signature="e#23529#23565#0" />
-                <element signature="e#23676#23780#0" />
-                <element signature="e#23893#24124#0" />
+                <element signature="e#1400#3231#0" />
+                <element signature="e#3312#6625#0" />
+                <element signature="e#6708#11499#0" />
+                <element signature="e#11681#12043#0" />
+                <element signature="e#12102#12165#0" />
+                <element signature="e#12224#12286#0" />
+                <element signature="e#13193#14281#0" />
+                <element signature="e#14364#15179#0" />
+                <element signature="e#17841#18063#0" />
+                <element signature="e#18143#19191#0" />
+                <element signature="e#19248#19397#0" />
+                <element signature="e#19396#19580#0" />
+                <element signature="e#19648#19940#0" />
+                <element signature="e#20008#22271#0" />
+                <element signature="e#22341#23032#0" />
+                <element signature="e#23124#24042#0" />
+                <element signature="e#24105#24214#0" />
+                <element signature="e#24298#24347#0" />
+                <element signature="e#24450#24891#0" />
+                <element signature="e#29461#30060#0" />
+                <element signature="e#30696#33511#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/log.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="98">
+              <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/Admin.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1708">
+              <caret line="122" column="19" selection-start-line="122" selection-start-column="19" selection-end-line="122" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -67,14 +80,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiscordBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="171" column="13" selection-start-line="171" selection-start-column="13" selection-end-line="171" selection-end-column="13" />
+            <state relative-caret-position="1904">
+              <caret line="158" column="34" selection-start-line="158" selection-start-column="34" selection-end-line="158" selection-end-column="34" />
               <folding>
                 <element signature="e#2597#3414#0" />
-                <element signature="e#6956#7452#0" />
-                <element signature="e#7562#8372#0" />
-                <element signature="e#8406#8519#0" />
-                <element signature="e#8654#8925#0" />
               </folding>
             </state>
           </provider>
@@ -107,6 +116,7 @@
       <find>channels[</find>
       <find>log(</find>
       <find>.server</find>
+      <find>[2:</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -154,6 +164,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="Nomitron" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="$PROJECT_DIR$" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -161,16 +182,9 @@
               <item name="Nomitron" type="b2602c69:ProjectViewProjectNode" />
               <item name="Nomitron" type="462c0819:PsiDirectoryNode" />
             </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
             <path>
-              <item name="Nomitron" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="$PROJECT_DIR$" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="Nomitron" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -334,20 +348,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00050" summary="Added Nomitron.py Python3.6,7 Version Support">
-      <created>1561442502076</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1561442502077</updated>
-    </task>
-    <task id="LOCAL-00051" summary="Added Nomitron.py Python3.6,7 Version Support">
-      <created>1561442805130</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1561442805130</updated>
     </task>
     <task id="LOCAL-00052" summary="Added run.py to execute detached from ssh.">
       <created>1561443831597</created>
@@ -678,7 +678,21 @@
       <option name="project" value="LOCAL" />
       <updated>1561785353732</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="Fixing Bug-aggedon">
+      <created>1561786283722</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1561786283722</updated>
+    </task>
+    <task id="LOCAL-00100" summary="Fixing Bug-aggedon">
+      <created>1561786848048</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1561786848048</updated>
+    </task>
+    <option name="localTasksCounter" value="101" />
     <servers />
   </component>
   <component name="TodoView">
@@ -691,12 +705,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2784" y="44" width="1038" height="1018" extended-state="6" />
+    <frame x="2784" y="96" width="1038" height="966" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47455752" visible="true" weight="0.2201382" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47471264" visible="true" weight="0.24284305" />
       <window_info id="Structure" order="1" sideWeight="0.50108224" side_tool="true" weight="0.27243245" />
-      <window_info active="true" id="Run" order="2" sideWeight="0.5254425" side_tool="true" visible="true" weight="0.2201382" />
+      <window_info id="Run" order="2" sideWeight="0.52528733" side_tool="true" weight="0.35241857" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
@@ -706,7 +720,7 @@
       <window_info anchor="bottom" id="TODO" order="5" weight="0.32937366" />
       <window_info anchor="bottom" id="Event Log" order="6" side_tool="true" weight="0.32900432" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32937366" />
-      <window_info anchor="bottom" id="Python Console" order="8" weight="0.32900432" />
+      <window_info anchor="bottom" id="Python Console" order="8" weight="0.32853982" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.32900432" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -779,13 +793,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1830">
-          <caret line="122" column="19" selection-start-line="122" selection-start-column="19" selection-end-line="122" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/map.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -824,16 +831,6 @@
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/AdminREADME.md" />
-    <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="149">
-            <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Nomitron.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
@@ -841,52 +838,66 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="434">
+            <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1708">
+          <caret line="122" column="19" selection-start-line="122" selection-start-column="19" selection-end-line="122" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/DiscordBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="171" column="13" selection-start-line="171" selection-start-column="13" selection-end-line="171" selection-end-column="13" />
+        <state relative-caret-position="1904">
+          <caret line="158" column="34" selection-start-line="158" selection-start-column="34" selection-end-line="158" selection-end-column="34" />
           <folding>
             <element signature="e#2597#3414#0" />
-            <element signature="e#6956#7452#0" />
-            <element signature="e#7562#8372#0" />
-            <element signature="e#8406#8519#0" />
-            <element signature="e#8654#8925#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/log.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="98">
+          <caret line="7" column="12" selection-start-line="7" selection-start-column="12" selection-end-line="7" selection-end-column="12" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="493" column="36" lean-forward="true" selection-start-line="493" selection-start-column="36" selection-end-line="493" selection-end-column="36" />
+        <state relative-caret-position="468">
+          <caret line="300" column="38" selection-start-line="300" selection-start-column="38" selection-end-line="300" selection-end-column="38" />
           <folding>
-            <element signature="e#614#667#0" />
-            <element signature="e#763#816#0" />
-            <element signature="e#912#18952#0" />
-            <element signature="e#1052#1107#0" />
-            <element signature="e#1248#2974#0" />
-            <element signature="e#8347#8709#0" />
-            <element signature="e#8768#8831#0" />
-            <element signature="e#8890#8952#0" />
-            <element signature="e#9035#9666#0" />
-            <element signature="e#10398#11376#0" />
-            <element signature="e#10807#11615#0" />
-            <element signature="e#11698#14194#0" />
-            <element signature="e#14260#14456#0" />
-            <element signature="e#14053#14524#0" />
-            <element signature="e#19294#19588#0" />
-            <element signature="e#19694#21957#0" />
-            <element signature="e#17611#18211#0" />
-            <element signature="e#17047#17965#0" />
-            <element signature="e#17996#18098#0" />
-            <element signature="e#18139#18188#0" />
-            <element signature="e#24380#24682#0" />
-            <element signature="e#28200#30240#0" />
-            <element signature="e#19194#19216#0" />
-            <element signature="e#20434#23260#0" />
-            <element signature="e#23529#23565#0" />
-            <element signature="e#23676#23780#0" />
-            <element signature="e#23893#24124#0" />
+            <element signature="e#1400#3231#0" />
+            <element signature="e#3312#6625#0" />
+            <element signature="e#6708#11499#0" />
+            <element signature="e#11681#12043#0" />
+            <element signature="e#12102#12165#0" />
+            <element signature="e#12224#12286#0" />
+            <element signature="e#13193#14281#0" />
+            <element signature="e#14364#15179#0" />
+            <element signature="e#17841#18063#0" />
+            <element signature="e#18143#19191#0" />
+            <element signature="e#19248#19397#0" />
+            <element signature="e#19396#19580#0" />
+            <element signature="e#19648#19940#0" />
+            <element signature="e#20008#22271#0" />
+            <element signature="e#22341#23032#0" />
+            <element signature="e#23124#24042#0" />
+            <element signature="e#24105#24214#0" />
+            <element signature="e#24298#24347#0" />
+            <element signature="e#24450#24891#0" />
+            <element signature="e#29461#30060#0" />
+            <element signature="e#30696#33511#0" />
           </folding>
         </state>
       </provider>

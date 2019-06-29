@@ -1,7 +1,7 @@
 #
 # Map Module For Discord Bot
 ################################
-import pickle, sys, datetime, os, discord, math
+import pickle, sys, datetime, os, discord, math, re
 
 n = 75
 
@@ -61,7 +61,9 @@ async def run(payload, message):
         await plotMap(message.channel)
         await saveData()
 
-    if payload['Channel'].lower() in ['actions','action']:
+    if Data[guild]['Pause']:
+        await message.channel.send("The Bot Has Been Paused. Please Wait For Admins To Unpause It")
+    elif payload['Channel'].lower() in ['actions','action']:
         if splitContent[0] == '!start' and len(splitContent) == 3:
 
             if payload['Author'] in Data[guild]['Players'].keys():
@@ -224,7 +226,7 @@ async def run(payload, message):
             print("sending Map_Data File")
 
         if splitContent[0] == '!remove' and len(splitContent) == 2:
-            player = message.guild.get_member(int(splitContent[1][2:-1]))
+            player = message.guild.get_member(int(re.search(r'\d+', splitContent[1]).group()))
             if player is not None:
                 playerName = player.name + "#" + str(player.discriminator)
                 if playerName in Data[guild]['Players']:
@@ -234,13 +236,13 @@ async def run(payload, message):
                 else:
                     await message.channel.send('Player ' + playerName + ' is not on the Map.')
             else:
-                await message.channel.send('Player with id:' + splitContent[1][2:-1] + ' cannot be found.')
+                await message.channel.send('Player with id:' + str(re.search(r'\d+', splitContent[1]).group()) + ' cannot be found.')
 
         if splitContent[0] == '!setColor' and len(splitContent) == 3:
             if splitContent[1].lower() in mcd.CSS4_COLORS:
                 splitContent[1] ,splitContent[2] = splitContent[2] ,splitContent[1]
 
-            player = message.guild.get_member(int(splitContent[1][2:-1]))
+            player = message.guild.get_member(int(re.search(r'\d+', splitContent[1]).group()))
 
             if splitContent[2].lower() not in mcd.CSS4_COLORS:
                 await message.channel.send('Color ' + splitContent[2] + ' is unavailable. Sorry.')
@@ -253,7 +255,7 @@ async def run(payload, message):
                 else:
                     await message.channel.send('Player ' + playerName + ' is not on the Map.')
             else:
-                await message.channel.send('Player with id:' + splitContent[1][2:-1] + ' cannot be found.')
+                await message.channel.send('Player with id:' + str(re.search(r'\d+', splitContent[1]).group()) + ' cannot be found.')
 
         if splitContent[0] == '!getTile' and len(splitContent) == 2:
             coords = await extractCoords(splitContent[1], message.channel)
@@ -269,54 +271,44 @@ async def run(payload, message):
                     except ValueError: pass
                 await message.channel.send(msg)
 
-        if splitContent[0] == '!setTile' and len(splitContent) == 4:
+        if splitContent[0] == '!setTile' and len(splitContent) > 5:
+
             coords = await extractCoords(splitContent[1], message.channel)
-            if coords is not None:
-                xcord, xcordAlpha, ycord = coords
+            player = message.guild.get_member(int(re.search(r'\d+', splitContent[2]).group()))
+            shape = splitContent[3]
+            properties = eval(' '.join(splitContent[4:]))
 
-                if splitContent[2].lower() in mcd.CSS4_COLORS:
-                    Color = splitContent[2].lower()
-                    for player in Data[guild]['Players'].keys():
-                        if Data[guild]['Players'][player]['Color'] == Color:
-                            for player2 in Data[guild]['Players'].keys():
-                                try:
-                                    index = Data[guild]['Players'][player2]['Markers']['Location'].index([xcord,ycord])
-                                    del Data[guild]['Players'][player2]['Markers']['Location'][index]
-                                    del Data[guild]['Players'][player2]['Markers']['Shape'][index]
-                                except ValueError:
-                                    pass
-                        Data[guild]['Players'][player]['Markers']['Location'].append([xcord,ycord])
-                        Data[guild]['Players'][player]['Markers']['Shape'].append(splitContent[3])
-                        await message.channel.send('Marker Changes Set.')
-                        await updateInAnnouncements(message.guild)
-                elif splitContent[3].lower() in mcd.CSS4_COLORS:
-                    Color = splitContent[3].lower()
-                    for player in Data[guild]['Players'].keys():
-                        if Data[guild]['Players'][player]['Color'] == Color:
-                            for player2 in Data[guild]['Players'].keys():
-                                try:
-                                    index = Data[guild]['Players'][player2]['Markers']['Location'].index([xcord, ycord])
-                                    del Data[guild]['Players'][player2]['Markers']['Location'][index]
-                                    del Data[guild]['Players'][player2]['Markers']['Shape'][index]
-                                except ValueError:
-                                    pass
-                        Data[guild]['Players'][player]['Markers']['Location'].append([xcord, ycord])
-                        Data[guild]['Players'][player]['Markers']['Shape'].append(splitContent[2])
-                        await updateInAnnouncements(message.guild)
-                        await message.channel.send('Marker Changes Set.')
-
-                else:
-                    await message.channel.send('Color ' + splitContent[2] + ' is unavailable. Sorry.')
+            if player is None:
+                await message.channel.send('Player Cannot Be Fount')
+            if not isinstance(properties, (dict,)):
+                await message.channel.send('Properties Is Not Dict.')
+            if shape not in ['Claim','Capital']:
+                await message.channel.send('Shape is Not Claim or Capital')
+            else:
+                for player2 in Data[guild]['Players'].keys():
+                    try:
+                        index = Data[guild]['Players'][player2]['Markers']['Location'].index([xcord,ycord])
+                        del Data[guild]['Players'][player2]['Markers']['Location'][index]
+                        del Data[guild]['Players'][player2]['Markers']['Shape'][index]
+                        del Data[guild]['Players'][player2]['Markers']['Properties'][index]
+                    except ValueError:
+                        pass
+                x,xa. y = coords
+                Data[guild]['Players'][player]['Markers']['Location'].append([x,y])
+                Data[guild]['Players'][player]['Markers']['Shape'].append(shape)
+                Data[guild]['Players'][player]['Markers']['Properties'].append(properties)
+    
+                await message.channel.send('Marker Changes Set.')
+                await updateInAnnouncements(message.guild)
 
         if splitContent[0] == '!resetTimer':
             playerid = None
             if len(splitContent) == 2:
-                playerid = splitContent[1][2:-1]
+                playerid = int(re.search(r'\d+', splitContent[1]).group())
             await resetTimers(message.guild, playerid = playerid, channel = message.channel)
 
         if splitContent[0] == '!give' and len(splitContent) == 4:
-            print (splitContent)
-            player = message.guild.get_member(int(splitContent[1][2:-1]))
+            player = message.guild.get_member(int(re.search(r'\d+', splitContent[1]).group()))
             if player is not None:
                 playerName = player.name + "#" + str(player.discriminator)
                 amount = None
@@ -333,7 +325,11 @@ async def run(payload, message):
                     else:
                         await message.channel.send('Player ' + playerName + ' is not in the Map.')
             else:
-                await message.channel.send('Player with id:' + splitContent[1][2:-1] + ' cannot be found.')
+                await message.channel.send('Player with id:' + int(re.search(r'\d+', splitContent[1]).group()) + ' cannot be found.')
+
+        if payload['Content'] == '!pause':
+            Data[guild]['Pause'] = not Data[guild]['Pause']
+            await message.channel.send("You Have Paused The Bot.")
 
     await saveData()
 
@@ -417,7 +413,7 @@ async def resetTimers(server, channel = None, playerid = None):
             await channel.send("Resetting Claim Timer for " + playerName)
 
         else:
-            await channel.send("User with id: {0} not found".format(playerid[2:-1]))
+            await channel.send("User with id: {0} not found".format(playerid))
 
 
 """
@@ -479,7 +475,6 @@ def addItem(guild, player, item, count):
     else: Data[guild]['Players'][player]['Inventory'][item] += count
     if inv[item] == 0 and item != 'BF':
         del Data[guild]['Players'][player]['Inventory'][item]
-    print('Transaction Completed')
     return True
 
 
@@ -511,12 +506,9 @@ async def updateInAnnouncements(server):
             junkmsg = await channels[server.id][logChannel].send(
                 'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
             content = junkmsg.content
-            await msg.edit(
-                content=content #"World Map",
-                #embed=embeded
-            )
+            await msg.edit( content=content  )
             await junkmsg.delete()
-
+    '''
     # Update Player Stuffs
     if isinstance(Data[guild]['Announcements']['Items'], (list,)):
         for msgid in Data[guild]['Announcements']['Items']:
@@ -551,10 +543,9 @@ async def updateInAnnouncements(server):
         for item in Data[guild]['Players'][player]['Inventory']:
             msg += "\n\t"+item+': '+str(Data[guild]['Players'][player]['Inventory'][item])
 
-        await channels[server.id][logChannel].send('```' + msg + '```')
         post = await channels[server.id][targetChannel].send('```'+msg+'```')
         Data[guild]['Announcements']['Items'].append(post.id)
-
+    '''
 
 
 """
@@ -576,6 +567,8 @@ async def setup(chans, logchan, server):
     await loadData()
     # Do Stuff Here
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+    if Data[guild].get('Pause') is None:
+        Data[guild]['Pause'] = False
     if Data.get(guild) is None: Data[guild] = {}
     if Data[guild].get('Announcements') is None: Data[guild]['Announcements'] = {
         'Map':None,
@@ -739,24 +732,17 @@ Data = {
                         'Claim',
                     ]
                     'Properties':[
-                    {
-                        'Harvest': {
-                            'age': 5
-                            'type': 'Perpetual'
-                        }
-                        
-                    },
-                    {'
-                        Harvest': {
-                            'age': 5
-                            'type': 'Non Perpetual'
-                        }
-                    },
-                    .
-                    .
-                    {}
+                        {
+                            'Harvest': {
+                                'age': 5
+                                'type': 'Perpetual'
+                            }
+                            
+                        },                    
+                        .
+                        .
+                        {}
                     ]
-                
                 }
                 'Color': 'red'
                 'Claimed Today': False
