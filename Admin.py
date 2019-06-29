@@ -56,6 +56,20 @@ async def run(payload, message):
                 msg = msg + line
             if msg != "":
                 await message.channel.send('```diff\n'+msg+'```')
+    if payload['Content'] in ['!admin', '! admin']:
+        with open('README.md', 'r') as helpFile:
+            help = open('AdminREADME.md', 'r').readlines()
+            msg = ""
+            if payload['Author'] in ["Doby's Peri#6151", 'Fenris Wolf#6136']:
+                await message.channel.send("https://tenor.com/view/clippy-microsoft-office-word-publisher-gif-5630386")
+            for line in help:
+                if len(msg + line) > 1900:
+                    await message.channel.send('```diff\n'+msg+'```')
+                    msg = ""
+                msg = msg + line
+            if msg != "":
+                await message.channel.send('```diff\n'+msg+'```')
+
 
     if payload['Author'] in admins and payload['Channel'].lower() in ['actions','action', 'mod-lounge', 'bot-lounge']:
         if payload['Content'][:len(botCharacter)] == botCharacter and  payload['Content'][len(botCharacter)] != ' ':

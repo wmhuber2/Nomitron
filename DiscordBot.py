@@ -125,8 +125,9 @@ class DiscordNomicBot():
         for mod, name in zip(self.modules, self.moduleNames):
             if name in self.Data['disabled'][message.guild.id]: continue
             if hasattr(mod, 'run'):
-                tasks.append(mod.run(payload,message))
-        await asyncio.gather(*tasks,return_exceptions=True)
+                #tasks.append(mod.run(payload,message))
+                await mod.run(payload, message)
+        #await asyncio.gather(*tasks,return_exceptions=True)
         self.loadData()
 
 

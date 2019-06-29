@@ -57,12 +57,14 @@ async def run(payload, message):
 
     guild = message.guild.id
     splitContent =  payload['Content'].split(' ')
-    if payload['Content'] == '!map':
+
+    if payload['Content'] == '!map' and payload['Channel'].lower() not in ['actions','action']:
         await plotMap(message.channel)
+        await updateInAnnouncements(message.server, reload = False)
         await saveData()
 
-    if Data[guild]['Pause']:
-        await message.channel.send("The Bot Has Been Paused. Please Wait For Admins To Unpause It")
+    if Data[guild]['Pause'] and payload['Content'][0] == '!':
+        await message.channel.send("Warning: The Bot Has Been Paused.\n Admins May Ignore This Message")
     elif payload['Channel'].lower() in ['actions','action']:
         if splitContent[0] == '!start' and len(splitContent) == 3:
 
@@ -165,7 +167,7 @@ async def run(payload, message):
 
                             cost = {'Perpetual': -4,'Non Perpetual':-7}
                             if typeHarv is None: pass
-                            elif not addItem( guild, player, 'BF', cost[typeHarv]):
+                            elif not addItem( guild, payload['Author'], 'BF', cost[typeHarv]):
                                 await message.channel.send("You Have Insufficient Blemflarcks To Complete This Actions.")
                             else:
                                 Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest'] = {
@@ -186,7 +188,7 @@ async def run(payload, message):
                                 typeHarv = 'Non Perpetual'
 
                             cost = {'Perpetual': -4, 'Non Perpetual': -7}
-                            if not addItem( guild, player, 'BF', cost[typeHarv]):
+                            if not addItem( guild, payload['Author'], 'BF', cost[typeHarv]):
                                 await message.channel.send(
                                     "You Have Insufficient Blemflarcks To Complete This Actions.")
                             else:
@@ -194,7 +196,6 @@ async def run(payload, message):
                                     'age':  0,
                                     'type': typeHarv
                                 }
-                                print('Harvesting',xcord, ycord)
                                 Data[guild]['Log'].append('Player {0} is harvesting location {1} for {2} Resources at {3}'.format(
                                     payload['Author'], (xcordAlpha, ycord + 1), typeHarv,
                                     datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
@@ -222,7 +223,7 @@ async def run(payload, message):
             print('New Turn')
 
         if payload['Content'] == '!getData':
-            await sendMapData()
+            await sendMapData(guild = message.guild.id)
             print("sending Map_Data File")
 
         if splitContent[0] == '!remove' and len(splitContent) == 2:
@@ -271,8 +272,7 @@ async def run(payload, message):
                     except ValueError: pass
                 await message.channel.send(msg)
 
-        if splitContent[0] == '!setTile' and len(splitContent) > 5:
-
+        if splitContent[0] == '!setTile' and len(splitContent) >= 5:
             coords = await extractCoords(splitContent[1], message.channel)
             player = message.guild.get_member(int(re.search(r'\d+', splitContent[2]).group()))
             shape = splitContent[3]
@@ -280,24 +280,26 @@ async def run(payload, message):
 
             if player is None:
                 await message.channel.send('Player Cannot Be Fount')
-            if not isinstance(properties, (dict,)):
+            elif not isinstance(properties, (dict,)):
                 await message.channel.send('Properties Is Not Dict.')
-            if shape not in ['Claim','Capital']:
+            elif shape not in ['Claim','Capital']:
                 await message.channel.send('Shape is Not Claim or Capital')
-            else:
+            elif coords is not None:
+                x,xa, y = coords
+                playerName = player.name + "#" + str(player.discriminator)
                 for player2 in Data[guild]['Players'].keys():
                     try:
-                        index = Data[guild]['Players'][player2]['Markers']['Location'].index([xcord,ycord])
+                        index = Data[guild]['Players'][player2]['Markers']['Location'].index([x,y])
                         del Data[guild]['Players'][player2]['Markers']['Location'][index]
                         del Data[guild]['Players'][player2]['Markers']['Shape'][index]
                         del Data[guild]['Players'][player2]['Markers']['Properties'][index]
                     except ValueError:
                         pass
-                x,xa. y = coords
-                Data[guild]['Players'][player]['Markers']['Location'].append([x,y])
-                Data[guild]['Players'][player]['Markers']['Shape'].append(shape)
-                Data[guild]['Players'][player]['Markers']['Properties'].append(properties)
-    
+
+                Data[guild]['Players'][playerName]['Markers']['Location'].append([x,y])
+                Data[guild]['Players'][playerName]['Markers']['Shape'].append(shape)
+                Data[guild]['Players'][playerName]['Markers']['Properties'].append(properties)
+
                 await message.channel.send('Marker Changes Set.')
                 await updateInAnnouncements(message.guild)
 
@@ -329,8 +331,15 @@ async def run(payload, message):
 
         if payload['Content'] == '!pause':
             Data[guild]['Pause'] = not Data[guild]['Pause']
-            await message.channel.send("You Have Paused The Bot.")
+            await message.channel.send("You Have Paused/Unpaused The Bot.")
 
+        if payload['Content'] == '!subtractTurn':
+            for player in Data[guild]['Players'].keys():
+                for i in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
+                    for prop in Data[guild]['Players'][player]['Markers']['Properties'][i].keys():
+                        if prop == 'Harvest':
+                            Data[guild]['Players'][player]['Markers']['Properties'][i][prop]['age'] -= 1
+            await message.channel.send("Every Player Had one Turn Removed Form Harvest Count")
     await saveData()
 
 """
@@ -379,7 +388,7 @@ async def onTurnChange(server):
 
                 if isTileType(Data[guild]['Image'],xcord, ycord, 'LAND') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Non Perpetual':
-                    addItem( guild, player,'Steal', 1)
+                    addItem( guild, player,'Steel', 1)
 
                 if isTileType(Data[guild]['Image'],xcord, ycord, 'WATER') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Non Perpetual':
@@ -481,46 +490,39 @@ def addItem(guild, player, item, count):
 """
 Update Messages In Annoncements
 """
-async def updateInAnnouncements(server):
+async def updateInAnnouncements(server, reload = True):
     global Data
     guild = server.id
+    playerOrder = [
+        'Alekosen#8467',
+        'Boolacha#4539',
+        'Crorem#6962',
+        'Fenris Wolf#6136',
+        'Rabz12#9343',
+        'Steam:HaphStealth Bnet#1191#5187',
+        "Doby's Peri#6151",
+        'gfigs#6656',
+        'iann39#8298',
+        'MaxGrosshandler#6592'
+    ]
+
+
     targetChannel = "changelog-live"
     if targetChannel not in channels[guild]:
         targetChannel = 'bot-lounge'
-    await plotMap(channels[server.id][logChannel],False)
+    if reload: await plotMap(channels[guild][logChannel],False)
 
-    # Update Map
-    if Data[guild]['Announcements']['Map'] is None:
-        Data[guild]['Announcements']['Map'] = await channels[server.id][targetChannel].send(
-            'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
-        Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
-    else:
-        msg = None
-        try: msg = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Map'])
-        except: msg = None
-        if msg is None:
-            Data[guild]['Announcements']['Map'] = await channels[server.id][targetChannel].send(
-                'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
-            Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
-        else:
-            junkmsg = await channels[server.id][logChannel].send(
-                'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
-            content = junkmsg.content
-            await msg.edit( content=content  )
-            await junkmsg.delete()
-    '''
+
+
     # Update Player Stuffs
-    if isinstance(Data[guild]['Announcements']['Items'], (list,)):
-        for msgid in Data[guild]['Announcements']['Items']:
-            post = None
-            try:
-                post = await channels[server.id][targetChannel].fetch_message(msgid)
-                await post.delete()
-            except: pass
-    Data[guild]['Announcements']['Items'] = []
+    if not isinstance(Data[guild]['Announcements']['Items'], (list,)):
+        Data[guild]['Announcements']['Items'] = []
     sortedPlayers = list(Data[guild]['Players'].keys())
-    sortedPlayers.sort()
-    for player in sortedPlayers:
+
+    i = 0
+    print (sortedPlayers,playerOrder)
+    for player in playerOrder:
+        if player not in sortedPlayers: continue
         msg = player + ' : '+Data[guild]['Players'][player]['Color'].upper()+'\n'
         msg += '-Tiles:'
         totalRenewableHarvests = 0
@@ -543,10 +545,42 @@ async def updateInAnnouncements(server):
         for item in Data[guild]['Players'][player]['Inventory']:
             msg += "\n\t"+item+': '+str(Data[guild]['Players'][player]['Inventory'][item])
 
-        post = await channels[server.id][targetChannel].send('```'+msg+'```')
-        Data[guild]['Announcements']['Items'].append(post.id)
-    '''
+        try: post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][i])
+        except: post = None
+        if post is None:
+            post = await channels[server.id][targetChannel].send('```'+msg+'```')
+            Data[guild]['Announcements']['Items'].append(post.id)
+        else:
+            await post.edit( content='```'+msg+'```'  )
 
+        i+=1
+    for n in range(i,len(Data[guild]['Announcements']['Items'])):
+        try:
+            post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][n])
+            await post.delete()
+        except: post = None
+
+
+
+    # Update Map
+
+    junkmsg = await channels[server.id][logChannel].send(
+        'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
+    url = "World Map: "+datetime.datetime.now().strftime("%Y-%m-%d %H:%M")+"\n "+junkmsg.attachments[0].url
+    if Data[guild]['Announcements']['Map'] is None:
+        Data[guild]['Announcements']['Map'] = await channels[server.id][targetChannel].send(url)
+        Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
+    else:
+        msg = None
+        try:
+            msg = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Map'])
+        except:
+            msg = None
+        if msg is None:
+            Data[guild]['Announcements']['Map'] = await channels[server.id][targetChannel].send(url)
+            Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
+        else:
+            await msg.edit(content=url)
 
 """
 Setup Log Parameters and Channel List And Whatever You Need to Check on a Bot Reset.
@@ -565,6 +599,8 @@ async def setup(chans, logchan, server):
     logChannel = logchan
     guild = server.id
     await loadData()
+
+
     # Do Stuff Here
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
     if Data[guild].get('Pause') is None:
@@ -605,7 +641,6 @@ async def setup(chans, logchan, server):
             for tile in Data[guild]['Players'][player]['Markers']['Shape']:
                 Data[guild]['Players'][player]['Markers']['Properties'].append({})
 
-    #await plotMap()
     await updateInAnnouncements(server)
     await saveData()
 
