@@ -2,9 +2,7 @@ from git import Repo
 import shutil, os, sys
 
 if __name__ == "__main__":
-    gitLogin = open('/home/nomitron/gitSecret.psk','r').read().strip()
-    print( gitLogin )
-    rw_dir = 'https://'+gitLogin+'@github.com/wmhuber2/Nomitron'
+    rw_dir = 'https://github.com/wmhuber2/Nomitron'
     dir = os.getcwd()
 
     while 1:
