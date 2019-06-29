@@ -489,20 +489,20 @@ Update Messages In Annoncements
 async def updateInAnnouncements(server):
     global Data
     guild = server.id
-
+    targetChannel = "changelog-live"
     await plotMap(channels[logChannel])
 
     # Update Map
     if Data[guild]['Announcements']['Map'] is None:
-        Data[guild]['Announcements']['Map'] = await channels['announcements'].send(
+        Data[guild]['Announcements']['Map'] = await channels[targetChannel].send(
             'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
         Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
     else:
         msg = None
-        try: msg = await channels['announcements'].fetch_message(Data[guild]['Announcements']['Map'])
+        try: msg = await channels[targetChannel].fetch_message(Data[guild]['Announcements']['Map'])
         except: msg = None
         if msg is None:
-            Data[guild]['Announcements']['Map'] = await channels['announcements'].send(
+            Data[guild]['Announcements']['Map'] = await channels[targetChannel].send(
                 'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
             Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
         else:
@@ -519,7 +519,7 @@ async def updateInAnnouncements(server):
     if isinstance(Data[guild]['Announcements']['Items'], (list,)):
         for msgid in Data[guild]['Announcements']['Items']:
             post = None
-            try: post = await channels['announcements'].fetch_message(msgid)
+            try: post = await channels[targetChannel].fetch_message(msgid)
             except: pass
             if post is not None: await post.delete()
     Data[guild]['Announcements']['Items'] = []
@@ -549,7 +549,7 @@ async def updateInAnnouncements(server):
             msg += "\n\t"+item+': '+str(Data[guild]['Players'][player]['Inventory'][item])
 
         await channels[logChannel].send('```' + msg + '```')
-        post = await channels['announcements'].send('```'+msg+'```')
+        post = await channels[targetChannel].send('```'+msg+'```')
         Data[guild]['Announcements']['Items'].append(post.id)
 
 
