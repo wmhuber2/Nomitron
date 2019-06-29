@@ -315,7 +315,7 @@ async def run(payload, message):
             await resetTimers(message.guild, playerid = playerid, channel = message.channel)
 
         if splitContent[0] == '!give' and len(splitContent) == 4:
-
+            print (splitContent)
             player = message.guild.get_member(int(splitContent[1][2:-1]))
             if player is not None:
                 playerName = player.name + "#" + str(player.discriminator)
