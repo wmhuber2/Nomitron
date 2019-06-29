@@ -60,7 +60,7 @@ async def run(payload, message):
 
     if payload['Content'] == '!map' and payload['Channel'].lower() not in ['actions','action']:
         await plotMap(message.channel)
-        await updateInAnnouncements(message.server, reload = False)
+        await updateInAnnouncements(message.guild, reload = False)
         await saveData()
 
     if Data[guild]['Pause'] and payload['Content'][0] == '!':
