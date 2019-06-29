@@ -604,9 +604,9 @@ async def setup(chans, logchan, server):
 
     # Do Stuff Here
     print(datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+    if Data.get(guild) is None: Data[guild] = {}
     if Data[guild].get('Pause') is None:
         Data[guild]['Pause'] = False
-    if Data.get(guild) is None: Data[guild] = {}
     if Data[guild].get('Announcements') is None: Data[guild]['Announcements'] = {
         'Map':None,
         'Items':None
