@@ -490,6 +490,8 @@ async def updateInAnnouncements(server):
     global Data
     guild = server.id
     targetChannel = "changelog-live"
+    if targetChannel not in in channels[guild]:
+        targetChannel = 'bot-lounge'
     await plotMap(channels[server.id][logChannel])
 
     # Update Map
