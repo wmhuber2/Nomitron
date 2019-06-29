@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/AdminREADME.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DiscordBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/DiscordBot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlayerREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/PlayerREADME.md" afterDir="false" />
     </list>
     <ignored path="Paint.py" />
     <ignored mask="*_Data.pickle" />
@@ -31,11 +27,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3318">
-              <caret line="565" lean-forward="true" selection-start-line="565" selection-end-line="565" />
+            <state relative-caret-position="362">
+              <caret line="465" column="33" selection-start-line="465" selection-start-column="33" selection-end-line="465" selection-end-column="33" />
               <folding>
                 <element signature="e#1400#3231#0" />
                 <element signature="e#3312#6625#0" />
@@ -44,10 +40,12 @@
                 <element signature="e#12102#12165#0" />
                 <element signature="e#12368#13109#0" />
                 <element signature="e#13193#14281#0" />
+                <element signature="e#14364#15179#0" />
                 <element signature="e#15262#16832#0" />
                 <element signature="e#17841#18063#0" />
                 <element signature="e#18143#19191#0" />
                 <element signature="e#19248#19397#0" />
+                <element signature="e#18661#19132#0" />
                 <element signature="e#19396#19580#0" />
                 <element signature="e#19648#19940#0" />
                 <element signature="e#20008#22271#0" />
@@ -55,17 +53,20 @@
                 <element signature="e#23124#24042#0" />
                 <element signature="e#24298#24347#0" />
                 <element signature="e#24450#24891#0" />
+                <element signature="e#24906#28717#0" />
+                <element signature="e#27970#30088#0" />
                 <element signature="e#29461#30060#0" />
+                <element signature="e#30696#33511#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiscordBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="18" column="7" lean-forward="true" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+            <state relative-caret-position="756">
+              <caret line="270" column="40" selection-start-line="270" selection-start-column="40" selection-end-line="270" selection-end-column="40" />
               <folding>
                 <element signature="e#2172#2199#0" />
                 <element signature="e#2597#3414#0" />
@@ -348,13 +349,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00053" summary="Added run.py to execute detached from ssh.">
-      <created>1561443889854</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1561443889854</updated>
     </task>
     <task id="LOCAL-00054" summary="Added run.py to execute detached from ssh.">
       <created>1561444004581</created>
@@ -692,7 +686,14 @@
       <option name="project" value="LOCAL" />
       <updated>1561820688801</updated>
     </task>
-    <option name="localTasksCounter" value="102" />
+    <task id="LOCAL-00102" summary="All better now.....Or so it seamed. For our intrepid adventurer ad no idea the monsterous creatures he was doomed to face....">
+      <created>1561832057365</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1561832057365</updated>
+    </task>
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TodoView">
@@ -706,11 +707,10 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="2784" y="114" width="1038" height="948" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4736211" visible="true" weight="0.24284305" />
       <window_info id="Structure" order="1" sideWeight="0.50108224" side_tool="true" weight="0.27243245" />
-      <window_info active="true" id="Run" order="2" sideWeight="0.52637887" side_tool="true" visible="true" weight="0.24284305" />
+      <window_info id="Run" order="2" sideWeight="0.52637887" side_tool="true" weight="0.24284305" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
@@ -738,7 +738,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Fixed DPI." />
     <MESSAGE value="Added indicator for long computation" />
     <MESSAGE value="Fixed &gt;&gt; Help Print" />
     <MESSAGE value="Added Log And Map_Data Backups to bot-lounge" />
@@ -763,7 +762,8 @@
     <MESSAGE value="added changelog live. Where all our favorite disney character come to life." />
     <MESSAGE value="Fixing Bug-aggedon" />
     <MESSAGE value="Stabalized Government in Forign Nations, and the bot too." />
-    <option name="LAST_COMMIT_MESSAGE" value="Stabalized Government in Forign Nations, and the bot too." />
+    <MESSAGE value="All better now.....Or so it seamed. For our intrepid adventurer ad no idea the monsterous creatures he was doomed to face...." />
+    <option name="LAST_COMMIT_MESSAGE" value="All better now.....Or so it seamed. For our intrepid adventurer ad no idea the monsterous creatures he was doomed to face...." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tmp/Admin.py" />
@@ -871,10 +871,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/DiscordBot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="756">
+          <caret line="270" column="40" selection-start-line="270" selection-start-column="40" selection-end-line="270" selection-end-column="40" />
+          <folding>
+            <element signature="e#2172#2199#0" />
+            <element signature="e#2597#3414#0" />
+            <element signature="e#4140#6990#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3318">
-          <caret line="565" lean-forward="true" selection-start-line="565" selection-end-line="565" />
+        <state relative-caret-position="362">
+          <caret line="465" column="33" selection-start-line="465" selection-start-column="33" selection-end-line="465" selection-end-column="33" />
           <folding>
             <element signature="e#1400#3231#0" />
             <element signature="e#3312#6625#0" />
@@ -883,10 +895,12 @@
             <element signature="e#12102#12165#0" />
             <element signature="e#12368#13109#0" />
             <element signature="e#13193#14281#0" />
+            <element signature="e#14364#15179#0" />
             <element signature="e#15262#16832#0" />
             <element signature="e#17841#18063#0" />
             <element signature="e#18143#19191#0" />
             <element signature="e#19248#19397#0" />
+            <element signature="e#18661#19132#0" />
             <element signature="e#19396#19580#0" />
             <element signature="e#19648#19940#0" />
             <element signature="e#20008#22271#0" />
@@ -894,19 +908,10 @@
             <element signature="e#23124#24042#0" />
             <element signature="e#24298#24347#0" />
             <element signature="e#24450#24891#0" />
+            <element signature="e#24906#28717#0" />
+            <element signature="e#27970#30088#0" />
             <element signature="e#29461#30060#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DiscordBot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="18" column="7" lean-forward="true" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-          <folding>
-            <element signature="e#2172#2199#0" />
-            <element signature="e#2597#3414#0" />
-            <element signature="e#4140#6990#0" />
+            <element signature="e#30696#33511#0" />
           </folding>
         </state>
       </provider>

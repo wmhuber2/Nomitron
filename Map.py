@@ -524,7 +524,8 @@ async def updateInAnnouncements(server, reload = True):
     for player in playerOrder:
         if player not in sortedPlayers: continue
         msg = player + ' : '+Data[guild]['Players'][player]['Color'].upper()+'\n'
-        msg += '-Tiles:'
+        msg += '-Has Claimed Today: '+str(Data[guild]['Players'][player]['Claimed Today'])
+        msg += '\n-Tiles:'
         totalRenewableHarvests = 0
         totalNonRenewableHarvests = 0
         Total = 0
