@@ -69,6 +69,11 @@ Admin:
 +       if a player is given reset that player's timer
 +       else reset all timers
 +       Rule: N/A
+-    !give @player #count $item
++       Allowed Channels: actions, mod-lounge, bot-lounge
++       give play er# count of $item
++        #count can be deciaml and negative
++       Rule: N/A
 
 This Bot's Code May Be Found At:
 https://github.com/wmhuber2/Nomitron/

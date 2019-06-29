@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DiscordBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/DiscordBot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayerREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/PlayerREADME.md" afterDir="false" />
     </list>
     <ignored path="Paint.py" />
     <ignored mask="*_Data.pickle" />
@@ -19,8 +21,8 @@
         <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="247">
-                <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
+              <first_editor relative-caret-position="149">
+                <caret line="31" column="9" lean-forward="true" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
               </first_editor>
               <second_editor />
             </state>
@@ -30,13 +32,13 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="367">
-              <caret line="156" column="125" selection-start-line="156" selection-start-column="125" selection-end-line="156" selection-end-column="125" />
+            <state relative-caret-position="174">
+              <caret line="360" column="38" lean-forward="true" selection-start-line="360" selection-start-column="38" selection-end-line="360" selection-end-column="38" />
               <folding>
                 <element signature="e#614#667#0" />
                 <element signature="e#763#816#0" />
+                <element signature="e#1052#1107#0" />
                 <element signature="e#1248#2974#0" />
-                <element signature="e#3148#6126#0" />
                 <element signature="e#8347#8709#0" />
                 <element signature="e#8768#8831#0" />
                 <element signature="e#8890#8952#0" />
@@ -45,14 +47,16 @@
                 <element signature="e#10807#11615#0" />
                 <element signature="e#11698#14194#0" />
                 <element signature="e#14260#14456#0" />
-                <element signature="e#15336#17854#0" />
+                <element signature="e#14053#14524#0" />
+                <element signature="e#19294#19588#0" />
+                <element signature="e#19694#21957#0" />
                 <element signature="e#17611#18211#0" />
                 <element signature="e#17047#17965#0" />
                 <element signature="e#17996#18098#0" />
                 <element signature="e#18139#18188#0" />
-                <element signature="e#18225#18324#0" />
-                <element signature="e#18478#18625#0" />
-                <element signature="e#18540#20392#0" />
+                <element signature="e#24380#24682#0" />
+                <element signature="e#24535#27741#0" />
+                <element signature="e#27936#30022#0" />
                 <element signature="e#19194#19216#0" />
                 <element signature="e#19257#19850#0" />
                 <element signature="e#20434#23260#0" />
@@ -67,10 +71,16 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiscordBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="25" column="27" lean-forward="true" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
+            <state relative-caret-position="151">
+              <caret line="80" column="24" lean-forward="true" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
               <folding>
                 <element signature="e#2597#3414#0" />
+                <element signature="e#4140#6834#0" />
+                <element signature="e#6956#7452#0" />
+                <element signature="e#7562#8372#0" />
+                <element signature="e#8406#8519#0" />
+                <element signature="e#8654#8925#0" />
+                <element signature="e#9050#11737#0" />
               </folding>
             </state>
           </provider>
@@ -91,6 +101,15 @@
       <find>'n'</find>
       <find>'p'</find>
       <find>Non-Perpetual</find>
+      <find>BF</find>
+      <find>plotMap</find>
+      <find>updateInAnnouncements</find>
+      <find>.guild</find>
+      <find>'Marker'</find>
+      <find>print e</find>
+      <find>elif addItem(</find>
+      <find>if addItem(</find>
+      <find>addItem</find>
       <find>.server</find>
     </findStrings>
   </component>
@@ -120,18 +139,18 @@
         <option value="$PROJECT_DIR$/Rules.py" />
         <option value="$PROJECT_DIR$/Admin.py" />
         <option value="$PROJECT_DIR$/Nomitron.py" />
-        <option value="$PROJECT_DIR$/DiscordBot.py" />
         <option value="$PROJECT_DIR$/AdminREADME.md" />
-        <option value="$PROJECT_DIR$/PlayerREADME.md" />
+        <option value="$PROJECT_DIR$/DiscordBot.py" />
         <option value="$PROJECT_DIR$/Map.py" />
+        <option value="$PROJECT_DIR$/PlayerREADME.md" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="617" />
+    <option name="x" value="2592" />
     <option name="y" value="62" />
-    <option name="width" value="846" />
-    <option name="height" value="508" />
+    <option name="width" value="1230" />
+    <option name="height" value="1000" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -302,8 +321,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.DiscordBot" />
-        <item itemvalue="Python.Nomitron" />
         <item itemvalue="Python.Paint" />
+        <item itemvalue="Python.Nomitron" />
         <item itemvalue="Python.Admin" />
         <item itemvalue="Python.Rules" />
       </list>
@@ -319,20 +338,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00040" summary="Added Secret Token Reader THing.">
-      <created>1561269698725</created>
-      <option name="number" value="00040" />
-      <option name="presentableId" value="LOCAL-00040" />
-      <option name="project" value="LOCAL" />
-      <updated>1561269698725</updated>
-    </task>
-    <task id="LOCAL-00041" summary="Add A log file to nomitron folder.">
-      <created>1561303414737</created>
-      <option name="number" value="00041" />
-      <option name="presentableId" value="LOCAL-00041" />
-      <option name="project" value="LOCAL" />
-      <updated>1561303414737</updated>
     </task>
     <task id="LOCAL-00042" summary="Added Rules Instructions in Readme.">
       <created>1561307200754</created>
@@ -663,7 +668,21 @@
       <option name="project" value="LOCAL" />
       <updated>1561759887902</updated>
     </task>
-    <option name="localTasksCounter" value="89" />
+    <task id="LOCAL-00089" summary="Doby Dick Update. Now Change Harvests!">
+      <created>1561762187018</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1561762187018</updated>
+    </task>
+    <task id="LOCAL-00090" summary="Doby Dick Update. Now Change Harvests!">
+      <created>1561762399688</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1561762399688</updated>
+    </task>
+    <option name="localTasksCounter" value="91" />
     <servers />
   </component>
   <component name="TodoView">
@@ -676,12 +695,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="713" y="62" width="942" height="1000" extended-state="6" />
+    <frame x="2784" y="62" width="1038" height="1000" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4751693" visible="true" weight="0.39040348" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4751693" visible="true" weight="0.2201382" />
       <window_info id="Structure" order="1" sideWeight="0.50108224" side_tool="true" weight="0.27243245" />
-      <window_info active="true" id="Run" order="2" sideWeight="0.5248307" side_tool="true" visible="true" weight="0.39040348" />
+      <window_info active="true" id="Run" order="2" sideWeight="0.5248307" side_tool="true" visible="true" weight="0.2201382" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
@@ -709,7 +728,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Made All Keys Secret." />
     <MESSAGE value="Removed Clean :)" />
     <MESSAGE value="Map Implemented" />
     <MESSAGE value="Added Nomitron.py Python3.6,7 Version Support" />
@@ -734,7 +752,8 @@
     <MESSAGE value="Upgrade Players To New Data Structure&#10;Add Commands To Harvest" />
     <MESSAGE value="Modified Plot For Harvest" />
     <MESSAGE value="Added Helper Funtions Finished Plot. Added End Turn COmmand" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Helper Funtions Finished Plot. Added End Turn COmmand" />
+    <MESSAGE value="Doby Dick Update. Now Change Harvests!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Doby Dick Update. Now Change Harvests!" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tmp/Admin.py" />
@@ -825,35 +844,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/DiscordBot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="80" column="24" lean-forward="true" selection-start-line="80" selection-start-column="24" selection-end-line="80" selection-end-column="24" />
+          <folding>
+            <element signature="e#2597#3414#0" />
+            <element signature="e#4140#6834#0" />
+            <element signature="e#6956#7452#0" />
+            <element signature="e#7562#8372#0" />
+            <element signature="e#8406#8519#0" />
+            <element signature="e#8654#8925#0" />
+            <element signature="e#9050#11737#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="247">
-            <caret line="38" column="10" selection-start-line="38" selection-start-column="10" selection-end-line="38" selection-end-column="10" />
+          <first_editor relative-caret-position="149">
+            <caret line="31" column="9" lean-forward="true" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/DiscordBot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="25" column="27" lean-forward="true" selection-start-line="25" selection-start-column="27" selection-end-line="25" selection-end-column="27" />
-          <folding>
-            <element signature="e#2597#3414#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="367">
-          <caret line="156" column="125" selection-start-line="156" selection-start-column="125" selection-end-line="156" selection-end-column="125" />
+        <state relative-caret-position="174">
+          <caret line="360" column="38" lean-forward="true" selection-start-line="360" selection-start-column="38" selection-end-line="360" selection-end-column="38" />
           <folding>
             <element signature="e#614#667#0" />
             <element signature="e#763#816#0" />
+            <element signature="e#1052#1107#0" />
             <element signature="e#1248#2974#0" />
-            <element signature="e#3148#6126#0" />
             <element signature="e#8347#8709#0" />
             <element signature="e#8768#8831#0" />
             <element signature="e#8890#8952#0" />
@@ -862,14 +887,16 @@
             <element signature="e#10807#11615#0" />
             <element signature="e#11698#14194#0" />
             <element signature="e#14260#14456#0" />
-            <element signature="e#15336#17854#0" />
+            <element signature="e#14053#14524#0" />
+            <element signature="e#19294#19588#0" />
+            <element signature="e#19694#21957#0" />
             <element signature="e#17611#18211#0" />
             <element signature="e#17047#17965#0" />
             <element signature="e#17996#18098#0" />
             <element signature="e#18139#18188#0" />
-            <element signature="e#18225#18324#0" />
-            <element signature="e#18478#18625#0" />
-            <element signature="e#18540#20392#0" />
+            <element signature="e#24380#24682#0" />
+            <element signature="e#24535#27741#0" />
+            <element signature="e#27936#30022#0" />
             <element signature="e#19194#19216#0" />
             <element signature="e#19257#19850#0" />
             <element signature="e#20434#23260#0" />

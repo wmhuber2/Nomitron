@@ -81,7 +81,7 @@ async def run(payload, message):
                         Data[guild]['Players'][payload['Author']]['Markers']['Shape']      = ['Capital']
                         Data[guild]['Players'][payload['Author']]['Markers']['Properties'] = [{}]
                         Data[guild]['Players'][payload['Author']]['Inventory'] = {'BF': 0, }
-                        await plotMap(message.channel)
+                        await updateInAnnouncements(message.guild)
                         Data[guild]['Log'].append('New Player {0} Added to Map with color {1} and capital at {2}. {3}'.format(
                             payload['Author'], splitContent[2].lower(), (xcordAlpha, ycord+1), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
                     else:
@@ -116,7 +116,7 @@ async def run(payload, message):
 
                         if isClaimed:
                             await message.channel.send("You cannot claim this location. It is already claimed.")
-                        else:
+                        elif addItem( guild, payload['Author'], 'BF', -2):
                             print(xcord, ycord)
                             Data[guild]['Players'][payload['Author']]['Markers']['Location'].append([xcord, ycord])
                             Data[guild]['Players'][payload['Author']]['Markers']['Properties'].append({})
@@ -125,7 +125,10 @@ async def run(payload, message):
                             await message.channel.send("You have claimed the location. ")
                             Data[guild]['Log'].append('Player {0} claimed location {1} at {2}'.format(
                                 payload['Author'],(xcordAlpha, ycord+1),datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
-                            await plotMap(message.channel)
+                            await updateInAnnouncements(message.guild)
+                        else:
+                            await message.channel.send("You Have Insufficient Blemflarcks To Complete This Actions.")
+
                     else:
                         await message.channel.send("You cannot claim this location as you have no adjacent markers.")
 
@@ -158,7 +161,11 @@ async def run(payload, message):
                                     and splitContent[2].lower() in ['perpetual', 'p']: typeHarv = 'Perpetual'
                             else:   await message.channel.send("This locations is already being harvested in that method.")
 
-                            if typeHarv is not None:
+                            cost = {'Perpetual': -4,'Non Perpetual':-7}
+                            if typeHarv is None: pass
+                            elif not addItem( guild, player, 'BF', cost[typeHarv]):
+                                await message.channel.send("You Have Insufficient Blemflarcks To Complete This Actions.")
+                            else:
                                 Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest'] = {
                                     'age': 0,
                                     'type': typeHarv
@@ -169,22 +176,28 @@ async def run(payload, message):
                                         datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
                                 await message.channel.send(
                                     "Location Harvest Changed. Resources Will Be Given At The Start Of The Next Turn")
-                                await plotMap(message.channel)
+                                await updateInAnnouncements(message.guild)
 
                         else:
                             typeHarv = 'Perpetual'
                             if splitContent[2].lower() in ['non-perpetual', 'n']:
                                 typeHarv = 'Non Perpetual'
-                            Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest'] = {
-                                'age':  0,
-                                'type': typeHarv
-                            }
-                            print('Harvesting',xcord, ycord)
-                            Data[guild]['Log'].append('Player {0} is harvesting location {1} for {2} Resources at {3}'.format(
-                                payload['Author'], (xcordAlpha, ycord + 1), typeHarv,
-                                datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
-                            await message.channel.send("Location set to Harvest. Resources Will Be Given At The Start Of The Next Turn")
-                            await plotMap(message.channel)
+
+                            cost = {'Perpetual': -4, 'Non Perpetual': -7}
+                            if not addItem( guild, player, 'BF', cost[typeHarv]):
+                                await message.channel.send(
+                                    "You Have Insufficient Blemflarcks To Complete This Actions.")
+                            else:
+                                Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest'] = {
+                                    'age':  0,
+                                    'type': typeHarv
+                                }
+                                print('Harvesting',xcord, ycord)
+                                Data[guild]['Log'].append('Player {0} is harvesting location {1} for {2} Resources at {3}'.format(
+                                    payload['Author'], (xcordAlpha, ycord + 1), typeHarv,
+                                    datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
+                                await message.channel.send("Location set to Harvest. Resources Will Be Given At The Start Of The Next Turn")
+                                await updateInAnnouncements(message.guild)
                     else:
                         await message.channel.send("You cannot harvest this location until you have claimed it.")
 
@@ -217,6 +230,7 @@ async def run(payload, message):
                 if playerName in Data[guild]['Players']:
                     del Data[guild]['Players'][playerName]
                     await message.channel.send('Player ' + playerName + ' is removed from the Map.')
+                    await updateInAnnouncements(message.guild)
                 else:
                     await message.channel.send('Player ' + playerName + ' is not on the Map.')
             else:
@@ -234,6 +248,7 @@ async def run(payload, message):
                 playerName = player.name + "#" + str(player.discriminator)
                 if playerName in Data[guild]['Players']:
                     Data[guild]['Players'][playerName]['Color'] = splitContent[2].lower()
+                    await updateInAnnouncements(message.guild)
                     await message.channel.send('Player ' + playerName + ' is now '+splitContent[2].lower())
                 else:
                     await message.channel.send('Player ' + playerName + ' is not on the Map.')
@@ -273,7 +288,7 @@ async def run(payload, message):
                         Data[guild]['Players'][player]['Markers']['Location'].append([xcord,ycord])
                         Data[guild]['Players'][player]['Markers']['Shape'].append(splitContent[3])
                         await message.channel.send('Marker Changes Set.')
-                        await plotMap(message.channel)
+                        await updateInAnnouncements(message.guild)
                 elif splitContent[3].lower() in mcd.CSS4_COLORS:
                     Color = splitContent[3].lower()
                     for player in Data[guild]['Players'].keys():
@@ -287,7 +302,7 @@ async def run(payload, message):
                                     pass
                         Data[guild]['Players'][player]['Markers']['Location'].append([xcord, ycord])
                         Data[guild]['Players'][player]['Markers']['Shape'].append(splitContent[2])
-                        await plotMap(message.channel)
+                        await updateInAnnouncements(message.guild)
                         await message.channel.send('Marker Changes Set.')
 
                 else:
@@ -305,16 +320,18 @@ async def run(payload, message):
             if player is not None:
                 playerName = player.name + "#" + str(player.discriminator)
                 amount = None
+                item = splitContent[3]
                 try:
                     amount = float(splitContent[2])
                 except:
                     await message.channel.send(splitContent[2] + ' cannot be quantified into an amount.')
                 if amount is not None:
                     if playerName in Data[guild]['Players']:
-                        Data[guild]['Players'][playerName]['Color'] = splitContent[2].lower()
-                        await message.channel.send('Player ' + playerName + ' is now ' + splitContent[2].lower())
+                        addItem( guild, playerName,item,amount)
+                        await message.channel.send('Transaction Completed')
+                        await updateInAnnouncements(message.guild)
                     else:
-                        await message.channel.send('Player ' + playerName + ' is not on the Map.')
+                        await message.channel.send('Player ' + playerName + ' is not in the Map.')
             else:
                 await message.channel.send('Player with id:' + splitContent[1][2:-1] + ' cannot be found.')
 
@@ -341,6 +358,7 @@ async def onDayChange(server):
     await resetTimers(server)
     Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
     await sendMapData()
+    await updateInAnnouncements(guild)
 
 """
 Called On Turn Change
@@ -357,37 +375,30 @@ async def onTurnChange(server):
 
                 if isTileType(Data[guild]['Image'],xcord, ycord, 'LAND') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Perpetual':
-                    addItem(Data[guild]['Players'][player]['Inventory'],'Corn', 5)
+                    addItem( guild, player,'Corn', 5)
 
                 if isTileType(Data[guild]['Image'],xcord, ycord, 'WATER') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Perpetual':
-                    addItem(Data[guild]['Players'][player]['Inventory'],'Fish', 5)
+                    addItem( guild, player,'Fish', 5)
 
                 if isTileType(Data[guild]['Image'],xcord, ycord, 'LAND') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Non Perpetual':
-                    addItem(Data[guild]['Players'][player]['Inventory'],'Steal', 1)
+                    addItem( guild, player,'Steal', 1)
 
                 if isTileType(Data[guild]['Image'],xcord, ycord, 'WATER') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Non Perpetual':
-                    addItem(Data[guild]['Players'][player]['Inventory'],'Oil', 1)
+                    addItem( guild, player,'Oil', 1)
 
                 Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] += 1
                 if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Non Perpetual' and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] >= 5:
                     del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']
 
-        msg += player+" - "+Data[guild]['Players'][player]['Color'].upper()+":\n"
-        for item in Data[guild]['Players'][player]['Inventory']:
-            msg += "\t"+item+': '+str(Data[guild]['Players'][player]['Inventory'][item])+'\n'
+        #msg += player+" - "+Data[guild]['Players'][player]['Color'].upper()+":\n"
+        #for item in Data[guild]['Players'][player]['Inventory']:
+        #    msg += "\t"+item+': '+str(Data[guild]['Players'][player]['Inventory'][item])+'\n'
 
-    tosend = ""
-    for line in msg:
-        if len(tosend + line) > 1900:
-            await log('```'+ tosend + '```')
-            tosend = ""
-        tosend = tosend + '\n\n' + line
-    if msg != "":
-        await log('```' + msg + '```')
+    await updateInAnnouncements(server)
 
 async def resetTimers(server, channel = None, playerid = None):
     if channel is None: channel = channels[logChannel]
@@ -456,21 +467,91 @@ def isTileType(image, x, y, type):
 '''
 Add item of count N to player's inventory inv.
 '''
-def addItem(inv, item, count):
-    if inv.get(item) is None: inv[item] = 0
-    inv[item] += count
-    if inv[item] == 0: del inv[item]
+def addItem(guild, player, item, count):
+    inv = Data[guild]['Players'][player]['Inventory']
+    if inv.get(item) is None:
+        Data[guild]['Players'][player]['Inventory'][item] = 0
+
+    # If Not Allowed To Be Negative
+    if inv[item] + count < 0 and item in [
+        'BF',
+    ]:return False
+    else: Data[guild]['Players'][player]['Inventory'][item] += count
+    if inv[item] == 0 and item != 'BF':
+        del Data[guild]['Players'][player]['Inventory'][item]
+    print('Transaction Completed')
+    return True
 
 
 """
 Update Messages In Annoncements
 """
 async def updateInAnnouncements(server):
+    global Data
     guild = server.id
+
+    await plotMap(channels[logChannel])
+
+    # Update Map
     if Data[guild]['Announcements']['Map'] is None:
-        pass
-    if Data[guild]['Announcements']['Items'] is None:
-        pass
+        Data[guild]['Announcements']['Map'] = await channels['announcements'].send(
+            'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
+        Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
+    else:
+        msg = None
+        try: msg = await channels['announcements'].fetch_message(Data[guild]['Announcements']['Map'])
+        except: msg = None
+        if msg is None:
+            Data[guild]['Announcements']['Map'] = await channels['announcements'].send(
+                'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
+            Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
+        else:
+            junkmsg = await channels[logChannel].send(
+                'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
+            content = junkmsg.content
+            await msg.edit(
+                content=content #"World Map",
+                #embed=embeded
+            )
+            await junkmsg.delete()
+
+    # Update Player Stuffs
+    if isinstance(Data[guild]['Announcements']['Items'], (list,)):
+        for msgid in Data[guild]['Announcements']['Items']:
+            post = None
+            try: post = await channels['announcements'].fetch_message(msgid)
+            except: pass
+            if post is not None: await post.delete()
+    Data[guild]['Announcements']['Items'] = []
+    sortedPlayers = list(Data[guild]['Players'].keys())
+    sortedPlayers.sort()
+    for player in sortedPlayers:
+        msg = player + ' : '+Data[guild]['Players'][player]['Color'].upper()+'\n'
+        msg += '-Tiles:'
+        totalRenewableHarvests = 0
+        totalNonRenewableHarvests = 0
+        Total = 0
+        for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
+            x,y = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
+            #if isTileType(Data[guild]['Image'],x , y, 'LAND'): totalLand+=1
+            #if isTileType(Data[guild]['Image'],x , y, 'WATER'): totalWater+=1
+            Total+=1
+            for prop in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].keys():
+                if prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Perpetual':
+                    totalRenewableHarvests +=1
+                if prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Non Perpetual':
+                    totalNonRenewableHarvests +=1
+        msg += "\n\tTotal Tiles:"+str(Total)+\
+               '\n\tRenewable Harvests:'+str(totalRenewableHarvests)+\
+               '\n\tNon-Renewable Harvests:'+str(totalNonRenewableHarvests)
+        msg += "\n-Inventory:"
+        for item in Data[guild]['Players'][player]['Inventory']:
+            msg += "\n\t"+item+': '+str(Data[guild]['Players'][player]['Inventory'][item])
+
+        await channels[logChannel].send('```' + msg + '```')
+        post = await channels['announcements'].send('```'+msg+'```')
+        Data[guild]['Announcements']['Items'].append(post.id)
+
 
 
 """
@@ -529,10 +610,10 @@ async def setup(chans, logchan, server):
                 Data[guild]['Players'][player]['Markers']['Properties'].append({})
 
     #await plotMap()
+    await updateInAnnouncements(server)
     await saveData()
 
-
-async def plotMap(channel = None):
+async def plotMap(channel, postReply = True):
     try:
         global Data
         guild = channel.guild.id
@@ -544,7 +625,6 @@ async def plotMap(channel = None):
             plt.yticks(axisn + 0.5)
 
             for player in Data[guild]['Players'].keys():
-                print('Player:'+player)
                 player = Data[guild]['Players'][player]
                 color = player['Color']
 
@@ -554,7 +634,6 @@ async def plotMap(channel = None):
                 obj[obj == 'Claim'] = '.'
                 obj[obj == 'Capital'] = '*'
                 for i in range(obj.shape[0]):
-                    print()
                     if player['Markers']['Properties'][i].get('Harvest') is not None:
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
@@ -589,7 +668,8 @@ async def plotMap(channel = None):
             plt.grid(color='k', linestyle='-', linewidth=0.25, alpha = 0.5)
             ax.imshow(Data[guild]['Image'].transpose(1,0,2), interpolation='nearest')
             plt.savefig('tmpgrid.png', format='png', dpi = 600, bbox_inches="tight")
-            await channel.send('World Map:', file=discord.File(open('tmpgrid.png', 'br')))
+            if postReply:
+                await channel.send('World Map:', file=discord.File(open('tmpgrid.png', 'br')))
     except Exception as e:
         print(e)
 

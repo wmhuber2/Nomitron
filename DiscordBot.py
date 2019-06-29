@@ -169,12 +169,14 @@ class DiscordNomicBot():
                     try:
                         await mod.setup(channels,self.logChannel,server)
                     except Exception as e:
+                        print ("Exception On Startup")
                         try:
                             self.Data['disabled'][server.id].append(name)
                             await channels[self.logChannel].send("Disabling "+name+" due to Error:"+str(e))
                             self.saveData()
                         except Exception as e2:
-                            print('Error Disabling After Error', e2)
+                            print('Error Disabling After Error', str(e2))
+                        raise e
 
             msg =  "```diff\nModules Loaded:"
             for m in self.moduleNames:
@@ -293,8 +295,10 @@ class DiscordNomicBot():
                 if hasattr(mod, 'setup'):
                     try:
                         await mod.setup(channels, self.logChannel, message.guild)
-                        self.Data['disabled'][message.guild.id].remove(splitPayload[2])
+                        print('Enabling',self.Data)
+                        self.Data['disabled'][message.guild.id] = [x for x in self.Data['disabled'][message.guild.id] if x != splitPayload[2]]
                     except Exception as e:
+                        print('Disabling')
                         await message.channel.send("Disabling " + splitPayload[2] + " due to Error:" + str(e))
 
                     msg = "```diff\nModules Loaded:"
