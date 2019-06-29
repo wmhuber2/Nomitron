@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
     </list>
     <ignored path="Paint.py" />
     <ignored mask="*_Data.pickle" />
@@ -30,8 +29,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="491">
-              <caret line="526" column="24" selection-start-line="526" selection-start-column="24" selection-end-line="526" selection-end-column="24" />
+            <state relative-caret-position="409">
+              <caret line="493" column="36" lean-forward="true" selection-start-line="493" selection-start-column="36" selection-end-line="493" selection-end-column="36" />
               <folding>
                 <element signature="e#614#667#0" />
                 <element signature="e#763#816#0" />
@@ -54,6 +53,7 @@
                 <element signature="e#17996#18098#0" />
                 <element signature="e#18139#18188#0" />
                 <element signature="e#24380#24682#0" />
+                <element signature="e#28200#30240#0" />
                 <element signature="e#19194#19216#0" />
                 <element signature="e#20434#23260#0" />
                 <element signature="e#23529#23565#0" />
@@ -334,20 +334,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00048" summary="Removed Clean :)">
-      <created>1561423532823</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1561423532823</updated>
-    </task>
-    <task id="LOCAL-00049" summary="Map Implemented">
-      <created>1561440530745</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1561440530745</updated>
     </task>
     <task id="LOCAL-00050" summary="Added Nomitron.py Python3.6,7 Version Support">
       <created>1561442502076</created>
@@ -678,7 +664,21 @@
       <option name="project" value="LOCAL" />
       <updated>1561784042816</updated>
     </task>
-    <option name="localTasksCounter" value="97" />
+    <task id="LOCAL-00097" summary="Fixing Bug-aggedon">
+      <created>1561785315498</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1561785315498</updated>
+    </task>
+    <task id="LOCAL-00098" summary="Fixing Bug-aggedon">
+      <created>1561785353732</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1561785353732</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TodoView">
@@ -724,7 +724,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added Nomitron.py Python3.6,7 Version Support" />
     <MESSAGE value="Added run.py to execute detached from ssh." />
     <MESSAGE value="Fixed DPI." />
     <MESSAGE value="Added indicator for long computation" />
@@ -749,7 +748,8 @@
     <MESSAGE value="Doby Dick Update. Now Change Harvests!" />
     <MESSAGE value="Finaly became a drug. Also Added BFs and Better Map Updates" />
     <MESSAGE value="added changelog live. Where all our favorite disney character come to life." />
-    <option name="LAST_COMMIT_MESSAGE" value="added changelog live. Where all our favorite disney character come to life." />
+    <MESSAGE value="Fixing Bug-aggedon" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixing Bug-aggedon" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tmp/Admin.py" />
@@ -857,8 +857,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="491">
-          <caret line="526" column="24" selection-start-line="526" selection-start-column="24" selection-end-line="526" selection-end-column="24" />
+        <state relative-caret-position="409">
+          <caret line="493" column="36" lean-forward="true" selection-start-line="493" selection-start-column="36" selection-end-line="493" selection-end-column="36" />
           <folding>
             <element signature="e#614#667#0" />
             <element signature="e#763#816#0" />
@@ -881,6 +881,7 @@
             <element signature="e#17996#18098#0" />
             <element signature="e#18139#18188#0" />
             <element signature="e#24380#24682#0" />
+            <element signature="e#28200#30240#0" />
             <element signature="e#19194#19216#0" />
             <element signature="e#20434#23260#0" />
             <element signature="e#23529#23565#0" />
