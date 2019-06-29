@@ -30,8 +30,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="493" column="35" selection-start-line="493" selection-start-column="35" selection-end-line="493" selection-end-column="35" />
+            <state relative-caret-position="491">
+              <caret line="526" column="24" selection-start-line="526" selection-start-column="24" selection-end-line="526" selection-end-column="24" />
               <folding>
                 <element signature="e#614#667#0" />
                 <element signature="e#763#816#0" />
@@ -67,8 +67,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiscordBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="148" column="28" selection-start-line="148" selection-start-column="28" selection-end-line="148" selection-end-column="28" />
+            <state relative-caret-position="394">
+              <caret line="171" column="13" selection-start-line="171" selection-start-column="13" selection-end-line="171" selection-end-column="13" />
               <folding>
                 <element signature="e#2597#3414#0" />
                 <element signature="e#6956#7452#0" />
@@ -76,15 +76,6 @@
                 <element signature="e#8406#8519#0" />
                 <element signature="e#8654#8925#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Nomitron.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
             </state>
           </provider>
         </entry>
@@ -343,20 +334,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00046" summary="Made All Keys Secret. Only print Voting reacts.">
-      <created>1561386234407</created>
-      <option name="number" value="00046" />
-      <option name="presentableId" value="LOCAL-00046" />
-      <option name="project" value="LOCAL" />
-      <updated>1561386234407</updated>
-    </task>
-    <task id="LOCAL-00047" summary="Made All Keys Secret.">
-      <created>1561386704432</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1561386704432</updated>
     </task>
     <task id="LOCAL-00048" summary="Removed Clean :)">
       <created>1561423532823</created>
@@ -687,7 +664,21 @@
       <option name="project" value="LOCAL" />
       <updated>1561783783955</updated>
     </task>
-    <option name="localTasksCounter" value="95" />
+    <task id="LOCAL-00095" summary="added changelog live. Where all our favorite disney character come to life.">
+      <created>1561784004323</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1561784004323</updated>
+    </task>
+    <task id="LOCAL-00096" summary="added changelog live. Where all our favorite disney character come to life.">
+      <created>1561784042816</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1561784042816</updated>
+    </task>
+    <option name="localTasksCounter" value="97" />
     <servers />
   </component>
   <component name="TodoView">
@@ -845,15 +836,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Nomitron.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="17" column="39" selection-start-line="17" selection-start-column="39" selection-end-line="17" selection-end-column="39" />
+        <state relative-caret-position="266">
+          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DiscordBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="148" column="28" selection-start-line="148" selection-start-column="28" selection-end-line="148" selection-end-column="28" />
+        <state relative-caret-position="394">
+          <caret line="171" column="13" selection-start-line="171" selection-start-column="13" selection-end-line="171" selection-end-column="13" />
           <folding>
             <element signature="e#2597#3414#0" />
             <element signature="e#6956#7452#0" />
@@ -866,8 +857,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="493" column="35" selection-start-line="493" selection-start-column="35" selection-end-line="493" selection-end-column="35" />
+        <state relative-caret-position="491">
+          <caret line="526" column="24" selection-start-line="526" selection-start-column="24" selection-end-line="526" selection-end-column="24" />
           <folding>
             <element signature="e#614#667#0" />
             <element signature="e#763#816#0" />

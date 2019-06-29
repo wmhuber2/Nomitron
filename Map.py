@@ -521,9 +521,10 @@ async def updateInAnnouncements(server):
     if isinstance(Data[guild]['Announcements']['Items'], (list,)):
         for msgid in Data[guild]['Announcements']['Items']:
             post = None
-            try: post = await channels[server.id][targetChannel].fetch_message(msgid)
+            try:
+                post = await channels[server.id][targetChannel].fetch_message(msgid)
+                await post.delete()
             except: pass
-            if post is not None: await post.delete()
     Data[guild]['Announcements']['Items'] = []
     sortedPlayers = list(Data[guild]['Players'].keys())
     sortedPlayers.sort()
