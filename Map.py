@@ -317,7 +317,10 @@ async def run(payload, message):
             if splitContent[0] == '!give':
                 for playerid in splitContent[1:-3]:
                     print(playerid)
-                    playerName = await getPlayer(message.guild, playerid, message.channel)
+                    if playerid[0] == '@':
+                        playerName = playerid[1:]
+                    else:
+                        playerName = await getPlayer(message.guild, playerid, message.channel)
 
                     if playerName is not None:
                         amount = None
