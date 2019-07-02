@@ -330,7 +330,8 @@ async def run(payload, message):
                                 Data[guild]['Players'][player]['Markers']['Properties'][i][prop]['age'] -= 1
                 await message.channel.send("Every Player Had one Turn Removed Form Harvest Count")
 
-
+            if payload['Content'] == '!ping':
+                await message.channel.send("pong")
     #  IF A DM CHANNEL
     if payload['Channel Type'] == 'DM':
         pass

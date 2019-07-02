@@ -37,6 +37,11 @@ Admin:
 +       if a player is given reset that player's timer
 +       else reset all timers
 +       Rule: N/A
+-    !setTimer @player
++       Allowed Channels: actions, mod-lounge, bot-lounge
++       if a player is given disable that player's timer
++       else reset all timers
++       Rule: N/A
 -    !give @player #count $item
 +       Allowed Channels: actions, mod-lounge, bot-lounge
 +       give play er# count of $item
@@ -48,5 +53,7 @@ Admin:
 +       admin commands may be executed
 -    !subtractTurn
 +       subtracts one from every age counter in Harvest Tiles
+-    !ping
++       ping bot for a response
 This Bot's Code May Be Found At:
 https://github.com/wmhuber2/Nomitron/
