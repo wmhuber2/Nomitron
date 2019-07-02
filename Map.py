@@ -297,6 +297,12 @@ async def run(payload, message):
                     playerid = splitContent[1]
                 await resetTimers(message.guild, playerid = playerid, channel = message.channel)
 
+            if splitContent[0] == '!setTimer':
+                playerid = None
+                if len(splitContent) == 2:
+                    playerid = splitContent[1]
+                await resetTimers(message.guild, playerid=playerid, channel=message.channel, mode = True)
+
             if splitContent[0] == '!give' and len(splitContent) == 4:
                 playerName = await getPlayer(message.guild, splitContent[1], message.channel)
 
@@ -393,13 +399,13 @@ async def onTurnChange(server):
 
     await updateInAnnouncements(server)
 
-async def resetTimers(server, channel = None, playerid = None):
+async def resetTimers(server, channel = None, playerid = None, mode = False):
     if channel is None: channel = channels[server.id][logChannel]
     guild = server.id
 
     if playerid is None:
         for player in Data[guild]['Players']:
-            Data[guild]['Players'][player]['Claimed Today'] = False
+            Data[guild]['Players'][player]['Claimed Today'] = mode
         await channel.send("Resetting Claim Timer for Everyone")
 
     else:
