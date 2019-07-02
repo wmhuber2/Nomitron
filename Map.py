@@ -328,7 +328,7 @@ async def run(payload, message):
                             await message.channel.send(splitContent[-2] + ' cannot be quantified into an amount.')
                         if amount is not None:
                             addItem( guild, playerName,item,amount)
-                            await message.channel.send('Transaction Completed')
+                            await message.channel.send('Transaction Completed For '+playerName)
                 await updateInAnnouncements(message.guild)
 
             if payload['Content'] == '!pause':
