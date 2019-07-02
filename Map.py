@@ -4,6 +4,18 @@
 import pickle, sys, datetime, os, discord, math, re, socket
 
 n = 75
+'''
+elif payload['Channel'].lower() not in ['actions','action']:
+    if payload['Content'] == '!' + secretCommand:
+        if Data[guild]['Secret'] == 0:
+            await message.channel.send("You Did It! You Solved My Puzzle. Here is a reward.")
+            addItem(message.guild.id, payload['Author'], secretCommand.split(' ')[-1], int(secretCommand.split(' ')[-2]))
+            Data[guild]['Secret'] = 1
+            await updateInAnnouncements(message.guild)
+        else:
+            await message.channel.send("The reward has already been claimed. :cry:")
+'''
+
 
 TILES = {
     'LAND'  :[45, 84, 55,255],
@@ -67,16 +79,6 @@ async def run(payload, message):
 
         if Data[guild]['Pause'] and payload['Content'][0] == '!':
             await message.channel.send("Warning: The Bot Has Been Paused.\n Admins May Ignore This Message")
-
-        elif payload['Channel'].lower() not in ['actions','action']:
-            if payload['Content'] == '!' + secretCommand:
-                if Data[guild]['Secret'] == 0:
-                    await message.channel.send("You Did It! You Solved My Puzzle. Here is a reward.")
-                    addItem(message.guild.id, payload['Author'], secretCommand.split(' ')[-1], int(secretCommand.split(' ')[-2]))
-                    Data[guild]['Secret'] = 1
-                    await updateInAnnouncements(message.guild)
-                else:
-                    await message.channel.send("The reward has already been claimed. :cry:")
 
         elif payload['Channel'].lower() in ['actions','action']:
             if splitContent[0] == '!start' and len(splitContent) == 3:
@@ -312,20 +314,22 @@ async def run(payload, message):
                     playerid = splitContent[1]
                 await resetTimers(message.guild, playerid=playerid, channel=message.channel, mode = True)
 
-            if splitContent[0] == '!give' and len(splitContent) == 4:
-                playerName = await getPlayer(message.guild, splitContent[1], message.channel)
+            if splitContent[0] == '!give':
+                for playerid in splitContent[1:-3]:
+                    print(playerid)
+                    playerName = await getPlayer(message.guild, playerid, message.channel)
 
-                if playerName is not None:
-                    amount = None
-                    item = splitContent[3]
-                    try:
-                        amount = float(splitContent[2])
-                    except:
-                        await message.channel.send(splitContent[2] + ' cannot be quantified into an amount.')
-                    if amount is not None:
-                        addItem( guild, playerName,item,amount)
-                        await message.channel.send('Transaction Completed')
-                        await updateInAnnouncements(message.guild)
+                    if playerName is not None:
+                        amount = None
+                        item = splitContent[-1]
+                        try:
+                            amount = float(splitContent[-2])
+                        except:
+                            await message.channel.send(splitContent[-2] + ' cannot be quantified into an amount.')
+                        if amount is not None:
+                            addItem( guild, playerName,item,amount)
+                            await message.channel.send('Transaction Completed')
+                await updateInAnnouncements(message.guild)
 
             if payload['Content'] == '!pause':
                 Data[guild]['Pause'] = not Data[guild]['Pause']
@@ -667,7 +671,7 @@ async def setup(chans, logchan, server):
     await updateInAnnouncements(server)
     await saveData()
 
-
+    '''
     import urllib.request
     import socket
     fp = urllib.request.urlopen("https://www.youtube.com/watch?v=oHg5SJYRHA0")
@@ -681,7 +685,7 @@ async def setup(chans, logchan, server):
     tmp = socket.gethostname()
     secretCommand = tmp[9]+tmp[4]+tmp[2]+tmp[0], mystr[i2 + 4:i2 + 25].strip().split(' ')[1], mystr[i + 6:i + 18].strip().replace(' ','-')
     secretCommand = ' '.join(secretCommand)
-
+    '''
 
 
 
