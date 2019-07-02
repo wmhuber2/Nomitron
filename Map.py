@@ -596,7 +596,7 @@ get Player
 async def getPlayer(server, playerid, channel = None):
     guild = server.id
     if channel == None: channel = channels[logChannel]
-
+    if len(playerid) == 0: return None
     if playerid[0] == '@':
         return playerid[1:]
     else:
@@ -609,7 +609,7 @@ async def getPlayer(server, playerid, channel = None):
                 await channel.send('Player ' + playerName + ' cannot be found in the map.')
         else:
             await channel.send(
-                'Player with id:' + str(re.search(r'\d+', playerid).group()) + ' cannot be found in the server.')
+                'Player with id:' + playerid + ' cannot be found in the server.')
         return None
 
 """
