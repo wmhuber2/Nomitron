@@ -42,9 +42,9 @@ Admin:
 +       if a player is given disable that player's timer
 +       else reset all timers
 +       Rule: N/A
--    !give @player #count $item
+-    !give {list @player} #count $item
 +       Allowed Channels: actions, mod-lounge, bot-lounge
-+       give play er# count of $item
++       give players # count of $item
 +        #count can be deciaml and negative
 +       Rule: N/A
 -    !pause
