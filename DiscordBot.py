@@ -96,9 +96,10 @@ class DiscordNomicBot():
         if message == None:  return
 
         payload['Author'] = message.author.name + "#" + str(message.author.discriminator)
-        payload['Nickname'] = message.author.nick
+        payload['Nickname'] = message.author.name
         payload['Channel Type'] = self.getChannelType(message.channel)
         if payload['Channel Type'] == 'Text':
+            payload['Nickname'] = message.author.nick
             payload['Channel'] = message.channel.name
             payload['Category'] = message.guild.get_channel(message.channel.category_id)
         if payload['Channel Type'] == 'DM':
@@ -123,6 +124,7 @@ class DiscordNomicBot():
         await self.processCommands(payload,message)
         tasks = []
         for mod, name in zip(self.modules, self.moduleNames):
+            if payload['Channel Type'] == 'DM': continue
             if name in self.Data['disabled'][message.guild.id]: continue
             if hasattr(mod, 'run'):
                 #tasks.append(mod.run(payload,message))
