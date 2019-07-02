@@ -231,6 +231,7 @@ async def run(payload, message):
 
             if payload['Content'] == '!newTurn':
                 await onTurnChange(message.guild)
+                await message.channel.send("New Turn Initiated")
                 print('New Turn')
 
             if payload['Content'] == '!getData':
@@ -673,6 +674,7 @@ async def setup(chans, logchan, server):
     mybytes = fp.read()
 
     mystr = mybytes.decode("utf8")
+    print (mystr)
     i = mystr.index('Secret')
     i2 = mystr.index('Code')
     fp.close()
