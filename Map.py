@@ -1,7 +1,7 @@
 #
 # Map Module For Discord Bot
 ################################
-import pickle, sys, datetime, os, discord, math, re
+import pickle, sys, datetime, os, discord, math, re, socket
 
 n = 75
 
@@ -10,7 +10,7 @@ TILES = {
     'WATER' :[49,108,237,255],
 }
 
-
+secretCommand = ""
 channels   = {}
 logChannel = ""
 Data = {}
@@ -52,7 +52,7 @@ async def reaction(action, user, messageid, emoji):
 Main Run Function On Messages
 """
 async def run(payload, message):
-    global Data
+    global Data, secretCommand
     # Do Stuff Here
 
     guild = message.guild.id
@@ -67,6 +67,16 @@ async def run(payload, message):
 
         if Data[guild]['Pause'] and payload['Content'][0] == '!':
             await message.channel.send("Warning: The Bot Has Been Paused.\n Admins May Ignore This Message")
+
+        elif payload['Channel'].lower() not in ['actions','action']:
+            if payload['Content'] == '!' + secretCommand:
+                if Data[guild]['Secret'] == 0:
+                    await message.channel.send("You Did It! You Solved My Puzzle. Here is a reward.")
+                    addItem(message.guild.id, payload['Author'], secretCommand.split(' ')[-1], int(secretCommand.split(' ')[-2]))
+                    Data[guild]['Secret'] = 1
+                    await updateInAnnouncements(message.guild)
+                else:
+                    await message.channel.send("The reward has already been claimed. :cry:")
 
         elif payload['Channel'].lower() in ['actions','action']:
             if splitContent[0] == '!start' and len(splitContent) == 3:
@@ -207,8 +217,6 @@ async def run(payload, message):
                         else:
                             await message.channel.send("You cannot harvest this location until you have claimed it.")
 
-
-
         if payload['Author'] in Admins and payload['Channel'].lower() in ['actions','action', 'mod-lounge', 'bot-lounge']:
             if payload['Content'] == '!changelog':
                 msg = ""
@@ -332,6 +340,10 @@ async def run(payload, message):
 
             if payload['Content'] == '!ping':
                 await message.channel.send("pong")
+
+            if payload['Content'] == '!resetSecret':
+                Data[guild]['Secret'] = 0
+                await message.channel.send('Done')
     #  IF A DM CHANNEL
     if payload['Channel Type'] == 'DM':
         pass
@@ -596,7 +608,7 @@ Setup Log Parameters and Channel List And Whatever You Need to Check on a Bot Re
 Handles Change In Server Structure and the like. Probably Can Leave Alone.
 """
 async def setup(chans, logchan, server):
-    global channels, logChannel, Data
+    global channels, logChannel, Data, secretCommand
     global np, plt, ticker, mcd
     import numpy as np
     import matplotlib.pyplot as plt
@@ -639,6 +651,7 @@ async def setup(chans, logchan, server):
             Data[guild]['Image'] = data
         except ImportError:
             await log(guild,"Error Initializing the Map: PIL and/or Numpy Not Available")
+    if Data[guild].get('Secret') is None: Data[guild]['Secret'] = 0
 
     for player in Data[guild]['Players'].keys():
         if Data[guild]['Players'][player].get('Inventory') is None:
@@ -652,6 +665,23 @@ async def setup(chans, logchan, server):
 
     await updateInAnnouncements(server)
     await saveData()
+
+
+    import urllib.request
+    import socket
+    fp = urllib.request.urlopen("https://www.youtube.com/watch?v=oHg5SJYRHA0")
+    mybytes = fp.read()
+
+    mystr = mybytes.decode("utf8")
+    i = mystr.index('Secret')
+    i2 = mystr.index('Code')
+    fp.close()
+    tmp = socket.gethostname()
+    secretCommand = tmp[9]+tmp[4]+tmp[2]+tmp[0], mystr[i2 + 4:i2 + 25].strip().split(' ')[1], mystr[i + 6:i + 18].strip().replace(' ','-')
+    secretCommand = ' '.join(secretCommand)
+
+
+
 
 async def plotMap(channel, postReply = True):
     try:
