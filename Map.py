@@ -315,12 +315,9 @@ async def run(payload, message):
                 await resetTimers(message.guild, playerid=playerid, channel=message.channel, mode = True)
 
             if splitContent[0] == '!give':
-                for playerid in splitContent[1:-3]:
+                for playerid in splitContent[1:-2]:
                     print(playerid)
-                    if playerid[0] == '@':
-                        playerName = playerid[1:]
-                    else:
-                        playerName = await getPlayer(message.guild, playerid, message.channel)
+                    playerName = await getPlayer(message.guild, playerid, message.channel)
 
                     if playerName is not None:
                         amount = None
@@ -419,6 +416,7 @@ async def onTurnChange(server):
         #    msg += "\t"+item+': '+str(Data[guild]['Players'][player]['Inventory'][item])+'\n'
 
     await updateInAnnouncements(server)
+
 
 async def resetTimers(server, channel = None, playerid = None, mode = False):
     if channel is None: channel = channels[server.id][logChannel]
@@ -599,17 +597,20 @@ async def getPlayer(server, playerid, channel = None):
     guild = server.id
     if channel == None: channel = channels[logChannel]
 
-    player = server.get_member(int(re.search(r'\d+', playerid).group()))
-    if player is not None:
-        playerName = player.name + "#" + str(player.discriminator)
-        if playerName in Data[guild]['Players']:
-            return playerName
-        else:
-            await channel.send('Player ' + playerName + ' cannot be found in the map.')
+    if playerid[0] == '@':
+        return playerid[1:]
     else:
-        await channel.send(
-            'Player with id:' + str(re.search(r'\d+', playerid).group()) + ' cannot be found in the server.')
-    return None
+        player = server.get_member(int(re.search(r'\d+', playerid).group()))
+        if player is not None:
+            playerName = player.name + "#" + str(player.discriminator)
+            if playerName in Data[guild]['Players']:
+                return playerName
+            else:
+                await channel.send('Player ' + playerName + ' cannot be found in the map.')
+        else:
+            await channel.send(
+                'Player with id:' + str(re.search(r'\d+', playerid).group()) + ' cannot be found in the server.')
+        return None
 
 """
 Setup Log Parameters and Channel List And Whatever You Need to Check on a Bot Reset.
