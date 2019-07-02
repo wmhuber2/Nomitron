@@ -385,7 +385,7 @@ async def onTurnChange(server):
     guild = server.id
     msg = "Players Now Have The Following:\n"
     for player in Data[guild]['Players']:
-        print(Data[guild]['Players'][player]['Markers'])
+        #print(Data[guild]['Players'][player]['Markers'])
         for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
             if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Harvest') is not None:
                 xcord, ycord = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
@@ -597,8 +597,6 @@ async def getPlayer(server, playerid, channel = None):
     guild = server.id
     if channel == None: channel = channels[logChannel]
     if len(playerid) == 0: return None
-    if playerid[0] == '@':
-        return playerid[1:]
     else:
         player = server.get_member(int(re.search(r'\d+', playerid).group()))
         if player is not None:
