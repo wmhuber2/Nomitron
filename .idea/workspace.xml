@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rules.py" afterDir="false" />
     </list>
     <ignored path="Paint.py" />
     <ignored mask="*_Data.pickle" />
@@ -30,11 +29,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="366">
-              <caret line="702" column="32" lean-forward="true" selection-start-line="702" selection-start-column="32" selection-end-line="702" selection-end-column="32" />
+            <state relative-caret-position="889">
+              <caret line="693" column="45" selection-start-line="693" selection-start-column="45" selection-end-line="693" selection-end-column="45" />
               <folding>
                 <element signature="n#!!doc" />
                 <element signature="e#132#777#1" />
@@ -45,6 +44,7 @@
                 <element signature="e#692#727#1" />
                 <element signature="e#784#837#0" />
                 <element signature="e#841#878#1" />
+                <element signature="e#1509#20102#0" />
                 <element signature="e#1210#1340#0" />
                 <element signature="e#1671#3586#0" />
                 <element signature="e#1867#3586#0" />
@@ -140,6 +140,7 @@
                 <element signature="e#30353#30508#0" />
                 <element signature="e#30725#31167#0" />
                 <element signature="e#30947#31167#0" />
+                <element signature="e#33246#36670#0" />
                 <element signature="e#32121#32625#0" />
                 <element signature="e#32488#32625#0" />
                 <element signature="e#34655#34708#0" />
@@ -158,11 +159,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Rules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="58" column="43" selection-start-line="58" selection-start-column="43" selection-end-line="58" selection-end-column="43" />
+            <state relative-caret-position="258">
+              <caret line="69" column="46" lean-forward="true" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
             </state>
           </provider>
         </entry>
@@ -170,8 +171,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiscordBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="278" column="51" lean-forward="true" selection-start-line="278" selection-start-column="51" selection-end-line="278" selection-end-column="51" />
+            <state relative-caret-position="160">
+              <caret line="256" lean-forward="true" selection-start-line="256" selection-end-line="256" />
               <folding>
                 <element signature="e#2172#2199#0" />
                 <element signature="e#2285#2493#0" />
@@ -455,20 +456,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00074" summary="Added Auto Disable on Error">
-      <created>1561496032193</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1561496032193</updated>
-    </task>
-    <task id="LOCAL-00075" summary="Added Auto Disable on Error">
-      <created>1561496087724</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1561496087724</updated>
     </task>
     <task id="LOCAL-00076" summary="Repaired Enable/Disable Bug and Methods">
       <created>1561502031283</created>
@@ -799,7 +786,21 @@
       <option name="project" value="LOCAL" />
       <updated>1562184083343</updated>
     </task>
-    <option name="localTasksCounter" value="123" />
+    <task id="LOCAL-00123" summary="Added Find/Search function to BOT">
+      <created>1562184231172</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1562184231172</updated>
+    </task>
+    <task id="LOCAL-00124" summary="Added Find/Search function to BOT">
+      <created>1562184665955</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1562184665956</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TodoView">
@@ -973,8 +974,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/DiscordBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="278" column="51" lean-forward="true" selection-start-line="278" selection-start-column="51" selection-end-line="278" selection-end-column="51" />
+        <state relative-caret-position="160">
+          <caret line="256" lean-forward="true" selection-start-line="256" selection-end-line="256" />
           <folding>
             <element signature="e#2172#2199#0" />
             <element signature="e#2285#2493#0" />
@@ -982,10 +983,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Rules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="69" column="46" lean-forward="true" selection-start-line="69" selection-start-column="46" selection-end-line="69" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="366">
-          <caret line="702" column="32" lean-forward="true" selection-start-line="702" selection-start-column="32" selection-end-line="702" selection-end-column="32" />
+        <state relative-caret-position="889">
+          <caret line="693" column="45" selection-start-line="693" selection-start-column="45" selection-end-line="693" selection-end-column="45" />
           <folding>
             <element signature="n#!!doc" />
             <element signature="e#132#777#1" />
@@ -996,6 +1004,7 @@
             <element signature="e#692#727#1" />
             <element signature="e#784#837#0" />
             <element signature="e#841#878#1" />
+            <element signature="e#1509#20102#0" />
             <element signature="e#1210#1340#0" />
             <element signature="e#1671#3586#0" />
             <element signature="e#1867#3586#0" />
@@ -1091,6 +1100,7 @@
             <element signature="e#30353#30508#0" />
             <element signature="e#30725#31167#0" />
             <element signature="e#30947#31167#0" />
+            <element signature="e#33246#36670#0" />
             <element signature="e#32121#32625#0" />
             <element signature="e#32488#32625#0" />
             <element signature="e#34655#34708#0" />
@@ -1105,13 +1115,6 @@
             <element signature="e#35456#35530#0" />
             <element signature="e#35533#37105#1" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Rules.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="58" column="43" selection-start-line="58" selection-start-column="43" selection-end-line="58" selection-end-column="43" />
         </state>
       </provider>
     </entry>
