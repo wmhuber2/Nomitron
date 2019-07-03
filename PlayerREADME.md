@@ -10,6 +10,10 @@ Rules:
 +        Allowed Channels: ALL            
 +        Diplay This Help Text
 +        Rule: N/A
+-   !find "text" OR !search "text"
++        Allowed Channels: ALL            
++        Display rules that contain text.
++        Rule: N/A
 
 Map:
 -    !start {coordinates} {color name} 

@@ -51,7 +51,45 @@ async def run(payload, message):
                     response = ""
                 response = response + "\n\n" + paragraph
             await channels[payload['Channel']].send(response)
-            
+
+    if (splitPayload[0] == "!search" or splitPayload[0] == "!find"):
+        text = ' '.join(splitPayload[1:]).lower()
+        if text[0] == '"': text = text[1:]
+        if text[1] == '"': text = text[:-2]
+        print (text)
+        for rule in Data.keys():
+            low = Data[rule].lower()
+            if text in low:
+                isIn = 1
+                count = 5
+                initIndex = 0
+                msg = '`'+str(rule)+':`\n'
+                while isIn and count > 0:
+                    try:
+                        index = low[initIndex:].index(text)
+                        index += initIndex
+
+                        initIndex = index + len(text)
+
+                        boundLower = index - 40
+                        if boundLower < 0:boundLower = 0
+
+                        boundUpper = index + 120
+                        if boundUpper >= len(low): boundUpper = len(low)-1
+
+                        msg +=('\t...'\
+                              +Data[rule][boundLower:index]\
+                              +'**'+ Data[rule][index:index+len(text)]\
+                              +'**'+ Data[rule][index+len(text):boundUpper]\
+                              +'...').replace('\n','  ')+'\n\n'
+                    except ValueError:
+                        isIn = 0
+                    count -= 1
+                if count <= 0:
+                    msg += '...and more...'
+                await message.channel.send(msg)
+
+        pass
 
     await saveData()
 

@@ -705,6 +705,8 @@ async def plotMap(channel, postReply = True):
             for player in Data[guild]['Players'].keys():
                 player = Data[guild]['Players'][player]
                 color = player['Color']
+                outline = 'black'
+                if color == 'black': outline = 'white'
 
                 x, y = np.asarray(player['Markers']['Location']).T
                 obj  = np.asarray(player['Markers']['Shape'])
@@ -719,15 +721,7 @@ async def plotMap(channel, postReply = True):
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Non Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
                                        linewidths=0.65, s=8.5, marker='s',alpha = 0.7)
-
-
-                    if color != 'black':
-                        ax.scatter(x[i], y[i], c='black', s=9, edgecolors='none', marker=obj[i])
-                    if color == 'black':
-                        ax.scatter(x[i], y[i], c='white', s=9, edgecolors='none', marker=obj[i])
-
-                    ax.scatter(x[i], y[i], c=color,   s=4.5, edgecolors='none', marker = obj[i])
-
+                    ax.scatter(x[i], y[i], c=color,   s=4.5, linewidths=0.1, edgecolors=outline, marker = obj[i])
 
 
             ax.yaxis.set_major_formatter(ticker.NullFormatter())
