@@ -61,7 +61,7 @@ async def run(payload, message):
             low = Data[rule].lower()
             if text in low:
                 isIn = 1
-                count = 5
+                count = 3
                 initIndex = 0
                 msg = '`'+str(rule)+':`\n'
                 while isIn and count > 0:
