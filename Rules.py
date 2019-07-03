@@ -37,6 +37,7 @@ async def run(payload, message):
     # Do Stuff Here
 
     splitPayload = payload['Content'].split()
+
     if(splitPayload[0] == "!rule" and len(splitPayload) == 2):
         rulequery = int(splitPayload[1])
         if(rulequery not in Data.keys()):
@@ -57,7 +58,7 @@ async def run(payload, message):
         if text[0] == '"': text = text[1:]
         if text[1] == '"': text = text[:-2]
         print (text)
-        if len(text) <= 3: message.channel.send("Must Search Words Longer Then 3 Letters")
+        if len(text) <= 3: await message.channel.send("Must Search Words Longer Then 3 Letters")
         else:
             for rule in Data.keys():
                 low = Data[rule].lower()
