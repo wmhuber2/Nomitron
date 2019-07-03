@@ -56,7 +56,7 @@ async def run(payload, message):
     if (splitPayload[0] == "!search" or splitPayload[0] == "!find"or splitPayload[0] == "!f"):
         text = ' '.join(splitPayload[1:]).lower()
         if text[0] == '"': text = text[1:]
-        if text[1] == '"': text = text[:-2]
+        if text[-1] == '"': text = text[:-1]
         print (text)
         if len(text) <= 3: await message.channel.send("Must Search Words Longer Then 3 Letters")
         else:
