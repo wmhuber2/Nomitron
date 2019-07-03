@@ -60,6 +60,7 @@ async def run(payload, message):
         print (text)
         if len(text) <= 3: await message.channel.send("Must Search Words Longer Then 3 Letters")
         else:
+            found = False
             for rule in Data.keys():
                 low = Data[rule].lower()
                 if text in low:
@@ -68,6 +69,7 @@ async def run(payload, message):
                     initIndex = 0
                     msg = '`'+str(rule)+':`\n'
                     while isIn and count > 0:
+                        found = True
                         try:
                             index = low[initIndex:].index(text)
                             index += initIndex
@@ -91,7 +93,8 @@ async def run(payload, message):
                     if count <= 0:
                         msg += '...and more...'
                     await message.channel.send(msg)
-
+            if not found:
+                await message.channel.send("Couldn't Find A Match For "+text)
     await saveData()
 
 
