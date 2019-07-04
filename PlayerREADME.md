@@ -34,7 +34,7 @@ Map:
 +        Example: !harvest aj56 p, !harvest 5ca perpetual, !harvest ca5 n
 +        Rule: 314
 -    !map
-+        Allowed Channels: ALL excluding Actions
++        Allowed Channels: ALL
 +        Display Current Map.
 +        Rule: 312
 

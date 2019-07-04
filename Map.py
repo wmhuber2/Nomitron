@@ -72,15 +72,15 @@ async def run(payload, message):
 
     #  IF A SERVER CHANNEL
     if payload['Channel Type'] == 'Text':
-        if payload['Content'] == '!map' and payload['Channel'].lower() not in ['actions','action']:
-            await plotMap(message.channel)
-            await updateInAnnouncements(message.guild, reload = False)
-            await saveData()
-
         if Data[guild]['Pause'] and payload['Content'][0] == '!':
             await message.channel.send("Warning: The Bot Has Been Paused.\n Admins May Ignore This Message")
+        elif payload['Content'] == '!map' and payload['Channel'].lower() not in []:
+                await plotMap(message.channel)
+                await updateInAnnouncements(message.guild, reload=False)
+                await saveData()
 
         elif payload['Channel'].lower() in ['actions','action']:
+
             if splitContent[0] == '!start' and len(splitContent) == 3:
 
                 if payload['Author'] in Data[guild]['Players'].keys():
@@ -220,6 +220,7 @@ async def run(payload, message):
                             await message.channel.send("You cannot harvest this location until you have claimed it.")
 
         if payload['Author'] in Admins and payload['Channel'].lower() in ['actions','action', 'mod-lounge', 'bot-lounge']:
+
             if payload['Content'] == '!changelog':
                 msg = ""
                 for line in Data[guild]['Log']:
@@ -556,13 +557,17 @@ async def updateInAnnouncements(server, reload = True):
             Data[guild]['Announcements']['Items'].append(post.id)
         else:
             await post.edit( content='```'+msg+'```'  )
-
+        print(i)
         i+=1
-    for n in range(i,len(Data[guild]['Announcements']['Items'])):
+    for n in reversed(range(i,len(Data[guild]['Announcements']['Items']))):
+        print('n',n)
         try:
             post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][n])
             await post.delete()
-        except: post = None
+            del Data[guild]['Announcements']['Items'][n]
+        except:
+            post = None
+            del Data[guild]['Announcements']['Items'][n]
 
 
 
@@ -618,6 +623,8 @@ async def setup(chans, logchan, server):
     global channels, logChannel, Data, secretCommand
     global np, plt, ticker, mcd
     import numpy as np
+    import matplotlib
+    matplotlib.use('TkAgg')
     import matplotlib.pyplot as plt
     import matplotlib.ticker as ticker
     import matplotlib._color_data as mcd
@@ -697,7 +704,11 @@ async def plotMap(channel, postReply = True):
         guild = channel.guild.id
         async with channel.typing():
             if channel is None: channel = channels[guild][logChannel]
-            fig, ax = plt.subplots()
+            #fig, ax = plt.subplots()
+            fig = plt.figure(figsize=(5.0, 5.0))
+            plt.subplots_adjust(left=0.04, bottom=0.04, right=0.96, top=0.96)
+            ax = fig.add_subplot(111)
+
             axisn = np.arange(0, n, 1)
             plt.xticks(axisn + 0.5)
             plt.yticks(axisn + 0.5)
@@ -738,8 +749,8 @@ async def plotMap(channel, postReply = True):
             ax.tick_params(axis='both', which='major', length=0,labeltop=True, labelright=True,bottom=True, top=True, left=True, right=True)
 
             plt.grid(color='k', linestyle='-', linewidth=0.25, alpha = 0.5)
-            ax.imshow(Data[guild]['Image'].transpose(1,0,2), interpolation='nearest')
-            plt.savefig('tmpgrid.png', format='png', dpi = 600, bbox_inches="tight")
+            ax.imshow(Data[guild]['Image'].transpose(1,0,2), interpolation='none')
+            plt.savefig('tmpgrid.png', format='png', dpi = 525) #, bbox_inches="tight")
 
             delay = None
             if channel.id != channels[guild][logChannel].id:

@@ -1,6 +1,10 @@
 Hi. It looks like you need some help. Some commands are listed below.
 
 Admin:
+-    !map
++        Allowed Channels: ALL excluding Actions
++        Display Current Map.
++        Rule: 312
 -    !newTurn
 +       Allowed Channels: actions, mod-lounge, bot-lounge
 +       Starts a new turn. Prints Current Player Resources
