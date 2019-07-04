@@ -624,7 +624,7 @@ async def setup(chans, logchan, server):
     global np, plt, ticker, mcd
     import numpy as np
     import matplotlib
-    matplotlib.use('TkAgg')
+    matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     import matplotlib.ticker as ticker
     import matplotlib._color_data as mcd

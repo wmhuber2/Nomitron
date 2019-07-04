@@ -33,8 +33,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="735" lean-forward="true" selection-start-line="735" selection-end-line="735" />
+            <state relative-caret-position="630">
+              <caret line="626" column="20" lean-forward="true" selection-start-line="626" selection-start-column="20" selection-end-line="626" selection-end-column="20" />
               <folding>
                 <element signature="n#!!doc" />
                 <element signature="e#1228#1281#0" />
@@ -65,7 +65,6 @@
                 <element signature="e#25650#29422#0" />
                 <element signature="e#25687#25966#0" />
                 <element signature="e#29644#30289#0" />
-                <element signature="e#30504#33192#0" />
                 <element signature="e#31456#32055#0" />
                 <element signature="e#37232#37275#0" />
                 <element signature="e#37386#37490#0" />
@@ -351,20 +350,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00077" summary="Fixed Map Image Transpose Bug.">
-      <created>1561504248488</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1561504248488</updated>
-    </task>
-    <task id="LOCAL-00078" summary="Fixed Map Image Transpose Bug.">
-      <created>1561504338521</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1561504338521</updated>
     </task>
     <task id="LOCAL-00079" summary="Updated Readme">
       <created>1561509372324</created>
@@ -695,7 +680,21 @@
       <option name="project" value="LOCAL" />
       <updated>1562280029356</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="Map Fixing.">
+      <created>1562280103183</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1562280103183</updated>
+    </task>
+    <task id="LOCAL-00127" summary="Map Fixing.">
+      <created>1562280141939</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1562280141939</updated>
+    </task>
+    <option name="localTasksCounter" value="128" />
     <servers />
   </component>
   <component name="TodoView">
@@ -708,7 +707,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2697" y="70" width="1125" height="992" extended-state="6" />
+    <frame x="2697" y="84" width="1125" height="978" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.46938777" weight="0.38325992" />
@@ -887,8 +886,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="139">
-          <caret line="735" lean-forward="true" selection-start-line="735" selection-end-line="735" />
+        <state relative-caret-position="630">
+          <caret line="626" column="20" lean-forward="true" selection-start-line="626" selection-start-column="20" selection-end-line="626" selection-end-column="20" />
           <folding>
             <element signature="n#!!doc" />
             <element signature="e#1228#1281#0" />
@@ -919,7 +918,6 @@
             <element signature="e#25650#29422#0" />
             <element signature="e#25687#25966#0" />
             <element signature="e#29644#30289#0" />
-            <element signature="e#30504#33192#0" />
             <element signature="e#31456#32055#0" />
             <element signature="e#37232#37275#0" />
             <element signature="e#37386#37490#0" />
