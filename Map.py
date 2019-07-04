@@ -617,11 +617,13 @@ Handles Change In Server Structure and the like. Probably Can Leave Alone.
 async def setup(chans, logchan, server):
     global channels, logChannel, Data, secretCommand
     global np, plt, ticker, mcd
+
     import numpy as np
+    import matplotlib
+    matplotlib.use('TkAgg')
     import matplotlib.pyplot as plt
     import matplotlib.ticker as ticker
     import matplotlib._color_data as mcd
-
 
     channels[server.id] = chans
     logChannel = logchan
@@ -658,6 +660,9 @@ async def setup(chans, logchan, server):
             Data[guild]['Image'] = data
         except ImportError:
             await log(guild,"Error Initializing the Map: PIL and/or Numpy Not Available")
+    if Data[guild].get('ImageT') is None:
+        Data[guild]['ImageT'] = Data[guild]['Image'].transpose(1, 0, 2)
+
     if Data[guild].get('Secret') is None: Data[guild]['Secret'] = 0
 
     for player in Data[guild]['Players'].keys():
@@ -689,15 +694,18 @@ async def setup(chans, logchan, server):
     secretCommand = ' '.join(secretCommand)
     '''
 
-
-
-async def plotMap(channel, postReply = True):
-    try:
+async def plotMap(channel, postReply=True):
+    if 1:
         global Data
+        import time,io
         guild = channel.guild.id
         async with channel.typing():
+
+            s = time.time()
             if channel is None: channel = channels[guild][logChannel]
-            fig, ax = plt.subplots()
+            fig = plt.figure(figsize=(5.0, 5.0))
+            plt.subplots_adjust(left=0.04, bottom=0.04, right=0.96, top=0.96)
+            ax = fig.add_subplot(111)
             axisn = np.arange(0, n, 1)
             plt.xticks(axisn + 0.5)
             plt.yticks(axisn + 0.5)
@@ -709,7 +717,7 @@ async def plotMap(channel, postReply = True):
                 if color == 'black': outline = 'white'
 
                 x, y = np.asarray(player['Markers']['Location']).T
-                obj  = np.asarray(player['Markers']['Shape'])
+                obj = np.asarray(player['Markers']['Shape'])
 
                 obj[obj == 'Claim'] = '.'
                 obj[obj == 'Capital'] = '*'
@@ -717,38 +725,46 @@ async def plotMap(channel, postReply = True):
                     if player['Markers']['Properties'][i].get('Harvest') is not None:
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
-                                       linewidths=0.2 ,s=10, marker='s', alpha = 0.7)
-                        if player['Markers']['Properties'][i]['Harvest']['type'] == 'Non Perpetual':
+                                       linewidths=0.2, s=10, marker='s', alpha=0.7)
+                        elif player['Markers']['Properties'][i]['Harvest']['type'] == 'Non Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
-                                       linewidths=0.65, s=8.5, marker='s',alpha = 0.7)
-                    ax.scatter(x[i], y[i], c=color,   s=4.5, linewidths=0.1, edgecolors=outline, marker = obj[i])
-
+                                       linewidths=0.65, s=8.5, marker='s', alpha=0.7)
+                    ax.scatter(x[i], y[i], c=color, s=4.5, linewidths=0.1, edgecolors=outline, marker=obj[i])
 
             ax.yaxis.set_major_formatter(ticker.NullFormatter())
             ax.yaxis.set_minor_locator(ticker.FixedLocator(axisn))
-            ax.yaxis.set_minor_formatter(ticker.FixedFormatter(axisn+1))
+            ax.yaxis.set_minor_formatter(ticker.FixedFormatter(axisn + 1))
 
             ax.xaxis.set_major_formatter(ticker.NullFormatter())
             ax.xaxis.set_minor_locator(ticker.FixedLocator(axisn))
             ax.xaxis.set_minor_formatter(ticker.FixedFormatter(plotLables))
 
-            ax.tick_params(axis='both', which='minor', labelsize=2.5,labeltop=True, labelright=True,bottom=True, top=True, left=True, right=True)
-            ax.tick_params(axis='both', which='minor', width=1,labeltop=True, labelright=True,bottom=True, top=True, left=True, right=True)
-            ax.tick_params(axis='both', which='minor', length=3,labeltop=True, labelright=True,bottom=True, top=True, left=True, right=True)
-            ax.tick_params(axis='both', which='major', length=0,labeltop=True, labelright=True,bottom=True, top=True, left=True, right=True)
+            ax.tick_params(axis='both', which='minor', labelsize=2.5, labeltop=True, labelright=True, bottom=True,
+                           top=True, left=True, right=True)
+            ax.tick_params(axis='both', which='minor', width=1, labeltop=True, labelright=True, bottom=True,
+                           top=True, left=True, right=True)
+            ax.tick_params(axis='both', which='minor', length=3, labeltop=True, labelright=True, bottom=True,
+                           top=True, left=True, right=True)
+            ax.tick_params(axis='both', which='major', length=0, labeltop=True, labelright=True, bottom=True,
+                           top=True, left=True, right=True)
 
-            plt.grid(color='k', linestyle='-', linewidth=0.25, alpha = 0.5)
-            ax.imshow(Data[guild]['Image'].transpose(1,0,2), interpolation='nearest')
-            plt.savefig('tmpgrid.png', format='png', dpi = 600, bbox_inches="tight")
+            plt.grid(color='k', linestyle='-', linewidth=0.25, alpha=0.5)
+            ax.imshow(Data[guild]['ImageT'], interpolation='none')
 
+            t1 = time.time()
+            plt.savefig('tmpgrid.png', format='png', dpi=500)
+
+            t2 = time.time()
             delay = None
             if channel.id != channels[guild][logChannel].id:
                 delay = 60*5
             if postReply:
                 await channel.send('World Map, You may view a constantly updated map in #changelog-live \n[Auto Delete: 5 mins]:',
-                    delete_after = delay, file=discord.File(open('tmpgrid.png', 'br')))
-    except Exception as e:
-        print('Error',str(e))
+                    delete_after = delay, file=discord.File(open('tmpgrid.png','rb')))
+            t3 = time.time()
+            print(t1-s)
+            print(t2-t1)
+            print(t3-t2)
 
 #####################################################
 #  Necessary Module Functions
