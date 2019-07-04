@@ -756,7 +756,7 @@ async def plotMap(channel, postReply = True):
             if channel.id != channels[guild][logChannel].id:
                 delay = 60*2
             if postReply:
-                await channel.send('World Map, You may view a constantly updated map in #changelog-live \n[Auto Delete: 5 mins]:',
+                await channel.send('World Map, You may view a constantly updated map in #changelog-live \n[Auto Delete: 2 mins]:',
                     delete_after = delay, file=discord.File(open('tmpgrid.png', 'br')))
     except Exception as e:
         print('Error',str(e))
