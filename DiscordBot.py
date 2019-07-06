@@ -208,14 +208,15 @@ class DiscordNomicBot():
     async def on_raw_reaction(self, payload, mode):
         user = self.client.get_user(payload.user_id)
         channel = self.client.get_channel(payload.channel_id)
-        msg =  await channel.fetch_message(payload.message_id)
+        msg = await channel.fetch_message(payload.message_id)
 
         tasks = []
         for mod, name in zip(self.modules, self.moduleNames):
             if name in self.Data['disabled'][msg.guild.id]: continue
             if hasattr(mod, 'reaction'):
-                tasks.append(mod.reaction(mode, user, msg, payload.emoji))
-        await asyncio.gather(*tasks,return_exceptions=True)
+                # tasks.append(mod.reaction(mode, user, msg, payload.emoji))
+                await mod.reaction(mode, user, msg, payload.emoji)
+        # await asyncio.gather(*tasks,return_exceptions=True)
 
 
     """

@@ -309,6 +309,9 @@ async def run(payload, message):
                     playerid = splitContent[1]
                 await resetTimers(message.guild, playerid = playerid, channel = message.channel)
 
+            if splitContent[0] == '!newDay':
+                await onDayChange(message.guild)
+
             if splitContent[0] == '!setTimer':
                 playerid = None
                 if len(splitContent) == 2:
@@ -372,11 +375,19 @@ Reset All Claim Timers
 async def onDayChange(server):
     guild = server.id
     print ('Day Changing...')
-    await log(guild,"Day " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+
     await resetTimers(server)
     Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
-    await sendMapData(guild)
-    await updateInAnnouncements(guild)
+    await updateInAnnouncements(server)
+
+    for chan in ['action', 'actions']:
+        if chan in channels[guild].keys():
+            await channels[guild][chan].send("New Day Actions Completed: " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+    await log(guild,"Day " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
+
+    lastday = datetime.datetime.today() - datetime.timedelta(days=1)
+    async for message in channels[guild]['voting'].history(limit=100, after = lastday):
+        print(message.content)
 
 """
 Called On Turn Change
