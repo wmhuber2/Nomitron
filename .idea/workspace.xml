@@ -5,8 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/DiscordBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/DiscordBot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/players.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="Paint.py" />
     <ignored mask="*_Data.pickle" />
@@ -77,20 +77,29 @@
         <entry file="file://$PROJECT_DIR$/Admin.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="448">
-              <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+              <caret line="44" selection-start-line="44" selection-end-line="44" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/DiscordBot.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="168">
+              <caret line="197" column="22" selection-start-line="197" selection-start-column="22" selection-end-line="197" selection-end-column="22" />
+              <folding>
+                <element signature="e#2172#2199#0" />
+                <element signature="e#2285#2493#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/DiscordBot.py">
+        <entry file="file://$PROJECT_DIR$/players.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="206" column="7" selection-start-line="206" selection-start-column="7" selection-end-line="206" selection-end-column="7" />
-              <folding>
-                <element signature="e#2172#2199#0" />
-                <element signature="e#2285#2493#0" />
-              </folding>
+            <state relative-caret-position="112">
+              <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -130,7 +139,7 @@
     </findStrings>
   </component>
   <component name="Git.Settings">
-    <option name="UPDATE_TYPE" value="REBASE" />
+    <option name="UPDATE_TYPE" value="MERGE" />
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
@@ -159,6 +168,7 @@
         <option value="$PROJECT_DIR$/PlayerREADME.md" />
         <option value="$PROJECT_DIR$/Map.py" />
         <option value="$PROJECT_DIR$/DiscordBot.py" />
+        <option value="$PROJECT_DIR$/players.yaml" />
       </list>
     </option>
   </component>
@@ -358,13 +368,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00080" summary="Update Map Image.">
-      <created>1561510667753</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1561510667754</updated>
     </task>
     <task id="LOCAL-00081" summary="git pswd hide">
       <created>1561514923922</created>
@@ -702,7 +705,14 @@
       <option name="project" value="LOCAL" />
       <updated>1562280607933</updated>
     </task>
-    <option name="localTasksCounter" value="129" />
+    <task id="LOCAL-00129" summary="Sermon">
+      <created>1562442285269</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1562442285269</updated>
+    </task>
+    <option name="localTasksCounter" value="130" />
     <servers />
   </component>
   <component name="TodoView">
@@ -718,9 +728,9 @@
     <frame x="2889" y="98" width="933" height="964" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.46774194" weight="0.38325992" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.46721312" visible="true" weight="0.38325992" />
       <window_info id="Structure" order="1" sideWeight="0.5322581" side_tool="true" weight="0.38325992" />
-      <window_info id="Run" order="2" sideWeight="0.53061223" side_tool="true" weight="0.2555066" />
+      <window_info id="Run" order="2" sideWeight="0.5327869" side_tool="true" visible="true" weight="0.38325992" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
@@ -748,7 +758,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Repaired Enable/Disable Bug and Methods" />
     <MESSAGE value="Fixed Map Image Transpose Bug." />
     <MESSAGE value="Updated Readme" />
     <MESSAGE value="Update Map Image." />
@@ -773,7 +782,8 @@
     <MESSAGE value="Multiple give targets" />
     <MESSAGE value="Added Find/Search function to BOT" />
     <MESSAGE value="Map Fixing." />
-    <option name="LAST_COMMIT_MESSAGE" value="Map Fixing." />
+    <MESSAGE value="Sermon" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sermon" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tmp/Admin.py" />
@@ -918,18 +928,25 @@
     <entry file="file://$PROJECT_DIR$/Admin.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="448">
-          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="44" />
+          <caret line="44" selection-start-line="44" selection-end-line="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DiscordBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="206" column="7" selection-start-line="206" selection-start-column="7" selection-end-line="206" selection-end-column="7" />
+        <state relative-caret-position="168">
+          <caret line="197" column="22" selection-start-line="197" selection-start-column="22" selection-end-line="197" selection-end-column="22" />
           <folding>
             <element signature="e#2172#2199#0" />
             <element signature="e#2285#2493#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/players.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="112">
+          <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
         </state>
       </provider>
     </entry>
