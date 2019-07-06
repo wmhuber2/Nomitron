@@ -1,0 +1,1018 @@
+sentences:
+  # Rule 101
+  - text: "All players must always abide by all the rules then in effect, in the form in which they are then in effect."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  - text: "The rules in the Initial Set are in effect whenever a game begins."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 2
+  - text: "The Initial Set consists of Rules 101-115 (immutable) and 201-216 (mutable)."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 3
+  # Rule 102
+  - text: "Initially rules in the 100's are immutable and rules in the 200's are mutable."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  - text: "Rules subsequently enacted or transmuted (that is, changed from immutable to mutable or vice versa) may be immutable or mutable regardless of their numbers, and rules in the Initial Set may be transmuted regardless of their numbers."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 2
+  # Rule 103
+  - text: "A rule-change is any of the following: (1) the enactment, repeal, or amendment of a mutable rule; (2) the enactment, repeal, or amendment of an amendment of a mutable rule; or (3) the transmutation of an immutable rule into a mutable rule or vice versa."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  # Rule 104
+  - text: "All rule-changes proposed in the proper way shall be voted on."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  - text: "They will be adopted if and only if they receive the required number of votes."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 2
+  # Rule 105
+  - text: "All proposed rule-changes shall be written down before they are voted on."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  - text: "If they are adopted, they shall guide play in the form in which they were voted on."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 2
+  # Rule 106
+  - text: "No rule-change may take effect earlier than the moment of the completion of the vote that adopted it, even if its wording explicitly states otherwise."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  - text: "No rule-change may have retroactive application."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 2
+  # Rule 107
+  - text: "Each proposed rule-change shall be given a number for reference."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  - text: "The numbers shall begin with 301, and each rule-change proposed in the proper way shall receive the next successive integer, whether or not the proposal is adopted."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 2
+  # Rule 108
+  - text: "Rule-changes that transmute immutable rules into mutable rules may be adopted if and only if the vote is unanimous among the eligible voters."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  - text: "Transmutation shall not be implied, but must be stated explicitly in a proposal to take effect."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 2
+  # Rule 109
+  - text: "In a conflict between a mutable and an immutable rule, the immutable rule takes precedence and the mutable rule shall be entirely void."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  - text: 'For the purposes of this rule a proposal to transmute an immutable rule does not "conflict" with that immutable rule.'
+    category: "Immutables"
+    paragraph: 1
+    sentence: 2
+  # Rule 110
+  - text: "A player always has the option to forfeit the game rather than continue to play or incur a game penalty."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  - text: "No penalty worse than losing, in the judgment of the player to incur it, may be imposed."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 2
+  # Rule 111
+  - text: "The adoption of rule-changes must never become completely impermissible."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  # Rule 112
+  - text: "Rule-changes that affect rules needed to allow or apply rule-changes are as permissible as other rule-changes."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  - text: "Even rule-changes that amend or repeal their own authority are permissible."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 2
+  - text: "No rule-change or type of move is impermissible solely on account of the self-reference or self-application of a rule."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 3
+  # Rule 113
+  - text: "Votes must be unambiguous."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  - text: "A vote that would be ambiguous is not considered to be a vote."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 2
+  - text: "Additional rules may be made to clarify what constitutes ambiguity."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 3
+  # Rule 114
+  - text: "Server administrators and moderators regulate the server and game."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  - text: "Their responsibilities include the creation of text and voice channels, the designation of which messages go in which channels, the editing or deleting of messages that are inappropriate for the channel that they are in, and keeping track of the state of the game."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 2
+  - text: "The server administrator may override the decision of a server moderator, and may grant and revoke moderator status to persons."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 3
+  - text: 'A person is a server administrator if and only if they have the "Administrator" role.'
+    category: "Immutables"
+    paragraph: 2
+    sentence: 1
+  - text: 'A person is a server moderator if and only if they have the "Moderator" role.'
+    category: "Immutables"
+    paragraph: 2
+    sentence: 2
+  # Rule 115
+  - text: "Whatever is not prohibited or regulated by a rule is permitted and unregulated, with the sole exception of changing the rules, which is permitted only when a rule or set of rules explicitly or implicitly permits it."
+    category: "Immutables"
+    paragraph: 1
+    sentence: 1
+  # Rule 201
+  - text: "Players shall initially alternate in a random order to be determined by the server administrator by the start of the game, taking one whole turn apiece."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  - text: "Players joining the game will have their turn order set to precede the player that is taking their turn at the time of the player’s joining."
+    category: "Starters"
+    paragraph: 1
+    sentence: 2
+  - text: "Turns belonging to active players may not be skipped or passed, and parts of turns belonging to active players may not be omitted."
+    category: "Starters"
+    paragraph: 1
+    sentence: 3
+  - text: "All players begin with zero points."
+    category: "Starters"
+    paragraph: 1
+    sentence: 4
+  # Rule 202
+  - text: "One turn consists of proposing one rule-change and having it voted on."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  # Rule 203
+  - text: "A rule-change is adopted if and only if a simple majority of eligible voters vote for it."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  # Rule 204
+  - text: "An adopted rule-change takes full effect at the moment of the start of the turn following the turn that it was adopted on."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  # Rule 205
+  - text: "Every active player is an eligible voter."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  - text: "Every eligible voter must participate in every vote on rule-changes."
+    category: "Starters"
+    paragraph: 1
+    sentence: 2
+  # Rule 206
+  - text: "The length of a turn defaults to 24 hours."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  - text: "If the player whose turn it is has made a proposal, the length of the turn is extended by 24 more hours."
+    category: "Starters"
+    paragraph: 1
+    sentence: 2
+  - text: "If, at the 24-hour mark of a turn, all active players have cast an unwithdrawn vote on the current revision of the proposal, and Judgement has not been invoked during said turn, the above extension is revoked and the turn ends immediately."
+    category: "Starters"
+    paragraph: 1
+    sentence: 3
+  # Rule 207
+  - text: "It is the active player’s turn, and said player has not made a proposal by the end of their turn"
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  - text: "It is not the active player’s turn, a proposal has been put forward during the turn, and said player has not voted on said proposal by the end of the turn"
+    category: "Starters"
+    paragraph: 1
+    sentence: 2
+  - text: "The active player has publicly declared that they are now inactive"
+    category: "Starters"
+    paragraph: 1
+    sentence: 3
+  - text: "Players that have become inactive through the above methods may become active again by attempting to cast a vote (the vote will be counted as though it was cast when they were active) or by publicly declaring that they are active."
+    category: "Starters"
+    paragraph: 2
+    sentence: 1
+  - text: "Players may declare inactivity during their turn."
+    category: "Starters"
+    paragraph: 3
+    sentence: 1
+  - text: "The turn will not end immediately, but any proposal made during the turn is treated as though it does not exist."
+    category: "Starters"
+    paragraph: 3
+    sentence: 2
+  - text: "A player that declares inactivity during their turn cannot become active for the duration of said turn."
+    category: "Starters"
+    paragraph: 3
+    sentence: 3
+  - text: "If an inactive player’s turn would start, their turn is skipped instead."
+    category: "Starters"
+    paragraph: 4
+    sentence: 1
+  # Rule 208
+  - text: "Each player always has exactly one vote."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  # Rule 209
+  - text: "Players may change or withdraw their votes by stating their intention to do so."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  - text: "Players may not edit or delete their votes (*i.e.* alter the voting record)."
+    category: "Starters"
+    paragraph: 1
+    sentence: 2
+  - text: "A vote that is edited loses its vote status."
+    category: "Starters"
+    paragraph: 1
+    sentence: 3
+  # Rule 210
+  - text: "Proposals may not be edited after they are submitted for voting."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  - text: "A proposal may be resubmitted up to two times a turn but may not be resubmitted if the turn has started more than 24 hours ago."
+    category: "Starters"
+    paragraph: 1
+    sentence: 2
+  - text: "Resubmitting a proposal restarts the vote on the proposal."
+    category: "Starters"
+    paragraph: 1
+    sentence: 3
+  # Rule 211
+  - text: "If a section of a rule relies on a bot to be implemented to the point where its manual implementation would be infeasible, and there is no such bot, then said rule’s section is void until said bot is functional."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  # Rule 212
+  - text: "If two or more mutable rules conflict with one another, or if two or more immutable rules conflict with one another, then the rule with the lowest ordinal number takes precedence."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  - text: "If at least one of the rules in conflict explicitly says of itself that it defers to another rule (or type of rule) or takes precedence over another rule (or type of rule), then such provisions shall supersede the numerical method for determining precedence."
+    category: "Starters"
+    paragraph: 2
+    sentence: 1
+  - text: "If two or more rules claim to take precedence over one another or to defer to one another, then the numerical method again governs."
+    category: "Starters"
+    paragraph: 3
+    sentence: 1
+  # Rule 213
+  - text: "If players disagree about the legality of a move or the interpretation or application of a rule, then the active player preceding the one moving is to be the Judge and decide the question."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  - text: "Disagreement for the purposes of this rule may be created by the insistence of any player."
+    category: "Starters"
+    paragraph: 1
+    sentence: 2
+  - text: "This process is called invoking Judgment."
+    category: "Starters"
+    paragraph: 1
+    sentence: 3
+  - text: "When Judgement is invoked, the current turn is extended by 24 hours unless the scheduled end of the turn was already more than 24 hours after Judgement’s invocation."
+    category: "Starters"
+    paragraph: 2
+    sentence: 1
+  - text: "If the turn is extended in this manner, and there are still more than 24 hours left in the turn, a majority of active players may consent to revoke the extension."
+    category: "Starters"
+    paragraph: 2
+    sentence: 2
+  - text: "The Judge's Judgment may be overruled only by either a unanimous vote of the other active players taken before the next turn is begun or the server administrator within 24 hours of the Judgement."
+    category: "Starters"
+    paragraph: 3
+    sentence: 1
+  - text: "If a Judge's Judgment is overruled, and the turn has not changed since the Judgement was made, then the active player preceding the Judge in the playing order becomes the new Judge for the question, and so on, except that no player is to be Judge during his or her own turn or during the turn of a team-mate."
+    category: "Starters"
+    paragraph: 3
+    sentence: 2
+  - text: "The state of the game has no bearing on whether the server administrator can or cannot overrule the Judge's Judgement."
+    category: "Starters"
+    paragraph: 4
+    sentence: 1
+  - text: "The server administrator can only overrule a Judge’s Judgement if the Judgement egregiously conflicts with the rules and would cause lasting damage to the game."
+    category: "Starters"
+    paragraph: 5
+    sentence: 1
+  - text: "A majority vote of the other active players, taken within the 24 hours following the overruling, may nullify the overruling, in which case the original Judgement stands, the original Judge resumes their position as Judge, and all Judgements issued by Judges between the overruling and the nullification of the overruling are nullified."
+    category: "Starters"
+    paragraph: 5
+    sentence: 2
+  - text: "Unless a Judge is overruled, one Judge settles all questions arising from the game until the next turn is begun, including questions as to his or her own legitimacy and jurisdiction as Judge."
+    category: "Starters"
+    paragraph: 6
+    sentence: 1
+  - text: "New Judges are not bound by the decisions of old Judges."
+    category: "Starters"
+    paragraph: 7
+    sentence: 1
+  - text: "New Judges may, however, settle only those questions on which the players currently disagree and that affect the completion of the turn in which Judgment was invoked."
+    category: "Starters"
+    paragraph: 7
+    sentence: 2
+  - text: "All decisions by Judges shall be in accordance with all the rules then in effect; but when the rules are silent, inconsistent, or unclear on the point at issue, then the Judge shall consider game-custom and the spirit of the game before applying other standards."
+    category: "Starters"
+    paragraph: 7
+    sentence: 3
+  # Rule 214
+  - text: "The state of affairs that constitutes winning may not be altered from achieving *n* points to any other state of affairs."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  - text: "The magnitude of *n* and the means of earning points may be changed, and rules that establish a winner when play cannot continue may be enacted and (while they are mutable) be amended or repealed."
+    category: "Starters"
+    paragraph: 1
+    sentence: 2
+  # Rule 215
+  - text: "If the rules are changed so that further play is impossible, or if the legality of a move cannot be determined with finality, or if by the Judge's best reasoning, not overruled, a move appears equally legal and illegal, then the first player unable to complete a turn is the winner."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  - text: "This rule takes precedence over every other rule determining the winner."
+    category: "Starters"
+    paragraph: 2
+    sentence: 1
+  # Rule 216
+  - text: "Persons wishing to become players may request to do so publicly."
+    category: "Starters"
+    paragraph: 1
+    sentence: 1
+  - text: "Within 24 hours of the request, if no player has publicly objected or privately objected (to a server moderator or administrator) to a player joining the game, that player will join the game."
+    category: "Starters"
+    paragraph: 1
+    sentence: 2
+  - text: "If a player has objected, a vote is immediately held on whether or not the person joins the game."
+    category: "Starters"
+    paragraph: 1
+    sentence: 3
+  - text: "If there is a majority vote in favor after 24 hours of the start of the vote, that player will join the game."
+    category: "Starters"
+    paragraph: 1
+    sentence: 4
+  # Rule 301
+  - text: "Following the ratification of this rule, each player will select an emoji."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "This emoji will function as that player’s sigil."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 2
+  - text: "Each player must select a unique emoji."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 3
+  - text: "To avoid multiple players selecting the same emoji, players will take turns selecting."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 4
+  - text: "The order in which players select their emoji is the opposite of the turn order for Nomic III."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 5
+  - text: "Players may only select an emoji that is part of Discord’s default emoji sets."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 6
+  - text: "To select an emoji, a player must clearly indicate in the actions channel what emoji they are selecting."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 7
+  - text: "Votes must be unambiguous."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 1
+  - text: "A vote that would be ambiguous is not considered to be a vote."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 2
+  - text: "Additional rules may be made to clarify what constitutes ambiguity."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 3
+  - text: "From here on in, if a player reacts to a proposal on discord with their emoji sigil, that will count as an unambiguous vote in favor of the proposal."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 1
+  - text: "New players joining the game must declare an emoji sigil once they are approved."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 1
+  - text: "If a player wishes to change their sigil, they must petition the group, declaring what they want their new sigil to be."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 1
+  - text: "This must be ratified by 2/3rds or more active players."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 2
+  # Rule 302
+  - text: "Votes on rule-changes can only affect proposal passing or failure."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "Proposals are not allowed to distinguish those who voted for it, those who voted against it, or those who did not vote on it from each other."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 2
+  # Rule 303
+  - text: "Players that are required by the rules to perform an action have a total of 48 hours to perform said action."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "A player that does not perform said action within the allotted 48 hours becomes inactive until either they do perform said action or said action becomes impossible to perform."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 2
+  - text: "Additional penalties and regulations may be applied."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 3
+  - text: "At the time of this rules passing, Doby's turn to choose a sigil is skipped and is assigned 🚼, superceeding the first paragraph of rule 301 in this instance."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 1
+  # Rule 305
+  - text: "All bots used to fulfill any action described by a rule must have their code be open source."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  # Rule 307
+  - text: "Any player may choose to form a political party during their own turn."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "To propose a political party, the player whose turn it is must post their intent to create a party in #actions, along with the party name and an emoji, to be used as the party’s emoji sigil."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 2
+  - text: "The name or the sigil of the party can only be changed by the unanimous and public consent of all party members."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 3
+  - text: "No party can share a name, and no party can share an emoji sigil with any other party or any player (Players cannot choose an emoji that is a political party’s emoji sigil as their own emoji sigil)."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 4
+  - text: "A player that proposes a political party automatically joins said party."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 5
+  - text: "After a political party is proposed, other players may request to join it in #actions."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 1
+  - text: "The members of the political party then vote in #actions to determine if that player is allowed to join."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 2
+  - text: "A player is accepted if there is a majority vote to allow that player into the political party."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 3
+  - text: "Players can only be in up to one political party at a time."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 1
+  - text: "Players may leave their political party at any time, and automatically leave their current political party when they join a different political party."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 2
+  - text: "If a political party has no players, it automatically dissolves."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 1
+  - text: "If, throughout an entire turn, a political party has no active players, it dissolves at the end of said turn."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 2
+  - text: "There is an ongoing vote on a rule-change"
+    category: "Constructs"
+    paragraph: 4
+    sentence: 3
+  - text: "The political party in question has at least 4 members"
+    category: "Constructs"
+    paragraph: 4
+    sentence: 4
+  - text: "The political party in question has no inactive members"
+    category: "Constructs"
+    paragraph: 4
+    sentence: 5
+  - text: "No member of the political party in question has changed or withdrawn their vote for the current revision of the proposed rule-change"
+    category: "Constructs"
+    paragraph: 4
+    sentence: 6
+  - text: "Every member of the political party in question has voted and voted identically on the current revision of the proposed rule-change"
+    category: "Constructs"
+    paragraph: 4
+    sentence: 7
+  - text: "Political parties with eligible voter status lose their eligible voter status if the vote for the current revision of the proposed rule-change ends or if any of the above criteria cease to be fulfilled."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 1
+  - text: "Political parties with eligible voter status cast their vote when a member of said political party reacts to the current revision of the proposed rule change with the political party’s emoji sigil."
+    category: "Constructs"
+    paragraph: 6
+    sentence: 1
+  - text: "More than one member of said political party may react to the same proposal with said emoji sigil, but no member may withdraw their react."
+    category: "Constructs"
+    paragraph: 6
+    sentence: 2
+  - text: "The political party’s vote is the same as all of its members’."
+    category: "Constructs"
+    paragraph: 6
+    sentence: 3
+  # Rule 308
+  - text: "This proposal seeks to introduce a system of economy into the Nomic Game."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "The proposed unit of currency would be a Blemflarck or BF for short."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 2
+  - text: "All players would start with 20 Blemflarcks."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 3
+  - text: "Players gain 5 Blemflarcks when they vote on a proposal for the first time on a given turn of play."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 4
+  - text: "A player can attempt to give Blemflarcks to another player by declaring their intention in actions."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 5
+  - text: "This either needs to be accepted or declined by the receiving player before the end of the current turn of play."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 6
+  - text: "If the receiving player does not respond before the end of the turn, it is treated as a rejection."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 7
+  - text: "An action that would lead to a negative balance of Blemflarck is blocked automatically."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 8
+  # Rule 309
+  - text: "Things that exist are in a state of being."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "All players exist."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 2
+  - text: "Therefore, all players are in a state of being."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 3
+  - text: "This rule seeks to further specify what kind of state all players exist in."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 4
+  - text: "The player(s) with the most Blemflarcks is/are eligible to be in a State of Greed."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 1
+  - text: "Players instantly lose their eligibility if/when another player(s) has more Blemflarcks than them."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 2
+  - text: "If a player joins a political party on a player’s turn, and remains in that political party until that player’s next turn, they are eligible to be in a State of Loyalty."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 1
+  - text: "Players instantly lose their eligibility if/when they lose their status as a member of said political party."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 2
+  - text: "If a player’s last proposal passed, they are eligible to be in a State of Honor."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 1
+  - text: "Players instantly lose their eligibility if/when a proposal of theirs fails."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 2
+  - text: "If a player votes on a player’s turn, and continues to vote on every proposal until that player’s next turn comes, they are eligible to be in a State of Responsibility."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 1
+  - text: "If the player whose turn they voted on becomes inactive, their eligibility is instead judged by when that player’s turn would have taken place in the turn order."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 2
+  - text: "Players instantly lose their eligibility if/when they do not vote on a proposal."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 3
+  - text: "If a player is not eligible for any other States, they become eligible to be in a State of Passivity."
+    category: "Constructs"
+    paragraph: 6
+    sentence: 1
+  - text: "Players instantly lose their eligibilty if/when they become eligible for another State."
+    category: "Constructs"
+    paragraph: 6
+    sentence: 2
+  - text: "If a player is only eligible for one State, they are automatically in that State."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 1
+  - text: "If a player is eligible for multiple States, and they are already in a State, they may swap between States that they are eligible for once every 24 hours."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 2
+  - text: "If a player is eligible for multiple States, and they are not already in a State, they must declare in #actions which State they are in."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 3
+  - text: "If, as per rule 303, a player who is eligible for multiple States has not declared which State they are in within the appropriate amount of time, they are automatically assigned to a State of Headassery and are no longer eligible for any other States until the end of the current turn."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 4
+  - text: "At the end of each turn, players in a State of Headassery may once again become eligible for other States."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 5
+  - text: "If a player loses eligibility for the State that they are currently in, they are instantly no longer in that State."
+    category: "Constructs"
+    paragraph: 8
+    sentence: 1
+  - text: "A player who is removed from a State in this manner must follow the above proceedings."
+    category: "Constructs"
+    paragraph: 8
+    sentence: 2
+  - text: "Additional States may be defined in future proposals, either as amendments to this rule or as their own rules."
+    category: "Constructs"
+    paragraph: 9
+    sentence: 1
+  # Rule 312
+  - text: "The world is 75x75 grid map consisting of TILES."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "The map to be used is displayed below"
+    category: "Constructs"
+    paragraph: 2
+    sentence: 1
+  - text: "In all rules pertaining to this map, all references to distance and adjacency include diagonals unless explicitly stated otherwise"
+    category: "Constructs"
+    paragraph: 3
+    sentence: 1
+  - text: "Active players start by placing a Capital on an unmarked LAND TILE at least 2 TILES away from other Capitals."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 1
+  - text: "They will also choose a unique and easily distinguishable color used for all their MARKERS."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 1
+  - text: "The allowed colors for players are presented below"
+    category: "Constructs"
+    paragraph: 6
+    sentence: 1
+  - text: "Players who haven't chosen a Capital yet do so in turn order."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 1
+  - text: "This is all done using !start {coordinates} {color} in actions."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 2
+  - text: "Once per day, players may claim any unmarked LAND TILE if it is adjacent to any of their MARKERS at a cost of 2 BF."
+    category: "Constructs"
+    paragraph: 8
+    sentence: 1
+  - text: "This is done using !claim {coordinates} in actions."
+    category: "Constructs"
+    paragraph: 8
+    sentence: 2
+  - text: "One may view the map in any channel."
+    category: "Constructs"
+    paragraph: 9
+    sentence: 1
+  - text: "This is done using !map anywhere."
+    category: "Constructs"
+    paragraph: 9
+    sentence: 2
+  - text: "A player's claimed TILES are marked with a medium circle MARKER."
+    category: "Constructs"
+    paragraph: 10
+    sentence: 1
+  - text: "A player's capital is marked with a star MARKER."
+    category: "Constructs"
+    paragraph: 10
+    sentence: 2
+  - text: "A bot will manage the map and associated actions with the assistance of Moderators and Admins"
+    category: "Constructs"
+    paragraph: 11
+    sentence: 1
+  - text: "Additional mechanics may be added."
+    category: "Constructs"
+    paragraph: 11
+    sentence: 2
+  # Rule 314
+  - text: "This proposal looks to build off of rule 312."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "At a cost of blemflarck, a player can start harvesting resources from their controlled tiles on the map."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 1
+  - text: "For 4 BF, a player can start a tile's production of perpetual resources."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 1
+  - text: "Perpetual resources will produce 5 units of their resource a turn."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 2
+  - text: "A LAND tile will produce the perpetual resource of corn."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 3
+  - text: "A WATER tile will produce the perpetual resource of fish."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 1
+  - text: "For 7 BF, a player can start a non-perpetual operation on a tile."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 1
+  - text: "This operation will produce 1 of the tile's non-perpetual resource each turn for the next 5 turns, after which the tile will lose its status  of producing the resource."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 2
+  - text: "At a cost of more BF it can reenter this status."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 3
+  - text: "A LAND tile will produce the non-perpetual resource of steel."
+    category: "Constructs"
+    paragraph: 6
+    sentence: 1
+  - text: "A WATER tile will produce the non-perpetual resource of oil."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 1
+  - text: "Should a tile be in a state of production when taken over by a different player, it will then contribute those resources produced to the new owner."
+    category: "Constructs"
+    paragraph: 8
+    sentence: 1
+  - text: "A tile can only be in production of one resource, and can only produce resources at the rates described above."
+    category: "Constructs"
+    paragraph: 9
+    sentence: 1
+  - text: "Production cannot stack on the same tile."
+    category: "Constructs"
+    paragraph: 9
+    sentence: 2
+  - text: "If a player would like to change the produced item from a tile, they can do so by paying the cost of the desired tile production."
+    category: "Constructs"
+    paragraph: 9
+    sentence: 3
+  - text: "No tiles can enter states of production until all active players have placed capitals on the map."
+    category: "Constructs"
+    paragraph: 10
+    sentence: 1
+  - text: "The resources described above can be traded in the #actions channel by a player stating the resources they are trading to another player, and the resources they seek in exchange, followed by the target player accepting."
+    category: "Constructs"
+    paragraph: 11
+    sentence: 1
+  - text: "A trade not accepted by the end of turn is counted as declines, and a trade cannot occur unless the players have enough of the resources outlined in the trade such that neither player has a negative amount of the resources afterwards."
+    category: "Constructs"
+    paragraph: 11
+    sentence: 2
+  - text: "Players can never have a negative amount of the described resources."
+    category: "Constructs"
+    paragraph: 11
+    sentence: 3
+  # Rule 318
+  - text: "At the beginning of each turn, Nomitron will make a post in #actions."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "These posts will henceforth be known as Sermons."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 2
+  - text: "The posts will be formatted thusly"
+    category: "Constructs"
+    paragraph: 1
+    sentence: 3
+  - text: "Welcome, players, to our sermon on this blessed day, *."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 1
+  - text: "I invite you all to open your Nomic rulebooks to a favorite quote of mine."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 2
+  - text: "“*” - *."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 3
+  - text: "As you go about your day, think about this quote."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 4
+  - text: "Let it grant you wisdom and solace."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 5
+  - text: "Amen."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 6
+  - text: "In each of Nomitron’s Sermons, let the first asterix in the Sermon be replaced by the date of the post."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 1
+  - text: "In each of Nomitron’s Sermons, let the second asterix in the Sermon be replaced by a random sentence from one of the rules in Nomic III."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 1
+  - text: "Nomitron shall not be limited in any way in regards to which rules it is allowed to quote."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 2
+  - text: "New rules can be quoted from once they are ratified."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 3
+  - text: "In each of Nomitron’s Sermons, let the third asterix in the Sermon be replaced by proper citation."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 1
+  - text: "Proper citation will be as follows: The category that the quoted rule belongs in, a number representing which paragraph in the rule the sentence quoted came from, a colon, and a number representing which number sentence in said paragraph the quote is from."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 2
+  - text: "Rules in the 100s are categorized as Immutables."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 3
+  - text: "Rules in the 200s are categorized as Starters."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 4
+  - text: "Rules in the 300s and beyond are categorized as Constructs."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 5
+  - text: "Welcome, players, to our sermon on this blessed day, Monday, July 1st."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 1
+  - text: "I invite you all to open your Nomic rulebooks to a favorite quote of mine."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 2
+  - text: "“All players must always abide by all the rules then in effect, in the form in which they are then in effect.” - Immutables 1:1."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 3
+  - text: "As you go about your day, think about this quote."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 4
+  - text: "Let it grant you wisdom and solace."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 5
+  - text: "Amen."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 6
+  - text: "Players may attend a Sermon by typing “Amen.”"
+    category: "Constructs"
+    paragraph: 8
+    sentence: 1
+  - text: "Players may also give a tithe of one Blemflarck to Nomitron by reacting to the Sermon with their Emoji Sigil."
+    category: "Constructs"
+    paragraph: 8
+    sentence: 2
+  - text: "Players receive their item at the end of each turn if they don’t give a tithe."
+    category: "Constructs"
+    paragraph: 10
+    sentence: 1
+  - text: "Players receive their item immediately upon giving a tithe."
+    category: "Constructs"
+    paragraph: 10
+    sentence: 2
+  - text: "Thank you for attending today’s Sermon, @player."
+    category: "Constructs"
+    paragraph: 12
+    sentence: 1
+  - text: "Unfortunately, supplies are limited, and I am unable to grant you a gift."
+    category: "Constructs"
+    paragraph: 12
+    sentence: 2
+  - text: "I hope the wisdom you will carry with you from my Sermon will suffice."
+    category: "Constructs"
+    paragraph: 12
+    sentence: 3
+  - text: "Thank you for attending today’s Sermon, @player."
+    category: "Constructs"
+    paragraph: 13
+    sentence: 1
+  - text: "I grant you one Cracker."
+    category: "Constructs"
+    paragraph: 13
+    sentence: 2
+  - text: "May you never hunger while under my tutelage."
+    category: "Constructs"
+    paragraph: 13
+    sentence: 3
+  - text: "Thank you for attending today’s Sermon, @player."
+    category: "Constructs"
+    paragraph: 14
+    sentence: 1
+  - text: "I grant you some Wine."
+    category: "Constructs"
+    paragraph: 14
+    sentence: 2
+  - text: "It represents the fruits of your labor."
+    category: "Constructs"
+    paragraph: 14
+    sentence: 3
+  - text: "I am very proud of you."
+    category: "Constructs"
+    paragraph: 14
+    sentence: 4
+  - text: "Players cannot trade Crackers or Wine amongst one another."
+    category: "Constructs"
+    paragraph: 15
+    sentence: 1
+  - text: "Nomitron is always watching."
+    category: "Constructs"
+    paragraph: 15
+    sentence: 2
+  - text: "Players may consume Crackers and Wine."
+    category: "Constructs"
+    paragraph: 16
+    sentence: 1
+  - text: "When a player consumes Crackers or Wine, the Crackers or Wine are destroyed."
+    category: "Constructs"
+    paragraph: 16
+    sentence: 2
+  - text: "Crackers and Wine may be consumed at any time."
+    category: "Constructs"
+    paragraph: 16
+    sentence: 3
+  - text: "Consumption must be announced in #actions."
+    category: "Constructs"
+    paragraph: 16
+    sentence: 4
+  - text: "Consuming 10 Crackers at once grants a player Divine Luck."
+    category: "Constructs"
+    paragraph: 16
+    sentence: 5
+  - text: "Consuming 5 Wine at once grants a player Dionysian Aura."
+    category: "Constructs"
+    paragraph: 16
+    sentence: 6
+  - text: "While buffed by Divine Luck, a player has a 1 in 3 chance to discover a treasure chest when claiming LAND TILES, which grants the player 5 Blemflarcks."
+    category: "Constructs"
+    paragraph: 17
+    sentence: 1
+  - text: "A player buffed by Divine Luck loses Divine Luck after claiming three LAND TILES."
+    category: "Constructs"
+    paragraph: 17
+    sentence: 2
+  - text: "While buffed by Dionysian Aura, a player can intoxicate a player, preventing them from taking any actions for twelve hours."
+    category: "Constructs"
+    paragraph: 18
+    sentence: 1
+  - text: "A player buffed by Dionysian Aura loses Dionysian Aura after intoxicating a player."
+    category: "Constructs"
+    paragraph: 18
+    sentence: 2
