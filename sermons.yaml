@@ -1016,3 +1016,8 @@ sentences:
     category: "Constructs"
     paragraph: 18
     sentence: 2
+# Rule 319
+  - text: "Gay Rights"
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
