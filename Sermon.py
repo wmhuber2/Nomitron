@@ -49,7 +49,7 @@ async def reaction(action, user, message, emoji):
         playerData['tithed'] = True
         if(playerData['attended']):
             blessing = giveReward(userName, 0.3, 0.2)
-            await channels[guild]["action"].send(blessing)
+            await channels[guild]["actions"].send(blessing)
 
     await saveData()
 
@@ -77,7 +77,7 @@ async def run(payload, message):
             playerData[player]['attended'] = False
             playerData[player]['tithed']   = False
 
-        if(endTurnMessage != ""): await channels[guild]["action"].send(endTurnMessage)
+        if(endTurnMessage != ""): await channels[guild]["actions"].send(endTurnMessage)
 
         # Nomitron gives a new sermon
         today = datetime.datetime.today()
@@ -93,14 +93,14 @@ async def run(payload, message):
             sermonSentence["paragraph"],
             sermonSentence["sentence"]
         )
-        newSermon = await channels[guild]["action"].send(startTurnMessage)
+        newSermon = await channels[guild]["actions"].send(startTurnMessage)
         Data['sermonID'] = newSermon.id
 
     if payload['Content'] == "Amen." and (not authorData['attended']):
         authorData['attended'] = True
         if(authorData['tithed']):
             message = giveReward(payload['Author'], 0.3, 0.2)
-            await channels[guild]["action"].send(message)
+            await channels[guild]["actions"].send(message)
 
     await saveData()
 
