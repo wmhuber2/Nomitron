@@ -165,7 +165,7 @@ def loadData(inData):
     AllData = inData
     if inData.get(savefile) is None:
         try:
-            with open(savefile, 'rb') as handle:
+            with open(savefile + '_Data.pickle', 'rb') as handle:
                 global Data
                 AllData[savefile] = pickle.load(handle)
         except:
