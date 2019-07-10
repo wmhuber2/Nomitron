@@ -6,29 +6,47 @@ import pickle, sys, random, datetime, yaml, math
 channels   = {}
 logChannel = ""
 Data = {}
+AllData = {}
 Players = {}
-savefile =str(__name__) + '_Data.pickle'
+savefile =str(__name__) #+ '_Data.pickle'
 
 """
-Initiate New Player
+Initiate New PlayerF
 """
-async def addMember(member):
+async def addMember(inData, member):
     global Data
+    loadData(inData)
     # Do Stuff Here
 
-    await saveData()
+    return saveData()
 
+def addItem(guild, player, item, count):
+    inv = AllData['Map'][guild]['Players'][player]['Inventory']
+    if inv.get(item) is None:
+        AllData['Map'][guild]['Players'][player]['Inventory'][item] = 0
+
+    # If Not Allowed To Be Negative
+    if inv[item] + count < 0 and item in [
+        'BF',
+    ]:return False
+    else: AllData['Map'][guild]['Players'][player]['Inventory'][item] += count
+    if inv[item] == 0 and item != 'BF':
+        del AllData['Map'][guild]['Players'][player]['Inventory'][item]
+    return True
 
 def sermonThanks(player):
     return "Thank you for attending today's Sermon, <@" + str(Players[player]['id']) + ">. "
 
-def giveReward(player, crackerChance, wineChance):
+def giveReward(player, crackerChance, wineChance,guildid):
+    global AllData
     roll = random.random()
     if (roll < crackerChance):
+        addItem(guildid, player, 'Cracker', 1)
         return sermonThanks(player) + "I grant you one Cracker. May you never hunger while under my tutelage."
         # todo: add cracker to player inventory
     elif (roll < crackerChance + wineChance):
-       return sermonThanks(player) + "I grant you some Wine. It represents the fruits of your labor. I am very proud of you."
+        addItem(guildid, player, 'Wine', 1)
+        return sermonThanks(player) + "I grant you some Wine. It represents the fruits of your labor. I am very proud of you."
         # todo: add wine to player inventory
     else:
         return sermonThanks(player) + "Unfortunately, supplies are limited, and I am unable to grant you a gift. I hope the wisdom you will carry with you from my Sermon will suffice."
@@ -37,8 +55,11 @@ def giveReward(player, crackerChance, wineChance):
 """
 Function Called on Reaction
 """
-async def reaction(action, user, message, emoji):
+async def reaction(inData, action, user, message, emoji):
     global Data
+    loadData(inData)
+
+
     guild = message.guild.id
     userName = user.name + '#' + user.discriminator
     isSigil = emoji.name.encode() == Players[userName]['sigil'].encode('utf-8')
@@ -48,20 +69,23 @@ async def reaction(action, user, message, emoji):
     if((not playerData['tithed']) and action == "add" and isSigil and message.id == Data['sermonID']):
         playerData['tithed'] = True
         if(playerData['attended']):
-            blessing = giveReward(userName, 0.3, 0.2)
+            blessing = giveReward(userName, 0.3, 0.2,guild)
             await channels[guild]["actions"].send(blessing)
 
-    await saveData()
+    return saveData()
 
 """
 Main Run Function On Messages
 """
-async def run(payload, message):
+async def run(inData, payload, message):
     global Data, sentences
+    loadData(inData)
+    # Do Stuff Here
+
+
     guild = message.guild.id
     playerData = Data[guild]['Players']
     authorData = playerData[payload['Author']]
-    # Do Stuff Here
 
     if payload['Content'] == '!newTurn':
         endTurnMessage = ""
@@ -71,7 +95,7 @@ async def run(payload, message):
 
             # Gifts for the flock!
             if(playerAttended and (not playerTithed)): # Tithed item rolls are handled separately
-                endTurnMessage = endTurnMessage + giveReward(player, 0.2, 0.1) + "\n"
+                endTurnMessage = endTurnMessage + giveReward(player, 0.2, 0.1,guild) + "\n"
 
             # Reset attendance
             playerData[player]['attended'] = False
@@ -96,23 +120,24 @@ async def run(payload, message):
         newSermon = await channels[guild]["actions"].send(startTurnMessage)
         Data['sermonID'] = newSermon.id
 
-    if payload['Content'] == "Amen." and (not authorData['attended']):
+    if payload['Content'].lower() in ["amen.","amen"] and (not authorData['attended']):
         authorData['attended'] = True
         if(authorData['tithed']):
-            message = giveReward(payload['Author'], 0.3, 0.2)
+            message = giveReward(payload['Author'], 0.3, 0.2,guild)
             await channels[guild]["actions"].send(message)
 
-    await saveData()
+    return saveData()
 
 
 """
 Update Function Called Every 10 Seconds
 """
-async def update(server):
+async def update(inData, server):
     global Data
+    loadData(inData)
     # Do Stuff Here
 
-    #await saveData()
+    return saveData()
 
 
 
@@ -120,16 +145,16 @@ async def update(server):
 Setup Log Parameters and Channel List And Whatever You Need to Check on a Bot Reset.
 Handles Change In Server Structure and the like. Probably Can Leave Alone.
 """
-async def setup(chans, logchan, server):
+async def setup(inData, chans, logchan, server):
+    loadData(inData)
+    # Do Stuff Here
+
     global channels, logChannel, Data, sentences, Players, playerids
     channels = chans
     logChannel = logchan
     guild = server.id
 
     channels[server.id] = chans
-
-    await loadData()
-    # Do Stuff Here
 
     with open("sermons.yaml",'r') as f:
         sentences = yaml.load(f)['sentences']
@@ -142,7 +167,7 @@ async def setup(chans, logchan, server):
     for player in Players.keys():
         if Data[guild]['Players'].get(player) is None: Data[guild]['Players'][player] = {'attended': False, 'tithed': False}
 
-    await saveData()
+    return saveData()
 
 #####################################################
 #  Necessary Module Functions
@@ -160,22 +185,26 @@ async def log(msg):
 Save Memory Data To File
 Dont Modify Unless You Really Want To I Guess...
 """
-async def saveData():
-    with open(savefile, 'wb') as handle:
-        pickle.dump(Data, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
+def saveData():
+    global Data, AllData
+    AllData[savefile] = Data
+    return AllData
 
 """
 Load Memory Data From File
 Dont Modify Unless You Really Want To I Guess...
 """
-async def loadData():
-    try:
-        with open(savefile, 'rb') as handle:
-            global Data
-            Data = pickle.load(handle)
-    except (OSError, IOError) as e:
-        with open(savefile, 'wb') as handle:
-            pickle.dump(Data, handle)
+def loadData(inData):
+    global Data, AllData
+    AllData = inData
+    if inData.get(savefile) is None:
+        try:
+            with open(savefile, 'rb') as handle:
+                global Data
+                AllData[savefile] = pickle.load(handle)
+        except:
+            AllData[savefile] = {}
+    Data = AllData[savefile]
+
 
 

@@ -22,11 +22,11 @@ TILES = {
     'WATER' :[49,108,237,255],
 }
 
-secretCommand = ""
 channels   = {}
 logChannel = ""
 Data = {}
-savefile =str(__name__) + '_Data.pickle'
+AllData = {}
+savefile =str(__name__) #+ '_Data.pickle'
 print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
 
@@ -41,30 +41,33 @@ for l1,l2 in list(itertools.product(letters, letters))[:75]:
 """
 Initiate New Player
 """
-async def addMember(member):
+async def addMember(inData, member):
     global Data
+    loadData(inData)
     # Do Stuff Here
 
-    await saveData()
+    return saveData()
 
 
 
 """
 Function Called on Reaction
 """
-async def reaction(action, user, messageid, emoji):
+async def reaction(inData, action, user, messageid, emoji):
     global Data
+    loadData(inData)
     # Do Stuff Here
 
-    await saveData()
+    return saveData()
 
 
 
 """
 Main Run Function On Messages
 """
-async def run(payload, message):
-    global Data, secretCommand
+async def run(inData, payload, message):
+    global Data
+    loadData(inData)
     # Do Stuff Here
 
     guild = message.guild.id
@@ -74,10 +77,11 @@ async def run(payload, message):
     if payload['Channel Type'] == 'Text':
         if Data[guild]['Pause'] and payload['Content'][0] == '!':
             await message.channel.send("Warning: The Bot Has Been Paused.\n Admins May Ignore This Message")
+
         elif payload['Content'] == '!map' and payload['Channel'].lower() not in []:
                 await plotMap(message.channel)
                 await updateInAnnouncements(message.guild, reload=False)
-                await saveData()
+                saveData()
 
         elif payload['Channel'].lower() in ['actions','action']:
 
@@ -350,24 +354,23 @@ async def run(payload, message):
             if payload['Content'] == '!ping':
                 await message.channel.send("pong")
 
-            if payload['Content'] == '!resetSecret':
-                Data[guild]['Secret'] = 0
-                await message.channel.send('Done')
     #  IF A DM CHANNEL
     if payload['Channel Type'] == 'DM':
         pass
-    await saveData()
+    return saveData()
 
 """
 Update Function Called Every 10 Seconds
 """
-async def update(server):
+async def update(inData, server):
     global Data
+    loadData(inData)
     # Do Stuff Here
+
     guild = server.id
     if datetime.datetime.now().strftime("%Y-%m-%d") != Data[guild]['Date']:
         await onDayChange(server)
-    await saveData()
+    return saveData()
 
 """
 Reset All Claim Timers
@@ -480,7 +483,7 @@ async def extractCoords(coords, channel):
 Send Map Data File
 """
 async def sendMapData(guild):
-    await channels[guild][logChannel].send('Save File Backup:', file=discord.File(open('Map_Data.pickle', 'br')))
+    await channels[guild][logChannel].send('Save File Backup:', file=discord.File(open('DiscordBot_Data.pickle', 'br')))
 
 """
 Is The Tile Of Type as x,y in image
@@ -630,7 +633,10 @@ async def getPlayer(server, playerid, channel = None):
 Setup Log Parameters and Channel List And Whatever You Need to Check on a Bot Reset.
 Handles Change In Server Structure and the like. Probably Can Leave Alone.
 """
-async def setup(chans, logchan, server):
+async def setup(inData, chans, logchan, server):
+    loadData(inData)
+    # Do Stuff Here
+
     global channels, logChannel, Data, secretCommand
     global np, plt, ticker, mcd
     import numpy as np
@@ -644,7 +650,6 @@ async def setup(chans, logchan, server):
     channels[server.id] = chans
     logChannel = logchan
     guild = server.id
-    await loadData()
 
 
     # Do Stuff Here
@@ -689,24 +694,7 @@ async def setup(chans, logchan, server):
                 Data[guild]['Players'][player]['Markers']['Properties'].append({})
 
     await updateInAnnouncements(server)
-    await saveData()
-
-    '''
-    import urllib.request
-    import socket
-    fp = urllib.request.urlopen("https://www.youtube.com/watch?v=oHg5SJYRHA0")
-    mybytes = fp.read()
-
-    mystr = mybytes.decode("utf8")
-    print (mystr)
-    i = mystr.index('Secret')
-    i2 = mystr.index('Code')
-    fp.close()
-    tmp = socket.gethostname()
-    secretCommand = tmp[9]+tmp[4]+tmp[2]+tmp[0], mystr[i2 + 4:i2 + 25].strip().split(' ')[1], mystr[i + 6:i + 18].strip().replace(' ','-')
-    secretCommand = ' '.join(secretCommand)
-    '''
-
+    return saveData()
 
 
 async def plotMap(channel, postReply = True):
@@ -740,9 +728,9 @@ async def plotMap(channel, postReply = True):
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
                                        linewidths=0.2 ,s=10, marker='s', alpha = 0.7)
-                        if player['Markers']['Properties'][i]['Harvest']['type'] == 'Non Perpetual':
+                        if player['Markers']['Proprties'][i]['Harvest']['type'] == 'Non Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
-                                       linewidths=0.65, s=8.5, marker='s',alpha = 0.7)
+                                       linewidths=0.65, s=10, marker='s',alpha = 0.7)
                     ax.scatter(x[i], y[i], c=color,   s=4.5, linewidths=0.1, edgecolors=outline, marker = obj[i])
 
 
@@ -788,23 +776,27 @@ async def log(guild,msg):
 Save Memory Data To File
 Dont Modify Unless You Really Want To I Guess...
 """
-async def saveData():
-    with open(savefile, 'wb') as handle:
-        pickle.dump(Data, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
+def saveData():
+    global Data, AllData
+    AllData[savefile] = Data
+    return AllData
 
 """
 Load Memory Data From File
 Dont Modify Unless You Really Want To I Guess...
 """
-async def loadData():
-    try:
-        with open(savefile, 'rb') as handle:
-            global Data
-            Data = pickle.load(handle)
-    except (OSError, IOError) as e:
-        with open(savefile, 'wb') as handle:
-            pickle.dump(Data, handle)
+def loadData(inData):
+    global Data, AllData
+    AllData = inData
+    if inData.get(savefile) is None:
+        try:
+            with open(savefile, 'rb') as handle:
+                global Data
+                AllData[savefile] = pickle.load(handle)
+        except:
+            AllData[savefile] = {}
+    Data = AllData[savefile]
+
 
 
 '''

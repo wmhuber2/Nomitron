@@ -122,16 +122,17 @@ class DiscordNomicBot():
         if payload['Author'] == self.client.user.name+ "#" + str(message.author.discriminator): return
 
         await self.processCommands(payload,message)
-        tasks = []
         for mod, name in zip(self.modules, self.moduleNames):
             if payload['Channel Type'] == 'DM': continue
             if name in self.Data['disabled'][message.guild.id]: continue
             if hasattr(mod, 'run'):
-                #tasks.append(mod.run(payload,message))
-                await mod.run(payload, message)
-        #await asyncio.gather(*tasks,return_exceptions=True)
-        self.loadData()
-
+                try:
+                    tmp = await mod.run(self.Data, payload, message)
+                    if tmp is not None: self.Data = tmp
+                    else: print("None Returned OnMessage",name)
+                except Exception as e:
+                    print('Error:', e)
+        self.saveData()
 
     """
     Display All Server Detailssocket.gethostname()
@@ -169,9 +170,10 @@ class DiscordNomicBot():
             for mod, name in zip(self.modules, self.moduleNames):
                 if name in self.Data['disabled']: continue
                 if hasattr(mod, 'setup'):
-                    await mod.setup(channels, self.logChannel, server)
                     try:
-                        pass#await mod.setup(channels,self.logChannel,server)
+                        tmp = await mod.setup(self.Data, channels,self.logChannel,server)
+                        if tmp is not None: self.Data = tmp
+                        else: print("None Returned OnMessage", name)
                     except Exception as e:
                         print ("Exception On Startup")
                         try:
@@ -197,8 +199,13 @@ class DiscordNomicBot():
                 for server in self.client.guilds:
                     if name in self.Data['disabled'][server.id]: continue
                     if hasattr(mod, 'update'):
-                        tasks.append(mod.update(server))
-            await asyncio.gather(*tasks,return_exceptions=True)
+                        try:
+                            tmp = await mod.update(self.Data, server)
+                            if tmp is not None: self.Data = tmp
+                            else:print("None Returned OnMessage", name)
+                        except Exception as e:
+                            print('Error:',e)
+            self.saveData()
 
 
 
@@ -214,9 +221,10 @@ class DiscordNomicBot():
         for mod, name in zip(self.modules, self.moduleNames):
             if name in self.Data['disabled'][msg.guild.id]: continue
             if hasattr(mod, 'reaction'):
-                # tasks.append(mod.reaction(mode, user, msg, payload.emoji))
-                await mod.reaction(mode, user, msg, payload.emoji)
-        # await asyncio.gather(*tasks,return_exceptions=True)
+                tmp = await mod.reaction(self.Data, mode, user, msg, payload.emoji)
+                if tmp is not None: self.Data = tmp
+                else: print("None Returned OnMessage", name)
+        self.saveData()
 
 
     """
@@ -229,23 +237,10 @@ class DiscordNomicBot():
             for mod, name in zip(self.modules, self.moduleNames):
                 if name in self.Data['disabled'][guild.id]: continue
                 if hasattr(mod, 'addMember'):
-                    tasks.append(mod.addMember(member))
-            await asyncio.gather(*tasks)
-
-
-            '''
-            tasks = []
-            for mod in self.modules:
-                tasks.append(
-                    asyncio.ensure_future(
-                        mod.addMember(member)
-                    )
-                )
-            try:
-                self.loop.call_soon_threadsafe(asyncio.gather, *tasks)
-            except Exception as e:
-                print ('Error Running Join On Module', str(mod),'\n',e)
-        '''
+                    tmp = await mod.addMember(self.Data, member)
+                    if tmp is not None: self.Data = tmp
+                    else: print("None Returned OnMessage", name)
+        self.saveData()
 
     def saveData(self):
         with open(savefile, 'wb') as handle:
