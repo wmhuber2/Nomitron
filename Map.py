@@ -29,7 +29,6 @@ AllData = {}
 savefile =str(__name__) #+ '_Data.pickle'
 print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
-
 import itertools
 letters = 'abcdefghijklmnopqrstuvwxyz'.upper()
 labels = []
@@ -728,7 +727,7 @@ async def plotMap(channel, postReply = True):
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
                                        linewidths=0.2 ,s=10, marker='s', alpha = 0.7)
-                        if player['Markers']['Proprties'][i]['Harvest']['type'] == 'Non Perpetual':
+                        if player['Markers']['Properties'][i]['Harvest']['type'] == 'Non Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
                                        linewidths=0.65, s=10, marker='s',alpha = 0.7)
                     ax.scatter(x[i], y[i], c=color,   s=4.5, linewidths=0.1, edgecolors=outline, marker = obj[i])
