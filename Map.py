@@ -788,6 +788,7 @@ Dont Modify Unless You Really Want To I Guess...
 def loadData(inData):
     global Data, AllData
     AllData = inData
+    print(savefile)
     if inData.get(savefile) is None:
         try:
             with open(savefile + '_Data.pickle', 'rb') as handle:
