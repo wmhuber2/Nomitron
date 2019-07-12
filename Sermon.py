@@ -37,10 +37,10 @@ def addItem(guild, player, item, count):
 def sermonThanks(player):
     return "Thank you for attending today's Sermon, <@" + str(Players[player]['id']) + ">. "
 
-def giveReward(player, crackerChance, wineChance, guildid):
+async def giveReward(player, crackerChance, wineChance, guildid):
     global AllData
     roll = random.random()
-    log('Roll:',player,roll,crackerChance,wineChance)
+    await log(str(['Roll:',player,roll,crackerChance,wineChance]))
     if (roll < crackerChance):
         addItem(guildid, player, 'Cracker', 1)
         return sermonThanks(player) + "I grant you one Cracker. May you never hunger while under my tutelage."
@@ -70,7 +70,7 @@ async def reaction(inData, action, user, message, emoji):
     if((not playerData['tithed']) and action == "add" and isSigil and message.id == Data['sermonID']):
         playerData['tithed'] = True
         if(playerData['attended']):
-            blessing = giveReward(userName, 0.3, 0.2,guild)
+            blessing = await giveReward(userName, 0.3, 0.2,guild)
             await channels[guild]["actions"].send(blessing)
 
     return saveData()
@@ -96,7 +96,7 @@ async def run(inData, payload, message):
 
             # Gifts for the flock!
             if(playerAttended and (not playerTithed)): # Tithed item rolls are handled separately
-                endTurnMessage = endTurnMessage + giveReward(player, 0.2, 0.1,guild) + "\n"
+                endTurnMessage = endTurnMessage + await giveReward(player, 0.2, 0.1,guild) + "\n"
 
             # Reset attendance
             playerData[player]['attended'] = False
@@ -124,7 +124,7 @@ async def run(inData, payload, message):
     if payload['Content'].lower() in ["amen.","amen"] and (not authorData['attended']):
         authorData['attended'] = True
         if(authorData['tithed']):
-            message = giveReward(payload['Author'], 0.3, 0.2,guild)
+            message = await giveReward(payload['Author'], 0.3, 0.2,guild)
             await channels[guild]["actions"].send(message)
 
     return saveData()
