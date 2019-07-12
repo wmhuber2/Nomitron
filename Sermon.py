@@ -37,9 +37,10 @@ def addItem(guild, player, item, count):
 def sermonThanks(player):
     return "Thank you for attending today's Sermon, <@" + str(Players[player]['id']) + ">. "
 
-def giveReward(player, crackerChance, wineChance,guildid):
+def giveReward(player, crackerChance, wineChance, guildid):
     global AllData
     roll = random.random()
+    log('Roll:',player,roll,crackerChance,wineChance)
     if (roll < crackerChance):
         addItem(guildid, player, 'Cracker', 1)
         return sermonThanks(player) + "I grant you one Cracker. May you never hunger while under my tutelage."

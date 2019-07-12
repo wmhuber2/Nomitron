@@ -139,7 +139,6 @@ async def run(inData, payload, message):
                             if isClaimed:
                                 await message.channel.send("You cannot claim this location. It is already claimed.")
                             elif addItem( guild, payload['Author'], 'BF', -2):
-                                print(xcord, ycord)
                                 Data[guild]['Players'][payload['Author']]['Markers']['Location'].append([xcord, ycord])
                                 Data[guild]['Players'][payload['Author']]['Markers']['Properties'].append({})
                                 Data[guild]['Players'][payload['Author']]['Markers']['Shape'].append('Claim')
@@ -182,6 +181,10 @@ async def run(inData, payload, message):
                                 elif Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest']['type'] == 'Non Perpetual' \
                                         and splitContent[2].lower() in ['perpetual', 'p']: typeHarv = 'Perpetual'
                                 else:   await message.channel.send("This locations is already being harvested in that method.")
+
+                                if 'Unit' in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index].keys():
+                                    await message.channel.send(
+                                        "This locations contains a Unit, It cannot be Harvested.")
 
                                 cost = {'Perpetual': -4,'Non Perpetual':-7}
                                 if typeHarv is None: pass
@@ -241,7 +244,7 @@ async def run(inData, payload, message):
                 print('New Turn')
 
             if payload['Content'] == '!getData':
-                await sendMapData(guild = message.guild.id)
+                await sendMapData(guild = message.guild.id, channel = message.channel)
                 print("sending Map_Data File")
 
             if splitContent[0] == '!remove' and len(splitContent) == 2:
@@ -323,7 +326,6 @@ async def run(inData, payload, message):
 
             if splitContent[0] == '!give':
                 for playerid in splitContent[1:-2]:
-                    print(playerid)
                     playerName = await getPlayer(message.guild, playerid, message.channel)
 
                     if playerName is not None:
@@ -352,6 +354,78 @@ async def run(inData, payload, message):
 
             if payload['Content'] == '!ping':
                 await message.channel.send("pong")
+
+            if splitContent[0] == '!mark' and len(splitContent) == 4:
+                location, marker, player = splitContent[1:]
+                if len(marker) > len(player): marker, player = player, marker
+                if marker[0] == '"' and marker[-1] == '"':
+                    marker = '${0}$'.format(marker[1:-1])
+
+                coords = await extractCoords(location, message.channel)
+                player = await getPlayer(message.guild, player, message.channel)
+                if player is not None and coords is not None:
+                    x, xa, y = coords
+                    for player2 in Data[guild]['Players'].keys():
+                        try:
+                            index = Data[guild]['Players'][player2]['Markers']['Location'].index([x,y])
+                            del Data[guild]['Players'][player2]['Markers']['Location'][index]
+                            del Data[guild]['Players'][player2]['Markers']['Shape'][index]
+                            del Data[guild]['Players'][player2]['Markers']['Properties'][index]
+                        except ValueError: pass
+                    Data[guild]['Players'][player]['Markers']['Location'].append([x,y])
+                    Data[guild]['Players'][player]['Markers']['Shape'].append(marker)
+                    Data[guild]['Players'][player]['Markers']['Properties'].append({'Unit':{}})
+                    await message.channel.send("Location Marked")
+                    await updateInAnnouncements(message.guild)
+
+            if splitContent[0] == '!newUnit' and len(splitContent) == 1:
+                await message.channel.send( str({
+                    'Costs':[],
+                    'DailyCosts': [],
+                    'NeedAdminApproval':False,
+                    'PrerequisiteUnits': [],
+                    'Marker':"",
+                    'isMobile':False,
+                    'MobileCost':0,
+                    'MoveLimitPerDay':0,
+                    'DailyReturn':[],
+                } ))
+
+            if splitContent[0] == '!newUnit' and len(splitContent) > 1:
+                name = splitContent[1]
+                data = dict(eval(' '.join(splitContent[2:])))
+
+                #if name not in Data[guild]['Unit']:
+                #    await message.channel.send("Unit Name Taken.")
+
+                allThere = False
+                requirements = {
+                    'Costs':[],
+                    'DailyCosts': [],
+                    'NeedAdminApproval':False,
+                    'PrerequisiteUnits': [],
+                    'Marker':"",
+                    'isMobile':False,
+                    'MobileCost':0,
+                    'MoveLimitPerDay':0,
+                    'DailyReturn':[],
+                }
+
+                for key in data.keys():
+                    if requirements.get(key) is not None:
+                        requirements[key] = data[key]
+                Data[guild]['Units'][name] = requirements
+
+                await message.channel.send("Unit Saved")
+                await updateInAnnouncements(message.guild)
+
+            if payload['Content'] == '!getUnits':
+                for unit in Data[guild]['Units'].keys():
+                    msg = unit+':\n'
+                    for k in Data[guild]['Units'][unit]:
+                        msg += '\t'+k+': '+str(Data[guild]['Units'][unit][k])+'\n'
+                    await message.channel.send('```'+msg+'```')
+
 
     #  IF A DM CHANNEL
     if payload['Channel Type'] == 'DM':
@@ -481,8 +555,8 @@ async def extractCoords(coords, channel):
 """
 Send Map Data File
 """
-async def sendMapData(guild):
-    await channels[guild][logChannel].send('Save File Backup:', file=discord.File(open('DiscordBot_Data.pickle', 'br')))
+async def sendMapData(guild, channel):
+    await channel.send('Save File Backup:', file=discord.File(open('DiscordBot_Data.pickle', 'br')))
 
 """
 Is The Tile Of Type as x,y in image
@@ -570,10 +644,8 @@ async def updateInAnnouncements(server, reload = True):
             Data[guild]['Announcements']['Items'].append(post.id)
         else:
             await post.edit( content='```'+msg+'```'  )
-        print(i)
         i+=1
     for n in reversed(range(i,len(Data[guild]['Announcements']['Items']))):
-        print('n',n)
         try:
             post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][n])
             await post.delete()
@@ -660,6 +732,7 @@ async def setup(inData, chans, logchan, server):
         'Map':None,
         'Items':None
     }
+    if Data[guild].get('Units') is None: Data[guild]['Units'] = {}
     if Data[guild].get('Players') is None: Data[guild]['Players'] = {}
     if Data[guild].get('Date') is None: Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
     if Data[guild].get('Log') is None: Data[guild]['Log'] = []
@@ -717,6 +790,7 @@ async def plotMap(channel, postReply = True):
                 outline = 'black'
                 if color == 'black': outline = 'white'
 
+                if len(player['Markers']['Location']) == 0 : continue
                 x, y = np.asarray(player['Markers']['Location']).T
                 obj  = np.asarray(player['Markers']['Shape'])
 
@@ -726,12 +800,15 @@ async def plotMap(channel, postReply = True):
                     if player['Markers']['Properties'][i].get('Harvest') is not None:
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
-                                       linewidths=0.2 ,s=10, marker='s', alpha = 0.7)
+                                       linewidths=0.2 ,s=11.5, marker='s', alpha = 0.7)
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Non Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
-                                       linewidths=0.65, s=10, marker='s',alpha = 0.7)
-                    ax.scatter(x[i], y[i], c=color,   s=4.5, linewidths=0.1, edgecolors=outline, marker = obj[i])
+                                       linewidths=0.65, s=12, marker='s',alpha = 0.7)
 
+                    if len(obj[i]) <= 3:
+                        ax.scatter(x[i], y[i], c=color,   s=5.0, linewidths=0.075, edgecolors=outline, marker = obj[i])
+                    else:
+                        ax.scatter(x[i], y[i], c=color, s=10.0, linewidths=0.06, edgecolors=outline, marker=obj[i])
 
             ax.yaxis.set_major_formatter(ticker.NullFormatter())
             ax.yaxis.set_minor_locator(ticker.FixedLocator(axisn))
@@ -757,7 +834,7 @@ async def plotMap(channel, postReply = True):
                 await channel.send('World Map, You may view a constantly updated map in #changelog-live \n[Auto Delete: 2 mins]:',
                     delete_after = delay, file=discord.File(open('tmpgrid.png', 'br')))
     except Exception as e:
-        print('Error',str(e))
+        print('Plot Error',str(e))
 
 #####################################################
 #  Necessary Module Functions
@@ -787,7 +864,6 @@ Dont Modify Unless You Really Want To I Guess...
 def loadData(inData):
     global Data, AllData
     AllData = inData
-    print(savefile)
     if inData.get(savefile) is None:
         try:
             with open(savefile + '_Data.pickle', 'rb') as handle:

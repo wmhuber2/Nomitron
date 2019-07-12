@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/Map.py" line="77" />
+    <bookmark url="file://$PROJECT_DIR$/Map.py" line="76" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AdminREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/AdminREADME.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DiscordBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/DiscordBot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sermon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sermon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <ignored path="Paint.py" />
     <ignored mask="*_Data.pickle" />
@@ -21,35 +25,19 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiscordBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="227" lean-forward="true" selection-start-line="227" selection-end-line="227" />
+            <state relative-caret-position="254">
+              <caret line="43" column="31" selection-start-line="43" selection-start-column="31" selection-end-line="43" selection-end-column="31" />
               <folding>
                 <element signature="e#2172#2199#0" />
                 <element signature="e#2285#2493#0" />
                 <element signature="e#2597#3468#0" />
-                <element signature="e#9287#12034#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Blank.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="105" selection-start-line="105" selection-end-line="105" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Admin.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="707">
-              <caret line="178" selection-start-line="178" selection-end-line="178" />
-              <folding>
-                <element signature="e#1106#1722#0" />
-                <element signature="e#1783#2398#0" />
+                <element signature="e#3561#4297#0" />
+                <element signature="e#4404#7559#0" />
+                <element signature="e#7660#8241#0" />
+                <element signature="e#8351#8830#0" />
+                <element signature="e#8864#8977#0" />
+                <element signature="e#9112#9383#0" />
+                <element signature="e#9449#12196#0" />
               </folding>
             </state>
           </provider>
@@ -58,8 +46,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Rules.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="663">
-              <caret line="173" selection-start-line="173" selection-end-line="173" />
+            <state relative-caret-position="972">
+              <caret line="131" column="28" lean-forward="true" selection-start-line="131" selection-start-column="28" selection-end-line="131" selection-end-column="28" />
             </state>
           </provider>
         </entry>
@@ -67,23 +55,37 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="654" column="19" lean-forward="true" selection-start-line="654" selection-start-column="19" selection-end-line="654" selection-end-column="19" />
+            <state relative-caret-position="310">
+              <caret line="111" column="56" selection-start-line="111" selection-start-column="56" selection-end-line="111" selection-end-column="56" />
               <folding>
                 <element signature="n#!!doc" />
-                <element signature="e#17715#17917#0" />
-                <element signature="e#18077#18288#0" />
-                <element signature="e#18349#19152#0" />
-                <element signature="e#19217#19344#0" />
-                <element signature="e#19416#19914#0" />
-                <element signature="e#25160#25276#0" />
-                <element signature="e#25360#25409#0" />
-                <element signature="e#25512#25953#0" />
-                <element signature="e#26056#30157#0" />
-                <element signature="e#30238#30883#0" />
-                <element signature="e#32127#32726#0" />
-                <element signature="e#37232#37275#0" />
-                <element signature="e#37725#37793#0" />
+                <element signature="e#2050#2180#0" />
+                <element signature="e#2336#4251#0" />
+                <element signature="e#4340#7797#0" />
+                <element signature="e#7888#12864#0" />
+                <element signature="e#13057#13451#0" />
+                <element signature="e#13518#13650#0" />
+                <element signature="e#14316#15005#0" />
+                <element signature="e#15096#15955#0" />
+                <element signature="e#17714#17916#0" />
+                <element signature="e#18076#18287#0" />
+                <element signature="e#18348#19151#0" />
+                <element signature="e#19216#19343#0" />
+                <element signature="e#19415#19913#0" />
+                <element signature="e#20302#21721#0" />
+                <element signature="e#21812#22144#0" />
+                <element signature="e#22233#23129#0" />
+                <element signature="e#23197#23462#0" />
+                <element signature="e#20198#20405#0" />
+                <element signature="e#20473#21144#0" />
+                <element signature="e#21212#23476#0" />
+                <element signature="e#23561#24087#0" />
+                <element signature="e#24178#25096#0" />
+                <element signature="e#25511#25952#0" />
+                <element signature="e#26055#30156#0" />
+                <element signature="e#30237#30882#0" />
+                <element signature="e#34837#37089#0" />
+                <element signature="e#33410#36774#0" />
               </folding>
             </state>
           </provider>
@@ -92,8 +94,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sermon.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="665">
-              <caret line="207" selection-start-line="207" selection-end-line="207" />
+            <state relative-caret-position="294">
+              <caret line="42" column="53" lean-forward="true" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="53" />
             </state>
           </provider>
         </entry>
@@ -102,11 +104,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>'Harvest'</find>
-      <find>'n'</find>
-      <find>'p'</find>
-      <find>Non-Perpetual</find>
-      <find>BF</find>
       <find>updateInAnnouncements</find>
       <find>.guild</find>
       <find>'Marker'</find>
@@ -120,7 +117,6 @@
       <find>Steel</find>
       <find>plotMap</find>
       <find>.server</find>
-      <find>sendMapData</find>
       <find>r'\d+'</find>
       <find>Secret</find>
       <find>Corn</find>
@@ -128,10 +124,16 @@
       <find>await loadData(</find>
       <find>await  loadData(</find>
       <find>log</find>
-      <find>giveReward</find>
-      <find>log(</find>
+      <find>'Proprt</find>
       <find>await saveData(</find>
+      <find>log(</find>
       <find>loadData</find>
+      <find>Map'</find>
+      <find>print</find>
+      <find>giveReward</find>
+      <find>Error</find>
+      <find>getData</find>
+      <find>sendMapData</find>
     </findStrings>
     <replaceStrings>
       <replace>saveData(</replace>
@@ -160,23 +162,23 @@
         <option value="$PROJECT_DIR$/run.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/Nomitron.py" />
-        <option value="$PROJECT_DIR$/AdminREADME.md" />
         <option value="$PROJECT_DIR$/PlayerREADME.md" />
         <option value="$PROJECT_DIR$/players.yaml" />
-        <option value="$PROJECT_DIR$/DiscordBot.py" />
         <option value="$PROJECT_DIR$/Rules.py" />
-        <option value="$PROJECT_DIR$/Sermon.py" />
         <option value="$PROJECT_DIR$/Admin.py" />
         <option value="$PROJECT_DIR$/Blank.py" />
+        <option value="$PROJECT_DIR$/AdminREADME.md" />
+        <option value="$PROJECT_DIR$/Sermon.py" />
+        <option value="$PROJECT_DIR$/DiscordBot.py" />
         <option value="$PROJECT_DIR$/Map.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="3657" />
-    <option name="y" value="98" />
-    <option name="width" value="165" />
-    <option name="height" value="964" />
+    <option name="x" value="2667" />
+    <option name="y" value="112" />
+    <option name="width" value="1155" />
+    <option name="height" value="950" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -368,20 +370,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00084" summary="Edited Readme">
-      <created>1561522183463</created>
-      <option name="number" value="00084" />
-      <option name="presentableId" value="LOCAL-00084" />
-      <option name="project" value="LOCAL" />
-      <updated>1561522183463</updated>
-    </task>
-    <task id="LOCAL-00085" summary="Upgrade Players To New Data Structure&#10;Add Commands To Harvest">
-      <created>1561690624773</created>
-      <option name="number" value="00085" />
-      <option name="presentableId" value="LOCAL-00085" />
-      <option name="project" value="LOCAL" />
-      <updated>1561690624774</updated>
     </task>
     <task id="LOCAL-00086" summary="Modified Plot For Harvest">
       <created>1561691339558</created>
@@ -712,7 +700,21 @@
       <option name="project" value="LOCAL" />
       <updated>1562786870122</updated>
     </task>
-    <option name="localTasksCounter" value="133" />
+    <task id="LOCAL-00133" summary="Reformated Data&#10;Sermon Gifts Automatic">
+      <created>1562787005534</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1562787005534</updated>
+    </task>
+    <task id="LOCAL-00134" summary="Reformated Data&#10;Sermon Gifts Automatic">
+      <created>1562787186072</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1562787186072</updated>
+    </task>
+    <option name="localTasksCounter" value="135" />
     <servers />
   </component>
   <component name="TodoView">
@@ -725,12 +727,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2697" y="84" width="1125" height="978" extended-state="6" />
+    <frame x="2667" y="112" width="1155" height="950" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.46658987" visible="true" weight="0.24454546" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.46547619" visible="true" weight="0.3035398" />
       <window_info id="Structure" order="1" sideWeight="0.5322581" side_tool="true" weight="0.38325992" />
-      <window_info active="true" id="Run" order="2" sideWeight="0.53341013" side_tool="true" visible="true" weight="0.24454546" />
+      <window_info active="true" id="Run" order="2" sideWeight="0.5345238" side_tool="true" visible="true" weight="0.3035398" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
@@ -840,23 +842,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Admin_Data.pickle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="7" selection-start-column="7" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/AdminREADME.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="182">
-            <caret line="13" column="11" selection-start-line="13" selection-start-column="11" selection-end-line="13" selection-end-column="11" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/players.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
@@ -879,17 +864,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Rules.py">
+    <entry file="file://$PROJECT_DIR$/Admin_Data.pickle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="173" selection-start-line="173" selection-end-line="173" />
+        <state>
+          <caret column="7" selection-start-column="7" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sermon.py">
+    <entry file="file://$PROJECT_DIR$/Blank.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="665">
-          <caret line="207" selection-start-line="207" selection-end-line="207" />
+        <state relative-caret-position="663">
+          <caret line="105" selection-start-line="105" selection-end-line="105" />
         </state>
       </provider>
     </entry>
@@ -904,45 +889,82 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Blank.py">
+    <entry file="file://$PROJECT_DIR$/AdminREADME.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="168">
+            <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sermon.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="663">
-          <caret line="105" selection-start-line="105" selection-end-line="105" />
+        <state relative-caret-position="294">
+          <caret line="42" column="53" lean-forward="true" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="53" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Rules.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="972">
+          <caret line="131" column="28" lean-forward="true" selection-start-line="131" selection-start-column="28" selection-end-line="131" selection-end-column="28" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/DiscordBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="227" lean-forward="true" selection-start-line="227" selection-end-line="227" />
+        <state relative-caret-position="254">
+          <caret line="43" column="31" selection-start-line="43" selection-start-column="31" selection-end-line="43" selection-end-column="31" />
           <folding>
             <element signature="e#2172#2199#0" />
             <element signature="e#2285#2493#0" />
             <element signature="e#2597#3468#0" />
-            <element signature="e#9287#12034#0" />
+            <element signature="e#3561#4297#0" />
+            <element signature="e#4404#7559#0" />
+            <element signature="e#7660#8241#0" />
+            <element signature="e#8351#8830#0" />
+            <element signature="e#8864#8977#0" />
+            <element signature="e#9112#9383#0" />
+            <element signature="e#9449#12196#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="654" column="19" lean-forward="true" selection-start-line="654" selection-start-column="19" selection-end-line="654" selection-end-column="19" />
+        <state relative-caret-position="310">
+          <caret line="111" column="56" selection-start-line="111" selection-start-column="56" selection-end-line="111" selection-end-column="56" />
           <folding>
             <element signature="n#!!doc" />
-            <element signature="e#17715#17917#0" />
-            <element signature="e#18077#18288#0" />
-            <element signature="e#18349#19152#0" />
-            <element signature="e#19217#19344#0" />
-            <element signature="e#19416#19914#0" />
-            <element signature="e#25160#25276#0" />
-            <element signature="e#25360#25409#0" />
-            <element signature="e#25512#25953#0" />
-            <element signature="e#26056#30157#0" />
-            <element signature="e#30238#30883#0" />
-            <element signature="e#32127#32726#0" />
-            <element signature="e#37232#37275#0" />
-            <element signature="e#37725#37793#0" />
+            <element signature="e#2050#2180#0" />
+            <element signature="e#2336#4251#0" />
+            <element signature="e#4340#7797#0" />
+            <element signature="e#7888#12864#0" />
+            <element signature="e#13057#13451#0" />
+            <element signature="e#13518#13650#0" />
+            <element signature="e#14316#15005#0" />
+            <element signature="e#15096#15955#0" />
+            <element signature="e#17714#17916#0" />
+            <element signature="e#18076#18287#0" />
+            <element signature="e#18348#19151#0" />
+            <element signature="e#19216#19343#0" />
+            <element signature="e#19415#19913#0" />
+            <element signature="e#20302#21721#0" />
+            <element signature="e#21812#22144#0" />
+            <element signature="e#22233#23129#0" />
+            <element signature="e#23197#23462#0" />
+            <element signature="e#20198#20405#0" />
+            <element signature="e#20473#21144#0" />
+            <element signature="e#21212#23476#0" />
+            <element signature="e#23561#24087#0" />
+            <element signature="e#24178#25096#0" />
+            <element signature="e#25511#25952#0" />
+            <element signature="e#26055#30156#0" />
+            <element signature="e#30237#30882#0" />
+            <element signature="e#34837#37089#0" />
+            <element signature="e#33410#36774#0" />
           </folding>
         </state>
       </provider>

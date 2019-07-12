@@ -134,6 +134,7 @@ class DiscordNomicBot():
                     print('Error:', e)
         self.saveData()
 
+
     """
     Display All Server Detailssocket.gethostname()
     """
@@ -206,7 +207,6 @@ class DiscordNomicBot():
                         except Exception as e:
                             print('Error:',e)
             self.saveData()
-
 
 
     """

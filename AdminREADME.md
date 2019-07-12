@@ -15,7 +15,7 @@ Admin:
 +       Rule: N/A
 -    !getData {coords}
 +       Allowed Channels: actions, mod-lounge, bot-lounge
-+       Sends The Current Map File
++       Sends The Data Pickle File
 +       Rule: N/A
 -    !setColor @player $color
 +       Allowed Channels: actions, mod-lounge, bot-lounge
