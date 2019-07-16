@@ -1,18 +1,14 @@
 Hi. It looks like you need some help. Some commands are listed below.
 
 Admin: Allowed Channels: actions, mod-lounge, bot-lounge
--    !newTurn
-+       Starts a new turn.
-+       Rule: 314
--    !newDay
-+       Forces Nomi to run the newDay Actions.
-+       Rule: 314
--    !changelog
-+       Prints The Completed Actions Since the last changelog
-+       Rule: N/A
--    !getData {coords}
-+       Sends The Data Pickle File
-+       Rule: N/A
+-    !newTurn:       Starts a new turn.
+
+-    !newDay:        Forces newDay Actions.
+
+-    !getData:       Sends The Data Pickle File
+
+-    !ping:     ping bot for a response
+
 -    !setColor @player $color
 +       Set A Players Color
 +       Rule: N/A
@@ -53,8 +49,5 @@ Admin: Allowed Channels: actions, mod-lounge, bot-lounge
 +       Creates new Unit. Leave blank to get example.
 
 
-
--    !ping
-+       ping bot for a response
 This Bot's Code May Be Found At:
 https://github.com/wmhuber2/Nomitron/

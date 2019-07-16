@@ -1,23 +1,15 @@
 Hi. It looks like you need some help. Some commands are listed below.
 
-
-Rules:
--   !rule $num  
-+        Allowed Channels: ALL            
+Global Commands: Allowed Channels: ALL   
+-   !rule $num          
 +        Diplay Rule Number $num if it exists.
-+        Rule: N/A
--   !help
-+        Allowed Channels: ALL            
+-   !help       
 +        Diplay This Help Text
-+        Rule: N/A
--   !find "text" OR !search "text"
-+        Allowed Channels: ALL            
+-   !find "text" OR !search "text" OR !f "text" 
 +        Display rules that contain text.
-+        Rule: N/A
 
-Map:
+ActionCommands:        Allowed Channels: actions
 -    !start {coordinates} {color name} 
-+        Allowed Channels: actions
 +        Add Capital to map at desired coordiantes (row,col order doesnt matter)
 +        and declare your color.
 +        Example: !start aj56 red, !start 6ca red
@@ -29,23 +21,18 @@ Map:
 +        Rule: 312
 -    !harvest {coordinates} {mode}
 +        mode may be any of the following: ['perpetual', 'non-perpetual', 'p', 'n']
-+        Allowed Channels: actions
 +        Allows You to harvest a location you own.
 +        Example: !harvest aj56 p, !harvest 5ca perpetual, !harvest ca5 n
 +        Rule: 314
 -    !map
-+        Allowed Channels: ALL
 +        Display Current Map.
 +        Rule: 312
 -    !unit {coords} $name
-+        Allowed Channels: actions
 +        Buy Unit and place at coords
 +        Rule: 320
 -    !move {coord1} {coord2}
-+        Allowed Channels: actions
 +        move unit form coord1 to coord2
 +        Rule: 320
-
 
 
 +###########################################
