@@ -119,19 +119,19 @@ class DiscordNomicBot():
     """
     async def on_message(self, message):
         payload = self.convertToPayload(message)
-        if payload['Author'] == self.client.user.name+ "#" + str(message.author.discriminator): return
+        if message.author == self.client.user: return
 
         await self.processCommands(payload,message)
         for mod, name in zip(self.modules, self.moduleNames):
             if payload['Channel Type'] == 'DM': continue
             if name in self.Data['disabled'][message.guild.id]: continue
             if hasattr(mod, 'run'):
-                try:
+                if 1: #try:
                     tmp = await mod.run(self.Data, payload, message)
                     if tmp is not None: self.Data = tmp
                     else: print("None Returned OnMessage",name)
-                except Exception as e:
-                    print('Error:', e)
+                #except Exception as e:
+                #    print('Error:', e)
         self.saveData()
 
 
@@ -214,6 +214,7 @@ class DiscordNomicBot():
     """
     async def on_raw_reaction(self, payload, mode):
         user = self.client.get_user(payload.user_id)
+        if user == self.client.user: return
         channel = self.client.get_channel(payload.channel_id)
         msg = await channel.fetch_message(payload.message_id)
 

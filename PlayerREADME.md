@@ -37,6 +37,15 @@ Map:
 +        Allowed Channels: ALL
 +        Display Current Map.
 +        Rule: 312
+-    !unit {coords} $name
++        Allowed Channels: actions
++        Buy Unit and place at coords
++        Rule: 320
+-    !move {coord1} {coord2}
++        Allowed Channels: actions
++        move unit form coord1 to coord2
++        Rule: 320
+
 
 
 +###########################################

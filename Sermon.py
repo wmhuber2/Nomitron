@@ -3,6 +3,8 @@
 # Blank Module For Discord Bot
 ################################
 import pickle, sys, random, datetime, yaml, math
+from discord.utils import get
+
 channels   = {}
 logChannel = ""
 Data = {}
@@ -67,11 +69,13 @@ async def reaction(inData, action, user, message, emoji):
 
     playerData = Data[guild]['Players'][userName]
     # Do Stuff Here
-    if((not playerData['tithed']) and action == "add" and isSigil and message.id == Data['sermonID']):
+    if(message.id == Data['sermonID'] and (not playerData['tithed']) and action == "add" and isSigil):
         playerData['tithed'] = True
-        if(playerData['attended']):
+        if(playerData['attended']) and addItem(message.guild, userName, 'BF',-1):
             blessing = await giveReward(userName, 0.3, 0.2,guild)
             await channels[guild]["actions"].send(blessing)
+        else:
+            await channels[guild]["actions"].send("You Have Already Attended or Have No BF")
 
     return saveData()
 
@@ -121,8 +125,11 @@ async def run(inData, payload, message):
         newSermon = await channels[guild]["actions"].send(startTurnMessage)
         Data['sermonID'] = newSermon.id
 
-    if payload['Content'].lower() in ["amen.","amen"] and (not authorData['attended']):
+    if payload['Content'] in ["Amen."] and (not authorData['attended']):
         authorData['attended'] = True
+        await message.add_reaction('🙏')
+        #emoji = get(message.guild.emojis, name='pray')
+
         if(authorData['tithed']):
             message = await giveReward(payload['Author'], 0.3, 0.2,guild)
             await channels[guild]["actions"].send(message)

@@ -57,6 +57,56 @@ async def reaction(inData, action, user, messageid, emoji):
     loadData(inData)
     # Do Stuff Here
 
+
+    message = messageid
+    reactorName = user.name + '#' + user.discriminator
+    playerName = message.author.name + "#" + str(message.author.discriminator)
+    guild = message.guild.id
+    splitContent = messageid.content.split(' ')
+
+    if splitContent[0] == '!unit' and len(splitContent) == 3 and reactorName in Admins:
+        coords, name = splitContent[1:]
+        if coords in Data[guild]['Units'].keys(): coords, name = name, coords
+
+        coords = await extractCoords(coords, message.channel)
+        if coords is not None and name in Data[guild]['Units'].keys():
+            x, xa, y = coords
+            unit = dict(Data[guild]['Units'][name])
+            indexTile = None
+
+            try:
+                indexTile = Data[guild]['Players'][playerName]['Markers']['Location'].index([x, y])
+            except:
+                await message.channel.send("You Do Not Own Ths Location")
+
+            if indexTile is not None:
+                canAfford = True
+                for cost in unit['Costs']:
+                    amount, item = cost.split(' ')
+                    canAfford = canAfford and addItem(guild, playerName, item, -float(amount), testOnly=True)
+
+                if Data[guild]['Players'][playerName]['Markers']['Shape'][indexTile] == "":
+                    await message.channel.send("Units Must Be Upgraded On Your Claimed Tile")
+                elif unit['UpgradeUnit'] != "" and unit['UpgradeUnit'] != \
+                        Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']:
+                    await message.channel.send("This location cannot be Upgraded To " + name)
+                elif unit['UpgradeUnit'] == "" and 'Unit' in \
+                        Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]:
+                    await message.channel.send("This location Already Has Unit")
+                elif canAfford:
+                    for cost in unit['Costs']:
+                        amount, item = cost.split(' ')
+                        addItem(guild, playerName, item, -float(amount))
+
+                    Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit'] =  name
+                    await message.channel.send(name + "Unit Added On " + str(xa) + str(y+1) + " For "+playerName)
+                    await updateInAnnouncements(message.guild)
+                else:
+                    await message.channel.send("Insufficent Funds")
+        else:
+            await message.channel.send("Unit Not Found")
+
+
     return saveData()
 
 
@@ -172,6 +222,7 @@ async def run(inData, payload, message):
 
                         if [xcord, ycord] in Data[guild]['Players'][payload['Author']]['Markers']['Location']:
                             index = Data[guild]['Players'][payload['Author']]['Markers']['Location'].index([xcord, ycord])
+
                             if Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index].get('Harvest'):
                                 typeHarv = None
 
@@ -182,9 +233,10 @@ async def run(inData, payload, message):
                                         and splitContent[2].lower() in ['perpetual', 'p']: typeHarv = 'Perpetual'
                                 else:   await message.channel.send("This locations is already being harvested in that method.")
 
-                                if 'Unit' in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index].keys():
+                                if 'Unit' in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]:
                                     await message.channel.send(
                                         "This locations contains a Unit, It cannot be Harvested.")
+                                    typeHarv = None
 
                                 cost = {'Perpetual': -4,'Non Perpetual':-7}
                                 if typeHarv is None: pass
@@ -209,9 +261,14 @@ async def run(inData, payload, message):
                                     typeHarv = 'Non Perpetual'
 
                                 cost = {'Perpetual': -4, 'Non Perpetual': -7}
-                                if not addItem( guild, payload['Author'], 'BF', cost[typeHarv]):
+                                if 'Unit' in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]:
+                                    await message.channel.send(
+                                        "This locations contains a Unit, It cannot be Harvested.")
+
+                                elif not addItem( guild, payload['Author'], 'BF', cost[typeHarv]):
                                     await message.channel.send(
                                         "You Have Insufficient Blemflarcks To Complete This Actions.")
+
                                 else:
                                     Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest'] = {
                                         'age':  0,
@@ -224,6 +281,142 @@ async def run(inData, payload, message):
                                     await updateInAnnouncements(message.guild)
                         else:
                             await message.channel.send("You cannot harvest this location until you have claimed it.")
+
+            if splitContent[0] in ['!unit','!units'] and len(splitContent) == 3:
+                coords, name = splitContent[1:]
+                playerName = payload['Author']
+                if coords in Data[guild]['Units'].keys(): coords, name = name, coords
+
+                coords = await extractCoords(coords, message.channel)
+                if coords is not None and name in Data[guild]['Units'].keys():
+                    x, xa, y = coords
+                    unit = dict(Data[guild]['Units'][name])
+                    indexTile = None
+
+                    try: indexTile = Data[guild]['Players'][playerName]['Markers']['Location'].index([x,y])
+                    except: await message.channel.send("You Do Not Own Ths Location")
+
+                    if indexTile is not None:
+                        canAfford = True
+                        for cost in unit['Costs']:
+                            amount,item = cost.split(' ')
+                            canAfford = canAfford and addItem(guild, playerName, item, -float(amount), testOnly=True)
+
+                        if Data[guild]['Players'][playerName]['Markers']['Shape'][indexTile] == "":
+                            await message.channel.send("Units Must Be Upgraded On Your Claimed Tile")
+                        elif unit['UpgradeUnit'] != "" and unit['UpgradeUnit'] != \
+                            Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']:
+                            await message.channel.send("This location cannot be Upgraded To "+name)
+                        elif unit['UpgradeUnit'] == "" and 'Unit' in Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]:
+                            await message.channel.send("This location Already Has Unit")
+                        elif unit['NeedAdminApproval']:
+                            await message.channel.send("Awaiting Admin/Mod React on Request For Approval")
+                        elif canAfford:
+                            for cost in unit['Costs']:
+                                amount,item = cost.split(' ')
+                                addItem(guild, playerName, item, -float(amount))
+
+                            Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit'] = name
+                            await message.channel.send(name + "Unit Added On " + str(xa) + str(y+1) + " ")
+                            await updateInAnnouncements(message.guild)
+                        else:
+                            await message.channel.send("Insufficent Funds")
+                else:
+                    await message.channel.send("Unit Not Found")
+
+            if splitContent[0] == '!move' and len(splitContent) == 3:
+                coord1 = await extractCoords(splitContent[1], message.channel)
+                coord2 = await extractCoords(splitContent[2], message.channel)
+                player = payload['Author']
+                if coord1 is not None and coord2 is not None:
+                    x1, x1a, y1 = coord1
+                    x2, x2a, y2 = coord2
+                    index1 = None
+                    try: index1 = Data[guild]['Players'][player]['Markers']['Location'].index([x1, y1])
+                    except ValueError: pass
+
+                    index2 = None
+                    try: index2 = Data[guild]['Players'][player]['Markers']['Location'].index([x2, y2])
+                    except ValueError:
+                        pass
+
+                    targetOccupied = False
+                    for playerTest in Data[guild]['Players']:
+                        try:
+                            ind = Data[guild]['Players'][playerTest]['Markers']['Location'].index([x2, y2])
+                            if 'Unit' in Data[guild]['Players'][playerTest]['Markers']['Properties'][ind]:
+                                targetOccupied = True
+                        except ValueError: pass
+
+                    if abs(x1-x2)**2 + abs(y1-y2)**2 >= 4 or abs(x1-x2)**2 + abs(y1-y2)**2 == 0:
+                        await message.channel.send("Movement Must Be to Adjacent Tiles")
+                    elif index1 is None:
+                        await message.channel.send("No Unit There To Move")
+                    elif 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
+                        await message.channel.send("No Unit There To Move")
+                    elif targetOccupied:
+                        await message.channel.send("2 Units cant exist in the same location")
+                    elif not Data[guild]['Units'][
+                        Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                        ]['isMobile']:
+                        await message.channel.send("Unit Is Not Mobile")
+                    elif 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
+                        await message.channel.send("Unit Is Disabled")
+                    else:
+                        unit = Data[guild]['Units'][
+                        Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                        ]
+                        canAfford = True
+                        for cost in unit['MobileCost']:
+                            amount, item = cost.split(' ')
+                            canAfford = canAfford and addItem(guild, payload['Author'], item, -float(amount),
+                                                              testOnly=True)
+                        if not canAfford:
+                            await message.channel.send("Insufficient Funds To Move")
+                        else:
+                            for cost in unit['MobileCost']:
+                                amount, item = cost.split(' ')
+                                addItem(guild, payload['Author'], item, -float(amount))
+                            if index2 is None:
+                                Data[guild]['Players'][player]['Markers']['Properties'].append({
+                                    'Unit':Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                                })
+                                Data[guild]['Players'][player]['Markers']['Shape'].append("")
+                                Data[guild]['Players'][player]['Markers']['Location'].append([x2,y2])
+                                del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                            else:
+                                Data[guild]['Players'][player]['Markers']['Properties'][index2]['Unit'] \
+                                    = "" + str(Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'])
+                                del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+
+                            if Data[guild]['Players'][player]['Markers']['Shape'][index1] == "":
+                                del Data[guild]['Players'][player]['Markers']['Location'][index1]
+                                del Data[guild]['Players'][player]['Markers']['Shape'][index1]
+                                del Data[guild]['Players'][player]['Markers']['Properties'][index1]
+
+                            await message.channel.send("Moving Unit From "+x1a+str(y1+1)+" to "+x2a+str(y2+1))
+                            await updateInAnnouncements(message.guild)
+
+
+
+            if splitContent[0] == '!toggle' and len(splitContent) == 2:
+                coords = await extractCoords(splitContent[1],message.channel)
+                if coords is not None:
+                    xcord, xcordAlpha, ycord = coords
+                    index = Data[guild]['Players'][payload['Author']]['Markers']['Location'].index([xcord, ycord])
+
+                    if 'DisabledAndPermanent' in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index] and \
+                            Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['DisabledAndPermanent']:
+                        Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['DisabledAndPermanent'] = False
+                        await message.channel.send("Location Enabled. Will Take Effect After Midnight")
+                    else:
+                        Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['DisabledAndPermanent'] = True
+                        await message.channel.send("Location Disabled.")
+                    await updateInAnnouncements(message.guild)
+
+                else:
+                    await message.channel.send("You cannot disable this location.")
+
 
         if payload['Author'] in Admins and payload['Channel'].lower() in ['actions','action', 'mod-lounge', 'bot-lounge']:
 
@@ -243,16 +436,34 @@ async def run(inData, payload, message):
                 await message.channel.send("New Turn Initiated")
                 print('New Turn')
 
+            if splitContent[0] == '!newDay':
+                await onDayChange(message.guild)
+
             if payload['Content'] == '!getData':
                 await sendMapData(guild = message.guild.id, channel = message.channel)
                 print("sending Map_Data File")
 
             if splitContent[0] == '!remove' and len(splitContent) == 2:
-                player = await getPlayer(message.guild, splitContent[1], message.channel)
-                if player is not None:
-                    del Data[guild]['Players'][player]
-                    await message.channel.send('Player ' + player + ' is removed from the Map.')
-                    await updateInAnnouncements(message.guild)
+                if len(splitContent[1]) <=4:
+                    coords = await extractCoords(splitContent[1],message.channel)
+                    if coords is not None:
+                        xcord, xcordAlpha, ycord = coords
+                        for player in Data[guild]['Players'].keys():
+                            try:
+                                index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
+                                del Data[guild]['Players'][player]['Markers']['Location'][index]
+                                del Data[guild]['Players'][player]['Markers']['Shape'][index]
+                                del Data[guild]['Players'][player]['Markers']['Properties'][index]
+                            except ValueError:
+                                pass
+                        await message.channel.send("Tile Removed")
+
+                else:
+                    player = await getPlayer(message.guild, splitContent[1], message.channel)
+                    if player is not None:
+                        del Data[guild]['Players'][player]
+                        await message.channel.send('Player ' + player + ' is removed from the Map.')
+                        await updateInAnnouncements(message.guild)
 
             if splitContent[0] == '!setColor' and len(splitContent) == 3:
                 if splitContent[1].lower() in mcd.CSS4_COLORS:
@@ -275,8 +486,7 @@ async def run(inData, payload, message):
                         try:
                             index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
                             msg += '-'+player + ": "+str(Data[guild]['Players'][player]['Markers']['Shape'][index])
-                            for prop in Data[guild]['Players'][player]['Markers']['Properties'][index].keys():
-                                msg += '\n\t'+prop+': '+str(Data[guild]['Players'][player]['Markers']['Properties'][index][prop])
+                            msg += '\n'+str(Data[guild]['Players'][player]['Markers']['Properties'][index])
                         except ValueError: pass
                     await message.channel.send(msg)
 
@@ -309,16 +519,13 @@ async def run(inData, payload, message):
                     await message.channel.send('Marker Changes Set.')
                     await updateInAnnouncements(message.guild)
 
-            if splitContent[0] == '!resetTimer':
+            if splitContent[0] in ['!resetTimer','!resetTimers']:
                 playerid = None
                 if len(splitContent) == 2:
                     playerid = splitContent[1]
                 await resetTimers(message.guild, playerid = playerid, channel = message.channel)
 
-            if splitContent[0] == '!newDay':
-                await onDayChange(message.guild)
-
-            if splitContent[0] == '!setTimer':
+            if splitContent[0] == ['!setTimer', '!setTimers']:
                 playerid = None
                 if len(splitContent) == 2:
                     playerid = splitContent[1]
@@ -383,10 +590,10 @@ async def run(inData, payload, message):
                     'Costs':[],
                     'DailyCosts': [],
                     'NeedAdminApproval':False,
-                    'PrerequisiteUnits': [],
+                    'UpgradeUnit': "",
                     'Marker':"",
                     'isMobile':False,
-                    'MobileCost':0,
+                    'MobileCost':[],
                     'MoveLimitPerDay':0,
                     'DailyReturn':[],
                 } ))
@@ -400,15 +607,15 @@ async def run(inData, payload, message):
 
                 allThere = False
                 requirements = {
-                    'Costs':[],
+                    'Costs': [],
                     'DailyCosts': [],
-                    'NeedAdminApproval':False,
-                    'PrerequisiteUnits': [],
-                    'Marker':"",
-                    'isMobile':False,
-                    'MobileCost':0,
-                    'MoveLimitPerDay':0,
-                    'DailyReturn':[],
+                    'NeedAdminApproval': False,
+                    'UpgradeUnit': "",
+                    'Marker': "",
+                    'isMobile': False,
+                    'MobileCost': [],
+                    'MoveLimitPerDay': 0,
+                    'DailyReturn': [],
                 }
 
                 for key in data.keys():
@@ -419,7 +626,7 @@ async def run(inData, payload, message):
                 await message.channel.send("Unit Saved")
                 await updateInAnnouncements(message.guild)
 
-            if payload['Content'] == '!getUnits':
+            if payload['Content'].lower() in ['!getunits','!getunit']:
                 for unit in Data[guild]['Units'].keys():
                     msg = unit+':\n'
                     for k in Data[guild]['Units'][unit]:
@@ -465,6 +672,39 @@ async def onDayChange(server):
     async for message in channels[guild]['voting'].history(limit=100, after = lastday):
         print(message.content)
 
+    for player in Data[guild]['Players']:
+        for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
+            if 'Unit' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] \
+                    and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('DisabledAndPermanent') is not True:
+                print('Found Unit: '+ Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'])
+                name = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
+                unit = dict(Data[guild]['Units'][name])
+
+                canAfford = True
+                for cost in unit['DailyCosts']:
+                    if ' ' in cost:
+                        amount, item = cost.split(' ')
+                        print(item,amount)
+                        canAfford = canAfford and addItem(guild, player, item, -float(amount), testOnly=True)
+
+                if not canAfford:
+                    await  channels[guild]['actions'].send('@'+player+' You Have Insufficient Funds For Your '+name)
+                    Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['DisabledAndPermanent'] = False
+                else:
+                    if 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] and \
+                        not Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['DisabledAndPermanent']:
+                        del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['DisabledAndPermanent']
+
+                    for cost in unit['DailyCosts']:
+                        if ' ' in cost:
+                            amount, item = cost.split(' ')
+                            addItem(guild, player, item, -float(amount))
+                    for cost in unit['DailyReturn']:
+                        if ' ' in cost:
+                            amount, item = cost.split(' ')
+                            addItem(guild, player, item, float(amount))
+
+    await updateInAnnouncements(server)
 """
 Called On Turn Change
 """
@@ -475,7 +715,8 @@ async def onTurnChange(server):
     for player in Data[guild]['Players']:
         #print(Data[guild]['Players'][player]['Markers'])
         for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
-            if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Harvest') is not None:
+            if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Harvest') is not None\
+                    and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Unit') is None:
                 xcord, ycord = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
 
                 if isTileType(Data[guild]['Image'],xcord, ycord, 'LAND') and \
@@ -568,7 +809,7 @@ def isTileType(image, x, y, type):
 '''
 Add item of count N to player's inventory inv.
 '''
-def addItem(guild, player, item, count):
+def addItem(guild, player, item, count, testOnly = False):
     inv = Data[guild]['Players'][player]['Inventory']
     if inv.get(item) is None:
         Data[guild]['Players'][player]['Inventory'][item] = 0
@@ -576,7 +817,16 @@ def addItem(guild, player, item, count):
     # If Not Allowed To Be Negative
     if inv[item] + count < 0 and item in [
         'BF',
+        'Steel',
+        'Wood',
+        'Energy',
+        'Oil',
+        'Fish',
+        'Corn',
+        'Food',
+        'Technology'
     ]:return False
+    elif testOnly: return True
     else: Data[guild]['Players'][player]['Inventory'][item] += count
     if inv[item] == 0 and item != 'BF':
         del Data[guild]['Players'][player]['Inventory'][item]
@@ -794,21 +1044,37 @@ async def plotMap(channel, postReply = True):
                 x, y = np.asarray(player['Markers']['Location']).T
                 obj  = np.asarray(player['Markers']['Shape'])
 
-                obj[obj == 'Claim'] = '.'
+                obj[obj == 'Claim'] = 'None'
                 obj[obj == 'Capital'] = '*'
+                for unit in Data[guild]['Units'].keys():
+                    obj[obj == unit] = Data[guild]['Units'][unit]['Marker']
+
                 for i in range(obj.shape[0]):
-                    if player['Markers']['Properties'][i].get('Harvest') is not None:
+                    if obj[i] != "":
+                        ax.scatter(x[i], y[i], c="none", edgecolors=color,
+                                   linewidths=0.3, s=11, marker='s', alpha=0.7)
+
+
+                    if player['Markers']['Properties'][i].get('Unit') is not None:
+                        unit = player['Markers']['Properties'][i]['Unit']
+                        obj[i] = Data[guild]['Units'][unit]['Marker']
+                    elif player['Markers']['Properties'][i].get('Harvest') is not None:
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
-                                       linewidths=0.2 ,s=11.5, marker='s', alpha = 0.7)
+                                       linewidths=0.2, s=11.5, marker='.', alpha=0.7)
+
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Non Perpetual':
-                            ax.scatter(x[i], y[i], c="none", edgecolors=color,
-                                       linewidths=0.65, s=12, marker='s',alpha = 0.7)
+                            ax.scatter(x[i], y[i], c=color, edgecolors=color,
+                                       linewidths=0.2, s=11.5, marker='.', alpha=0.7)
+
+                    alpha = 1.0
+                    if 'DisabledAndPermanent' in player['Markers']['Properties'][i]:
+                        alpha = 0.25
 
                     if len(obj[i]) <= 3:
-                        ax.scatter(x[i], y[i], c=color,   s=5.0, linewidths=0.075, edgecolors=outline, marker = obj[i])
+                        ax.scatter(x[i], y[i], c=color, alpha = alpha, s=5.0, linewidths=0.075, edgecolors=outline, marker = obj[i])
                     else:
-                        ax.scatter(x[i], y[i], c=color, s=10.0, linewidths=0.06, edgecolors=outline, marker=obj[i])
+                        ax.scatter(x[i], y[i], c=color, alpha = alpha, s=10.0, linewidths=0.06, edgecolors=outline, marker=obj[i])
 
             ax.yaxis.set_major_formatter(ticker.NullFormatter())
             ax.yaxis.set_minor_locator(ticker.FixedLocator(axisn))
@@ -825,7 +1091,7 @@ async def plotMap(channel, postReply = True):
 
             plt.grid(color='k', linestyle='-', linewidth=0.25, alpha = 0.5)
             ax.imshow(Data[guild]['Image'].transpose(1,0,2), interpolation='none')
-            plt.savefig('tmpgrid.png', format='png', dpi = 525) #, bbox_inches="tight")
+            plt.savefig('tmpgrid.png', format='png', dpi = 500) #, bbox_inches="tight")
 
             delay = None
             if channel.id != channels[guild][logChannel].id:
