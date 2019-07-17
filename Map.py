@@ -887,16 +887,21 @@ async def updateInAnnouncements(server, reload = True):
         for item in Data[guild]['Players'][player]['Inventory']:
             msg += "\n\t"+item+': '+str(Data[guild]['Players'][player]['Inventory'][item])
 
-        try: post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][i])
-        except: post = None
+        try:
+            post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][i])
+        except:
+            post = None
         if post is None:
+            del Data[guild]['Announcements']['Items'][i]
             post = await channels[server.id][targetChannel].send('```'+msg+'```')
             Data[guild]['Announcements']['Items'].append(post.id)
         else:
             await post.edit( content='```'+msg+'```'  )
         i+=1
+    print (i,len(Data[guild]['Announcements']['Items']) )
     for n in reversed(range(i,len(Data[guild]['Announcements']['Items']))):
         try:
+            print('del',n)
             post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][n])
             await post.delete()
             del Data[guild]['Announcements']['Items'][n]
