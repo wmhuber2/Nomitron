@@ -4,9 +4,10 @@
     <bookmark url="file://$PROJECT_DIR$/Map.py" line="126" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="Adding Jana">
+    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sermon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sermon.py" afterDir="false" />
     </list>
     <ignored path="Paint.py" />
     <ignored mask="*_Data.pickle" />
@@ -18,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/DiscordBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-805">
-              <caret line="114" selection-start-line="114" selection-end-line="114" />
+            <state relative-caret-position="230">
+              <caret line="193" lean-forward="true" selection-start-line="193" selection-end-line="193" />
               <folding>
                 <element signature="e#2172#2199#0" />
                 <element signature="e#2285#2493#0" />
@@ -32,14 +33,22 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="228">
-              <caret line="849" column="23" selection-start-line="849" selection-start-column="23" selection-end-line="849" selection-end-column="23" />
+            <state relative-caret-position="270">
+              <caret line="812" selection-start-line="812" selection-end-line="812" selection-end-column="24" />
               <folding>
                 <element signature="n#!!doc" />
                 <element signature="e#1230#1305#0" />
+                <element signature="e#36518#39285#0" />
+                <element signature="e#39352#41728#0" />
+                <element signature="e#41813#42339#0" />
+                <element signature="e#42430#43348#0" />
+                <element signature="e#43420#43516#0" />
+                <element signature="e#43600#43649#0" />
+                <element signature="e#49484#51803#0" />
+                <element signature="e#51856#56227#0" />
               </folding>
             </state>
           </provider>
@@ -48,8 +57,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sermon.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2716">
-              <caret line="194" column="3" selection-start-line="194" selection-start-column="3" selection-end-line="194" selection-end-column="3" />
+            <state relative-caret-position="350">
+              <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
               <folding>
                 <element signature="e#81#129#0" expanded="true" />
               </folding>
@@ -133,19 +142,19 @@
         <option value="$PROJECT_DIR$/Admin.py" />
         <option value="$PROJECT_DIR$/Blank.py" />
         <option value="$PROJECT_DIR$/DiscordBot.py" />
-        <option value="$PROJECT_DIR$/Sermon.py" />
         <option value="$PROJECT_DIR$/AdminREADME.md" />
         <option value="$PROJECT_DIR$/PlayerREADME.md" />
         <option value="$PROJECT_DIR$/players.yaml" />
         <option value="$PROJECT_DIR$/Map.py" />
+        <option value="$PROJECT_DIR$/Sermon.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="969" />
-    <option name="y" value="84" />
+    <option name="y" value="98" />
     <option name="width" value="933" />
-    <option name="height" value="978" />
+    <option name="height" value="964" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -337,20 +346,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00092" summary="added changelog live. Where all our favorite disney character come to life.">
-      <created>1561782228426</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1561782228426</updated>
-    </task>
-    <task id="LOCAL-00093" summary="added changelog live. Where all our favorite disney character come to life.">
-      <created>1561783378045</created>
-      <option name="number" value="00093" />
-      <option name="presentableId" value="LOCAL-00093" />
-      <option name="project" value="LOCAL" />
-      <updated>1561783378045</updated>
     </task>
     <task id="LOCAL-00094" summary="added changelog live. Where all our favorite disney character come to life.">
       <created>1561783783955</created>
@@ -681,7 +676,21 @@
       <option name="project" value="LOCAL" />
       <updated>1563330370983</updated>
     </task>
-    <option name="localTasksCounter" value="141" />
+    <task id="LOCAL-00141" summary="Adding Jana">
+      <created>1563333469754</created>
+      <option name="number" value="00141" />
+      <option name="presentableId" value="LOCAL-00141" />
+      <option name="project" value="LOCAL" />
+      <updated>1563333469754</updated>
+    </task>
+    <task id="LOCAL-00142" summary="Fixed Update bug Where Lost Msgs werent removed from list.">
+      <created>1563334438985</created>
+      <option name="number" value="00142" />
+      <option name="presentableId" value="LOCAL-00142" />
+      <option name="project" value="LOCAL" />
+      <updated>1563334438985</updated>
+    </task>
+    <option name="localTasksCounter" value="143" />
     <servers />
   </component>
   <component name="TodoView">
@@ -694,12 +703,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="969" y="84" width="933" height="978" extended-state="6" />
+    <frame x="969" y="98" width="933" height="964" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4654378" visible="true" weight="0.41079295" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4654378" weight="0.41079295" />
       <window_info id="Structure" order="1" sideWeight="0.5322581" side_tool="true" weight="0.38325992" />
-      <window_info id="Run" order="2" sideWeight="0.53456223" side_tool="true" weight="0.2890909" />
+      <window_info active="true" id="Run" order="2" sideWeight="0.53456223" side_tool="true" visible="true" weight="0.28854626" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
@@ -727,7 +736,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added Open Source" />
     <MESSAGE value="Edited Readme" />
     <MESSAGE value="Upgrade Players To New Data Structure&#10;Add Commands To Harvest" />
     <MESSAGE value="Modified Plot For Harvest" />
@@ -752,7 +760,8 @@
     <MESSAGE value="All Unit Stuff Added.Plus Some Sermon Updates." />
     <MESSAGE value="Updated Help" />
     <MESSAGE value="Adding Jana" />
-    <option name="LAST_COMMIT_MESSAGE" value="Adding Jana" />
+    <MESSAGE value="Fixed Update bug Where Lost Msgs werent removed from list." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Update bug Where Lost Msgs werent removed from list." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tmp/Admin.py" />
@@ -847,28 +856,6 @@
     <entry file="file://$PROJECT_DIR$/sermons.yaml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/DiscordBot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-805">
-          <caret line="114" selection-start-line="114" selection-end-line="114" />
-          <folding>
-            <element signature="e#2172#2199#0" />
-            <element signature="e#2285#2493#0" />
-            <element signature="e#2597#3468#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sermon.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2716">
-          <caret line="194" column="3" selection-start-line="194" selection-start-column="3" selection-end-line="194" selection-end-column="3" />
-          <folding>
-            <element signature="e#81#129#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/players.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="266">
@@ -878,11 +865,41 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="849" column="23" selection-start-line="849" selection-start-column="23" selection-end-line="849" selection-end-column="23" />
+        <state relative-caret-position="270">
+          <caret line="812" selection-start-line="812" selection-end-line="812" selection-end-column="24" />
           <folding>
             <element signature="n#!!doc" />
             <element signature="e#1230#1305#0" />
+            <element signature="e#36518#39285#0" />
+            <element signature="e#39352#41728#0" />
+            <element signature="e#41813#42339#0" />
+            <element signature="e#42430#43348#0" />
+            <element signature="e#43420#43516#0" />
+            <element signature="e#43600#43649#0" />
+            <element signature="e#49484#51803#0" />
+            <element signature="e#51856#56227#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sermon.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="25" column="24" selection-start-line="25" selection-start-column="24" selection-end-line="25" selection-end-column="24" />
+          <folding>
+            <element signature="e#81#129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DiscordBot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="193" lean-forward="true" selection-start-line="193" selection-end-line="193" />
+          <folding>
+            <element signature="e#2172#2199#0" />
+            <element signature="e#2285#2493#0" />
+            <element signature="e#2597#3468#0" />
           </folding>
         </state>
       </provider>

@@ -810,6 +810,7 @@ def isTileType(image, x, y, type):
 Add item of count N to player's inventory inv.
 '''
 def addItem(guild, player, item, count, testOnly = False):
+    count = float(count)
     inv = Data[guild]['Players'][player]['Inventory']
     if inv.get(item) is None:
         Data[guild]['Players'][player]['Inventory'][item] = 0
@@ -861,8 +862,8 @@ async def updateInAnnouncements(server, reload = True):
         Data[guild]['Announcements']['Items'] = []
     sortedPlayers = list(Data[guild]['Players'].keys())
 
-    i = 0
-    for player in playerOrder:
+    i = 1
+    for player in reversed(playerOrder):
         if player not in sortedPlayers: continue
         msg = player + ' : '+Data[guild]['Players'][player]['Color'].upper()+'\n'
         msg += '-Has Claimed Today: '+str(Data[guild]['Players'][player]['Claimed Today'])
@@ -885,14 +886,14 @@ async def updateInAnnouncements(server, reload = True):
                '\n\tNon-Renewable Harvests:'+str(totalNonRenewableHarvests)
         msg += "\n-Inventory:"
         for item in Data[guild]['Players'][player]['Inventory']:
-            msg += "\n\t"+item+': '+str(Data[guild]['Players'][player]['Inventory'][item])
+            msg += "\n\t"+item+': '+str(float(Data[guild]['Players'][player]['Inventory'][item]))
 
         try:
-            post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][i])
+            post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][-i])
         except:
             post = None
         if post is None:
-            del Data[guild]['Announcements']['Items'][i]
+            del Data[guild]['Announcements']['Items'][-i]
             post = await channels[server.id][targetChannel].send('```'+msg+'```')
             Data[guild]['Announcements']['Items'].append(post.id)
         else:

@@ -23,6 +23,7 @@ async def addMember(inData, member):
     return saveData()
 
 def addItem(guild, player, item, count):
+    count = float(count)
     inv = AllData['Map'][guild]['Players'][player]['Inventory']
     if inv.get(item) is None:
         AllData['Map'][guild]['Players'][player]['Inventory'][item] = 0
