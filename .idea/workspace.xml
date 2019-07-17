@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AdminREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/AdminREADME.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlayerREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/PlayerREADME.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/players.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/players.yaml" afterDir="false" />
     </list>
     <ignored path="Paint.py" />
     <ignored mask="*_Data.pickle" />
@@ -22,87 +22,13 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiscordBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="175">
-              <caret line="81" column="7" lean-forward="true" selection-start-line="81" selection-start-column="7" selection-end-line="81" selection-end-column="7" />
+            <state relative-caret-position="133">
+              <caret line="78" selection-start-line="78" selection-end-line="78" />
               <folding>
                 <element signature="e#2172#2199#0" />
                 <element signature="e#2285#2493#0" />
                 <element signature="e#2597#3468#0" />
-                <element signature="e#4404#7559#0" />
-                <element signature="e#8351#8830#0" />
-                <element signature="e#8864#8977#0" />
-                <element signature="e#9112#9383#0" />
-                <element signature="e#9449#12196#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Map.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="592">
-              <caret line="87" column="86" selection-start-line="87" selection-start-column="86" selection-end-line="87" selection-end-column="86" />
-              <folding>
-                <element signature="n#!!doc" />
-                <element signature="e#1230#1305#0" />
-                <element signature="e#2050#2180#0" />
-                <element signature="e#2336#4251#0" />
-                <element signature="e#4340#7797#0" />
-                <element signature="e#9904#15329#0" />
-                <element signature="e#18336#22834#0" />
-                <element signature="e#19107#19783#0" />
-                <element signature="e#13057#13451#0" />
-                <element signature="e#13518#13650#0" />
-                <element signature="e#13717#13807#0" />
-                <element signature="e#23358#24615#0" />
-                <element signature="e#14316#15005#0" />
-                <element signature="e#17588#18447#0" />
-                <element signature="e#16046#17647#0" />
-                <element signature="e#25955#26157#0" />
-                <element signature="e#26334#26545#0" />
-                <element signature="e#18348#19151#0" />
-                <element signature="e#19216#19343#0" />
-                <element signature="e#19415#19913#0" />
-                <element signature="e#20302#21721#0" />
-                <element signature="e#21839#22280#0" />
-                <element signature="e#23794#24807#0" />
-                <element signature="e#31003#31284#0" />
-                <element signature="e#20198#20405#0" />
-                <element signature="e#30821#33404#0" />
-                <element signature="e#21212#23476#0" />
-                <element signature="e#23561#24087#0" />
-                <element signature="e#24178#25096#0" />
-                <element signature="e#25511#25952#0" />
-                <element signature="e#26055#30156#0" />
-                <element signature="e#30237#30882#0" />
-                <element signature="e#34837#37089#0" />
-                <element signature="e#51218#55734#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/AdminREADME.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="210">
-                <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-              </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="FIRST">
-              <first_editor relative-caret-position="504">
-                <caret line="36" selection-start-line="36" selection-end-line="36" />
-              </first_editor>
-              <second_editor />
             </state>
           </provider>
         </entry>
@@ -111,10 +37,19 @@
         <entry file="file://$PROJECT_DIR$/Sermon.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="398">
-              <caret line="130" column="8" selection-start-line="130" selection-start-column="8" selection-end-line="130" selection-end-column="8" />
+              <caret line="194" column="3" lean-forward="true" selection-start-line="194" selection-start-column="3" selection-end-line="194" selection-end-column="3" />
               <folding>
                 <element signature="e#81#129#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/players.yaml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="364">
+              <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
             </state>
           </provider>
         </entry>
@@ -182,22 +117,22 @@
         <option value="$PROJECT_DIR$/run.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/Nomitron.py" />
-        <option value="$PROJECT_DIR$/players.yaml" />
         <option value="$PROJECT_DIR$/Rules.py" />
         <option value="$PROJECT_DIR$/Admin.py" />
         <option value="$PROJECT_DIR$/Blank.py" />
         <option value="$PROJECT_DIR$/DiscordBot.py" />
         <option value="$PROJECT_DIR$/Sermon.py" />
-        <option value="$PROJECT_DIR$/Map.py" />
         <option value="$PROJECT_DIR$/AdminREADME.md" />
         <option value="$PROJECT_DIR$/PlayerREADME.md" />
+        <option value="$PROJECT_DIR$/Map.py" />
+        <option value="$PROJECT_DIR$/players.yaml" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="3051" />
+    <option name="x" value="777" />
     <option name="y" value="84" />
-    <option name="width" value="771" />
+    <option name="width" value="1125" />
     <option name="height" value="978" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -206,6 +141,17 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope">
+        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
+          <expand>
+            <path>
+              <item name="Nomitron" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="$PROJECT_DIR$" type="442cc68d:ScopeViewTreeModel$RootNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -216,17 +162,6 @@
             <path>
               <item name="Nomitron" type="b2602c69:ProjectViewProjectNode" />
               <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Scope 'Project Files'; set:Project Files; class com.intellij.psi.search.scope.ProjectFilesScope">
-          <expand>
-            <path>
-              <item name="Nomitron" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
-              <item name="$PROJECT_DIR$" type="442cc68d:ScopeViewTreeModel$RootNode" />
             </path>
           </expand>
           <select />
@@ -390,13 +325,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00089" summary="Doby Dick Update. Now Change Harvests!">
-      <created>1561762187018</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1561762187018</updated>
     </task>
     <task id="LOCAL-00090" summary="Doby Dick Update. Now Change Harvests!">
       <created>1561762399688</created>
@@ -734,7 +662,14 @@
       <option name="project" value="LOCAL" />
       <updated>1563243080134</updated>
     </task>
-    <option name="localTasksCounter" value="138" />
+    <task id="LOCAL-00138" summary="Updated Help">
+      <created>1563243498878</created>
+      <option name="number" value="00138" />
+      <option name="presentableId" value="LOCAL-00138" />
+      <option name="project" value="LOCAL" />
+      <updated>1563243498879</updated>
+    </task>
+    <option name="localTasksCounter" value="139" />
     <servers />
   </component>
   <component name="TodoView">
@@ -747,12 +682,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="3051" y="98" width="771" height="964" extended-state="6" />
+    <frame x="777" y="84" width="1125" height="978" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.46604216" weight="0.35120642" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.46604216" visible="true" weight="0.2890909" />
       <window_info id="Structure" order="1" sideWeight="0.5322581" side_tool="true" weight="0.38325992" />
-      <window_info id="Run" order="2" sideWeight="0.53395784" side_tool="true" weight="0.35120642" />
+      <window_info active="true" id="Run" order="2" sideWeight="0.53395784" side_tool="true" visible="true" weight="0.35120642" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
@@ -780,7 +715,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="git pswd hide" />
     <MESSAGE value="Fixing Git Pull URL" />
     <MESSAGE value="Added Open Source" />
     <MESSAGE value="Edited Readme" />
@@ -805,7 +739,8 @@
     <MESSAGE value="Reformated Data&#10;Sermon Gifts Automatic" />
     <MESSAGE value="Added Unit base and debug for Sermon." />
     <MESSAGE value="All Unit Stuff Added.Plus Some Sermon Updates." />
-    <option name="LAST_COMMIT_MESSAGE" value="All Unit Stuff Added.Plus Some Sermon Updates." />
+    <MESSAGE value="Updated Help" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated Help" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tmp/Admin.py" />
@@ -841,13 +776,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Rules_Data.pickle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="34" lean-forward="true" selection-start-line="8" selection-start-column="34" selection-end-line="8" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Rules_Data.pickle" />
     <entry file="file://$PROJECT_DIR$/log.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="98">
@@ -862,25 +791,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/players.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="8" column="12" lean-forward="true" selection-start-line="8" selection-start-column="12" selection-end-line="8" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Map_Data.pickle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3612" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Admin_Data.pickle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="7" selection-start-column="7" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Map_Data.pickle" />
+    <entry file="file://$PROJECT_DIR$/Admin_Data.pickle" />
     <entry file="file://$PROJECT_DIR$/Blank.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="663">
@@ -906,73 +818,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Sermon.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="130" column="8" selection-start-line="130" selection-start-column="8" selection-end-line="130" selection-end-column="8" />
-          <folding>
-            <element signature="e#81#129#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Map.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="87" column="86" selection-start-line="87" selection-start-column="86" selection-end-line="87" selection-end-column="86" />
-          <folding>
-            <element signature="n#!!doc" />
-            <element signature="e#1230#1305#0" />
-            <element signature="e#2050#2180#0" />
-            <element signature="e#2336#4251#0" />
-            <element signature="e#4340#7797#0" />
-            <element signature="e#9904#15329#0" />
-            <element signature="e#18336#22834#0" />
-            <element signature="e#19107#19783#0" />
-            <element signature="e#13057#13451#0" />
-            <element signature="e#13518#13650#0" />
-            <element signature="e#13717#13807#0" />
-            <element signature="e#23358#24615#0" />
-            <element signature="e#14316#15005#0" />
-            <element signature="e#17588#18447#0" />
-            <element signature="e#16046#17647#0" />
-            <element signature="e#25955#26157#0" />
-            <element signature="e#26334#26545#0" />
-            <element signature="e#18348#19151#0" />
-            <element signature="e#19216#19343#0" />
-            <element signature="e#19415#19913#0" />
-            <element signature="e#20302#21721#0" />
-            <element signature="e#21839#22280#0" />
-            <element signature="e#23794#24807#0" />
-            <element signature="e#31003#31284#0" />
-            <element signature="e#20198#20405#0" />
-            <element signature="e#30821#33404#0" />
-            <element signature="e#21212#23476#0" />
-            <element signature="e#23561#24087#0" />
-            <element signature="e#24178#25096#0" />
-            <element signature="e#25511#25952#0" />
-            <element signature="e#26055#30156#0" />
-            <element signature="e#30237#30882#0" />
-            <element signature="e#34837#37089#0" />
-            <element signature="e#51218#55734#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/DiscordBot.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="175">
-          <caret line="81" column="7" lean-forward="true" selection-start-line="81" selection-start-column="7" selection-end-line="81" selection-end-column="7" />
-          <folding>
-            <element signature="e#2172#2199#0" />
-            <element signature="e#2285#2493#0" />
-            <element signature="e#2597#3468#0" />
-            <element signature="e#4404#7559#0" />
-            <element signature="e#8351#8830#0" />
-            <element signature="e#8864#8977#0" />
-            <element signature="e#9112#9383#0" />
-            <element signature="e#9449#12196#0" />
-          </folding>
+    <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="182">
+            <caret line="13" column="16" selection-start-line="13" selection-start-column="16" selection-end-line="13" selection-end-column="16" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>
@@ -980,19 +832,52 @@
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
           <first_editor relative-caret-position="210">
-            <caret line="15" column="18" lean-forward="true" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
+            <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/PlayerREADME.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="504">
-            <caret line="36" selection-start-line="36" selection-end-line="36" />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/Map.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="186">
+          <caret line="846" column="22" lean-forward="true" selection-start-line="846" selection-start-column="22" selection-end-line="846" selection-end-column="22" />
+          <folding>
+            <element signature="n#!!doc" />
+            <element signature="e#1230#1305#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/DiscordBot.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="78" selection-start-line="78" selection-end-line="78" />
+          <folding>
+            <element signature="e#2172#2199#0" />
+            <element signature="e#2285#2493#0" />
+            <element signature="e#2597#3468#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sermons.yaml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sermon.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="398">
+          <caret line="194" column="3" lean-forward="true" selection-start-line="194" selection-start-column="3" selection-end-line="194" selection-end-column="3" />
+          <folding>
+            <element signature="e#81#129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/players.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="26" column="12" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
         </state>
       </provider>
     </entry>
