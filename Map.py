@@ -847,9 +847,9 @@ async def updateInAnnouncements(server, reload = True):
         'Rabz12#9343',
         'Steam:HaphStealth Bnet#1191#5187',
         "Doby's Peri#6151",
+        'Janwich#4842',
         'gfigs#6656',
         'iann39#8298',
-        'Janwich#4842'
     ]
     targetChannel = "changelog-live"
     if targetChannel not in channels[guild]:
