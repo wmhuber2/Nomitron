@@ -42,7 +42,7 @@ def sermonThanks(player):
 
 async def giveReward(player, crackerChance, wineChance, guildid):
     global AllData
-    roll = random.random()
+    roll = random.randrange(10)/10.0
     await log(str(['Roll:',player,roll,crackerChance,wineChance]))
     if (roll < crackerChance):
         addItem(guildid, player, 'Cracker', 1)
@@ -76,7 +76,7 @@ async def reaction(inData, action, user, message, emoji):
             blessing = await giveReward(userName, 0.3, 0.2,guild)
             await channels[guild]["actions"].send(blessing)
         else:
-            await channels[guild]["actions"].send("You Have Already Attended or Have No BF")
+            await channels[guild]["actions"].send("You Haven't Amened Yet or Have No BF")
 
     return saveData()
 
