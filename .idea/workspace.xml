@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sermon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sermon.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
     </list>
     <ignored path="Paint.py" />
     <ignored mask="*_Data.pickle" />
@@ -22,8 +21,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/DiscordBot.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2366">
-              <caret line="197" selection-start-line="197" selection-end-line="197" />
+            <state relative-caret-position="158">
+              <caret line="148" column="35" selection-start-line="148" selection-start-column="35" selection-end-line="148" selection-end-column="35" />
               <folding>
                 <element signature="e#2172#2199#0" />
                 <element signature="e#2285#2493#0" />
@@ -33,11 +32,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Map.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="9506">
-              <caret line="812" selection-start-line="812" selection-end-line="812" selection-end-column="24" />
+            <state relative-caret-position="354">
+              <caret line="1068" column="57" selection-start-line="1068" selection-start-column="57" selection-end-line="1068" selection-end-column="57" />
               <folding>
                 <element signature="n#!!doc" />
                 <element signature="e#1230#1305#0" />
@@ -52,11 +51,16 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/tmpgrid.png">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Sermon.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="182">
-              <caret line="43" column="18" lean-forward="true" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
+            <state relative-caret-position="238">
+              <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
               <folding>
                 <element signature="e#81#129#0" expanded="true" />
               </folding>
@@ -143,16 +147,16 @@
         <option value="$PROJECT_DIR$/AdminREADME.md" />
         <option value="$PROJECT_DIR$/PlayerREADME.md" />
         <option value="$PROJECT_DIR$/players.yaml" />
-        <option value="$PROJECT_DIR$/Map.py" />
         <option value="$PROJECT_DIR$/Sermon.py" />
+        <option value="$PROJECT_DIR$/Map.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="2889" />
-    <option name="y" value="60" />
+    <option name="x" value="1938" />
+    <option name="y" value="54" />
     <option name="width" value="933" />
-    <option name="height" value="1002" />
+    <option name="height" value="1008" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -344,13 +348,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00095" summary="added changelog live. Where all our favorite disney character come to life.">
-      <created>1561784004323</created>
-      <option name="number" value="00095" />
-      <option name="presentableId" value="LOCAL-00095" />
-      <option name="project" value="LOCAL" />
-      <updated>1561784004323</updated>
     </task>
     <task id="LOCAL-00096" summary="added changelog live. Where all our favorite disney character come to life.">
       <created>1561784042816</created>
@@ -688,7 +685,14 @@
       <option name="project" value="LOCAL" />
       <updated>1563337159432</updated>
     </task>
-    <option name="localTasksCounter" value="144" />
+    <task id="LOCAL-00144" summary="Reverted Map">
+      <created>1563650975230</created>
+      <option name="number" value="00144" />
+      <option name="presentableId" value="LOCAL-00144" />
+      <option name="project" value="LOCAL" />
+      <updated>1563650975231</updated>
+    </task>
+    <option name="localTasksCounter" value="145" />
     <servers />
   </component>
   <component name="TodoView">
@@ -701,12 +705,12 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2889" y="66" width="933" height="996" extended-state="6" />
+    <frame x="1938" y="32" width="1125" height="1030" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.4654378" weight="0.41079295" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.46420825" visible="true" weight="0.3390909" />
       <window_info id="Structure" order="1" sideWeight="0.5322581" side_tool="true" weight="0.38325992" />
-      <window_info active="true" id="Run" order="2" sideWeight="0.53456223" side_tool="true" visible="true" weight="0.28854626" />
+      <window_info active="true" id="Run" order="2" sideWeight="0.53579175" side_tool="true" visible="true" weight="0.3390909" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32937366" />
@@ -734,7 +738,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Upgrade Players To New Data Structure&#10;Add Commands To Harvest" />
     <MESSAGE value="Modified Plot For Harvest" />
     <MESSAGE value="Added Helper Funtions Finished Plot. Added End Turn COmmand" />
     <MESSAGE value="Doby Dick Update. Now Change Harvests!" />
@@ -759,7 +762,8 @@
     <MESSAGE value="Adding Jana" />
     <MESSAGE value="Fixed Update bug Where Lost Msgs werent removed from list." />
     <MESSAGE value="Fixed Bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Bug" />
+    <MESSAGE value="Reverted Map" />
+    <option name="LAST_COMMIT_MESSAGE" value="Reverted Map" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/tmp/Admin.py" />
@@ -854,10 +858,30 @@
     <entry file="file://$PROJECT_DIR$/sermons.yaml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$PROJECT_DIR$/players.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Sermon.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
+          <folding>
+            <element signature="e#81#129#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tmpgrid.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
     <entry file="file://$PROJECT_DIR$/DiscordBot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2366">
-          <caret line="197" selection-start-line="197" selection-end-line="197" />
+        <state relative-caret-position="158">
+          <caret line="148" column="35" selection-start-line="148" selection-start-column="35" selection-end-line="148" selection-end-column="35" />
           <folding>
             <element signature="e#2172#2199#0" />
             <element signature="e#2285#2493#0" />
@@ -868,8 +892,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Map.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9506">
-          <caret line="812" selection-start-line="812" selection-end-line="812" selection-end-column="24" />
+        <state relative-caret-position="354">
+          <caret line="1068" column="57" selection-start-line="1068" selection-start-column="57" selection-end-line="1068" selection-end-column="57" />
           <folding>
             <element signature="n#!!doc" />
             <element signature="e#1230#1305#0" />
@@ -879,23 +903,6 @@
             <element signature="e#42430#43348#0" />
             <element signature="e#43420#43516#0" />
             <element signature="e#43600#43649#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/players.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="266">
-          <caret line="19" column="24" selection-start-line="19" selection-start-column="24" selection-end-line="19" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Sermon.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="182">
-          <caret line="43" column="18" lean-forward="true" selection-start-line="43" selection-start-column="18" selection-end-line="43" selection-end-column="18" />
-          <folding>
-            <element signature="e#81#129#0" expanded="true" />
           </folding>
         </state>
       </provider>
