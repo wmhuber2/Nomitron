@@ -1050,40 +1050,36 @@ async def plotMap(channel, postReply = True):
                 x, y = np.asarray(player['Markers']['Location']).T
                 obj  = np.asarray(player['Markers']['Shape'])
 
-                obj[obj == 'Claim'] = '.' #'None'
+                obj[obj == 'Claim'] = 'None'
                 obj[obj == 'Capital'] = '*'
-                #for unit in Data[guild]['Units'].keys():
-                #    obj[obj == unit] = Data[guild]['Units'][unit]['Marker']
+                for unit in Data[guild]['Units'].keys():
+                    obj[obj == unit] = Data[guild]['Units'][unit]['Marker']
                 print('New Stuff')
                 for i in range(obj.shape[0]):
-                    #if obj[i] != "":
-                    #    ax.scatter(x[i], y[i], c="none", edgecolors=color,
-                    #               linewidths=0.3, s=11, marker='s', alpha=0.7)
+                    if obj[i] != "":
+                        ax.scatter(x[i], y[i], c="none", edgecolors=color,
+                                   linewidths=0.3, s=11, marker='s', alpha=0.7)
 
 
-                    #if player['Markers']['Properties'][i].get('Unit') is not None:
-                    #    unit = player['Markers']['Properties'][i]['Unit']
-                    #    obj[i] = Data[guild]['Units'][unit]['Marker']
-                    #el
-                    if player['Markers']['Properties'][i].get('Harvest') is not None:
+                    if player['Markers']['Properties'][i].get('Unit') is not None:
+                        unit = player['Markers']['Properties'][i]['Unit']
+                        obj[i] = Data[guild]['Units'][unit]['Marker']
+                    elif player['Markers']['Properties'][i].get('Harvest') is not None:
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
-                                       linewidths=0.2, s=10, marker='s', alpha=0.7)
-                                       #linewidths=0.2, s=11.5, marker='.', alpha=0.7)
+                                       linewidths=0.2, s=11.5, marker='.', alpha=0.7)
 
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Non Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color, #ax.scatter(x[i], y[i], c=color, edgecolors=color,
-                                       linewidths=0.65, s=10, marker='s', alpha=0.7)
-                                       #linewidths=0.2, s=11.5, marker='.', alpha=0.7) #make .
-                    ax.scatter(x[i], y[i], c=color, s=4.5, linewidths=0.1, edgecolors=outline, marker=obj[i])
+                                       linewidths=0.2, s=11.5, marker='.', alpha=0.7) #make .
                     alpha = 1.0
                     if 'DisabledAndPermanent' in player['Markers']['Properties'][i]:
                         alpha = 0.25
 
-                    #if len(obj[i]) <= 3:
-                    #    ax.scatter(x[i], y[i], c=color, alpha = alpha, s=5.0, linewidths=0.075, edgecolors=outline, marker = obj[i])
-                    #else:
-                    #    ax.scatter(x[i], y[i], c=color, alpha = alpha, s=10.0, linewidths=0.06, edgecolors=outline, marker=obj[i])
+                    if len(obj[i]) <= 3:
+                        ax.scatter(x[i], y[i], c=color, alpha = alpha, s=5.0, linewidths=0.075, edgecolors=outline, marker = obj[i])
+                    else:
+                        ax.scatter(x[i], y[i], c=color, alpha = alpha, s=10.0, linewidths=0.06, edgecolors=outline, marker=obj[i])
 
             ax.yaxis.set_major_formatter(ticker.NullFormatter())
             ax.yaxis.set_minor_locator(ticker.FixedLocator(axisn))
