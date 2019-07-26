@@ -1071,7 +1071,7 @@ async def plotMap(channel, postReply = True):
 
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Non Perpetual':
                             ax.scatter(x[i], y[i], c=color, edgecolors=color,
-                                       linewidths=0.2, s=11.5, marker='.', alpha=0.7) 
+                                       linewidths=0.2, s=11.5, marker='.', alpha=0.7)
                     alpha = 1.0
                     if 'DisabledAndPermanent' in player['Markers']['Properties'][i]:
                         alpha = 0.25
