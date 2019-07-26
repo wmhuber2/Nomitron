@@ -226,13 +226,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00097" summary="Fixing Bug-aggedon">
-      <created>1561785315498</created>
-      <option name="number" value="00097" />
-      <option name="presentableId" value="LOCAL-00097" />
-      <option name="project" value="LOCAL" />
-      <updated>1561785315498</updated>
-    </task>
     <task id="LOCAL-00098" summary="Fixing Bug-aggedon">
       <created>1561785353732</created>
       <option name="number" value="00098" />
@@ -569,7 +562,14 @@
       <option name="project" value="LOCAL" />
       <updated>1563651171535</updated>
     </task>
-    <option name="localTasksCounter" value="146" />
+    <task id="LOCAL-00146" summary="RE-Reverted Map">
+      <created>1564110880983</created>
+      <option name="number" value="00146" />
+      <option name="presentableId" value="LOCAL-00146" />
+      <option name="project" value="LOCAL" />
+      <updated>1564110880984</updated>
+    </task>
+    <option name="localTasksCounter" value="147" />
     <servers />
   </component>
   <component name="TodoView">
@@ -603,7 +603,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Modified Plot For Harvest" />
     <MESSAGE value="Added Helper Funtions Finished Plot. Added End Turn COmmand" />
     <MESSAGE value="Doby Dick Update. Now Change Harvests!" />
     <MESSAGE value="Finaly became a drug. Also Added BFs and Better Map Updates" />
@@ -628,7 +627,8 @@
     <MESSAGE value="Fixed Update bug Where Lost Msgs werent removed from list." />
     <MESSAGE value="Fixed Bug" />
     <MESSAGE value="Reverted Map" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reverted Map" />
+    <MESSAGE value="RE-Reverted Map" />
+    <option name="LAST_COMMIT_MESSAGE" value="RE-Reverted Map" />
   </component>
   <component name="masterDetails">
     <states>
