@@ -548,131 +548,34 @@ sentences:
     paragraph: 6
     sentence: 3
   # Rule 308
-  - text: "This proposal seeks to introduce a system of economy into the Nomic Game."
+  - text: "The Blemflarck, or BF, is the official unit of currency for this game of Nomic."
     category: "Constructs"
     paragraph: 1
     sentence: 1
-  - text: "The proposed unit of currency would be a Blemflarck or BF for short."
-    category: "Constructs"
-    paragraph: 1
-    sentence: 2
   - text: "All players would start with 20 Blemflarcks."
     category: "Constructs"
     paragraph: 1
-    sentence: 3
-  - text: "Players gain 5 Blemflarcks when they vote on a proposal for the first time on a given turn of play."
+    sentence: 2
+  - text: "Players gain 5 Blemflarcks at the end of a turn if they have cast a vote on a rule-change at any point in said turn."
     category: "Constructs"
     paragraph: 1
-    sentence: 4
+    sentence: 3
   - text: "A player can attempt to give Blemflarcks to another player by declaring their intention in actions."
     category: "Constructs"
     paragraph: 1
-    sentence: 5
+    sentence: 4
   - text: "This either needs to be accepted or declined by the receiving player before the end of the current turn of play."
     category: "Constructs"
     paragraph: 1
-    sentence: 6
-  - text: "If the receiving player does not respond before the end of the turn, it is treated as a rejection."
+    sentence: 5
+  - text: "If the receiving player does not respond before the end of the turn, it is treated as a rejection"
     category: "Constructs"
     paragraph: 1
-    sentence: 7
+    sentence: 6
   - text: "An action that would lead to a negative balance of Blemflarck is blocked automatically."
     category: "Constructs"
     paragraph: 1
-    sentence: 8
-  # Rule 309
-  - text: "Things that exist are in a state of being."
-    category: "Constructs"
-    paragraph: 1
-    sentence: 1
-  - text: "All players exist."
-    category: "Constructs"
-    paragraph: 1
-    sentence: 2
-  - text: "Therefore, all players are in a state of being."
-    category: "Constructs"
-    paragraph: 1
-    sentence: 3
-  - text: "This rule seeks to further specify what kind of state all players exist in."
-    category: "Constructs"
-    paragraph: 1
-    sentence: 4
-  - text: "The player(s) with the most Blemflarcks is/are eligible to be in a State of Greed."
-    category: "Constructs"
-    paragraph: 2
-    sentence: 1
-  - text: "Players instantly lose their eligibility if/when another player(s) has more Blemflarcks than them."
-    category: "Constructs"
-    paragraph: 2
-    sentence: 2
-  - text: "If a player joins a political party on a player’s turn, and remains in that political party until that player’s next turn, they are eligible to be in a State of Loyalty."
-    category: "Constructs"
-    paragraph: 3
-    sentence: 1
-  - text: "Players instantly lose their eligibility if/when they lose their status as a member of said political party."
-    category: "Constructs"
-    paragraph: 3
-    sentence: 2
-  - text: "If a player’s last proposal passed, they are eligible to be in a State of Honor."
-    category: "Constructs"
-    paragraph: 4
-    sentence: 1
-  - text: "Players instantly lose their eligibility if/when a proposal of theirs fails."
-    category: "Constructs"
-    paragraph: 4
-    sentence: 2
-  - text: "If a player votes on a player’s turn, and continues to vote on every proposal until that player’s next turn comes, they are eligible to be in a State of Responsibility."
-    category: "Constructs"
-    paragraph: 5
-    sentence: 1
-  - text: "If the player whose turn they voted on becomes inactive, their eligibility is instead judged by when that player’s turn would have taken place in the turn order."
-    category: "Constructs"
-    paragraph: 5
-    sentence: 2
-  - text: "Players instantly lose their eligibility if/when they do not vote on a proposal."
-    category: "Constructs"
-    paragraph: 5
-    sentence: 3
-  - text: "If a player is not eligible for any other States, they become eligible to be in a State of Passivity."
-    category: "Constructs"
-    paragraph: 6
-    sentence: 1
-  - text: "Players instantly lose their eligibilty if/when they become eligible for another State."
-    category: "Constructs"
-    paragraph: 6
-    sentence: 2
-  - text: "If a player is only eligible for one State, they are automatically in that State."
-    category: "Constructs"
-    paragraph: 7
-    sentence: 1
-  - text: "If a player is eligible for multiple States, and they are already in a State, they may swap between States that they are eligible for once every 24 hours."
-    category: "Constructs"
-    paragraph: 7
-    sentence: 2
-  - text: "If a player is eligible for multiple States, and they are not already in a State, they must declare in #actions which State they are in."
-    category: "Constructs"
-    paragraph: 7
-    sentence: 3
-  - text: "If, as per rule 303, a player who is eligible for multiple States has not declared which State they are in within the appropriate amount of time, they are automatically assigned to a State of Headassery and are no longer eligible for any other States until the end of the current turn."
-    category: "Constructs"
-    paragraph: 7
-    sentence: 4
-  - text: "At the end of each turn, players in a State of Headassery may once again become eligible for other States."
-    category: "Constructs"
-    paragraph: 7
-    sentence: 5
-  - text: "If a player loses eligibility for the State that they are currently in, they are instantly no longer in that State."
-    category: "Constructs"
-    paragraph: 8
-    sentence: 1
-  - text: "A player who is removed from a State in this manner must follow the above proceedings."
-    category: "Constructs"
-    paragraph: 8
-    sentence: 2
-  - text: "Additional States may be defined in future proposals, either as amendments to this rule or as their own rules."
-    category: "Constructs"
-    paragraph: 9
-    sentence: 1
+    sentence: 7
   # Rule 312
   - text: "The world is 75x75 grid map consisting of TILES."
     category: "Constructs"
@@ -1021,3 +924,154 @@ sentences:
     category: "Constructs"
     paragraph: 1
     sentence: 1
+# Rule 321
+  - text: "The items below are created and/or set as raw material in the world."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "Units are structures/organizations one may create/upgrade from a cost of raw materials and may have prerequisites."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 1
+  - text: "Prerequisites include but are not limited to: Location and Ownership of Other Units."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 2
+  - text: "Units may have daily upkeep costs as a prerequisite, which will be collected at midnight."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 3
+  - text: "If a prerequisite for a unit is later missing, or willfully made unavailable by a players request, that unit becomes inactive and can preform no changes on the game until said prerequisite is met again."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 4
+  - text: "Upgrades do not inherit previous version costs."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 1
+  - text: "Units may not share locations, cannot be harvested, and must be initially placed on, and upgraded on a player's own tiles."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 2
+  - text: "Mobile Units may move to adjacent tiles at a movement cost."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 3
+  - text: "Destroyed Units are completely removed."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 4
+  - text: "Capitals may not be destroyed, and may not have units on them."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 5
+  - text: "All Units and Upgrade Paths Will be located in an easily accessible location, decided by the admin."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 1
+  - text: "New units and upgrades may be proposed."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 2
+  - text: "All Unit Markers will be decided by Moderators/Admins."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 3
+  - text: "The Following is AN EXAMPLE"
+    category: "Constructs"
+    paragraph: 5
+    sentence: 1
+  - text: "Once a turn destroy an adjacent tile unit to the mob with 50% chance of success."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 2
+  - text: "Gain 4 wood/day"
+    category: "Constructs"
+    paragraph: 5
+    sentence: 3
+# Rule 322
+  - text: "A player can place any actions in #actions under a condition."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "This acts so that when the condition is met, the action is taken."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 2
+  - text: 'For example a player could say "If it is {time}, then do {action}".'
+    category: "Constructs"
+    paragraph: 1
+    sentence: 3
+  - text: "Similarly, this can act to facilitate non player-targeted trades."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 1
+  - text: "By placing a conditional on the desired trading item, the player can leave an offer open for another player to accept the trade."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 2
+  - text: "Once a condition is met causing an action to occur, the conditional action is completed and will not occur the following times the condition is satisfied."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 1
+  - text: "A player can only have a single conditional active at once, and can repeal a conditional at any time, but cannot retroactively undo after the condition is met."
+    category: "Constructs"
+    paragraph: 4
+    sentence: 1
+  - text: "Any time the rules would prevent an action from being carried out, the conditional is immediately forfeit."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 1
+  - text: "For example, a player leaving a conditional that would give another player 10 BF while only having 5 would be unable to leave the condition active, unless the condition's satisfaction would require the action be valid."
+    category: "Constructs"
+    paragraph: 5
+    sentence: 2
+  - text: "To facilitate the management of conditionals, players will be responsible for managing their conditions in the newly created #conditionals channel."
+    category: "Constructs"
+    paragraph: 6
+    sentence: 1
+  - text: "Within this channel, each player will be permitted one message, which they can edit to reflect their current conditional."
+    category: "Constructs"
+    paragraph: 6
+    sentence: 2
+  - text: "This can also be accomplished by sending a new conditional into the channel, but the player must delete their previous condition."
+    category: "Constructs"
+    paragraph: 6
+    sentence: 3
+  - text: 'All messages in this channel should follow the format "If [A] then I [B]", where [A] is the condition that must be satisfied, and [B] is the action they would take given the condition''s satisfaction.'
+    category: "Constructs"
+    paragraph: 6
+    sentence: 4
+  - text: "In the case that players create conditions based on the same specific times being reached, they will resolve in the order the conditionals were created."
+    category: "Constructs"
+    paragraph: 7
+    sentence: 1
+# Rule 326
+  - text: "On their turn, a player may make a request in #actions for additional map space."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "For all intents and purposes, map extension requests fall under the jurisdiction of rule 210."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 2
+  - text: "It is the responsibility of the player making this request to specify what the map extension would look like and how it would connect to the existing map."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 3
+  - text: "If they fail to do this before the end of their turn, the request automatically fails."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 4
+  - text: "The map extension must be agreed to by at least two thirds of active players by the end of the turn."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 5
+  - text: "Players may indicate their approval or disapproval of the map extension in #actions in the same manner(s) as they would vote on a normal rule proposal."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 6
+  - text: "If the extension is ratified, the map will be updated at the end of the following turn, or at a later date formally established in #actions by one of the players responsible for implementing the change."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 7
