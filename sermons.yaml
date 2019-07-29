@@ -1075,3 +1075,33 @@ sentences:
     category: "Constructs"
     paragraph: 1
     sentence: 7
+# Rule 327
+  - text: "Changes to the world as it is specified in Rule 312 may not be made without the approval of a two-thirds majority of eligible voters."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "A change to the world is defined as the addition of, removal of, or change in the element of any TILE or TILES."
+    category: "Constructs"
+    paragraph: 2
+    sentence: 1
+  - text: "This rule applies to both proposed rule-changes and other in-game mechanisms."
+    category: "Constructs"
+    paragraph: 3
+    sentence: 1
+# Rule 328
+  - text: "All changelog-live and map layout/design elements that have no effect on game dynamics are managed by Mods/Admins."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 1
+  - text: "This includes but is not limited to: Marker shapes, Image Resolution, Territory Markers, and availability of information like number of harvests in changelog-live."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 2
+  - text: "This supersedes all prior rules (e.g. lower number)"
+    category: "Constructs"
+    paragraph: 1
+    sentence: 3
+  - text: "All future rules and rule amendments/changes that specify design/implementation of map or changelog-live elements must strictly specify their superseding of this rule otherwise have this rule take precedence."
+    category: "Constructs"
+    paragraph: 1
+    sentence: 4
