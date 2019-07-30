@@ -125,7 +125,7 @@ async def setup(inData, chans, logchan, guild):
     logChannel = logchan
 
     # Do Stuff Here
-
+    Data = {}
     with urllib.request.urlopen('https://raw.githubusercontent.com/dmouscher/nomic/master/rules-3.md') as response:
         rules = response.read().decode()
         ruletxt = rules.split('##')[1:]

@@ -22,6 +22,21 @@ TILES = {
     'WATER' :[49,108,237,255],
 }
 
+UNIT_BASE = {
+    'Costs':[],
+    'DailyCosts': [],
+    'NeedAdminApproval':False,
+    'UpgradeUnit': "",
+    'Marker':"",
+    'isMobile':False,
+    'MobileCost':[],
+    'MoveLimitPerDay':0,
+    'DailyReturn':[],
+    'LandOnly':False,
+    'WaterOnly':False,
+    'BeachOnly':False
+}
+
 channels   = {}
 logChannel = ""
 Data = {}
@@ -397,8 +412,6 @@ async def run(inData, payload, message):
                             await message.channel.send("Moving Unit From "+x1a+str(y1+1)+" to "+x2a+str(y2+1))
                             await updateInAnnouncements(message.guild)
 
-
-
             if splitContent[0] == '!toggle' and len(splitContent) == 2:
                 coords = await extractCoords(splitContent[1],message.channel)
                 if coords is not None:
@@ -586,38 +599,16 @@ async def run(inData, payload, message):
                     await updateInAnnouncements(message.guild)
 
             if splitContent[0] == '!newUnit' and len(splitContent) == 1:
-                await message.channel.send( str({
-                    'Costs':[],
-                    'DailyCosts': [],
-                    'NeedAdminApproval':False,
-                    'UpgradeUnit': "",
-                    'Marker':"",
-                    'isMobile':False,
-                    'MobileCost':[],
-                    'MoveLimitPerDay':0,
-                    'DailyReturn':[],
-                } ))
+                await message.channel.send( str(UNIT_BASE))
 
             if splitContent[0] == '!newUnit' and len(splitContent) > 1:
                 name = splitContent[1]
                 data = dict(eval(' '.join(splitContent[2:])))
 
-                #if name not in Data[guild]['Unit']:
-                #    await message.channel.send("Unit Name Taken.")
+                if name not in Data[guild]['Unit']:
+                    await message.channel.send("Replacing Existing Unit...")
 
-                allThere = False
-                requirements = {
-                    'Costs': [],
-                    'DailyCosts': [],
-                    'NeedAdminApproval': False,
-                    'UpgradeUnit': "",
-                    'Marker': "",
-                    'isMobile': False,
-                    'MobileCost': [],
-                    'MoveLimitPerDay': 0,
-                    'DailyReturn': [],
-                }
-
+                requirements = dict(UNIT_BASE)
                 for key in data.keys():
                     if requirements.get(key) is not None:
                         requirements[key] = data[key]
@@ -1021,6 +1012,13 @@ async def setup(inData, chans, logchan, server):
             for tile in Data[guild]['Players'][player]['Markers']['Shape']:
                 Data[guild]['Players'][player]['Markers']['Properties'].append({})
 
+    for name in Data[guild]['Units'].keys():
+        data =  Data[guild]['Units'][name]
+        requirements = dict(UNIT_BASE)
+        for key in data.keys():
+            if requirements.get(key) is not None:
+                requirements[key] = data[key]
+        Data[guild]['Units'][name] = requirements
     await updateInAnnouncements(server)
     return saveData()
 
