@@ -16,7 +16,6 @@ elif payload['Channel'].lower() not in ['actions','action']:
             await message.channel.send("The reward has already been claimed. :cry:")
 '''
 
-
 TILES = {
     'LAND'  :[45, 84, 55,255],
     'WATER' :[49,108,237,255],

@@ -113,7 +113,6 @@ async def update(inData, server):
     return saveData()
 
 
-
 """
 Setup Log Parameters and Channel List And Whatever You Need to Check on a Bot Reset.
 Handles Change In Server Structure and the like. Probably Can Leave Alone.

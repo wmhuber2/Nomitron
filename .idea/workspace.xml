@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="Fixed Rules Non Removal Bug">
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rules.py" afterDir="false" />
     </list>
@@ -220,13 +219,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00100" summary="Fixing Bug-aggedon">
-      <created>1561786848048</created>
-      <option name="number" value="00100" />
-      <option name="presentableId" value="LOCAL-00100" />
-      <option name="project" value="LOCAL" />
-      <updated>1561786848048</updated>
     </task>
     <task id="LOCAL-00101" summary="Stabalized Government in Forign Nations, and the bot too.">
       <created>1561820688801</created>
@@ -564,7 +556,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564111122700</updated>
     </task>
-    <option name="localTasksCounter" value="149" />
+    <task id="LOCAL-00149" summary="Fixed Rules Non Removal Bug">
+      <created>1564527412851</created>
+      <option name="number" value="00149" />
+      <option name="presentableId" value="LOCAL-00149" />
+      <option name="project" value="LOCAL" />
+      <updated>1564527412851</updated>
+    </task>
+    <option name="localTasksCounter" value="150" />
     <servers />
   </component>
   <component name="TodoView">
@@ -600,7 +599,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added Helper Funtions Finished Plot. Added End Turn COmmand" />
     <MESSAGE value="Doby Dick Update. Now Change Harvests!" />
     <MESSAGE value="Finaly became a drug. Also Added BFs and Better Map Updates" />
     <MESSAGE value="added changelog live. Where all our favorite disney character come to life." />
@@ -625,7 +623,8 @@
     <MESSAGE value="Fixed Bug" />
     <MESSAGE value="Reverted Map" />
     <MESSAGE value="RE-Reverted Map" />
-    <option name="LAST_COMMIT_MESSAGE" value="RE-Reverted Map" />
+    <MESSAGE value="Fixed Rules Non Removal Bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Rules Non Removal Bug" />
   </component>
   <component name="masterDetails">
     <states>
