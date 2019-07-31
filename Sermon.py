@@ -95,7 +95,7 @@ async def run(inData, payload, message):
 
     if payload['Content'] == '!newTurn':
         endTurnMessage = ""
-        for player in Players.keys():
+        for player in random.shuffle(list(Players.keys())):
             playerAttended = playerData[player]['attended']
             playerTithed   = playerData[player]['tithed']
 

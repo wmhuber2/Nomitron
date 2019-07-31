@@ -136,7 +136,7 @@ class DiscordNomicBot():
 
 
     """
-    Display All Server Detailssocket.gethostname()
+    Display All Server ,Detailssocket.gethostname()
     """
     async def on_ready(self):
         print()
