@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DiscordBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/DiscordBot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sermon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sermon.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -221,13 +219,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00102" summary="All better now.....Or so it seamed. For our intrepid adventurer ad no idea the monsterous creatures he was doomed to face....">
-      <created>1561832057365</created>
-      <option name="number" value="00102" />
-      <option name="presentableId" value="LOCAL-00102" />
-      <option name="project" value="LOCAL" />
-      <updated>1561832057365</updated>
     </task>
     <task id="LOCAL-00103" summary="All better now.....Or so it seamed. For our intrepid adventurer ad no idea the monsterous creatures he was doomed to face....">
       <created>1561834017534</created>
@@ -565,7 +556,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564527474064</updated>
     </task>
-    <option name="localTasksCounter" value="151" />
+    <task id="LOCAL-00151" summary="Added Extra Shuffle to Sermon">
+      <created>1564583887125</created>
+      <option name="number" value="00151" />
+      <option name="presentableId" value="LOCAL-00151" />
+      <option name="project" value="LOCAL" />
+      <updated>1564583887126</updated>
+    </task>
+    <option name="localTasksCounter" value="152" />
     <servers />
   </component>
   <component name="TodoView">
@@ -601,7 +599,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Doby Dick Update. Now Change Harvests!" />
     <MESSAGE value="Finaly became a drug. Also Added BFs and Better Map Updates" />
     <MESSAGE value="added changelog live. Where all our favorite disney character come to life." />
     <MESSAGE value="Fixing Bug-aggedon" />
@@ -626,7 +623,8 @@
     <MESSAGE value="Reverted Map" />
     <MESSAGE value="RE-Reverted Map" />
     <MESSAGE value="Fixed Rules Non Removal Bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Rules Non Removal Bug" />
+    <MESSAGE value="Added Extra Shuffle to Sermon" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Extra Shuffle to Sermon" />
   </component>
   <component name="masterDetails">
     <states>

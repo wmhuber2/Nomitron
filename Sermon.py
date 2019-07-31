@@ -42,7 +42,10 @@ def sermonThanks(player):
 
 async def giveReward(player, crackerChance, wineChance, guildid):
     global AllData
-    roll = random.randrange(10)/10.0
+    roll = 0.0
+    for i in range(20):
+        roll = random.randrange(10)/10.0
+        print(roll)
     await log(str(['Roll:',player,roll,crackerChance,wineChance]))
     if (roll < crackerChance):
         addItem(guildid, player, 'Cracker', 1)
@@ -95,7 +98,9 @@ async def run(inData, payload, message):
 
     if payload['Content'] == '!newTurn':
         endTurnMessage = ""
-        for player in random.shuffle(list(Players.keys())):
+        players = list(Players.keys())
+        random.shuffle(players)
+        for player in players:
             playerAttended = playerData[player]['attended']
             playerTithed   = playerData[player]['tithed']
 
