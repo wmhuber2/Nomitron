@@ -43,9 +43,7 @@ def sermonThanks(player):
 async def giveReward(player, crackerChance, wineChance, guildid):
     global AllData
     roll = 0.0
-    for i in range(20):
-        roll = random.randrange(10)/10.0
-        print(roll)
+    for i in range(10): roll = random.randrange(10)/10.0
     await log(str(['Roll:',player,roll,crackerChance,wineChance]))
     if (roll < crackerChance):
         addItem(guildid, player, 'Cracker', 1)

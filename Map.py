@@ -318,6 +318,20 @@ async def run(inData, payload, message):
 
                         if Data[guild]['Players'][playerName]['Markers']['Shape'][indexTile] == "":
                             await message.channel.send("Units Must Be Upgraded On Your Claimed Tile")
+                        elif unit['LandOnly'] and not isTileType(Data[guild]['Image'], x,y,'LAND'):
+                            await message.channel.send("This Can Only Be Placed On Land")
+                        elif unit['WaterOnly'] and not isTileType(Data[guild]['Image'], x,y,'WATER'):
+                            await message.channel.send("This Can Only Be Placed On Water")
+                        elif unit['BeachOnly'] and not (
+                                isTileType(Data[guild]['Image'], x, y, 'LAND')
+                                and (
+                                    isTileType(Data[guild]['Image'], x+1, y, 'WATER') or
+                                    isTileType(Data[guild]['Image'], x-1, y, 'WATER') or
+                                    isTileType(Data[guild]['Image'], x, y+1, 'WATER') or
+                                    isTileType(Data[guild]['Image'], x, y-1, 'WATER')
+                                )
+                            ):
+                            await message.channel.send("This Can Only Be Placed On A Beach")
                         elif unit['UpgradeUnit'] != "" and unit['UpgradeUnit'] != \
                             Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']:
                             await message.channel.send("This location cannot be Upgraded To "+name)
@@ -503,10 +517,12 @@ async def run(inData, payload, message):
                     await message.channel.send(msg)
 
             if splitContent[0] == '!setTile' and len(splitContent) >= 5:
+                print(splitContent)
                 coords = await extractCoords(splitContent[1], message.channel)
                 playerName = await getPlayer(message.guild, splitContent[2], message.channel)
                 shape = splitContent[3]
                 properties = eval(' '.join(splitContent[4:]))
+
 
 
                 if not isinstance(properties, (dict,)):
@@ -604,7 +620,7 @@ async def run(inData, payload, message):
                 name = splitContent[1]
                 data = dict(eval(' '.join(splitContent[2:])))
 
-                if name not in Data[guild]['Unit']:
+                if name not in Data[guild]['Units']:
                     await message.channel.send("Replacing Existing Unit...")
 
                 requirements = dict(UNIT_BASE)
@@ -1061,6 +1077,8 @@ async def plotMap(channel, postReply = True):
                     if player['Markers']['Properties'][i].get('Unit') is not None:
                         unit = player['Markers']['Properties'][i]['Unit']
                         obj[i] = Data[guild]['Units'][unit]['Marker']
+                        if obj[i][0] == '"' and obj[i][-1] == '"':
+                            obj[i] = '$'+obj[i][1:-1]+'$'
                     elif player['Markers']['Properties'][i].get('Harvest') is not None:
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
