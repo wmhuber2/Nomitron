@@ -120,6 +120,53 @@ async def reaction(inData, action, user, messageid, emoji):
         else:
             await message.channel.send("Unit Not Found")
 
+    if splitContent[0] == '!claim' and len(splitContent) == 2 and reactorName == playerName and action == 'add':
+        bot = None
+        canContinute = True
+        for r in message.reactions:
+            isBot = False
+            for u in await r.users().flatten():
+                isBot = u.bot or isBot
+                if u.bot:  bot = u
+            canContinute = canContinute and isBot
+
+        if canContinute:
+            for r in message.reactions:
+                if not r.emoji in ['💵', '🌮']:
+                    await message.channel.send("Invalid Payment Method You Fool.")
+                    canContinute = False
+                    break
+            if canContinute:
+                xcord, xcordAlpha, ycord  = await extractCoords(splitContent[1], message.channel)
+                cost = ""
+                amount = 0
+                if str(emoji) == '💵':
+                    print("BF")
+                    cost = "BF"
+                    amount =  Data[guild]['Players'][playerName]['Claimed Today'] + 2
+                elif str(emoji) == '🌮':
+                    print ("Food")
+                    cost = "Food"
+                    index = Data[guild]['Players'][playerName]['Markers']['Shape'].index("Capital")
+                    capx,capy =  Data[guild]['Players'][playerName]['Markers']['Location'][index]
+                    amount = abs(capx - xcord) + abs(capy - ycord)
+                else:
+                    print(emoji,str(emoji))
+                    cost = 'BF'
+                    amount = '10000'
+                await message.remove_reaction('💵',bot)
+                await message.remove_reaction('🌮',bot)
+                if addItem(guild, playerName, cost, -1*amount):
+                    Data[guild]['Players'][playerName]['Markers']['Location'].append([xcord, ycord])
+                    Data[guild]['Players'][playerName]['Markers']['Properties'].append({})
+                    Data[guild]['Players'][playerName]['Markers']['Shape'].append('Claim')
+                    Data[guild]['Players'][playerName]['Claimed Today'] += 1
+                    await message.channel.send("You have claimed the location. ")
+                    Data[guild]['Log'].append('Player {0} claimed location {1} at {2}'.format(
+                        playerName, (xcordAlpha, ycord + 1), datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
+                    await updateInAnnouncements(message.guild)
+                else:
+                    await message.channel.send("You Do Not Have "+str(amount)+' '+cost+" To Claim The Tile")
 
     return saveData()
 
@@ -180,11 +227,14 @@ async def run(inData, payload, message):
                     coords = await extractCoords(splitContent[1], message.channel)
                     if coords is not None:
                         xcord, xcordAlpha, ycord = coords
+                        claimsLeft = 1 + (hasUnit(guild, payload['Author'], 'ExplorerGuild') * 5) \
+                                     - Data[guild]['Players'][payload['Author']]['Claimed Today']
+
 
                         if not isTileType(Data[guild]['Image'],xcord , ycord, 'LAND'):
                             await message.channel.send("Please seek more advanced technology to claim Water Tiles.")
 
-                        elif Data[guild]['Players'][payload['Author']]['Claimed Today']:
+                        elif claimsLeft <= 0:
                             await message.channel.send("You have already purchased a claim today. Please wait until tomorrow to claim again. Have a nice day. :v:")
 
                         elif[xcord+1, ycord+1] in Data[guild]['Players'][payload['Author']]['Markers']['Location'] or \
@@ -202,11 +252,14 @@ async def run(inData, payload, message):
 
                             if isClaimed:
                                 await message.channel.send("You cannot claim this location. It is already claimed.")
+                            elif hasUnit(guild,payload['Author'],'ExplorerGuild') != 0:
+                                await message.add_reaction('💵')
+                                await message.add_reaction('🌮')
                             elif addItem( guild, payload['Author'], 'BF', -2):
                                 Data[guild]['Players'][payload['Author']]['Markers']['Location'].append([xcord, ycord])
                                 Data[guild]['Players'][payload['Author']]['Markers']['Properties'].append({})
                                 Data[guild]['Players'][payload['Author']]['Markers']['Shape'].append('Claim')
-                                Data[guild]['Players'][payload['Author']]['Claimed Today'] = True
+                                Data[guild]['Players'][payload['Author']]['Claimed Today'] += 1
                                 await message.channel.send("You have claimed the location. ")
                                 Data[guild]['Log'].append('Player {0} claimed location {1} at {2}'.format(
                                     payload['Author'],(xcordAlpha, ycord+1),datetime.datetime.now().strftime("%Y-%m-%d %H:%M")))
@@ -620,7 +673,7 @@ async def run(inData, payload, message):
                 name = splitContent[1]
                 data = dict(eval(' '.join(splitContent[2:])))
 
-                if name not in Data[guild]['Units']:
+                if name in Data[guild]['Units']:
                     await message.channel.send("Replacing Existing Unit...")
 
                 requirements = dict(UNIT_BASE)
@@ -631,6 +684,15 @@ async def run(inData, payload, message):
 
                 await message.channel.send("Unit Saved")
                 await updateInAnnouncements(message.guild)
+
+            if splitContent[0] == '!removeUnit' and len(splitContent) == 2:
+                name = splitContent[1]
+
+                if name in Data[guild]['Units']:
+                    del Data[guild]['Units'][name]
+                    await message.channel.send("Removeing Existing Unit...")
+                else:
+                    await message.channel.send("Unit Not FOund")
 
             if payload['Content'].lower() in ['!getunits','!getunit']:
                 for unit in Data[guild]['Units'].keys():
@@ -666,6 +728,7 @@ async def onDayChange(server):
     print ('Day Changing...')
 
     await resetTimers(server)
+    await sendMapData(guild, channels[guild][logChannel])
     Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
     await updateInAnnouncements(server)
 
@@ -753,7 +816,7 @@ async def onTurnChange(server):
     await updateInAnnouncements(server)
 
 
-async def resetTimers(server, channel = None, playerid = None, mode = False):
+async def resetTimers(server, channel = None, playerid = None, mode = 0):
     if channel is None: channel = channels[server.id][logChannel]
     guild = server.id
 
@@ -765,7 +828,7 @@ async def resetTimers(server, channel = None, playerid = None, mode = False):
     else:
         player = await getPlayer(server,playerid, channel)
         if player is not None:
-            Data[guild]['Players'][player]['Claimed Today'] = False
+            Data[guild]['Players'][player]['Claimed Today'] = 0
             await channel.send("Resetting Claim Timer for " + player)
 
 """
@@ -810,7 +873,6 @@ Is The Tile Of Type as x,y in image
 """
 def isTileType(image, x, y, type):
    return np.all(image[x, y] == TILES[type.upper()])
-
 
 '''
 Add item of count N to player's inventory inv.
@@ -868,11 +930,12 @@ async def updateInAnnouncements(server, reload = True):
         Data[guild]['Announcements']['Items'] = []
     sortedPlayers = list(Data[guild]['Players'].keys())
 
-    i = 1
-    for player in reversed(playerOrder):
+    i = 0
+    for player in playerOrder:
         if player not in sortedPlayers: continue
         msg = player + ' : '+Data[guild]['Players'][player]['Color'].upper()+'\n'
-        msg += '-Has Claimed Today: '+str(Data[guild]['Players'][player]['Claimed Today'])
+        msg += '-Claims Left Today: '+str(1 + (hasUnit(guild, player, 'ExplorerGuild') * 5) \
+                                     - Data[guild]['Players'][player]['Claimed Today'])
         msg += '\n-Tiles:'
         totalRenewableHarvests = 0
         totalNonRenewableHarvests = 0
@@ -894,27 +957,34 @@ async def updateInAnnouncements(server, reload = True):
         for item in Data[guild]['Players'][player]['Inventory']:
             msg += "\n\t"+item+': '+str(float(Data[guild]['Players'][player]['Inventory'][item]))
 
-        try:
-            post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][-i])
-        except:
-            post = None
-        if post is None:
-            del Data[guild]['Announcements']['Items'][-i]
-            post = await channels[server.id][targetChannel].send('```'+msg+'```')
+
+
+        if i >= len(Data[guild]['Announcements']['Items']):
+            post = await channels[server.id][targetChannel].send('```' + msg + '```')
             Data[guild]['Announcements']['Items'].append(post.id)
         else:
-            await post.edit( content='```'+msg+'```'  )
+            try:
+                post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][i])
+            except:
+                post = None
+            if post is None:
+                post = await channels[server.id][targetChannel].send('```'+msg+'```')
+                Data[guild]['Announcements']['Items'][i] = post.id
+            else:
+                await post.edit( content='```'+msg+'```'  )
         i+=1
+
     print (i,len(Data[guild]['Announcements']['Items']) )
-    for n in reversed(range(i,len(Data[guild]['Announcements']['Items']))):
+    for n in range(i,len(Data[guild]['Announcements']['Items'])):
         try:
             print('del',n)
-            post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][n])
+            post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][i])
             await post.delete()
-            del Data[guild]['Announcements']['Items'][n]
+            del Data[guild]['Announcements']['Items'][i]
         except:
+            print('delExcept',n)
             post = None
-            del Data[guild]['Announcements']['Items'][n]
+            del Data[guild]['Announcements']['Items'][i]
 
 
 
@@ -940,6 +1010,16 @@ async def updateInAnnouncements(server, reload = True):
             Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
         else:
             await msg.edit(content=url)
+
+
+"Determines If PLayer Has A Unit"
+def hasUnit(guildid, player, unit):
+    unitCount = 0
+    for tile in range(len(Data[guildid]['Players'][player]['Markers']['Location'])):
+        props = Data[guildid]['Players'][player]['Markers']['Properties'][tile]
+        if 'Unit' not in props: continue
+        elif unit in props['Unit']: unitCount += 1
+    return unitCount
 
 
 """

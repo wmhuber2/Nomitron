@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DiscordBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/DiscordBot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sermon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sermon.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -183,13 +183,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00104" summary="All better now.....Or so it seamed. For our intrepid adventurer ad no idea the monsterous creatures he was doomed to face....">
-      <created>1561834248619</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1561834248619</updated>
     </task>
     <task id="LOCAL-00105" summary="All better now.....Or so it seamed. For our intrepid adventurer ad no idea the monsterous creatures he was doomed to face....">
       <created>1561834438654</created>
@@ -527,7 +520,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564585958198</updated>
     </task>
-    <option name="localTasksCounter" value="153" />
+    <task id="LOCAL-00153" summary="Unit Location Option Added.">
+      <created>1564618925733</created>
+      <option name="number" value="00153" />
+      <option name="presentableId" value="LOCAL-00153" />
+      <option name="project" value="LOCAL" />
+      <updated>1564618925733</updated>
+    </task>
+    <option name="localTasksCounter" value="154" />
     <servers />
   </component>
   <component name="TodoView">
@@ -563,7 +563,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Finaly became a drug. Also Added BFs and Better Map Updates" />
     <MESSAGE value="added changelog live. Where all our favorite disney character come to life." />
     <MESSAGE value="Fixing Bug-aggedon" />
     <MESSAGE value="Stabalized Government in Forign Nations, and the bot too." />
@@ -588,7 +587,8 @@
     <MESSAGE value="RE-Reverted Map" />
     <MESSAGE value="Fixed Rules Non Removal Bug" />
     <MESSAGE value="Added Extra Shuffle to Sermon" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Extra Shuffle to Sermon" />
+    <MESSAGE value="Unit Location Option Added." />
+    <option name="LAST_COMMIT_MESSAGE" value="Unit Location Option Added." />
   </component>
   <component name="masterDetails">
     <states>

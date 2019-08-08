@@ -295,7 +295,7 @@ class DiscordNomicBot():
                     channels[channel.name] = channel
                 if hasattr(mod, 'setup'):
                     try:
-                        await mod.setup(channels, self.logChannel, message.guild)
+                        await mod.setup(self.Data, channels, self.logChannel, message.guild)
                         print('Enabling',self.Data)
                         self.Data['disabled'][message.guild.id] = [x for x in self.Data['disabled'][message.guild.id] if x != splitPayload[2]]
                     except Exception as e:
