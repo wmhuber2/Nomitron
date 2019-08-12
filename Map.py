@@ -185,32 +185,29 @@ async def reaction(inData, action, user, messageid, emoji):
                     canContinute = False
                     break
             if canContinute:
-                if str(emoji) == '👍':
-                    for playerid in splitContent[1:-2]:
-                        targetName = await getPlayer(message.guild, playerid, message.channel)
+                targetName = await getPlayer(message.guild, splitContent[1], message.channel)
+                if targetName is None: pass
+                elif str(emoji) == '👍' and targetName == reactorName:
+                    amount = None
+                    item = splitContent[-1]
+                    try:
+                        amount = float(splitContent[-2])
+                    except:
+                        await message.channel.send(splitContent[-2] + ' cannot be quantified into an amount.')
 
-                        if targetName is not None:
-                            if targetName == reactorName:
-                                amount = None
-                                item = splitContent[-1]
-                                try:
-                                    amount = float(splitContent[-2])
-                                except:
-                                    await message.channel.send(splitContent[-2] + ' cannot be quantified into an amount.')
+                    if amount is not None \
+                            and addItem(guild, playerName, item, -amount, testOnly=True) \
+                            and addItem(guild, targetName, item, amount, testOnly=True):
+                        await message.remove_reaction('👍', bot)
+                        await message.remove_reaction('👎', bot)
 
-                                if amount is not None \
-                                        and addItem(guild, playerName, item, -amount, testOnly=True) \
-                                        and addItem(guild, targetName, item, amount, testOnly=True):
-                                    await message.remove_reaction('👍', bot)
-                                    await message.remove_reaction('👎', bot)
-
-                                    addItem(guild, playerName, item, -amount)
-                                    addItem(guild, targetName, item, amount)
-                                    await message.channel.send('Transaction Completed For ' + playerName+' to '+targetName)
-                                    await updateInAnnouncements(message.guild)
-                                else:
-                                    await message.channel.send("Resources Unavailable For Trade")
-                elif str(emoji) == '👎':
+                        addItem(guild, playerName, item, -amount)
+                        addItem(guild, targetName, item, amount)
+                        await message.channel.send('Transaction Completed For ' + playerName+' to '+targetName)
+                        await updateInAnnouncements(message.guild)
+                    else:
+                        await message.channel.send("Resources Unavailable For Trade")
+                elif str(emoji) == '👎' and targetName == reactorName:
                     await message.remove_reaction('👍', bot)
                     await message.remove_reaction('👎', bot)
                     await message.channel.send('Transaction Rejected')
@@ -827,7 +824,7 @@ async def onDayChange(server):
                         canAfford = canAfford and addItem(guild, player, item, -float(amount), testOnly=True)
 
                 if not canAfford:
-                    await  channels[guild]['actions'].send('@'+player+' You Have Insufficient Funds For Your '+name)
+                    await  channels[guild]['actions'].send('@'+player+' You Have Insufficient Funds For Your '+name + '.\n Unit is disabled, will retry in 1 Day.')
                     Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['DisabledAndPermanent'] = False
                 else:
                     if 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] and \
