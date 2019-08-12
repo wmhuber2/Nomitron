@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DiscordBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/DiscordBot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayerREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/PlayerREADME.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -12,6 +12,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="UPDATE_TYPE" value="MERGE" />
@@ -26,7 +33,9 @@
     </option>
   </component>
   <component name="ProjectId" id="1OX4gffvPrzNgBon2Sohi13W92E" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -183,13 +192,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00105" summary="All better now.....Or so it seamed. For our intrepid adventurer ad no idea the monsterous creatures he was doomed to face....">
-      <created>1561834438654</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1561834438654</updated>
     </task>
     <task id="LOCAL-00106" summary="Dual Wield Axis, Auto remove Maps, Player ID module for those 21 and older.">
       <created>1562026002021</created>
@@ -527,7 +529,14 @@
       <option name="project" value="LOCAL" />
       <updated>1564618925733</updated>
     </task>
-    <option name="localTasksCounter" value="154" />
+    <task id="LOCAL-00154" summary="Implemented New Units And ExplorerGuild. Nomic IRS dont know about my secret Stash.">
+      <created>1565232504764</created>
+      <option name="number" value="00154" />
+      <option name="presentableId" value="LOCAL-00154" />
+      <option name="project" value="LOCAL" />
+      <updated>1565232504765</updated>
+    </task>
+    <option name="localTasksCounter" value="155" />
     <servers />
   </component>
   <component name="TodoView">
@@ -563,7 +572,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="added changelog live. Where all our favorite disney character come to life." />
     <MESSAGE value="Fixing Bug-aggedon" />
     <MESSAGE value="Stabalized Government in Forign Nations, and the bot too." />
     <MESSAGE value="All better now.....Or so it seamed. For our intrepid adventurer ad no idea the monsterous creatures he was doomed to face...." />
@@ -588,7 +596,8 @@
     <MESSAGE value="Fixed Rules Non Removal Bug" />
     <MESSAGE value="Added Extra Shuffle to Sermon" />
     <MESSAGE value="Unit Location Option Added." />
-    <option name="LAST_COMMIT_MESSAGE" value="Unit Location Option Added." />
+    <MESSAGE value="Implemented New Units And ExplorerGuild. Nomic IRS dont know about my secret Stash." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented New Units And ExplorerGuild. Nomic IRS dont know about my secret Stash." />
   </component>
   <component name="masterDetails">
     <states>

@@ -33,6 +33,12 @@ ActionCommands:        Allowed Channels: actions
 -    !move {coord1} {coord2}
 +        move unit form coord1 to coord2
 +        Rule: 320
+-    !toggle {coord}
++         disables/enables output of a unit.
++         Rule 321
+-    !trade @player amount item
++         give a player resources if they accept.
++         Rule 314
 
 
 +###########################################

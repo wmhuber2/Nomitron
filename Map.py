@@ -168,6 +168,53 @@ async def reaction(inData, action, user, messageid, emoji):
                 else:
                     await message.channel.send("You Do Not Have "+str(amount)+' '+cost+" To Claim The Tile")
 
+    if splitContent[0] == '!trade':
+        bot = None
+        canContinute = True
+        for r in message.reactions:
+            isBot = False
+            for u in await r.users().flatten():
+                isBot = u.bot or isBot
+                if u.bot:  bot = u
+            canContinute = canContinute and isBot
+
+        if canContinute:
+            for r in message.reactions:
+                if not r.emoji in ['👍', '👎']:
+                    await message.channel.send("Please Use Thumbs Up Or Down.")
+                    canContinute = False
+                    break
+            if canContinute:
+                if str(emoji) == '👍':
+                    for playerid in splitContent[1:-2]:
+                        targetName = await getPlayer(message.guild, playerid, message.channel)
+
+                        if targetName is not None:
+                            if targetName == reactorName:
+                                amount = None
+                                item = splitContent[-1]
+                                try:
+                                    amount = float(splitContent[-2])
+                                except:
+                                    await message.channel.send(splitContent[-2] + ' cannot be quantified into an amount.')
+
+                                if amount is not None \
+                                        and addItem(guild, playerName, item, -amount, testOnly=True) \
+                                        and addItem(guild, targetName, item, amount, testOnly=True):
+                                    await message.remove_reaction('👍', bot)
+                                    await message.remove_reaction('👎', bot)
+
+                                    addItem(guild, playerName, item, -amount)
+                                    addItem(guild, targetName, item, amount)
+                                    await message.channel.send('Transaction Completed For ' + playerName+' to '+targetName)
+                                    await updateInAnnouncements(message.guild)
+                                else:
+                                    await message.channel.send("Resources Unavailable For Trade")
+                elif str(emoji) == '👎':
+                    await message.remove_reaction('👍', bot)
+                    await message.remove_reaction('👎', bot)
+                    await message.channel.send('Transaction Rejected')
+
     return saveData()
 
 
@@ -365,9 +412,12 @@ async def run(inData, payload, message):
 
                     if indexTile is not None:
                         canAfford = True
+                        missingItems = ""
                         for cost in unit['Costs']:
                             amount,item = cost.split(' ')
-                            canAfford = canAfford and addItem(guild, playerName, item, -float(amount), testOnly=True)
+                            if not addItem(guild, playerName, item, -float(amount), testOnly=True):
+                                canAfford = False
+                                missingItems += '   '+str(amount)+' '+item+"\n"
 
                         if Data[guild]['Players'][playerName]['Markers']['Shape'][indexTile] == "":
                             await message.channel.send("Units Must Be Upgraded On Your Claimed Tile")
@@ -401,8 +451,8 @@ async def run(inData, payload, message):
                             await message.channel.send(name + "Unit Added On " + str(xa) + str(y+1) + " ")
                             await updateInAnnouncements(message.guild)
                         else:
-                            await message.channel.send("Insufficent Funds")
-                else:
+                            await message.channel.send("Insufficent Funds You Need:"+missingItems)
+                elif coords is not None:
                     await message.channel.send("Unit Not Found")
 
             if splitContent[0] == '!move' and len(splitContent) == 3:
@@ -496,6 +546,26 @@ async def run(inData, payload, message):
                 else:
                     await message.channel.send("You cannot disable this location.")
 
+            if splitContent[0] == '!trade':
+                for playerid in splitContent[1:-2]:
+                    playerName = await getPlayer(message.guild, playerid, message.channel)
+
+                    if playerName is not None:
+                        amount = None
+                        item = splitContent[-1]
+                        try:
+                            amount = float(splitContent[-2])
+                        except:
+                            await message.channel.send(splitContent[-2] + ' cannot be quantified into an amount.')
+
+                        if amount is not None \
+                            and addItem(guild, payload['Author'], item, -amount,testOnly=True) \
+                            and addItem(guild, playerName, item,  amount,testOnly=True):
+
+                            await message.add_reaction('👍')
+                            await message.add_reaction('👎')
+                        else:
+                            await message.channel.send("You Do Not Have The Resources")
 
         if payload['Author'] in Admins and payload['Channel'].lower() in ['actions','action', 'mod-lounge', 'bot-lounge']:
 
@@ -893,7 +963,8 @@ def addItem(guild, player, item, count, testOnly = False):
         'Fish',
         'Corn',
         'Food',
-        'Technology'
+        'Technology',
+        'Crystal'
     ]:return False
     elif testOnly: return True
     else: Data[guild]['Players'][player]['Inventory'][item] += count
