@@ -844,6 +844,7 @@ async def onDayChange(server):
                             addItem(guild, player, item, float(amount))
 
     await updateInAnnouncements(server)
+
 """
 Called On Turn Change
 """
@@ -1011,6 +1012,17 @@ async def updateInAnnouncements(server, reload = True):
         totalRenewableHarvests = 0
         totalNonRenewableHarvests = 0
         Total = 0
+        itemDelta = {
+            'BF':0,
+            'Steel':0,
+            'Wood':0,
+            'Energy':0,
+            'Oil':0,
+            'Fish':0,
+            'Corn':0,
+            'Food':0,
+            'Technology':0
+        }
         for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
             x,y = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
             #if isTileType(Data[guild]['Image'],x , y, 'LAND'): totalLand+=1
@@ -1021,14 +1033,35 @@ async def updateInAnnouncements(server, reload = True):
                     totalRenewableHarvests +=1
                 if prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Non Perpetual':
                     totalNonRenewableHarvests +=1
+                if prop == 'Unit':
+                    unit = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
+                    print('d Unit:', unit)
+                    for cst in Data[guild]['Units'][unit]['DailyCosts']:
+                        a,itm = cst.split(' ')
+                        itemDelta[itm] -= float(a)
+                    for cst in Data[guild]['Units'][unit]['DailyReturn']:
+                        a,itm = cst.split(' ')
+                        itemDelta[itm] += float(a)
+
         msg += "\n\tTotal Tiles:"+str(Total)+\
                '\n\tRenewable Harvests:'+str(totalRenewableHarvests)+\
                '\n\tNon-Renewable Harvests:'+str(totalNonRenewableHarvests)
-        msg += "\n-Inventory:"
-        for item in Data[guild]['Players'][player]['Inventory']:
-            msg += "\n\t"+item+': '+str(float(Data[guild]['Players'][player]['Inventory'][item]))
+        msg += "\n-Inventory:          Unit Daily Δ"
+        for item in set(Data[guild]['Players'][player]['Inventory'].keys()) | set(itemDelta.keys()):
+            amount = 0.0
+            delta = 0.0
+            sign = '+'
 
+            if item in Data[guild]['Players'][player]['Inventory'].keys():
+                amount = float(Data[guild]['Players'][player]['Inventory'][item])
+            if item in itemDelta.keys():
+                delta = float(itemDelta[item])
+            if delta < 0:
+                sign = ""
+            if delta == 0 and amount == 0: continue
+            tmpmsg = "\n\t" + item + ': ' + str(amount)
 
+            msg += tmpmsg + (20 - len(tmpmsg))*' ' + sign + str(delta)
 
         if i >= len(Data[guild]['Announcements']['Items']):
             post = await channels[server.id][targetChannel].send('```' + msg + '```')
@@ -1242,10 +1275,18 @@ async def plotMap(channel, postReply = True):
                     if 'DisabledAndPermanent' in player['Markers']['Properties'][i]:
                         alpha = 0.25
 
-                    if len(obj[i]) <= 3:
-                        ax.scatter(x[i], y[i], c=color, alpha = alpha, s=5.0, linewidths=0.075, edgecolors=outline, marker = obj[i])
-                    else:
-                        ax.scatter(x[i], y[i], c=color, alpha = alpha, s=10.0, linewidths=0.06, edgecolors=outline, marker=obj[i])
+                    try:
+                        if len(obj[i]) <= 3:
+                            ax.scatter(x[i], y[i], c=color, alpha = alpha, s=5.0, linewidths=0.075, edgecolors=outline, marker = obj[i])
+                        else:
+                            ax.scatter(x[i], y[i], c=color, alpha = alpha, s=10.0, linewidths=0.06, edgecolors=outline, marker = obj[i])
+                    except:
+                        if len(obj[i]) <= 3:
+                            ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
+                                       marker='$'+obj[i]+'$')
+                        else:
+                            ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
+                                       marker='$'+obj[i]+'$')
 
             ax.yaxis.set_major_formatter(ticker.NullFormatter())
             ax.yaxis.set_minor_locator(ticker.FixedLocator(axisn))
