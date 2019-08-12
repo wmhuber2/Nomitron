@@ -1033,7 +1033,8 @@ async def updateInAnnouncements(server, reload = True):
                     totalRenewableHarvests +=1
                 if prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['type'] == 'Non Perpetual':
                     totalNonRenewableHarvests +=1
-                if prop == 'Unit':
+                if prop == 'Unit' and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('DisabledAndPermanent') is None:
                     unit = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
                     print('d Unit:', unit)
                     for cst in Data[guild]['Units'][unit]['DailyCosts']:
@@ -1105,10 +1106,8 @@ async def updateInAnnouncements(server, reload = True):
         Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
     else:
         msg = None
-        try:
-            msg = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Map'])
-        except:
-            msg = None
+        try: msg = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Map'])
+        except: msg = None
         if msg is None:
             Data[guild]['Announcements']['Map'] = await channels[server.id][targetChannel].send(url)
             Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id

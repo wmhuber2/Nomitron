@@ -192,13 +192,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00107" summary="Set Timer Added">
-      <created>1562037643006</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1562037643007</updated>
-    </task>
     <task id="LOCAL-00108" summary="Set Timer Added and ping">
       <created>1562037825259</created>
       <option name="number" value="00108" />
@@ -535,7 +528,14 @@
       <option name="project" value="LOCAL" />
       <updated>1565588277413</updated>
     </task>
-    <option name="localTasksCounter" value="156" />
+    <task id="LOCAL-00156" summary="Added Delta from Units.">
+      <created>1565626091493</created>
+      <option name="number" value="00156" />
+      <option name="presentableId" value="LOCAL-00156" />
+      <option name="project" value="LOCAL" />
+      <updated>1565626091494</updated>
+    </task>
+    <option name="localTasksCounter" value="157" />
     <servers />
   </component>
   <component name="TodoView">
@@ -571,7 +571,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Stabalized Government in Forign Nations, and the bot too." />
     <MESSAGE value="All better now.....Or so it seamed. For our intrepid adventurer ad no idea the monsterous creatures he was doomed to face...." />
     <MESSAGE value="Dual Wield Axis, Auto remove Maps, Player ID module for those 21 and older." />
     <MESSAGE value="Set Timer Added" />
@@ -596,7 +595,8 @@
     <MESSAGE value="Unit Location Option Added." />
     <MESSAGE value="Implemented New Units And ExplorerGuild. Nomic IRS dont know about my secret Stash." />
     <MESSAGE value="Fixed Units Dual Error Bug. Added Trade Command. Minor Bug Fixes. Updated Readme." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Units Dual Error Bug. Added Trade Command. Minor Bug Fixes. Updated Readme." />
+    <MESSAGE value="Added Delta from Units." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Delta from Units." />
   </component>
   <component name="masterDetails">
     <states>
