@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -190,13 +189,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00110" summary="Added Confirmation to !newTurn">
-      <created>1562044808808</created>
-      <option name="number" value="00110" />
-      <option name="presentableId" value="LOCAL-00110" />
-      <option name="project" value="LOCAL" />
-      <updated>1562044808808</updated>
     </task>
     <task id="LOCAL-00111" summary="Multiple give targets">
       <created>1562078601264</created>
@@ -534,7 +526,14 @@
       <option name="project" value="LOCAL" />
       <updated>1565630555919</updated>
     </task>
-    <option name="localTasksCounter" value="159" />
+    <task id="LOCAL-00159" summary="Added Harvest Item Delta">
+      <created>1565670078584</created>
+      <option name="number" value="00159" />
+      <option name="presentableId" value="LOCAL-00159" />
+      <option name="project" value="LOCAL" />
+      <updated>1565670078585</updated>
+    </task>
+    <option name="localTasksCounter" value="160" />
     <servers />
   </component>
   <component name="TodoView">
@@ -570,7 +569,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Set Timer Added" />
     <MESSAGE value="Set Timer Added and ping" />
     <MESSAGE value="Secret Command Added" />
     <MESSAGE value="Added Confirmation to !newTurn" />
@@ -595,7 +593,8 @@
     <MESSAGE value="Added Delta from Units." />
     <MESSAGE value="Fixed Disable In Changelog Delta" />
     <MESSAGE value="Fix Trade Bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix Trade Bug" />
+    <MESSAGE value="Added Harvest Item Delta" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Harvest Item Delta" />
   </component>
   <component name="masterDetails">
     <states>
