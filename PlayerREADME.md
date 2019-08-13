@@ -7,26 +7,22 @@ Global Commands: Allowed Channels: ALL
 +        Diplay This Help Text
 -   !find "text" OR !search "text" OR !f "text" 
 +        Display rules that contain text.
+-    !map
++        Display Current Map.
++        Rule: 312
 
 ActionCommands:        Allowed Channels: actions
 -    !start {coordinates} {color name} 
-+        Add Capital to map at desired coordiantes (row,col order doesnt matter)
-+        and declare your color.
-+        Example: !start aj56 red, !start 6ca red
++        Add Capital to map at desired coordiantes and declare your color.
 +        Rule: 312
--    !claim {coordinates} 
-+        Allowed Channels: actions
+-    !claim {coordinates}
 +        Claim Coordinates
 +        Example: !claim aj56, !claim 5ca, !claim ca5
 +        Rule: 312
 -    !harvest {coordinates} {mode}
-+        mode may be any of the following: ['perpetual', 'non-perpetual', 'p', 'n']
-+        Allows You to harvest a location you own.
++        Harvests a location with this as mode ['perpetual', 'non-perpetual', 'p', 'n']
 +        Example: !harvest aj56 p, !harvest 5ca perpetual, !harvest ca5 n
 +        Rule: 314
--    !map
-+        Display Current Map.
-+        Rule: 312
 -    !unit {coords} $name
 +        Buy Unit and place at coords
 +        Rule: 320
