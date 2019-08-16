@@ -938,7 +938,7 @@ async def updateInAnnouncements(server, reload = True):
     global Data, oldData
     guild = server.id
     if oldData == pickle.dumps(Data[guild]['Players'], protocol=pickle.HIGHEST_PROTOCOL):
-        print('Up To Date. Skipping Plot')
+        #print('Up To Date. Skipping Plot')
         return 1
     else:
         print('Updating Plot')
