@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlayerREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/PlayerREADME.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -190,13 +191,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00112" summary="Multiple give targets">
-      <created>1562078795980</created>
-      <option name="number" value="00112" />
-      <option name="presentableId" value="LOCAL-00112" />
-      <option name="project" value="LOCAL" />
-      <updated>1562078795980</updated>
     </task>
     <task id="LOCAL-00113" summary="Multiple give targets">
       <created>1562078887117</created>
@@ -534,7 +528,14 @@
       <option name="project" value="LOCAL" />
       <updated>1565670257881</updated>
     </task>
-    <option name="localTasksCounter" value="161" />
+    <task id="LOCAL-00161" summary="Added Harvest Item Delta">
+      <created>1565724251586</created>
+      <option name="number" value="00161" />
+      <option name="presentableId" value="LOCAL-00161" />
+      <option name="project" value="LOCAL" />
+      <updated>1565724251588</updated>
+    </task>
+    <option name="localTasksCounter" value="162" />
     <servers />
   </component>
   <component name="TodoView">
@@ -596,6 +597,17 @@
     <MESSAGE value="Fix Trade Bug" />
     <MESSAGE value="Added Harvest Item Delta" />
     <option name="LAST_COMMIT_MESSAGE" value="Added Harvest Item Delta" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Map.py</url>
+          <line>675</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="masterDetails">
     <states>
