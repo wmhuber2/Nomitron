@@ -1200,7 +1200,6 @@ async def plotMap(channel, postReply = True):
                 obj[obj == 'Capital'] = '*'
                 for unit in Data[guild]['Units'].keys():
                     obj[obj == unit] = Data[guild]['Units'][unit]['Marker']
-                print('New Stuff')
                 for i in range(obj.shape[0]):
                     if obj[i] != "":
                         ax.scatter(x[i], y[i], c="none", edgecolors=color,
