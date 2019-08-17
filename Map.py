@@ -744,9 +744,8 @@ async def update(inData, server):
     if datetime.datetime.now().strftime("%Y-%m-%d") != Data[guild]['Date']:
         onDayChange(server)
         await sendMapData(guild, channels[guild][logChannel])
-
+        await updateInAnnouncements(server)
     await sendMessages()
-    await updateInAnnouncements(server)
     return saveData()
 
 """

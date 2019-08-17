@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DiscordBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/DiscordBot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -191,13 +192,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00117" summary="Multiple give targets">
-      <created>1562083470031</created>
-      <option name="number" value="00117" />
-      <option name="presentableId" value="LOCAL-00117" />
-      <option name="project" value="LOCAL" />
-      <updated>1562083470031</updated>
     </task>
     <task id="LOCAL-00118" summary="Multiple give targets">
       <created>1562084269808</created>
@@ -535,7 +529,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566006535869</updated>
     </task>
-    <option name="localTasksCounter" value="166" />
+    <task id="LOCAL-00166" summary="Bug FIxes">
+      <created>1566018906345</created>
+      <option name="number" value="00166" />
+      <option name="presentableId" value="LOCAL-00166" />
+      <option name="project" value="LOCAL" />
+      <updated>1566018906345</updated>
+    </task>
+    <option name="localTasksCounter" value="167" />
     <servers />
   </component>
   <component name="TodoView">

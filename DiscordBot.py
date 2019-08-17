@@ -205,7 +205,7 @@ class DiscordNomicBot():
                             if tmp is not None: self.Data = tmp
                             else:print("None Returned OnMessage", name)
                         except Exception as e:
-                            print('Error:',e)
+                            print('Error:',mod,e)
             self.saveData()
 
 
