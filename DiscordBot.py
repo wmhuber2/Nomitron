@@ -99,7 +99,7 @@ class DiscordNomicBot():
         payload['Nickname'] = message.author.name
         payload['Channel Type'] = self.getChannelType(message.channel)
         if payload['Channel Type'] == 'Text':
-            payload['Nickname'] = message.author.nick
+            #payload['Nickname'] = message.author.nick
             payload['Channel'] = message.channel.name
             payload['Category'] = message.guild.get_channel(message.channel.category_id)
         if payload['Channel Type'] == 'DM':

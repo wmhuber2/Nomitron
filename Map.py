@@ -234,7 +234,7 @@ async def run(inData, payload, message):
                 await plotMap(message.channel)
                 saveData()
 
-        elif payload['Channel'].lower() in ['actions','action']:
+        elif payload['Channel'].lower() in ['actions','action'] and len(splitContent) != 0:
 
             if splitContent[0] == '!start' and len(splitContent) == 3:
 
@@ -537,7 +537,6 @@ async def run(inData, payload, message):
                             addMsgQueue(message.channel,"You Do Not Have The Resources")
 
         if payload['Author'] in Admins and payload['Channel'].lower() in ['actions','action', 'mod-lounge', 'bot-lounge']:
-
 
             if payload['Content'] == '!newTurn':
                 onTurnChange(message.guild)
@@ -1255,6 +1254,7 @@ async def plotMap(channel, postReply = True):
             plt.grid(color='k', linestyle='-', linewidth=0.25, alpha = 0.5)
             ax.imshow(Data[guild]['Image'].transpose(1,0,2), interpolation='none')
             plt.savefig('tmpgrid.png', format='png', dpi = 500) #, bbox_inches="tight")
+            del fig
             print('Saved')
             delay = None
             if channel.id != channels[guild][logChannel].id:
