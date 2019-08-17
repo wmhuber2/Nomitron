@@ -32,6 +32,7 @@ if __name__ == "__main__":
                     os.remove(dst_file)
 
                 shutil.move(src_file, dst_dir)
+        os.system("echo 'New File\n' | tee python")
         os.system('python'+str(sys.version_info.major) + '.' +str(sys.version_info.minor) + ' '+os.path.join(dir,'DiscordBot.py') + " > log.txt 2>&1")
 
 
