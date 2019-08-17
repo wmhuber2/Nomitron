@@ -726,8 +726,8 @@ async def run(inData, payload, message):
     #  IF A DM CHANNEL
     if payload['Channel Type'] == 'DM':
         pass
-
-    print("Run- "+payload['Content']+': ',time.time() - start)
+    if '!' in payload['Content']:
+        print("Run- "+payload['Content']+': ',time.time() - start)
     await sendMessages()
     await updateInAnnouncements(message.guild)
     return saveData()
@@ -1269,9 +1269,9 @@ async def plotMap(channel, postReply = True):
 
 async def sendMessages():
     global msgQueue
-    for msg in msgQueue:
+    while len(msgQueue) !=0:
+        msg = msgQueue.pop(0)
         await msg['channel'].send( msg['text'], file = msg['file'] )
-    msgQueue = []
 
 def addMsgQueue(channel, msg, file=None):
     global msgQueue

@@ -130,7 +130,7 @@ async def setup(inData, chans, logchan, guild):
         ruletxt = rules.split('##')[1:]
         for rule in ruletxt:
             rulenum = int(rule.split()[0])
-            Data[rulenum] = rule
+            Data[rulenum] = rule.replace("&nbsp",'')
 
     return saveData()
 
