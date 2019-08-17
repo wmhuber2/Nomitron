@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Nomitron.py" beforeDir="false" afterPath="$PROJECT_DIR$/Nomitron.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -56,7 +57,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.DiscordBot">
+  <component name="RunManager" selected="Python.Nomitron">
     <configuration name="Admin" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Nomitron" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -171,10 +172,10 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.Nomitron" />
         <item itemvalue="Python.DiscordBot" />
         <item itemvalue="Python.Paint" />
         <item itemvalue="Python.Admin" />
-        <item itemvalue="Python.Nomitron" />
         <item itemvalue="Python.Rules" />
       </list>
     </recent_temporary>
@@ -189,13 +190,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00123" summary="Added Find/Search function to BOT">
-      <created>1562184231172</created>
-      <option name="number" value="00123" />
-      <option name="presentableId" value="LOCAL-00123" />
-      <option name="project" value="LOCAL" />
-      <updated>1562184231172</updated>
     </task>
     <task id="LOCAL-00124" summary="Added Find/Search function to BOT">
       <created>1562184665955</created>
@@ -533,7 +527,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566035047202</updated>
     </task>
-    <option name="localTasksCounter" value="172" />
+    <task id="LOCAL-00172" summary="Bug FIxes">
+      <created>1566035082594</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1566035082594</updated>
+    </task>
+    <option name="localTasksCounter" value="173" />
     <servers />
   </component>
   <component name="TodoView">
