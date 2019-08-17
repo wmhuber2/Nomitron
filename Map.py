@@ -60,8 +60,6 @@ async def reaction(inData, action, user, messageid, emoji):
     global Data
     loadData(inData)
     # Do Stuff Here
-
-
     message = messageid
     reactorName = user.name + '#' + user.discriminator
     playerName = message.author.name + "#" + str(message.author.discriminator)
@@ -195,6 +193,21 @@ async def reaction(inData, action, user, messageid, emoji):
                     await message.remove_reaction('👎', bot)
                     addMsgQueue(message.channel,'Transaction Rejected')
 
+    if str(emoji) == str('🔄') and reactorName in Admins:
+        payload = {}
+        payload['Author'] = message.author.name + "#" + str(message.author.discriminator)
+        payload['Nickname'] = message.author.name
+        payload['Nickname'] = message.author.nick
+        payload['Channel'] = message.channel.name
+        payload['Channel Type'] = 'Text'
+        payload['Category'] = message.guild.get_channel(message.channel.category_id)
+        payload['Content'] = message.system_content.strip()
+        payload['Attachments'] = {}
+
+        for file in message.attachments:
+            payload['Attachments'][file.filename] = file.url
+
+        await run( inData, payload ,message )
     await sendMessages()
     await updateInAnnouncements(message.guild)
     return saveData()
