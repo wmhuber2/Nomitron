@@ -126,11 +126,11 @@ async def setup(inData, chans, logchan, guild):
     # Do Stuff Here
     Data = {}
     with urllib.request.urlopen('https://raw.githubusercontent.com/dmouscher/nomic/master/rules-3.md') as response:
-        rules = response.read().decode()
+        rules = str(response.read().decode().replace("&nbsp;",''))
         ruletxt = rules.split('##')[1:]
         for rule in ruletxt:
             rulenum = int(rule.split()[0])
-            Data[rulenum] = rule.replace("&nbsp",'')
+            Data[rulenum] = rule.replace("&nbsp;",'')
 
     return saveData()
 
