@@ -2,8 +2,6 @@
 import sys, asyncio, os, importlib, glob, datetime, random,socket, multiprocessing, pickle
 
 
-sys.stderr = open('errlog.txt', 'w')
-sys.stdout = open('alllog.txt', 'w')
 from threading import Thread
 discord = None
 import traceback
