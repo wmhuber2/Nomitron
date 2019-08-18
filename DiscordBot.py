@@ -133,6 +133,8 @@ class DiscordNomicBot():
                     else: print("None Returned OnMessage",name)
                 #except Exception as e:
                 #    print('Error:', e)
+
+        sys.stdout.flush()
         self.saveData()
 
 
@@ -194,7 +196,9 @@ class DiscordNomicBot():
             await channels[self.logChannel].send(msg)
 
         while 1:
+            sys.stdout.flush()
             await asyncio.sleep(30)
+
             tasks = []
 
             for mod, name in zip(self.modules, self.moduleNames):
@@ -226,6 +230,8 @@ class DiscordNomicBot():
                 tmp = await mod.reaction(self.Data, mode, user, msg, payload.emoji)
                 if tmp is not None: self.Data = tmp
                 else: print("None Returned OnMessage", name)
+
+        sys.stdout.flush()
         self.saveData()
 
 
