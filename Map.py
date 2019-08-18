@@ -2,7 +2,7 @@
 # Map Module For Discord Bot
 ################################
 import pickle, sys, datetime, os, discord, math, re, socket, time
-
+np, plt, ticker, mcd = None,None,None,None
 n = 75
 
 TILES = {
