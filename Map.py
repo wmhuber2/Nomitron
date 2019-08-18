@@ -1269,7 +1269,7 @@ async def setup(inData, chans, logchan, server):
 
 
 async def plotMap(channel, postReply=True):
-    global Data
+    global Data, plt
     guild = channel.guild.id
     async with channel.typing():
         try:

@@ -194,13 +194,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00136" summary="Added Unit base and debug for Sermon.">
-      <created>1562972981535</created>
-      <option name="number" value="00136" />
-      <option name="presentableId" value="LOCAL-00136" />
-      <option name="project" value="LOCAL" />
-      <updated>1562972981535</updated>
-    </task>
     <task id="LOCAL-00137" summary="All Unit Stuff Added.Plus Some Sermon Updates.">
       <created>1563243080134</created>
       <option name="number" value="00137" />
@@ -537,7 +530,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566168836672</updated>
     </task>
-    <option name="localTasksCounter" value="185" />
+    <task id="LOCAL-00185" summary="Bug Fixes and Cleaning Of Code.">
+      <created>1566168937218</created>
+      <option name="number" value="00185" />
+      <option name="presentableId" value="LOCAL-00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1566168937218</updated>
+    </task>
+    <option name="localTasksCounter" value="186" />
     <servers />
   </component>
   <component name="TodoView">
