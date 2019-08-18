@@ -1,6 +1,9 @@
 #! Python3
 import sys, asyncio, os, importlib, glob, datetime, random,socket, multiprocessing, pickle
 
+
+sys.stderr = open('alllog.txt', 'w')
+sys.stdout = open('alllog.txt', 'w')
 from threading import Thread
 discord = None
 import traceback
