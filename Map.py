@@ -1271,7 +1271,7 @@ async def sendMessages():
     global msgQueue
     while len(msgQueue) !=0:
         msg = msgQueue.pop(0)
-        await msg['channel'].send( msg['text'], file = msg['file'] )
+        await msg['channel'].send( msg['text'] )
 
 def addMsgQueue(channel, msg, file=None):
     global msgQueue

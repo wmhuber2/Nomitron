@@ -7,7 +7,7 @@ Global Commands: Allowed Channels: ALL
 +        Diplay This Help Text
 -   !find "text" OR !search "text" OR !f "text" 
 +        Display rules that contain text.
--    !map
+-   !map
 +        Display Current Map.
 +        Rule: 312
 
@@ -25,10 +25,10 @@ ActionCommands:        Allowed Channels: actions
 +        Rule: 314
 -    !unit {coords} $name
 +        Buy Unit and place at coords
-+        Rule: 320
++        Rule: 321
 -    !move {coord1} {coord2}
 +        move unit form coord1 to coord2
-+        Rule: 320
++        Rule: 321
 -    !toggle {coord}
 +         disables/enables output of a unit.
 +         Rule 321
