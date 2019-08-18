@@ -856,7 +856,7 @@ Extracts Coordinates From String.
 """
 def extractCoords(coords, channel):
     if len(coords) > 4 or len(coords) < 3:
-        addMsgQueue("Incorrect Coordinate Formatting.")
+        addMsgQueue(channel,"Incorrect Coordinate Formatting.")
         return None
     else:
         xcord = None
@@ -1273,12 +1273,11 @@ async def sendMessages():
         msg = msgQueue.pop(0)
         await msg['channel'].send( msg['text'] )
 
-def addMsgQueue(channel, msg, file=None):
+def addMsgQueue(channel, msg):
     global msgQueue
     msgQueue.append({
         'text':msg,
-        'channel':channel,
-        'file': file
+        'channel':channel
     })
 
 """
