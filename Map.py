@@ -1370,6 +1370,7 @@ async def sendMessages():
     global msgQueue
     while len(msgQueue) != 0:
         msg = msgQueue.pop(0)
+        print('Sending:', len(msgQueue), msg)
         await msg['channel'].send(msg['text'])
 
 

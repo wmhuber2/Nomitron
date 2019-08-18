@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
                 shutil.move(src_file, dst_dir)
         #os.system("echo 'New File\n' | tee log.txt")
-        os.system('python'+str(sys.version_info.major) + '.' +str(sys.version_info.minor) + ' '+os.path.join(dir,'DiscordBot.py') )#+ " > log.txt 2>&1")
+        os.system('(python'+str(sys.version_info.major) + '.' +str(sys.version_info.minor) + ' '+os.path.join(dir,'DiscordBot.py') + " 2>&1) | tee -a log.txt")
 
 
 

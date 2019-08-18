@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/wolfgang.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/wolfgang.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Nomitron.py" beforeDir="false" afterPath="$PROJECT_DIR$/Nomitron.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -195,13 +195,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00133" summary="Reformated Data&#10;Sermon Gifts Automatic">
-      <created>1562787005534</created>
-      <option name="number" value="00133" />
-      <option name="presentableId" value="LOCAL-00133" />
-      <option name="project" value="LOCAL" />
-      <updated>1562787005534</updated>
     </task>
     <task id="LOCAL-00134" summary="Reformated Data&#10;Sermon Gifts Automatic">
       <created>1562787186072</created>
@@ -539,7 +532,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566167143337</updated>
     </task>
-    <option name="localTasksCounter" value="182" />
+    <task id="LOCAL-00182" summary="Bug Fixes and Cleaning Of Code.">
+      <created>1566167635450</created>
+      <option name="number" value="00182" />
+      <option name="presentableId" value="LOCAL-00182" />
+      <option name="project" value="LOCAL" />
+      <updated>1566167635450</updated>
+    </task>
+    <option name="localTasksCounter" value="183" />
     <servers />
   </component>
   <component name="TodoView">
@@ -575,7 +575,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added Find/Search function to BOT" />
     <MESSAGE value="Map Fixing." />
     <MESSAGE value="Sermon" />
     <MESSAGE value="Reformated Data&#10;Sermon Gifts Automatic" />
@@ -600,7 +599,8 @@
     <MESSAGE value="Added Admin Process Command" />
     <MESSAGE value="Bug FIxes" />
     <MESSAGE value="All Output to file." />
-    <option name="LAST_COMMIT_MESSAGE" value="All Output to file." />
+    <MESSAGE value="Bug Fixes and Cleaning Of Code." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fixes and Cleaning Of Code." />
   </component>
   <component name="masterDetails">
     <states>
