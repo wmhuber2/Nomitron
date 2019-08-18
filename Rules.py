@@ -49,7 +49,7 @@ async def run(inData, payload, message):
         else:
             answer = Data[rulequery].split("\n\n")
             response = "Rule"+answer[0]
-            answer = answer[1:]
+            answer = answer[1:].replace("&nbsp;",'')
             for paragraph in answer:
                 if(len(response) + len(paragraph) + 2 > 2000):
                     await channels[payload['Channel']].send(response)
@@ -126,7 +126,7 @@ async def setup(inData, chans, logchan, guild):
     # Do Stuff Here
     Data = {}
     with urllib.request.urlopen('https://raw.githubusercontent.com/dmouscher/nomic/master/rules-3.md') as response:
-        rules = str(response.read().decode().replace("&nbsp;",''))
+        rules = str(response.read().decode()).replace("&nbsp;",'')
         ruletxt = rules.split('##')[1:]
         for rule in ruletxt:
             rulenum = int(rule.split()[0])
