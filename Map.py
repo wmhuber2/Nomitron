@@ -165,16 +165,21 @@ async def reaction(inData, action, user, messageid, emoji):
             canContinute = canContinute or isBot
 
         if canContinute:
-            for r in message.reactions:
-                if not r.emoji in ['👍', '👎']:
-                    addMsgQueue(message.channel, "Please Use Thumbs Up Or Down.")
-                    canContinute = False
-                    break
-            if canContinute:
-                targetName = getPlayer(message.guild, splitContent[1], message.channel)
-                if targetName is None:
+            canContinute = False
+
+            targetName = getPlayer(message.guild, splitContent[1], message.channel)
+            if targetName is not None:
+                for r in message.reactions:
+                    if not r.emoji in ['👍', '👎']:
+                        continue
+                    for u in await r.users().flatten():
+                        if u.name + '#' + u.discriminator == targetName:
+                            canContinute = True
+                            emoji = r.emoji
+
+                if not canContinute:
                     pass
-                elif str(emoji) == '👍' and targetName == reactorName:
+                elif str(emoji) == '👍':
                     amount = None
                     item = splitContent[-1]
                     try:
@@ -194,7 +199,7 @@ async def reaction(inData, action, user, messageid, emoji):
                         addMsgQueue(message.channel, 'Transaction Completed For ' + playerName + ' to ' + targetName)
                     else:
                         addMsgQueue(message.channel, "Resources Unavailable For Trade")
-                elif str(emoji) == '👎' and targetName == reactorName:
+                elif str(emoji) == '👎':
                     await message.remove_reaction('👍', bot)
                     await message.remove_reaction('👎', bot)
                     addMsgQueue(message.channel, 'Transaction Rejected')

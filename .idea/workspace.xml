@@ -195,13 +195,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00141" summary="Adding Jana">
-      <created>1563333469754</created>
-      <option name="number" value="00141" />
-      <option name="presentableId" value="LOCAL-00141" />
-      <option name="project" value="LOCAL" />
-      <updated>1563333469754</updated>
-    </task>
     <task id="LOCAL-00142" summary="Fixed Update bug Where Lost Msgs werent removed from list.">
       <created>1563334438985</created>
       <option name="number" value="00142" />
@@ -538,7 +531,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566170906667</updated>
     </task>
-    <option name="localTasksCounter" value="190" />
+    <task id="LOCAL-00190" summary="Bug Fixes and Cleaning Of Code.">
+      <created>1566227771895</created>
+      <option name="number" value="00190" />
+      <option name="presentableId" value="LOCAL-00190" />
+      <option name="project" value="LOCAL" />
+      <updated>1566227771895</updated>
+    </task>
+    <option name="localTasksCounter" value="191" />
     <servers />
   </component>
   <component name="TodoView">
