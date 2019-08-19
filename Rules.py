@@ -51,7 +51,6 @@ async def run(inData, payload, message):
             answer = "Rule " + Data[rulequery]
             response = ""
             for paragraph in answer.split("\n\n"):
-                print(paragraph)
                 if(len(response) + len(paragraph) + 2 > 1900):
                     #print(response)
                     await channels[payload['Channel']].send(response)
