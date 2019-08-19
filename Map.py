@@ -156,13 +156,13 @@ async def reaction(inData, action, user, messageid, emoji):
 
     elif splitContent[0] == '!trade':
         bot = None
-        canContinute = True
+        canContinute = False
         for r in message.reactions:
             isBot = False
             for u in await r.users().flatten():
                 isBot = u.bot or isBot
                 if u.bot:  bot = u
-            canContinute = canContinute and isBot
+            canContinute = canContinute or isBot
 
         if canContinute:
             for r in message.reactions:
