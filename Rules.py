@@ -47,14 +47,17 @@ async def run(inData, payload, message):
         if(rulequery not in Data.keys()):
             await channels[payload['Channel']].send("I couldn't find that rule.")
         else:
-            answer = Data[rulequery].split("\n\n")
-            response = "Rule"+answer[0]
-            answer = answer[1:].replace("&nbsp;",'')
-            for paragraph in answer:
-                if(len(response) + len(paragraph) + 2 > 2000):
+            print("Found Rule", rulequery)
+            answer = "Rule " + Data[rulequery]
+            response = ""
+            for paragraph in answer.split("\n\n"):
+                print(paragraph)
+                if(len(response) + len(paragraph) + 2 > 1900):
+                    #print(response)
                     await channels[payload['Channel']].send(response)
                     response = ""
                 response = response + "\n\n" + paragraph
+            #print(response)
             await channels[payload['Channel']].send(response)
 
     if (splitPayload[0] == "!search" or splitPayload[0] == "!find"or splitPayload[0] == "!f"):
@@ -126,12 +129,13 @@ async def setup(inData, chans, logchan, guild):
     # Do Stuff Here
     Data = {}
     with urllib.request.urlopen('https://raw.githubusercontent.com/dmouscher/nomic/master/rules-3.md') as response:
-        rules = str(response.read().decode()).replace("&nbsp;",'')
-        ruletxt = rules.split('##')[1:]
+        rules = str(response.read().decode().encode('utf-8'))
+        ruletxt = rules.split("##")[1:]
         for rule in ruletxt:
-            rulenum = int(rule.split()[0])
-            Data[rulenum] = rule.replace("&nbsp;",'')
-
+            rule = rule.strip()
+            rulenum = int(rule[:3])
+            Data[rulenum] = rule.replace('&nbsp;', ' ').replace('\\n', '\n')
+        print (Data)
     return saveData()
 
 #####################################################

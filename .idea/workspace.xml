@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rules.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -177,8 +177,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.DiscordBot" />
-        <item itemvalue="Python.Nomitron" />
         <item itemvalue="Python.Paint" />
+        <item itemvalue="Python.Nomitron" />
         <item itemvalue="Python.Admin" />
         <item itemvalue="Python.Rules" />
       </list>
@@ -194,13 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00142" summary="Fixed Update bug Where Lost Msgs werent removed from list.">
-      <created>1563334438985</created>
-      <option name="number" value="00142" />
-      <option name="presentableId" value="LOCAL-00142" />
-      <option name="project" value="LOCAL" />
-      <updated>1563334438985</updated>
     </task>
     <task id="LOCAL-00143" summary="Fixed Bug">
       <created>1563337159432</created>
@@ -538,7 +531,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566227771895</updated>
     </task>
-    <option name="localTasksCounter" value="191" />
+    <task id="LOCAL-00191" summary="Bug Fixes and Cleaning Of Code.">
+      <created>1566228349787</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1566228349787</updated>
+    </task>
+    <option name="localTasksCounter" value="192" />
     <servers />
   </component>
   <component name="TodoView">
