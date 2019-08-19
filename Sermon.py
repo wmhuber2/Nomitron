@@ -64,20 +64,20 @@ async def reaction(inData, action, user, message, emoji):
     global Data
     loadData(inData)
 
+    if message.channel.name.lower() in ['action','actions']:
+        guild = message.guild.id
+        userName = user.name + '#' + user.discriminator
+        isSigil = emoji.name.encode() == Players[userName]['sigil'].encode('utf-8')
 
-    guild = message.guild.id
-    userName = user.name + '#' + user.discriminator
-    isSigil = emoji.name.encode() == Players[userName]['sigil'].encode('utf-8')
-
-    playerData = Data[guild]['Players'][userName]
-    # Do Stuff Here
-    if(message.id == Data['sermonID'] and (not playerData['tithed']) and action == "add" and isSigil):
-        playerData['tithed'] = True
-        if(playerData['attended']) and addItem(message.guild, userName, 'BF',-1):
-            blessing = await giveReward(userName, 0.3, 0.2,guild)
-            await channels[guild]["actions"].send(blessing)
-        else:
-            await channels[guild]["actions"].send("You Haven't Amened Yet or Have No BF")
+        playerData = Data[guild]['Players'][userName]
+        # Do Stuff Here
+        if(message.id == Data['sermonID'] and (not playerData['tithed']) and action == "add" and isSigil):
+            playerData['tithed'] = True
+            if(playerData['attended']) and addItem(message.guild, userName, 'BF',-1):
+                blessing = await giveReward(userName, 0.3, 0.2,guild)
+                await channels[guild]["actions"].send(blessing)
+            else:
+                await channels[guild]["actions"].send("You Haven't Amened Yet or Have No BF")
 
     return saveData()
 
@@ -89,54 +89,55 @@ async def run(inData, payload, message):
     loadData(inData)
     # Do Stuff Here
 
+    if message.channel.name.lower() not in ['join', 'off-topic']:
 
-    guild = message.guild.id
-    playerData = Data[guild]['Players']
-    authorData = playerData[payload['Author']]
+        guild = message.guild.id
+        playerData = Data[guild]['Players']
+        authorData = playerData[payload['Author']]
+    
+        if payload['Content'] == '!newTurn':
+            endTurnMessage = ""
+            players = list(Players.keys())
+            random.shuffle(players)
+            for player in players:
+                playerAttended = playerData[player]['attended']
+                playerTithed   = playerData[player]['tithed']
 
-    if payload['Content'] == '!newTurn':
-        endTurnMessage = ""
-        players = list(Players.keys())
-        random.shuffle(players)
-        for player in players:
-            playerAttended = playerData[player]['attended']
-            playerTithed   = playerData[player]['tithed']
+                # Gifts for the flock!
+                if(playerAttended and (not playerTithed)): # Tithed item rolls are handled separately
+                    endTurnMessage = endTurnMessage + await giveReward(player, 0.2, 0.1,guild) + "\n"
 
-            # Gifts for the flock!
-            if(playerAttended and (not playerTithed)): # Tithed item rolls are handled separately
-                endTurnMessage = endTurnMessage + await giveReward(player, 0.2, 0.1,guild) + "\n"
+                # Reset attendance
+                playerData[player]['attended'] = False
+                playerData[player]['tithed']   = False
 
-            # Reset attendance
-            playerData[player]['attended'] = False
-            playerData[player]['tithed']   = False
+            if(endTurnMessage != ""): await channels[guild]["actions"].send(endTurnMessage)
 
-        if(endTurnMessage != ""): await channels[guild]["actions"].send(endTurnMessage)
+            # Nomitron gives a new sermon
+            today = datetime.datetime.today()
+            sermonSentence = random.choice(sentences)
+            startTurnMessage = u"Welcome, players, to our sermon on this blessed day, {0}, {1} {2}{3}. I invite you all to open your Nomic rulebooks to a favorite quote of mine. “{4}” - {5} {6}:{7}. As you go about your day, think about this quote. Let it grant you wisdom and solace. Amen.".format \
+            (
+                today.strftime('%A'),
+                today.strftime('%B'),
+                int(today.strftime('%d')),
+                ("th" if 4<=int(today.strftime('%d'))%100<=20 else {1:"st",2:"nd",3:"rd"}.get(int(today.strftime('%d'))%10, "th")),
+                sermonSentence["text"],
+                sermonSentence["category"],
+                sermonSentence["paragraph"],
+                sermonSentence["sentence"]
+            )
+            newSermon = await channels[guild]["actions"].send(startTurnMessage)
+            Data['sermonID'] = newSermon.id
 
-        # Nomitron gives a new sermon
-        today = datetime.datetime.today()
-        sermonSentence = random.choice(sentences)
-        startTurnMessage = u"Welcome, players, to our sermon on this blessed day, {0}, {1} {2}{3}. I invite you all to open your Nomic rulebooks to a favorite quote of mine. “{4}” - {5} {6}:{7}. As you go about your day, think about this quote. Let it grant you wisdom and solace. Amen.".format \
-        (
-            today.strftime('%A'),
-            today.strftime('%B'),
-            int(today.strftime('%d')),
-            ("th" if 4<=int(today.strftime('%d'))%100<=20 else {1:"st",2:"nd",3:"rd"}.get(int(today.strftime('%d'))%10, "th")),
-            sermonSentence["text"],
-            sermonSentence["category"],
-            sermonSentence["paragraph"],
-            sermonSentence["sentence"]
-        )
-        newSermon = await channels[guild]["actions"].send(startTurnMessage)
-        Data['sermonID'] = newSermon.id
+        if payload['Content'] in ["Amen."] and (not authorData['attended']):
+            authorData['attended'] = True
+            await message.add_reaction('🙏')
+            #emoji = get(message.guild.emojis, name='pray')
 
-    if payload['Content'] in ["Amen."] and (not authorData['attended']):
-        authorData['attended'] = True
-        await message.add_reaction('🙏')
-        #emoji = get(message.guild.emojis, name='pray')
-
-        if(authorData['tithed']):
-            message = await giveReward(payload['Author'], 0.3, 0.2,guild)
-            await channels[guild]["actions"].send(message)
+            if(authorData['tithed']):
+                message = await giveReward(payload['Author'], 0.3, 0.2,guild)
+                await channels[guild]["actions"].send(message)
 
     return saveData()
 

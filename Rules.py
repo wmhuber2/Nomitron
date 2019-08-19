@@ -135,7 +135,6 @@ async def setup(inData, chans, logchan, guild):
             rule = rule.strip()
             rulenum = int(rule[:3])
             Data[rulenum] = rule.replace('&nbsp;', ' ').replace('\\n', '\n')
-        print (Data)
     return saveData()
 
 #####################################################
