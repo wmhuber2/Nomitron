@@ -587,6 +587,13 @@ async def run(inData, payload, message):
                             await message.add_reaction('👎')
                         else:
                             addMsgQueue(message.channel, "You Do Not Have The Resources")
+            
+            if payload['Content'].lower() in ['!units', '!unit']:
+                for unit in Data[guild]['Units'].keys():
+                    msg = unit + ':\n'
+                    for k in Data[guild]['Units'][unit]:
+                        msg += '\t' + k + ': ' + str(Data[guild]['Units'][unit][k]) + '\n'
+                    addMsgQueue(message.channel, '```' + msg + '```')
 
         if payload['Author'] in Admins and payload['Channel'].lower() in ['actions', 'action', 'mod-lounge',
                                                                           'bot-lounge']:
@@ -768,12 +775,6 @@ async def run(inData, payload, message):
                 else:
                     addMsgQueue(message.channel, "Unit Not Found")
 
-            if payload['Content'].lower() in ['!getunits', '!getunit']:
-                for unit in Data[guild]['Units'].keys():
-                    msg = unit + ':\n'
-                    for k in Data[guild]['Units'][unit]:
-                        msg += '\t' + k + ': ' + str(Data[guild]['Units'][unit][k]) + '\n'
-                    addMsgQueue(message.channel, '```' + msg + '```')
 
     #  IF A DM CHANNEL
     if payload['Channel Type'] == 'DM':
