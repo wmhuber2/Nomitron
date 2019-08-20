@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -193,13 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00146" summary="RE-Reverted Map">
-      <created>1564110880983</created>
-      <option name="number" value="00146" />
-      <option name="presentableId" value="LOCAL-00146" />
-      <option name="project" value="LOCAL" />
-      <updated>1564110880984</updated>
     </task>
     <task id="LOCAL-00147" summary="RE-Reverted Map">
       <created>1564111102754</created>
@@ -537,7 +531,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566232542068</updated>
     </task>
-    <option name="localTasksCounter" value="195" />
+    <task id="LOCAL-00195" summary="unit command for all players now. mother russia loves you">
+      <created>1566311976803</created>
+      <option name="number" value="00195" />
+      <option name="presentableId" value="LOCAL-00195" />
+      <option name="project" value="LOCAL" />
+      <updated>1566311976804</updated>
+    </task>
+    <option name="localTasksCounter" value="196" />
     <servers />
   </component>
   <component name="TodoView">
@@ -573,7 +574,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Reformated Data&#10;Sermon Gifts Automatic" />
     <MESSAGE value="Added Unit base and debug for Sermon." />
     <MESSAGE value="All Unit Stuff Added.Plus Some Sermon Updates." />
     <MESSAGE value="Updated Help" />
@@ -598,7 +598,8 @@
     <MESSAGE value="Bug Fixes and Cleaning Of Code." />
     <MESSAGE value="Fixed Rule Bug Issue with nsb; thing." />
     <MESSAGE value="Fixed Sermon Bug with non player chat" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Sermon Bug with non player chat" />
+    <MESSAGE value="unit command for all players now. mother russia loves you" />
+    <option name="LAST_COMMIT_MESSAGE" value="unit command for all players now. mother russia loves you" />
   </component>
   <component name="masterDetails">
     <states>

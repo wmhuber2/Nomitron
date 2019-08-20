@@ -587,7 +587,7 @@ async def run(inData, payload, message):
                             await message.add_reaction('👎')
                         else:
                             addMsgQueue(message.channel, "You Do Not Have The Resources")
-            
+
             if payload['Content'].lower() in ['!units', '!unit']:
                 for unit in Data[guild]['Units'].keys():
                     msg = unit + ':\n'
