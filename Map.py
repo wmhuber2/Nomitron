@@ -286,7 +286,7 @@ async def run(inData, payload, message):
                     coords = extractCoords(splitContent[1], message.channel)
                     if coords is not None:
                         xcord, xcordAlpha, ycord = coords
-                        claimsLeft = 1 + (hasUnit(guild, payload['Author'], 'ExplorerGuild') * 5) \
+                        claimsLeft = 1 + (hasUnit(guild, payload['Author'], 'explorerguild') * 5) \
                                      - Data[guild]['Players'][payload['Author']]['Claimed Today']
 
                         if not isTileType(Data[guild]['Image'], xcord, ycord, 'LAND'):
@@ -320,7 +320,7 @@ async def run(inData, payload, message):
 
                             if isClaimed:
                                 addMsgQueue(message.channel, "You cannot claim this location. It is already claimed.")
-                            elif hasUnit(guild, payload['Author'], 'ExplorerGuild') != 0:
+                            elif hasUnit(guild, payload['Author'], 'explorerguild') != 0:
                                 await message.add_reaction('💵')
                                 await message.add_reaction('🌮')
                             elif addItem(guild, payload['Author'], 'BF', -2):
@@ -421,6 +421,7 @@ async def run(inData, payload, message):
                 coords, name = splitContent[1:]
                 playerName = payload['Author']
                 if coords in Data[guild]['Units'].keys(): coords, name = name, coords
+                name = name.lower()
 
                 coords = extractCoords(coords, message.channel)
                 if coords is not None and name in Data[guild]['Units'].keys():
@@ -752,7 +753,7 @@ async def run(inData, payload, message):
                 addMsgQueue(message.channel, str(UNIT_BASE))
 
             if splitContent[0] == '!newUnit' and len(splitContent) > 1:
-                name = splitContent[1]
+                name = splitContent[1].lower()
                 data = dict(eval(' '.join(splitContent[2:])))
 
                 if name in Data[guild]['Units']:
@@ -1049,7 +1050,7 @@ async def updateInAnnouncements(server, reload=True):
     for player in playerOrder:
         if player not in sortedPlayers: continue
         msg = player + ' : ' + Data[guild]['Players'][player]['Color'].upper() + '\n'
-        msg += '-Claims Left Today: ' + str(1 + (hasUnit(guild, player, 'ExplorerGuild') * 5) \
+        msg += '-Claims Left Today: ' + str(1 + (hasUnit(guild, player, 'explorerguild') * 5) \
                                             - Data[guild]['Players'][player]['Claimed Today'])
         msg += '\n-Tiles:'
         totalRenewableHarvests = 0
@@ -1261,13 +1262,15 @@ async def setup(inData, chans, logchan, server):
             for tile in Data[guild]['Players'][player]['Markers']['Shape']:
                 Data[guild]['Players'][player]['Markers']['Properties'].append({})
 
-    for name in Data[guild]['Units'].keys():
-        data = Data[guild]['Units'][name]
+    oldUnits = dict(Data[guild]['Units'])
+    Data[guild]['Units'] = {}
+    for name in oldUnits.keys():
+        data = oldUnits[name]
         requirements = dict(UNIT_BASE)
         for key in data.keys():
             if requirements.get(key) is not None:
                 requirements[key] = data[key]
-        Data[guild]['Units'][name] = requirements
+        Data[guild]['Units'][name.lower()] = requirements
 
     await updateInAnnouncements(server)
     await sendMessages()
