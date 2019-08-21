@@ -1251,7 +1251,6 @@ async def setup(inData, chans, logchan, server):
             Data[guild]['Image'] = data
         except ImportError:
             log(guild, "Error Initializing the Map: PIL and/or Numpy Not Available")
-    if Data[guild].get('Secret') is None: Data[guild]['Secret'] = 0
 
     for player in Data[guild]['Players'].keys():
         if Data[guild]['Players'][player].get('Inventory') is None:
@@ -1259,9 +1258,10 @@ async def setup(inData, chans, logchan, server):
 
         if Data[guild]['Players'][player]['Markers'].get('Properties') is None:
             Data[guild]['Players'][player]['Markers']['Properties'] = []
-
             for tile in Data[guild]['Players'][player]['Markers']['Shape']:
                 Data[guild]['Players'][player]['Markers']['Properties'].append({})
+        else:
+            for tile in Data[guild]['Players'][player]['Markers']['Shape']:
                 props = Data[guild]['Players'][player]['Markers']['Properties'][tile]
                 if 'Unit' not in props:
                     continue

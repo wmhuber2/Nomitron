@@ -195,13 +195,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00153" summary="Unit Location Option Added.">
-      <created>1564618925733</created>
-      <option name="number" value="00153" />
-      <option name="presentableId" value="LOCAL-00153" />
-      <option name="project" value="LOCAL" />
-      <updated>1564618925733</updated>
-    </task>
     <task id="LOCAL-00154" summary="Implemented New Units And ExplorerGuild. Nomic IRS dont know about my secret Stash.">
       <created>1565232504764</created>
       <option name="number" value="00154" />
@@ -538,7 +531,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566421316286</updated>
     </task>
-    <option name="localTasksCounter" value="202" />
+    <task id="LOCAL-00202" summary="Remove Case Sensitive From Unit Stuff.">
+      <created>1566421736045</created>
+      <option name="number" value="00202" />
+      <option name="presentableId" value="LOCAL-00202" />
+      <option name="project" value="LOCAL" />
+      <updated>1566421736045</updated>
+    </task>
+    <option name="localTasksCounter" value="203" />
     <servers />
   </component>
   <component name="TodoView">
