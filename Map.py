@@ -1261,6 +1261,13 @@ async def setup(inData, chans, logchan, server):
 
             for tile in Data[guild]['Players'][player]['Markers']['Shape']:
                 Data[guild]['Players'][player]['Markers']['Properties'].append({})
+                props = Data[guild]['Players'][player]['Markers']['Properties'][tile]
+                if 'Unit' not in props:
+                    continue
+                else:
+                    Data[guild]['Players'][player]['Markers']['Properties'][tile]['Unit'] = props['Unit'].lower()
+                    
+
 
     oldUnits = dict(Data[guild]['Units'])
     Data[guild]['Units'] = {}

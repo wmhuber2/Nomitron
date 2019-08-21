@@ -7,7 +7,6 @@
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -195,13 +194,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00150" summary="Fixed Rules Non Removal Bug">
-      <created>1564527474064</created>
-      <option name="number" value="00150" />
-      <option name="presentableId" value="LOCAL-00150" />
-      <option name="project" value="LOCAL" />
-      <updated>1564527474064</updated>
     </task>
     <task id="LOCAL-00151" summary="Added Extra Shuffle to Sermon">
       <created>1564583887125</created>
@@ -539,7 +531,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566312417174</updated>
     </task>
-    <option name="localTasksCounter" value="199" />
+    <task id="LOCAL-00199" summary="Remove Case Sensitive From Unit Stuff.">
+      <created>1566420646028</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1566420646028</updated>
+    </task>
+    <option name="localTasksCounter" value="200" />
     <servers />
   </component>
   <component name="TodoView">
@@ -575,7 +574,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Added Unit base and debug for Sermon." />
     <MESSAGE value="All Unit Stuff Added.Plus Some Sermon Updates." />
     <MESSAGE value="Updated Help" />
     <MESSAGE value="Adding Jana" />
@@ -600,7 +598,8 @@
     <MESSAGE value="Fixed Rule Bug Issue with nsb; thing." />
     <MESSAGE value="Fixed Sermon Bug with non player chat" />
     <MESSAGE value="unit command for all players now. mother russia loves you" />
-    <option name="LAST_COMMIT_MESSAGE" value="unit command for all players now. mother russia loves you" />
+    <MESSAGE value="Remove Case Sensitive From Unit Stuff." />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove Case Sensitive From Unit Stuff." />
   </component>
   <component name="masterDetails">
     <states>
