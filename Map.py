@@ -1211,6 +1211,7 @@ async def setup(inData, chans, logchan, server):
     import matplotlib
 
     matplotlib.use('Agg')
+    print('Channels',channels)
 
     import matplotlib.pyplot as plt
     import matplotlib.ticker as ticker
@@ -1266,7 +1267,7 @@ async def setup(inData, chans, logchan, server):
                     continue
                 else:
                     Data[guild]['Players'][player]['Markers']['Properties'][tile]['Unit'] = props['Unit'].lower()
-                    
+
 
 
     oldUnits = dict(Data[guild]['Units'])
