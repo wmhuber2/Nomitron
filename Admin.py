@@ -29,7 +29,7 @@ async def reaction(inData, action, user, message, emoji):
     loadData(inData)
     # Do Stuff Here
     guild = message.guild.id
-    if message.channel.name.lower() == 'voting':
+    if message.channel.name.lower() in ['voting','actions']:
         await log('Player {0} has reacted to {1} in #{2} by '.format(user, message.author.name, message.channel.name)
                   + action+'ing {0}'.format(emoji) + ' (ID: %d)'%(message.id), guild)
 
