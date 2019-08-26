@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -195,13 +193,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00157" summary="Fixed Disable In Changelog Delta">
-      <created>1565628806577</created>
-      <option name="number" value="00157" />
-      <option name="presentableId" value="LOCAL-00157" />
-      <option name="project" value="LOCAL" />
-      <updated>1565628806577</updated>
     </task>
     <task id="LOCAL-00158" summary="Fix Trade Bug">
       <created>1565630555919</created>
@@ -539,7 +530,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566505638788</updated>
     </task>
-    <option name="localTasksCounter" value="206" />
+    <task id="LOCAL-00206" summary="Rule 314 Edit">
+      <created>1566797362788</created>
+      <option name="number" value="00206" />
+      <option name="presentableId" value="LOCAL-00206" />
+      <option name="project" value="LOCAL" />
+      <updated>1566797362788</updated>
+    </task>
+    <option name="localTasksCounter" value="207" />
     <servers />
   </component>
   <component name="TodoView">
@@ -575,7 +573,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Updated Help" />
     <MESSAGE value="Adding Jana" />
     <MESSAGE value="Fixed Update bug Where Lost Msgs werent removed from list." />
     <MESSAGE value="Fixed Bug" />
@@ -600,7 +597,8 @@
     <MESSAGE value="unit command for all players now. mother russia loves you" />
     <MESSAGE value="Remove Case Sensitive From Unit Stuff." />
     <MESSAGE value="Added Actions to react mention" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Actions to react mention" />
+    <MESSAGE value="Rule 314 Edit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rule 314 Edit" />
   </component>
   <component name="masterDetails">
     <states>

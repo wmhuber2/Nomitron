@@ -1116,7 +1116,7 @@ async def updateInAnnouncements(server, reload=True):
         msg += "\n\tTotal Tiles:" + str(Total) + \
                '\n\tRenewable Harvests:' + str(totalRenewableHarvests) + \
                '\n\tNon-Renewable Harvests:' + str(totalNonRenewableHarvests)
-        msg += "\n-Inventory:          Unit Daily Δ"
+        msg += "\n-Inventory:          Daily Δ"
         for item in set(Data[guild]['Players'][player]['Inventory'].keys()) | set(itemDelta.keys()) | {'Corn','Steel'}:
             amount = 0.0
             delta = 0.0
