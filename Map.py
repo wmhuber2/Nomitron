@@ -145,7 +145,7 @@ async def reaction(inData, action, user, messageid, emoji):
                     amount = '10000'
 
                 if reactorName in ["Doby's Peri#6151",]:
-                    addMsgQueue(message.channel, "Bad Kid "+reactorName+" has paid with "+str(amount) +' '+cost)
+                    addMsgQueue(message.channel, "Bad Kid "+reactorName+" has Claimed with "+str(amount) +' '+cost)
 
                 await message.remove_reaction('💵', bot)
                 await message.remove_reaction('🌮', bot)
@@ -1084,15 +1084,7 @@ async def updateInAnnouncements(server, reload=True):
         totalNonRenewableHarvests = 0
         Total = 0
         itemDelta = {
-            'BF': 0,
-            'Steel': 0,
-            'Wood': 0,
-            'Energy': 0,
-            'Oil': 0,
-            'Fish': 0,
-            'Corn': 0,
-            'Food': 0,
-            'Technology': 0
+            'BF': {'-': 0.0, '+': 0.0},
         }
         for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
             x, y = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
@@ -1110,34 +1102,56 @@ async def updateInAnnouncements(server, reload=True):
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get(
                             'DisabledAndPermanent') is None:
                     unit = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
+
                     for cst in Data[guild]['Units'][unit]['DailyCosts']:
                         a, itm = cst.split(' ')
-                        itemDelta[itm] -= float(a)
+                        if itemDelta.get(itm) is None:
+                            itemDelta[itm] = {'-': 0.0, '+': 0.0}
+                        itemDelta[itm]['-'] += float(a)
                     for cst in Data[guild]['Units'][unit]['DailyReturn']:
                         a, itm = cst.split(' ')
-                        itemDelta[itm] += float(a)
+                        if itemDelta.get(itm) is None:
+                            itemDelta[itm] = {'-': 0.0, '+': 0.0}
+                        itemDelta[itm]['+'] += float(a)
 
         msg += "\n\tTotal Tiles:" + str(Total) + \
                '\n\tRenewable Harvests:' + str(totalRenewableHarvests) + \
                '\n\tNon-Renewable Harvests:' + str(totalNonRenewableHarvests)
-        msg += "\n-Inventory:          Daily Δ"
-        for item in set(Data[guild]['Players'][player]['Inventory'].keys()) | set(itemDelta.keys()) | {'Corn','Steel'}:
+        msg += "\n-Inventory:       | Gains  | Loss   | Total "
+
+        itemList = ['BF','Corn', 'Fish','Food','Steel','Oil','Wood','Technology','Energy']
+        playerItemSet = set(Data[guild]['Players'][player]['Inventory'].keys())
+        playerItemSet = list((set(itemList) | playerItemSet) - set(itemList))
+        playerItemSet.sort()
+        itemList = itemList + playerItemSet
+        for item in itemList:
             amount = 0.0
-            delta = 0.0
+            deltaplus = 0.0
+            deltaloss = 0.0
             sign = '+'
             if item == 'Corn':
-                delta = totalRenewableHarvests * 3
+                deltaplus += totalRenewableHarvests * 3.0
             if item == 'Steel':
-                delta = totalNonRenewableHarvests
+                deltaplus += totalNonRenewableHarvests
             if item in Data[guild]['Players'][player]['Inventory'].keys():
                 amount = float(Data[guild]['Players'][player]['Inventory'][item])
             if item in itemDelta.keys():
-                delta += float(itemDelta[item])
+                deltaplus += float(itemDelta[item]['+'])
+                deltaloss += float(itemDelta[item]['-'])
+            delta = deltaplus - deltaloss
             if delta < 0:
                 sign = ""
             if delta == 0 and amount == 0: continue
-            tmpmsg = "\n\t" + item + ': ' + str(amount)
-            msg += tmpmsg + (20 - len(tmpmsg)) * ' ' + sign + str(delta)
+
+            #deltaloss = int(deltaloss)
+            #deltaplus = int(deltaplus)
+            #delta     = int(delta)
+
+            tmpmsg = "\n   " + item + ': ' + str(amount)
+            tmpmsg += (19 - len(tmpmsg)) * ' ' + '| +'+str(deltaplus)
+            tmpmsg += (28 - len(tmpmsg)) * ' ' + '| -' + str(deltaloss)
+            tmpmsg += (37 - len(tmpmsg)) * ' ' + '| ' +sign + str(delta)
+            msg    += tmpmsg
 
         if i >= len(Data[guild]['Announcements']['Items']):
             post = await channels[server.id][targetChannel].send('```' + msg + '```')
