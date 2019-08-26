@@ -4,9 +4,10 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="Remove Case Sensitive From Unit Stuff.">
+    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -194,13 +195,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00156" summary="Added Delta from Units.">
-      <created>1565626091493</created>
-      <option name="number" value="00156" />
-      <option name="presentableId" value="LOCAL-00156" />
-      <option name="project" value="LOCAL" />
-      <updated>1565626091494</updated>
     </task>
     <task id="LOCAL-00157" summary="Fixed Disable In Changelog Delta">
       <created>1565628806577</created>
@@ -538,7 +532,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566422467314</updated>
     </task>
-    <option name="localTasksCounter" value="205" />
+    <task id="LOCAL-00205" summary="Added Actions to react mention">
+      <created>1566505638788</created>
+      <option name="number" value="00205" />
+      <option name="presentableId" value="LOCAL-00205" />
+      <option name="project" value="LOCAL" />
+      <updated>1566505638788</updated>
+    </task>
+    <option name="localTasksCounter" value="206" />
     <servers />
   </component>
   <component name="TodoView">
@@ -574,7 +575,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="All Unit Stuff Added.Plus Some Sermon Updates." />
     <MESSAGE value="Updated Help" />
     <MESSAGE value="Adding Jana" />
     <MESSAGE value="Fixed Update bug Where Lost Msgs werent removed from list." />
@@ -599,7 +599,8 @@
     <MESSAGE value="Fixed Sermon Bug with non player chat" />
     <MESSAGE value="unit command for all players now. mother russia loves you" />
     <MESSAGE value="Remove Case Sensitive From Unit Stuff." />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove Case Sensitive From Unit Stuff." />
+    <MESSAGE value="Added Actions to react mention" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Actions to react mention" />
   </component>
   <component name="masterDetails">
     <states>

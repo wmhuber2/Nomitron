@@ -827,6 +827,35 @@ def onDayChange(server):
 
     for player in Data[guild]['Players']:
         for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
+
+            # IF HARVEST
+            if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Harvest') is not None \
+                    and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Unit') is None:
+                xcord, ycord = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
+
+                if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                            'type'] == 'Perpetual':                    addItem(guild, player, 'Corn', 3)
+
+                if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER') and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                            'type'] == 'Perpetual':                    addItem(guild, player, 'Fish', 3)
+
+                if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                            'type'] == 'Non Perpetual':                    addItem(guild, player, 'Steel', 1)
+
+                if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER') and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                            'type'] == 'Non Perpetual':                    addItem(guild, player, 'Oil', 1)
+
+                Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] += 1
+                if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                    'type'] == 'Non Perpetual' and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] >= 5:
+                    del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']
+
+            # IF UNIT
             if 'Unit' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] \
                     and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('DisabledAndPermanent') is not True:
                 name = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
@@ -856,21 +885,22 @@ def onDayChange(server):
                         if ' ' in cost:
                             amount, item = cost.split(' ')
                             addItem(guild, player, item, float(amount))
+
+
     print("OnDayChange: ", time.time() - start)
 
 
 """
 Called On Turn Change
 """
-
-
 def onTurnChange(server):
     global Data
 
     start = time.time()
     guild = server.id
     msg = "Players Now Have The Following:\n"
-    for player in Data[guild]['Players']:
+
+    """for player in Data[guild]['Players']:
         for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
             if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Harvest') is not None \
                     and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Unit') is None:
@@ -901,10 +931,13 @@ def onTurnChange(server):
                     'type'] == 'Non Perpetual' and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] >= 5:
                     del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']
-
+    """
     print("OnTurnChange: ", time.time() - start)
 
 
+"""
+Reset The Claim Timers
+"""
 def resetTimers(server, channel=None, playerid=None, mode=0):
     start = time.time()
     if channel is None: channel = channels[server.id][logChannel]
@@ -927,8 +960,6 @@ def resetTimers(server, channel=None, playerid=None, mode=0):
 """
 Extracts Coordinates From String. 
 """
-
-
 def extractCoords(coords, channel):
     if len(coords) > 4 or len(coords) < 3:
         addMsgQueue(channel, "Incorrect Coordinate Formatting.")
@@ -961,8 +992,6 @@ def extractCoords(coords, channel):
 """
 Send Map Data File
 """
-
-
 async def sendMapData(guild, channel):
     await channel.send('Save File Backup After Day Change:', file=discord.File(open('DiscordBot_Data.pickle', 'br')))
 
@@ -970,8 +999,6 @@ async def sendMapData(guild, channel):
 """
 Is The Tile Of Type as x,y in image
 """
-
-
 def isTileType(image, x, y, type):
     return np.all(image[x, y] == TILES[type.upper()])
 
@@ -979,8 +1006,6 @@ def isTileType(image, x, y, type):
 '''
 Add item of count N to player's inventory inv.
 '''
-
-
 def addItem(guild, player, item, count, testOnly=False):
     count = float(count)
     inv = Data[guild]['Players'][player]['Inventory']
@@ -1013,8 +1038,6 @@ def addItem(guild, player, item, count, testOnly=False):
 """
 Update Messages In Annoncements
 """
-
-
 async def updateInAnnouncements(server, reload=True):
     global Data, oldData
     guild = server.id
@@ -1091,20 +1114,21 @@ async def updateInAnnouncements(server, reload=True):
                         itemDelta[itm] += float(a)
 
         msg += "\n\tTotal Tiles:" + str(Total) + \
-               '\n\tRenewable Harvests:' + str(totalRenewableHarvests) + '  ({} Corn/Turn)'.format(
-            totalRenewableHarvests * 5) + \
-               '\n\tNon-Renewable Harvests:' + str(totalNonRenewableHarvests) + '  ({} Steel/Turn)'.format(
-            totalNonRenewableHarvests)
+               '\n\tRenewable Harvests:' + str(totalRenewableHarvests) + \
+               '\n\tNon-Renewable Harvests:' + str(totalNonRenewableHarvests)
         msg += "\n-Inventory:          Unit Daily Δ"
-        for item in set(Data[guild]['Players'][player]['Inventory'].keys()) | set(itemDelta.keys()):
+        for item in set(Data[guild]['Players'][player]['Inventory'].keys()) | set(itemDelta.keys()) | {'Corn','Steel'}:
             amount = 0.0
             delta = 0.0
             sign = '+'
-
+            if item == 'Corn':
+                delta = totalRenewableHarvests * 3
+            if item == 'Steel':
+                delta = totalNonRenewableHarvests
             if item in Data[guild]['Players'][player]['Inventory'].keys():
                 amount = float(Data[guild]['Players'][player]['Inventory'][item])
             if item in itemDelta.keys():
-                delta = float(itemDelta[item])
+                delta += float(itemDelta[item])
             if delta < 0:
                 sign = ""
             if delta == 0 and amount == 0: continue
@@ -1157,9 +1181,9 @@ async def updateInAnnouncements(server, reload=True):
             await msg.edit(content=url)
 
 
-"Determines If PLayer Has A Unit"
-
-
+"""
+Determines If PLayer Has A Unit
+"""
 def hasUnit(guildid, player, unit):
     unitCount = 0
     for tile in range(len(Data[guildid]['Players'][player]['Markers']['Location'])):
@@ -1174,8 +1198,6 @@ def hasUnit(guildid, player, unit):
 """
 get Player
 """
-
-
 def getPlayer(server, playerid, channel=None):
     guild = server.id
     if channel == None: channel = channels[logChannel]
