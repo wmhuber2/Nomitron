@@ -143,6 +143,10 @@ async def reaction(inData, action, user, messageid, emoji):
                 else:
                     cost = 'BF'
                     amount = '10000'
+
+                if reactorName in ["Doby's Peri#6151",]:
+                    addMsgQueue(message.channel, "Bad Kid "+reactorName+" has paid with "+str(amount) +' '+cost)
+
                 await message.remove_reaction('💵', bot)
                 await message.remove_reaction('🌮', bot)
                 if addItem(guild, playerName, cost, -1 * amount):
