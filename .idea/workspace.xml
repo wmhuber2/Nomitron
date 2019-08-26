@@ -196,13 +196,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00160" summary="Added Harvest Item Delta">
-      <created>1565670257881</created>
-      <option name="number" value="00160" />
-      <option name="presentableId" value="LOCAL-00160" />
-      <option name="project" value="LOCAL" />
-      <updated>1565670257881</updated>
-    </task>
     <task id="LOCAL-00161" summary="Added Harvest Item Delta">
       <created>1565724251586</created>
       <option name="number" value="00161" />
@@ -539,7 +532,14 @@
       <option name="project" value="LOCAL" />
       <updated>1566829354037</updated>
     </task>
-    <option name="localTasksCounter" value="209" />
+    <task id="LOCAL-00209" summary="Edited Changelog Live Formats.">
+      <created>1566854329653</created>
+      <option name="number" value="00209" />
+      <option name="presentableId" value="LOCAL-00209" />
+      <option name="project" value="LOCAL" />
+      <updated>1566854329653</updated>
+    </task>
+    <option name="localTasksCounter" value="210" />
     <servers />
   </component>
   <component name="TodoView">
@@ -575,7 +575,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adding Jana" />
     <MESSAGE value="Fixed Update bug Where Lost Msgs werent removed from list." />
     <MESSAGE value="Fixed Bug" />
     <MESSAGE value="Reverted Map" />
@@ -600,7 +599,8 @@
     <MESSAGE value="Remove Case Sensitive From Unit Stuff." />
     <MESSAGE value="Added Actions to react mention" />
     <MESSAGE value="Rule 314 Edit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rule 314 Edit" />
+    <MESSAGE value="Edited Changelog Live Formats." />
+    <option name="LAST_COMMIT_MESSAGE" value="Edited Changelog Live Formats." />
   </component>
   <component name="masterDetails">
     <states>

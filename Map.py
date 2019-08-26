@@ -610,6 +610,7 @@ async def run(inData, payload, message):
 
             if splitContent[0] == '!newDay':
                 onDayChange(message.guild)
+                await updateInAnnouncements(message.guild, postToSpam=True)
 
             if payload['Content'] == '!getData':
                 await sendMapData(guild=message.guild.id, channel=message.channel)
@@ -805,7 +806,7 @@ async def update(inData, server):
     if datetime.datetime.now().strftime("%Y-%m-%d") != Data[guild]['Date']:
         onDayChange(server)
         await sendMapData(guild, channels[guild][logChannel])
-        await updateInAnnouncements(server)
+        await updateInAnnouncements(server,postToSpam=True)
     await sendMessages()
     return saveData()
 
@@ -889,8 +890,6 @@ def onDayChange(server):
                         if ' ' in cost:
                             amount, item = cost.split(' ')
                             addItem(guild, player, item, float(amount))
-
-
     print("OnDayChange: ", time.time() - start)
 
 
@@ -1042,10 +1041,10 @@ def addItem(guild, player, item, count, testOnly=False):
 """
 Update Messages In Annoncements
 """
-async def updateInAnnouncements(server, reload=True):
+async def updateInAnnouncements(server, reload=True, postToSpam = False):
     global Data, oldData
     guild = server.id
-    if oldData == pickle.dumps(Data[guild]['Players'], protocol=pickle.HIGHEST_PROTOCOL):
+    if not postToSpam and oldData == pickle.dumps(Data[guild]['Players'], protocol=pickle.HIGHEST_PROTOCOL):
         # print('Up To Date. Skipping Plot')
         return 1
     else:
@@ -1152,6 +1151,7 @@ async def updateInAnnouncements(server, reload=True):
             tmpmsg += (28 - len(tmpmsg)) * ' ' + '| -' + str(deltaloss)
             tmpmsg += (37 - len(tmpmsg)) * ' ' + '| ' +sign + str(delta)
             msg    += tmpmsg
+        if postToSpam: log(guild,"```"+msg+"```")
 
         if i >= len(Data[guild]['Announcements']['Items']):
             post = await channels[server.id][targetChannel].send('```' + msg + '```')
@@ -1432,7 +1432,7 @@ async def sendMessages():
     global msgQueue
     while len(msgQueue) != 0:
         msg = msgQueue.pop(0)
-        print('Sending:', len(msgQueue), msg)
+        print('Sending Msg #', len(msgQueue),'to', msg['channel'].name)
         await msg['channel'].send(msg['text'])
 
 
