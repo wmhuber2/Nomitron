@@ -1390,7 +1390,11 @@ async def plotMap(channel, postReply=True):
                         else:
                             ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
                                        marker='$' + obj[i] + '$')
-
+                    '''
+                    if 'DisabledAndPermanent' in player['Markers']['Properties'][i]:
+                        if player['Markers']['Properties'][i]['DisabledAndPermanent']: color = 'red'
+                        ax.scatter(x[i], y[i], c=color, alpha='1.0', s=8.0, marker='$X$', edgecolors='None')
+                    '''
             ax.yaxis.set_major_formatter(ticker.NullFormatter())
             ax.yaxis.set_minor_locator(ticker.FixedLocator(axisn))
             ax.yaxis.set_minor_formatter(ticker.FixedFormatter(axisn + 1))

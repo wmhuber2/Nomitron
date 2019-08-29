@@ -36,7 +36,7 @@ class DiscordNomicBot():
 
         for mod in glob.glob("*.py"):
             mod = mod[:-3]
-            if mod in sys.argv[0] or 'Nomitron' == mod or 'run' == mod:
+            if mod in sys.argv[0] or 'Nomitron' == mod or 'run' == mod or mod[0]=='T':
                 continue
             print ('Importing Module ',mod)
             self.modules.append(importlib.import_module(mod))
