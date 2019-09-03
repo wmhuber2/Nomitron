@@ -1,7 +1,7 @@
 #
 # Map Module For Discord Bot
 ################################
-import pickle, sys, datetime, os, discord, math, re, socket, time
+import pickle, sys, datetime, os, discord, math, re, socket, time, random
 np, plt, ticker, mcd = None,None,None,None
 n = 75
 
@@ -25,6 +25,7 @@ UNIT_BASE = {
     'BeachOnly': False
 }
 
+botName = "Nomitron#3034"
 oldData = {}
 msgQueue = []
 channels = {}
@@ -150,8 +151,16 @@ async def reaction(inData, action, user, messageid, emoji):
                 await message.remove_reaction('💵', bot)
                 await message.remove_reaction('🌮', bot)
                 if addItem(guild, playerName, cost, -1 * amount):
+                    properties = {}
+                    if [xcord, ycord] in Data[guild]['Players'][botName]['Markers']['Location']:
+                        index = Data[guild]['Players'][botName]['Markers']['Location'].index([xcord,ycord])
+                        properties = dict(Data[guild]['Players'][botName]['Markers']['Properties'][index])
+                        Data[guild]['Players'][botName]['Markers']['Location'].pop(index)
+                        Data[guild]['Players'][botName]['Markers']['Properties'].pop(index)
+                        Data[guild]['Players'][botName]['Markers']['Shape'].pop(index)
+
                     Data[guild]['Players'][playerName]['Markers']['Location'].append([xcord, ycord])
-                    Data[guild]['Players'][playerName]['Markers']['Properties'].append({})
+                    Data[guild]['Players'][playerName]['Markers']['Properties'].append(properties)
                     Data[guild]['Players'][playerName]['Markers']['Shape'].append('Claim')
                     Data[guild]['Players'][playerName]['Claimed Today'] += 1
                     addMsgQueue(message.channel, "You have claimed the location. ")
@@ -318,7 +327,8 @@ async def run(inData, payload, message):
                             'Location']:
 
                             isClaimed = False
-                            for player in Data[guild]['Players']:
+                            for player in Data[guild]['Players'].keys(): 
+                                if botName == player: continue
                                 isClaimed = isClaimed or (
                                             [xcord, ycord] in Data[guild]['Players'][player]['Markers']['Location'])
 
@@ -328,8 +338,17 @@ async def run(inData, payload, message):
                                 await message.add_reaction('💵')
                                 await message.add_reaction('🌮')
                             elif addItem(guild, payload['Author'], 'BF', -2):
+                                properties = {}
+                                if [xcord, ycord] in Data[guild]['Players'][botName]['Markers']['Location']:
+                                    index = Data[guild]['Players'][botName]['Markers']['Location'].index([xcord,ycord])
+                                    properties = dict(Data[guild]['Players'][botName]['Markers']['Properties'][index])
+                                    Data[guild]['Players'][botName]['Markers']['Location'].pop(index)
+                                    Data[guild]['Players'][botName]['Markers']['Properties'].pop(index)
+                                    Data[guild]['Players'][botName]['Markers']['Shape'].pop(index)
+
+
                                 Data[guild]['Players'][payload['Author']]['Markers']['Location'].append([xcord, ycord])
-                                Data[guild]['Players'][payload['Author']]['Markers']['Properties'].append({})
+                                Data[guild]['Players'][payload['Author']]['Markers']['Properties'].append(properties)
                                 Data[guild]['Players'][payload['Author']]['Markers']['Shape'].append('Claim')
                                 Data[guild]['Players'][payload['Author']]['Claimed Today'] += 1
                                 addMsgQueue(message.channel, "You have claimed the location. ")
@@ -781,6 +800,39 @@ async def run(inData, payload, message):
                 else:
                     addMsgQueue(message.channel, "Unit Not Found")
 
+            if splitContent[0] == '!specialCommand':
+
+                array = np.random.rand(75,75)*175
+                array[2,13] = 0.5
+
+                coords = np.where(array<=1)
+                for x,y in zip(coords[0], coords[1]):
+                    if isTileType(Data[guild]['Image'],x,y,'LAND'):
+                        print(x, y)
+                        isOnPlayer = False
+                        for player in Data[guild]['Players'].keys():
+                            if [x,y] in Data[guild]['Players'][player]['Markers']['Location']:
+                                print(1,player)
+                                index = Data[guild]['Players'][player]['Markers']['Location'].index([x,y])
+
+                                if 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][index]:
+                                    Data[guild]['Players'][player]['Markers']['Properties'][index][
+                                        'Unit'] = 'town'
+                                    Data[guild]['Players'][player]['Markers']['Properties'][index][
+                                        'TownItem'] = random.choice([
+                                        'Wood','Steel','Energy','Technology','Oil','Corn','Food','Fish'
+                                    ])
+
+                                isOnPlayer = True
+                        if not isOnPlayer:
+                            Data[guild]['Players'][botName]['Markers']['Shape'].append("")
+                            Data[guild]['Players'][botName]['Markers']['Location'].append([x,y])
+                            Data[guild]['Players'][botName]['Markers']['Properties'].append({
+                                'Unit': 'town',
+                                'TownItem': random.choice([
+                                'Wood', 'Steel', 'Energy', 'Technology', 'Oil', 'Corn', 'Food', 'Fish'
+                                 ])
+                            })
 
     #  IF A DM CHANNEL
     if payload['Channel Type'] == 'DM':
@@ -881,7 +933,14 @@ def onDayChange(server):
                             not Data[guild]['Players'][player]['Markers']['Properties'][tileIndex][
                                 'DisabledAndPermanent']:
                         del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['DisabledAndPermanent']
-
+                    
+                    if name == 'town':                    
+                        gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('TownItem')
+                        if gift == None:
+                            gift = random.choice(['Wood','Steel','Energy','Technology','Oil','Corn','Food','Fish'])
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['TownItem'] = gift
+                        addItem(guild, player, gift, float(2))
+                        
                     for cost in unit['DailyCosts']:
                         if ' ' in cost:
                             amount, item = cost.split(' ')
@@ -890,6 +949,8 @@ def onDayChange(server):
                         if ' ' in cost:
                             amount, item = cost.split(' ')
                             addItem(guild, player, item, float(amount))
+                
+                    
     print("OnDayChange: ", time.time() - start)
 
 
@@ -903,38 +964,6 @@ def onTurnChange(server):
     guild = server.id
     msg = "Players Now Have The Following:\n"
 
-    """for player in Data[guild]['Players']:
-        for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
-            if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Harvest') is not None \
-                    and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Unit') is None:
-                xcord, ycord = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
-
-                if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
-                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Perpetual':
-                    addItem(guild, player, 'Corn', 5)
-
-                if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER') and \
-                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Perpetual':
-                    addItem(guild, player, 'Fish', 5)
-
-                if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
-                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Non Perpetual':
-                    addItem(guild, player, 'Steel', 1)
-
-                if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER') and \
-                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Non Perpetual':
-                    addItem(guild, player, 'Oil', 1)
-
-                Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] += 1
-                if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                    'type'] == 'Non Perpetual' and \
-                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] >= 5:
-                    del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']
-    """
     print("OnTurnChange: ", time.time() - start)
 
 
@@ -1102,6 +1131,16 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                             'DisabledAndPermanent') is None:
                     unit = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
 
+
+                    if unit == 'town':
+                        itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('TownItem')
+                        if itm == None:
+                            itm = random.choice(['Wood','Steel','Energy','Technology','Oil','Corn','Food','Fish'])
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['TownItem'] = itm
+                        if itemDelta.get(itm) is None:
+                            itemDelta[itm] = {'-': 0.0, '+': 0.0}
+                        itemDelta[itm]['+'] += float(2)
+                        
                     for cst in Data[guild]['Units'][unit]['DailyCosts']:
                         a, itm = cst.split(' ')
                         if itemDelta.get(itm) is None:
@@ -1291,6 +1330,16 @@ async def setup(inData, chans, logchan, server):
             Data[guild]['Image'] = data
         except ImportError:
             log(guild, "Error Initializing the Map: PIL and/or Numpy Not Available")
+    if Data[guild]['Players'].get(botName) is None:
+        Data[guild]['Players'][botName] = {
+            'Markers': {
+                'Location': [],
+                'Shape': [],
+                'Properties': []
+            },
+            'Color': 'Gold',
+            'Inventory': {}
+        }
 
     for player in Data[guild]['Players'].keys():
         if Data[guild]['Players'][player].get('Inventory') is None:
@@ -1329,7 +1378,7 @@ async def plotMap(channel, postReply=True):
     global Data, plt
     guild = channel.guild.id
     async with channel.typing():
-        try:
+        if 1:#try:
             if channel is None: channel = channels[guild][logChannel]
             # fig, ax = plt.subplots()
             fig = plt.figure(figsize=(5.0, 5.0))
@@ -1343,13 +1392,13 @@ async def plotMap(channel, postReply=True):
             for player in Data[guild]['Players'].keys():
                 player = Data[guild]['Players'][player]
                 color = player['Color']
+                
                 outline = 'black'
                 if color == 'black': outline = 'white'
 
                 if len(player['Markers']['Location']) == 0: continue
                 x, y = np.asarray(player['Markers']['Location']).T
                 obj = np.asarray(player['Markers']['Shape'])
-
                 obj[obj == 'Claim'] = 'None'
                 obj[obj == 'Capital'] = '*'
                 for unit in Data[guild]['Units'].keys():
@@ -1424,6 +1473,7 @@ async def plotMap(channel, postReply=True):
                 await channel.send(
                     'World Map, You may view a constantly updated map in #changelog-live \n[Auto Delete: 2 mins]:',
                     delete_after=delay, file=discord.File(open('tmpgrid.png', 'br')))
+        try:pass
         except Exception as e:
             print('Plot Error', str(e))
 
