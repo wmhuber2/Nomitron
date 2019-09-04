@@ -1145,10 +1145,10 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
                         itemDelta[itm]['+'] += float(a)
                 elif prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                    'type'] == 'Perpetual':
+                    'type'] == 'Perpetual' and 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]:
                     totalRenewableHarvests += 1
                 elif prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                    'type'] == 'Non Perpetual':
+                    'type'] == 'Non Perpetual' and 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]:
                     totalNonRenewableHarvests += 1
 
         msg += "\n\tTotal Tiles:" + str(Total) + \
