@@ -4,11 +4,9 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="Edited Changelog Live Formats.">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00163" summary="Performance Enhancements. Oh Yeh Flex That. Seperate Post Msg Buffer and await elimation  in majority of funcitons.">
-      <created>1565989756409</created>
-      <option name="number" value="00163" />
-      <option name="presentableId" value="LOCAL-00163" />
-      <option name="project" value="LOCAL" />
-      <updated>1565989756409</updated>
     </task>
     <task id="LOCAL-00164" summary="Added Admin Process Command">
       <created>1566004927798</created>
@@ -554,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567106398428</updated>
     </task>
-    <option name="localTasksCounter" value="212" />
+    <task id="LOCAL-00212" summary="Rule 347: Towns">
+      <created>1567534059659</created>
+      <option name="number" value="00212" />
+      <option name="presentableId" value="LOCAL-00212" />
+      <option name="project" value="LOCAL" />
+      <updated>1567534059659</updated>
+    </task>
+    <option name="localTasksCounter" value="213" />
     <servers />
   </component>
   <component name="TodoView">
@@ -593,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Fixed Update bug Where Lost Msgs werent removed from list." />
     <MESSAGE value="Fixed Bug" />
     <MESSAGE value="Reverted Map" />
     <MESSAGE value="RE-Reverted Map" />
@@ -618,7 +615,8 @@
     <MESSAGE value="Added Actions to react mention" />
     <MESSAGE value="Rule 314 Edit" />
     <MESSAGE value="Edited Changelog Live Formats." />
-    <option name="LAST_COMMIT_MESSAGE" value="Edited Changelog Live Formats." />
+    <MESSAGE value="Rule 347: Towns" />
+    <option name="LAST_COMMIT_MESSAGE" value="Rule 347: Towns" />
   </component>
   <component name="masterDetails">
     <states>

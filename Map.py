@@ -1120,17 +1120,10 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             # if isTileType(Data[guild]['Image'],x , y, 'WATER'): totalWater+=1
             Total += 1
             for prop in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].keys():
-                if prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                    'type'] == 'Perpetual':
-                    totalRenewableHarvests += 1
-                if prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                    'type'] == 'Non Perpetual':
-                    totalNonRenewableHarvests += 1
                 if prop == 'Unit' and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get(
                             'DisabledAndPermanent') is None:
                     unit = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
-
 
                     if unit == 'town':
                         itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('TownItem')
@@ -1151,6 +1144,12 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
                         itemDelta[itm]['+'] += float(a)
+                elif prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                    'type'] == 'Perpetual':
+                    totalRenewableHarvests += 1
+                elif prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                    'type'] == 'Non Perpetual':
+                    totalNonRenewableHarvests += 1
 
         msg += "\n\tTotal Tiles:" + str(Total) + \
                '\n\tRenewable Harvests:' + str(totalRenewableHarvests) + \
