@@ -7,6 +7,7 @@
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayerREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/PlayerREADME.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -209,13 +210,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00167" summary="Bug FIxes">
-      <created>1566034278697</created>
-      <option name="number" value="00167" />
-      <option name="presentableId" value="LOCAL-00167" />
-      <option name="project" value="LOCAL" />
-      <updated>1566034278697</updated>
     </task>
     <task id="LOCAL-00168" summary="Bug FIxes">
       <created>1566034503466</created>
@@ -553,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567742767177</updated>
     </task>
-    <option name="localTasksCounter" value="216" />
+    <task id="LOCAL-00216" summary="AssetTrade and harvest counter">
+      <created>1567902701911</created>
+      <option name="number" value="00216" />
+      <option name="presentableId" value="LOCAL-00216" />
+      <option name="project" value="LOCAL" />
+      <updated>1567902701912</updated>
+    </task>
+    <option name="localTasksCounter" value="217" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +593,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="RE-Reverted Map" />
     <MESSAGE value="Fixed Rules Non Removal Bug" />
     <MESSAGE value="Added Extra Shuffle to Sermon" />
     <MESSAGE value="Unit Location Option Added." />
@@ -617,7 +617,8 @@
     <MESSAGE value="Rule 347: Towns" />
     <MESSAGE value="Bug Fix: Harvest Counter" />
     <MESSAGE value="Bug Fix: Doby Msg in wrong location" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix: Doby Msg in wrong location" />
+    <MESSAGE value="AssetTrade and harvest counter" />
+    <option name="LAST_COMMIT_MESSAGE" value="AssetTrade and harvest counter" />
   </component>
   <component name="masterDetails">
     <states>

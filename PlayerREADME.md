@@ -36,7 +36,9 @@ ActionCommands:        Allowed Channels: actions
 -    !trade @player amount item
 +         give a player resources if they accept.
 +         Rule 314
-
+-    !asset + Proposal 351 formatting
++         Trade Tiles
++         Rule 351
 
 +###########################################
 -  !admin

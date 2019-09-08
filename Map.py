@@ -217,7 +217,121 @@ async def reaction(inData, action, user, messageid, emoji):
                     await message.remove_reaction('👍', bot)
                     await message.remove_reaction('👎', bot)
                     addMsgQueue(message.channel, 'Transaction Rejected')
-
+                    
+    elif splitContent[0].lower() == '!asset':
+        bot = None
+        canContinute = False
+        for r in message.reactions:
+            isBot = False
+            for u in await r.users().flatten():
+                isBot = u.bot or isBot
+                if u.bot:  bot = u
+            canContinute = canContinute or isBot
+        
+        if canContinute:
+            canContinute = False
+            approvedPlayers = set()
+            for r in message.reactions:
+                if not r.emoji in ['👍', '👎']: continue
+                for u in await r.users().flatten():
+                    if r.emoji == '👍':
+                        approvedPlayers.add( u.name + '#' + u.discriminator)
+            if 1:             
+                msg =  messageid.content.split('\n')
+                giver, reciptient = None, None
+                region = set()
+                assets = []
+                badassets = []
+                failed = False
+                toSet = []
+                players = set()
+                for linenum in range(len(msg)):
+                    line = str(msg[linenum])
+                    print(linenum, line)
+                    if 'gives to' not in line and giver is not None and reciptient is not None and len(line) >= 3:
+                        asset = line.strip()
+                        coord = extractCoords(asset, message.channel)
+                        if coord == None:
+                            failed = True        
+                            addMsgQueue(message.channel, 'Failed with bad coord')
+                            break
+                        else:
+                            assets.append((coord[0],coord[2],asset))
+                            badassets.append(asset)
+                            print('asset added',(coord[0],coord[2]) )
+                    if 'gives to' in line or linenum == len(msg)-1:
+                        if giver is not None and reciptient is not None:
+                            #generate map to ensure all tiles are connected by adjacency
+                            for x,y,a in assets:
+                                if [x,y] in Data[guild]['Players'][giver]['Markers']['Location'] and (\
+                                    [x+1, y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x+1, y  ] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x+1, y-1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x  , y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x  , y-1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x-1, y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x-1, y  ] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x-1, y-1] in Data[guild]['Players'][reciptient]['Markers']['Location']):
+                                    region.add((x+1,y+1))
+                                    region.add((x  ,y+1))
+                                    region.add((x-1,y+1))
+                                    region.add((x+1,y  ))
+                                    region.add((x  ,y  ))
+                                    region.add((x-1,y  ))
+                                    region.add((x+1,y-1))
+                                    region.add((x  ,y-1))
+                                    region.add((x-1,y-1))
+                                    print('Region Seed',x,y)
+                            assetsToMap = list(assets)
+                            print('Start ATM', assetsToMap)
+                            regionExpanded = True
+                            while regionExpanded:
+                                regionExpanded = False
+                                print(assetsToMap)
+                                for x,y,a in set(assetsToMap):
+                                    if (x,y) in region:
+                                        assetsToMap.remove((x,y,a))
+                                        badassets.remove(a)
+                                        regionExpanded = True
+                                        region.add((x+1,y+1))
+                                        region.add((x  ,y+1))
+                                        region.add((x-1,y+1))
+                                        region.add((x+1,y  ))
+                                        region.add((x-1,y  ))
+                                        region.add((x+1,y-1))
+                                        region.add((x  ,y-1))
+                                        region.add((x-1,y-1))
+                            print('End ATM', assetsToMap)
+                            if len(assetsToMap) != 0:            
+                                addMsgQueue(message.channel, "Error Trading Tiles:\n "+str('\n\t'.join(badassets)))
+                                failed = True
+                            else:
+                                for x,y,a in set(assets):
+                                    tile = [x,y,giver,reciptient]
+                                    toSet.append(tile)
+                                print('Done')
+                        if linenum != len(msg)-1:
+                            giver, reciptient = line.split('gives to')
+                            giver      = getPlayer(message.guild, giver.strip()     )
+                            reciptient = getPlayer(message.guild, reciptient.strip())
+                            players.add(giver)
+                            players.add(reciptient)
+                    else:
+                        print('Else:', line)
+                print(players, approvedPlayers)
+                if not failed and players.issubset(approvedPlayers):
+                    await message.remove_reaction('👍', bot)
+                    await message.remove_reaction('👎', bot)
+                    for x,y,g,r in toSet:
+                        index = Data[guild]['Players'][g]['Markers']['Location'].index([x,y])
+                        Data[guild]['Players'][r]['Markers']['Location'].append(Data[guild]['Players'][g]['Markers']['Location'][index])
+                        Data[guild]['Players'][r]['Markers']['Shape'].append(Data[guild]['Players'][g]['Markers']['Shape'][index])
+                        Data[guild]['Players'][r]['Markers']['Properties'].append(Data[guild]['Players'][g]['Markers']['Properties'][index])
+                    for x,y,g,r in toSet:
+                        index = Data[guild]['Players'][g]['Markers']['Location'].index([x,y])
+                        Data[guild]['Players'][g]['Markers']['Location'].pop(index)
+                        Data[guild]['Players'][g]['Markers']['Shape'].pop(index)
+                        Data[guild]['Players'][g]['Markers']['Properties'].pop(index)
     elif str(emoji) == str('🔄') and reactorName in Admins:
         payload = {}
         payload['Author'] = message.author.name + "#" + str(message.author.discriminator)
@@ -625,14 +739,29 @@ async def run(inData, payload, message):
                 giver, reciptient = None, None
                 region = set()
                 assets = []
+                badassets = []
                 failed = False
                 toSet = []
-                for line in msg:
-                    if 'gives to' in line:
+                players = set()
+                for linenum in range(len(msg)):
+                    line = str(msg[linenum])
+                    print(linenum, line)
+                    if 'gives to' not in line and giver is not None and reciptient is not None and len(line) >= 3:
+                        asset = line.strip()
+                        coord = extractCoords(asset, message.channel)
+                        if coord == None:
+                            failed = True        
+                            addMsgQueue(message.channel, 'Failed with bad coord')
+                            break
+                        else:
+                            assets.append((coord[0],coord[2],asset))
+                            badassets.append(asset)
+                            print('asset added',(coord[0],coord[2]) )
+                    if 'gives to' in line or linenum == len(msg)-1:
                         if giver is not None and reciptient is not None:
                             #generate map to ensure all tiles are connected by adjacency
                             regionExpanded = True
-                            for x,y in assets:
+                            for x,y,a in assets:
                                 if [x,y] in Data[guild]['Players'][giver]['Markers']['Location'] and (\
                                     [x+1, y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
                                     [x+1, y  ] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
@@ -642,60 +771,56 @@ async def run(inData, payload, message):
                                     [x-1, y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
                                     [x-1, y  ] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
                                     [x-1, y-1] in Data[guild]['Players'][reciptient]['Markers']['Location']):
-                                    region.add([x+1,y+1])
-                                    region.add([x  ,y+1])
-                                    region.add([x-1,y+1])
-                                    region.add([x+1,y  ])
-                                    region.add([x  ,y  ])
-                                    region.add([x-1,y  ])
-                                    region.add([x+1,y-1])
-                                    region.add([x  ,y-1])
-                                    region.add([x-1,y-1])
-                            assetsToMap = set(assets)
+                                    region.add((x+1,y+1))
+                                    region.add((x  ,y+1))
+                                    region.add((x-1,y+1))
+                                    region.add((x+1,y  ))
+                                    region.add((x  ,y  ))
+                                    region.add((x-1,y  ))
+                                    region.add((x+1,y-1))
+                                    region.add((x  ,y-1))
+                                    region.add((x-1,y-1))
+                                    print('Region Seed',x,y)
+                            assetsToMap = list(assets)
+                            print('Start ATM', assetsToMap)
                             while regionExpanded:
-                                regionExpranded = False
-                                for x,y in set(assetsToMap):
-                                    if [x,y] in region:
-                                        assetsToMap.pop([x,y])
+                                regionExpanded = False
+                                print(assetsToMap)
+                                for x,y,a in set(assetsToMap):
+                                    if (x,y) in region:
+                                        assetsToMap.remove((x,y,a))
+                                        badassets.remove(a)
                                         regionExpranded = True
-                                        region.add([x + 1, y + 1])
-                                        region.add([x, y + 1])
-                                        region.add([x - 1, y + 1])
-                                        region.add([x + 1, y])
-                                        region.add([x - 1, y])
-                                        region.add([x + 1, y - 1])
-                                        region.add([x, y - 1])
-                                        region.add([x - 1, y - 1])
-                            if len(assetsToMap) != 0:
-                                print("Cant Connect "+str(assetsToMap))
+                                        region.add((x+1,y+1))
+                                        region.add((x  ,y+1))
+                                        region.add((x-1,y+1))
+                                        region.add((x+1,y  ))
+                                        region.add((x-1,y  ))
+                                        region.add((x+1,y-1))
+                                        region.add((x  ,y-1))
+                                        region.add((x-1,y-1))
+                            print('End ATM', assetsToMap)
+                            if len(assetsToMap) != 0:            
+                                addMsgQueue(message.channel, "Error Trading Tiles:\n "+str('\n\t'.join(badassets)))
                                 failed = True
                             else:
-                                for x,y in set(assets):
-                                    tile = [x,y,giver,recipiant]
+                                for x,y,a in set(assets):
+                                    tile = [x,y,giver,reciptient]
                                     toSet.append(tile)
-                        giver, reciptient = line.split('gives to')
-                        giver      = getPlayer(guild, giver.strip()     )
-                        reciptient = getPlayer(guild, reciptient.strip())
-                    elif giver is not None and reciptient is not None and len(line) >= 3:
-                        asset = line.strip()
-                        coord = extractCoords(asset, message.channel)
-                        if coord == None:
-                            failed = True
-                            break
-                        else:
-                            assets.append([coord[0],coord[2]])
+                                print('Done')
+                        if linenum != len(msg)-1:
+                            giver, reciptient = line.split('gives to')
+                            giver      = getPlayer(message.guild, giver.strip()     )
+                            reciptient = getPlayer(message.guild, reciptient.strip())
+                            players.add(giver)
+                            players.add(reciptient)
+                    else:
+                        print('Else:', line)
                 if not failed:
-                    for x,y,g,r in toSet:
-                        index = Data[guild]['Players'][g]['Markers']['Location'].index([x,y])
-                        Data[guild]['Players'][r]['Markers']['Location'].append(Data[guild]['Players'][g]['Markers']['Location'][index])
-                        Data[guild]['Players'][r]['Markers']['Shape'].append(Data[guild]['Players'][g]['Markers']['Shape'][index])
-                        Data[guild]['Players'][r]['Markers']['Properties'].append(Data[guild]['Players'][g]['Markers']['Properties'][index])
-                    for x,y,g,r in toSet:
-                        index = Data[guild]['Players'][g]['Markers']['Location'].index([x,y])
-                        Data[guild]['Players'][g]['Markers']['Location'].pop(index)
-                        Data[guild]['Players'][g]['Markers']['Shape'].pop(index)
-                        Data[guild]['Players'][g]['Markers']['Properties'].pop(index)
-
+                    addMsgQueue(message.channel, "Asset Trade Requires Approval of: \n"+str(' '.join(players)))
+                    await message.add_reaction('👍')
+                    await message.add_reaction('👎')
+                   
         if payload['Author'] in Admins and payload['Channel'].lower() in ['actions', 'action', 'mod-lounge',
                                                                           'bot-lounge']:
 
@@ -1333,7 +1458,7 @@ get Player
 """
 def getPlayer(server, playerid, channel=None):
     guild = server.id
-    if channel == None: channel = channels[logChannel]
+    if channel == None: channel = channels[guild][logChannel]
     if len(playerid) == 0:
         return None
     else:
@@ -1366,13 +1491,13 @@ async def setup(inData, chans, logchan, server):
     import matplotlib
 
     matplotlib.use('Agg')
-    print('Channels',channels)
 
     import matplotlib.pyplot as plt
     import matplotlib.ticker as ticker
     import matplotlib._color_data as mcd
 
     channels[server.id] = chans
+    print('Channels',channels)
     logChannel = logchan
     guild = server.id
 
