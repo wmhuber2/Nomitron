@@ -620,6 +620,82 @@ async def run(inData, payload, message):
                         else:
                             addMsgQueue(message.channel, "You Do Not Have The Resources")
 
+            if splitContent[0].lower() == '!asset':
+                msg = payload['Content'].split('\n')
+                giver, reciptient = None, None
+                region = set()
+                assets = []
+                failed = False
+                toSet = []
+                for line in msg:
+                    if 'gives to' in line:
+                        if giver is not None and reciptient is not None:
+                            #generate map to ensure all tiles are connected by adjacency
+                            regionExpanded = True
+                            for x,y in assets:
+                                if [x,y] in Data[guild]['Players'][giver]['Markers']['Location'] and (\
+                                    [x+1, y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x+1, y  ] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x+1, y-1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x  , y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x  , y-1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x-1, y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x-1, y  ] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x-1, y-1] in Data[guild]['Players'][reciptient]['Markers']['Location']):
+                                    region.add([x+1,y+1])
+                                    region.add([x  ,y+1])
+                                    region.add([x-1,y+1])
+                                    region.add([x+1,y  ])
+                                    region.add([x  ,y  ])
+                                    region.add([x-1,y  ])
+                                    region.add([x+1,y-1])
+                                    region.add([x  ,y-1])
+                                    region.add([x-1,y-1])
+                            assetsToMap = set(assets)
+                            while regionExpanded:
+                                regionExpranded = False
+                                for x,y in set(assetsToMap):
+                                    if [x,y] in region:
+                                        assetsToMap.pop([x,y])
+                                        regionExpranded = True
+                                        region.add([x + 1, y + 1])
+                                        region.add([x, y + 1])
+                                        region.add([x - 1, y + 1])
+                                        region.add([x + 1, y])
+                                        region.add([x - 1, y])
+                                        region.add([x + 1, y - 1])
+                                        region.add([x, y - 1])
+                                        region.add([x - 1, y - 1])
+                            if len(assetsToMap) != 0:
+                                print("Cant Connect "+str(assetsToMap))
+                                failed = True
+                            else:
+                                for x,y in set(assets):
+                                    tile = [x,y,giver,recipiant]
+                                    toSet.append(tile)
+                        giver, reciptient = line.split('gives to')
+                        giver      = getPlayer(guild, giver.strip()     )
+                        reciptient = getPlayer(guild, reciptient.strip())
+                    elif giver is not None and reciptient is not None and len(line) >= 3:
+                        asset = line.strip()
+                        coord = extractCoords(asset, message.channel)
+                        if coord == None:
+                            failed = True
+                            break
+                        else:
+                            assets.append([coord[0],coord[2]])
+                if not failed:
+                    for x,y,g,r in toSet:
+                        index = Data[guild]['Players'][g]['Markers']['Location'].index([x,y])
+                        Data[guild]['Players'][r]['Markers']['Location'].append(Data[guild]['Players'][g]['Markers']['Location'][index])
+                        Data[guild]['Players'][r]['Markers']['Shape'].append(Data[guild]['Players'][g]['Markers']['Shape'][index])
+                        Data[guild]['Players'][r]['Markers']['Properties'].append(Data[guild]['Players'][g]['Markers']['Properties'][index])
+                    for x,y,g,r in toSet:
+                        index = Data[guild]['Players'][g]['Markers']['Location'].index([x,y])
+                        Data[guild]['Players'][g]['Markers']['Location'].pop(index)
+                        Data[guild]['Players'][g]['Markers']['Shape'].pop(index)
+                        Data[guild]['Players'][g]['Markers']['Properties'].pop(index)
+
         if payload['Author'] in Admins and payload['Channel'].lower() in ['actions', 'action', 'mod-lounge',
                                                                           'bot-lounge']:
 
@@ -995,7 +1071,7 @@ Extracts Coordinates From String.
 """
 def extractCoords(coords, channel):
     if len(coords) > 4 or len(coords) < 3:
-        addMsgQueue(channel, "Incorrect Coordinate Formatting.")
+        addMsgQueue(channel, "Incorrect Coordinate Formatting: "+coords)
         return None
     else:
         xcord = None
@@ -1010,13 +1086,13 @@ def extractCoords(coords, channel):
             xcord = int(labels.index(xcordAlpha))
             ycord = int(coords[:-2]) - 1
         else:
-            addMsgQueue(channel, "Incorrect Coordinate Formatting.")
+            addMsgQueue(channel, "Incorrect Coordinate Formatting: "+coords)
             return None
 
         if xcord is None and ycord is None:
             return None
         elif ycord >= n or ycord < 0 or xcord >= n or xcord < 0:
-            addMsgQueue(channel, "That is outside the map.")
+            addMsgQueue(channel, Coords +" is outside the map.")
             return None
 
         return xcord, xcordAlpha, ycord
@@ -1416,11 +1492,14 @@ async def plotMap(channel, postReply=True):
                     elif player['Markers']['Properties'][i].get('Harvest') is not None:
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
-                                       linewidths=0.2, s=11.5, marker='.', alpha=0.7)
+                                       linewidths=0.2, s=14, marker='.', alpha=0.7)
 
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Non Perpetual':
                             ax.scatter(x[i], y[i], c=color, edgecolors=color,
-                                       linewidths=0.2, s=11.5, marker='.', alpha=0.7)
+                                       linewidths=0.2, s=14, marker='.', alpha=0.7)
+                            ax.scatter(x[i], y[i], c=outline, edgecolors=outline,
+                                       linewidths=0.1, s=2.5, 
+                                       marker='$'+str(5-player['Markers']['Properties'][i]['Harvest']['age'])+'$', alpha=0.7)
                     alpha = 1.0
                     if 'DisabledAndPermanent' in player['Markers']['Properties'][i]:
                         alpha = 0.25
