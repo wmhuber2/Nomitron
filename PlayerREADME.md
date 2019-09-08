@@ -2,9 +2,9 @@ Hi. It looks like you need some help. Some commands are listed below.
 
 Global Commands: Allowed Channels: ALL   
 -   !rule $num          
-+        Diplay Rule Number $num if it exists.
++        Display Rule Number $num if it exists.
 -   !help       
-+        Diplay This Help Text
++        Display This Help Text
 -   !find "text" OR !search "text" OR !f "text" 
 +        Display rules that contain text.
 -   !map

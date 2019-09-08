@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/PlayerREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/PlayerREADME.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,13 +207,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00168" summary="Bug FIxes">
-      <created>1566034503466</created>
-      <option name="number" value="00168" />
-      <option name="presentableId" value="LOCAL-00168" />
-      <option name="project" value="LOCAL" />
-      <updated>1566034503466</updated>
     </task>
     <task id="LOCAL-00169" summary="Bug FIxes">
       <created>1566034850249</created>
@@ -554,7 +544,14 @@
       <option name="project" value="LOCAL" />
       <updated>1567902701912</updated>
     </task>
-    <option name="localTasksCounter" value="217" />
+    <task id="LOCAL-00217" summary="AssetTrade update">
+      <created>1567956490450</created>
+      <option name="number" value="00217" />
+      <option name="presentableId" value="LOCAL-00217" />
+      <option name="project" value="LOCAL" />
+      <updated>1567956490451</updated>
+    </task>
+    <option name="localTasksCounter" value="218" />
     <servers />
   </component>
   <component name="TodoView">
@@ -593,7 +590,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Fixed Rules Non Removal Bug" />
     <MESSAGE value="Added Extra Shuffle to Sermon" />
     <MESSAGE value="Unit Location Option Added." />
     <MESSAGE value="Implemented New Units And ExplorerGuild. Nomic IRS dont know about my secret Stash." />
@@ -618,7 +614,8 @@
     <MESSAGE value="Bug Fix: Harvest Counter" />
     <MESSAGE value="Bug Fix: Doby Msg in wrong location" />
     <MESSAGE value="AssetTrade and harvest counter" />
-    <option name="LAST_COMMIT_MESSAGE" value="AssetTrade and harvest counter" />
+    <MESSAGE value="AssetTrade update" />
+    <option name="LAST_COMMIT_MESSAGE" value="AssetTrade update" />
   </component>
   <component name="masterDetails">
     <states>
