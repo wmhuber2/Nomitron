@@ -36,7 +36,7 @@ savefile = str(__name__)  # + '_Data.pickle'
 print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
 itemList = ['BF', 'Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop']
-resourceList = ['Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
+resourceList = ['Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy', 'Gloop']
 import itertools
 
 letters = 'abcdefghijklmnopqrstuvwxyz'.upper()
