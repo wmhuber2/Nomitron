@@ -35,6 +35,8 @@ AllData = {}
 savefile = str(__name__)  # + '_Data.pickle'
 print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
+itemList = ['BF', 'Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop']
+resourceList = ['Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
 import itertools
 
 letters = 'abcdefghijklmnopqrstuvwxyz'.upper()
@@ -1021,9 +1023,7 @@ async def run(inData, payload, message):
                                     Data[guild]['Players'][player]['Markers']['Properties'][index][
                                         'Unit'] = 'town'
                                     Data[guild]['Players'][player]['Markers']['Properties'][index][
-                                        'TownItem'] = random.choice([
-                                        'Wood','Steel','Energy','Technology','Oil','Corn','Food','Fish'
-                                    ])
+                                        'TownItem'] = random.choice(resourceList)
 
                                 isOnPlayer = True
                         if not isOnPlayer:
@@ -1031,9 +1031,7 @@ async def run(inData, payload, message):
                             Data[guild]['Players'][botName]['Markers']['Location'].append([x,y])
                             Data[guild]['Players'][botName]['Markers']['Properties'].append({
                                 'Unit': 'town',
-                                'TownItem': random.choice([
-                                'Wood', 'Steel', 'Energy', 'Technology', 'Oil', 'Corn', 'Food', 'Fish'
-                                 ])
+                                'TownItem': random.choice(resourceList)
                             })
 
     #  IF A DM CHANNEL
@@ -1139,7 +1137,7 @@ def onDayChange(server):
                     if name == 'town':                    
                         gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('TownItem')
                         if gift == None:
-                            gift = random.choice(['Wood','Steel','Energy','Technology','Oil','Corn','Food','Fish'])
+                            gift = random.choice(resourceList)
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['TownItem'] = gift
                         addItem(guild, player, gift, float(2))
                         
@@ -1247,18 +1245,7 @@ def addItem(guild, player, item, count, testOnly=False):
         Data[guild]['Players'][player]['Inventory'][item] = 0
 
     # If Not Allowed To Be Negative
-    if inv[item] + count < 0 and item in [
-        'BF',
-        'Steel',
-        'Wood',
-        'Energy',
-        'Oil',
-        'Fish',
-        'Corn',
-        'Food',
-        'Technology',
-        'Crystal'
-    ]:
+    if inv[item] + count < 0 and item in ['BF', 'Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']:
         return False
     elif testOnly:
         return True
@@ -1331,7 +1318,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                     if unit == 'town':
                         itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('TownItem')
                         if itm == None:
-                            itm = random.choice(['Wood','Steel','Energy','Technology','Oil','Corn','Food','Fish'])
+                            itm = random.choice(resourceList)
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['TownItem'] = itm
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
@@ -1359,12 +1346,12 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                '\n\tNon-Renewable Harvests:' + str(totalNonRenewableHarvests)
         msg += "\n-Inventory:       | Gains  | Loss   | Total "
 
-        itemList = ['BF','Corn', 'Fish','Food','Steel','Oil','Wood','Technology','Energy']
+        itemListtmp = list(itemList)
         playerItemSet = set(Data[guild]['Players'][player]['Inventory'].keys())
-        playerItemSet = list((set(itemList) | playerItemSet) - set(itemList))
+        playerItemSet = list((set(itemListtmp) | playerItemSet) - set(itemListtmp))
         playerItemSet.sort()
-        itemList = itemList + playerItemSet
-        for item in itemList:
+        itemListtmp = itemListtmp + playerItemSet
+        for item in itemListtmp:
             amount = 0.0
             deltaplus = 0.0
             deltaloss = 0.0
