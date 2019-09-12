@@ -1497,7 +1497,7 @@ async def setup(inData, chans, logchan, server):
     import matplotlib._color_data as mcd
 
     channels[server.id] = chans
-    print('Channels',channels)
+    print('Channels',channels.keys())
     logChannel = logchan
     guild = server.id
 
@@ -1691,6 +1691,8 @@ async def sendMessages():
     while len(msgQueue) != 0:
         msg = msgQueue.pop(0)
         print('Sending Msg #', len(msgQueue),'to', msg['channel'].name)
+        msg['text'] = msg['text'].replace('@Krozr#0878','\"The Oracle\"')
+        msg['text'] = msg['text'].replace('@392883201061814282','\"The Oracle\"')
         await msg['channel'].send(msg['text'])
 
 
