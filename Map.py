@@ -1285,6 +1285,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
     playerOrder = [
         'Alekosen#8467',
         'Boolacha#4539',
+        'Krozr#0878',
         'Crorem#6962',
         'Fenris Wolf#6136',
         'Rabz12#9343',
