@@ -88,8 +88,8 @@ async def run(inData, payload, message):
     global Data, sentences
     loadData(inData)
     # Do Stuff Here
-
-    if message.channel.name.lower() not in ['join', 'off-topic']:
+    if payload['Content'][0] != '!': pass
+    elif message.channel.name.lower() not in ['join', 'off-topic']:
 
         guild = message.guild.id
         playerData = Data[guild]['Players']

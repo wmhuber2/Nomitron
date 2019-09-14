@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sermon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sermon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -207,13 +209,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00173" summary="Bug FIxes">
-      <created>1566035498841</created>
-      <option name="number" value="00173" />
-      <option name="presentableId" value="LOCAL-00173" />
-      <option name="project" value="LOCAL" />
-      <updated>1566035498841</updated>
     </task>
     <task id="LOCAL-00174" summary="Bug FIxes">
       <created>1566062975167</created>
@@ -551,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568318434529</updated>
     </task>
-    <option name="localTasksCounter" value="222" />
+    <task id="LOCAL-00222" summary="Bug Fix With gloop as resource.">
+      <created>1568318625227</created>
+      <option name="number" value="00222" />
+      <option name="presentableId" value="LOCAL-00222" />
+      <option name="project" value="LOCAL" />
+      <updated>1568318625227</updated>
+    </task>
+    <option name="localTasksCounter" value="223" />
     <servers />
   </component>
   <component name="TodoView">
@@ -590,7 +592,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Implemented New Units And ExplorerGuild. Nomic IRS dont know about my secret Stash." />
     <MESSAGE value="Fixed Units Dual Error Bug. Added Trade Command. Minor Bug Fixes. Updated Readme." />
     <MESSAGE value="Added Delta from Units." />
     <MESSAGE value="Fixed Disable In Changelog Delta" />
@@ -615,7 +616,8 @@
     <MESSAGE value="AssetTrade update" />
     <MESSAGE value="The Oracle Nonsense." />
     <MESSAGE value="Bug Fix With gloop as item, and cleanup code" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix With gloop as item, and cleanup code" />
+    <MESSAGE value="Bug Fix With gloop as resource." />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix With gloop as resource." />
   </component>
   <component name="masterDetails">
     <states>
