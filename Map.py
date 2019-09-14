@@ -37,6 +37,7 @@ print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
 itemList = ['BF', 'Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop']
 resourceList = ['Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy', 'Gloop']
+rawMaterialList = ['Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
 import itertools
 
 letters = 'abcdefghijklmnopqrstuvwxyz'.upper()
@@ -374,18 +375,20 @@ async def run(inData, payload, message):
         if Data[guild]['Pause'] and payload['Content'][0] == '!':
             addMsgQueue(message.channel, "Warning: The Bot Has Been Paused.\n Admins May Ignore This Message")
 
-        elif payload['Content'] == '!map' and payload['Channel'].lower() not in []:
+        if payload['Content'] == '!map':
             await plotMap(message.channel)
             saveData()
 
-        elif payload['Content'].lower() in ['!units', '!unit']:
-            for unit in Data[guild]['Units'].keys():
-                msg = unit + ':\n'
-                for k in Data[guild]['Units'][unit]:
-                    msg += '\t' + k + ': ' + str(Data[guild]['Units'][unit][k]) + '\n'
-                addMsgQueue(message.channel, '```' + msg + '```')
+        if payload['Channel'].lower() in ['bot-spam','bot-lounge', 'pizza-party','anti-league-league'] and len(splitContent) != 0:
 
-        elif payload['Channel'].lower() in ['actions', 'action'] and len(splitContent) != 0:
+            if payload['Content'].lower() in ['!units', '!unit']:
+                for unit in Data[guild]['Units'].keys():
+                    msg = unit + ':\n'
+                    for k in Data[guild]['Units'][unit]:
+                        msg += '\t' + k + ': ' + str(Data[guild]['Units'][unit][k]) + '\n'
+                    addMsgQueue(message.channel, '```' + msg + '```')
+
+        if payload['Channel'].lower() in ['actions-map',] and len(splitContent) != 0:
 
             if splitContent[0] == '!start' and len(splitContent) == 3:
 
@@ -406,6 +409,7 @@ async def run(inData, payload, message):
                             Data[guild]['Players'][payload['Author']]['Markers']['Shape'] = ['Capital']
                             Data[guild]['Players'][payload['Author']]['Markers']['Properties'] = [{}]
                             Data[guild]['Players'][payload['Author']]['Inventory'] = {'BF': 0, }
+                            Data[guild]['Fed']['MemberHistory'][payload['Author']] = 0
                         else:
                             addMsgQueue(message.channel, 'Color ' + splitContent[2] + ' is unavailable. Sorry.')
 
@@ -715,27 +719,6 @@ async def run(inData, payload, message):
                 else:
                     addMsgQueue(message.channel, "You cannot disable this location.")
 
-            if splitContent[0] == '!trade':
-                for playerid in splitContent[1:-2]:
-                    playerName = getPlayer(message.guild, playerid, message.channel)
-
-                    if playerName is not None:
-                        amount = None
-                        item = splitContent[-1]
-                        try:
-                            amount = float(splitContent[-2])
-                        except:
-                            addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
-
-                        if amount is not None \
-                                and addItem(guild, payload['Author'], item, -amount, testOnly=True) \
-                                and addItem(guild, playerName, item, amount, testOnly=True):
-
-                            await message.add_reaction('👍')
-                            await message.add_reaction('👎')
-                        else:
-                            addMsgQueue(message.channel, "You Do Not Have The Resources")
-
             if splitContent[0].lower() == '!asset':
                 msg = payload['Content'].split('\n')
                 giver, reciptient = None, None
@@ -822,12 +805,150 @@ async def run(inData, payload, message):
                     addMsgQueue(message.channel, "Asset Trade Requires Approval of: \n"+str(' '.join(players)))
                     await message.add_reaction('👍')
                     await message.add_reaction('👎')
-                   
-        if payload['Author'] in Admins and payload['Channel'].lower() in ['actions', 'action', 'mod-lounge',
+
+        if payload['Channel'].lower() in ['actions',] and len(splitContent) != 0:
+            if splitContent[0] == '!trade':
+                for playerid in splitContent[1:-2]:
+                    playerName = getPlayer(message.guild, playerid, message.channel)
+
+                    if playerName is not None:
+                        amount = None
+                        item = splitContent[-1]
+                        try:
+                            amount = float(splitContent[-2])
+                        except:
+                            addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
+
+                        if amount is not None \
+                                and addItem(guild, payload['Author'], item, -amount, testOnly=True) \
+                                and addItem(guild, playerName, item, amount, testOnly=True):
+
+                            await message.add_reaction('👍')
+                            await message.add_reaction('👎')
+                        else:
+                            addMsgQueue(message.channel, "You Do Not Have The Resources")
+
+            if splitContent[0].lower() == '!asset':
+                msg = payload['Content'].split('\n')
+                giver, reciptient = None, None
+                region = set()
+                assets = []
+                badassets = []
+                failed = False
+                toSet = []
+                players = set()
+                for linenum in range(len(msg)):
+                    line = str(msg[linenum])
+                    print(linenum, line)
+                    if 'gives to' not in line and giver is not None and reciptient is not None and len(line) >= 3:
+                        asset = line.strip()
+                        coord = extractCoords(asset, message.channel)
+                        if coord == None:
+                            failed = True
+                            addMsgQueue(message.channel, 'Failed with bad coord')
+                            break
+                        else:
+                            assets.append((coord[0], coord[2], asset))
+                            badassets.append(asset)
+                            print('asset added', (coord[0], coord[2]))
+                    if 'gives to' in line or linenum == len(msg) - 1:
+                        if giver is not None and reciptient is not None:
+                            # generate map to ensure all tiles are connected by adjacency
+                            regionExpanded = True
+                            for x, y, a in assets:
+                                if [x, y] in Data[guild]['Players'][giver]['Markers']['Location'] and ( \
+                                                [x + 1, y + 1] in Data[guild]['Players'][reciptient]['Markers'][
+                                            'Location'] or \
+                                                [x + 1, y] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location'] or \
+                                                [x + 1, y - 1] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location'] or \
+                                                [x, y + 1] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location'] or \
+                                                [x, y - 1] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location'] or \
+                                                [x - 1, y + 1] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location'] or \
+                                                [x - 1, y] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location'] or \
+                                                [x - 1, y - 1] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location']):
+                                    region.add((x + 1, y + 1))
+                                    region.add((x, y + 1))
+                                    region.add((x - 1, y + 1))
+                                    region.add((x + 1, y))
+                                    region.add((x, y))
+                                    region.add((x - 1, y))
+                                    region.add((x + 1, y - 1))
+                                    region.add((x, y - 1))
+                                    region.add((x - 1, y - 1))
+                                    print('Region Seed', x, y)
+                            assetsToMap = list(assets)
+                            print('Start ATM', assetsToMap)
+                            while regionExpanded:
+                                regionExpanded = False
+                                print(assetsToMap)
+                                for x, y, a in set(assetsToMap):
+                                    if (x, y) in region:
+                                        assetsToMap.remove((x, y, a))
+                                        badassets.remove(a)
+                                        regionExpranded = True
+                                        region.add((x + 1, y + 1))
+                                        region.add((x, y + 1))
+                                        region.add((x - 1, y + 1))
+                                        region.add((x + 1, y))
+                                        region.add((x - 1, y))
+                                        region.add((x + 1, y - 1))
+                                        region.add((x, y - 1))
+                                        region.add((x - 1, y - 1))
+                            print('End ATM', assetsToMap)
+                            if len(assetsToMap) != 0:
+                                addMsgQueue(message.channel, "Error Trading Tiles:\n " + str('\n\t'.join(badassets)))
+                                failed = True
+                            else:
+                                for x, y, a in set(assets):
+                                    tile = [x, y, giver, reciptient]
+                                    toSet.append(tile)
+                                print('Done')
+                        if linenum != len(msg) - 1:
+                            giver, reciptient = line.split('gives to')
+                            giver = getPlayer(message.guild, giver.strip())
+                            reciptient = getPlayer(message.guild, reciptient.strip())
+                            players.add(giver)
+                            players.add(reciptient)
+                    else:
+                        print('Else:', line)
+                if not failed:
+                    addMsgQueue(message.channel, "Asset Trade Requires Approval of: \n" + str(' '.join(players)))
+                    await message.add_reaction('👍')
+                    await message.add_reaction('👎')
+
+            if splitContent[0] == '!sell' and len(splitContent) == 3:
+                print('selling')
+                amount = None
+                item = splitContent[-1]
+                try:
+                    amount = float(splitContent[-2])
+                except:
+                    addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
+                if amount < 0:
+                    addMsgQueue(message.channel, 'You cannot sell negative stuff.')
+                elif Data[guild]['Fed']['Rates'].get(item) is None:
+                    addMsgQueue(message.channel, 'I dont buy that item. Sorry.')
+                elif amount is not None \
+                        and addItem(guild, payload['Author'], item, -amount, testOnly=True):
+                    addItem(guild, payload['Author'], item, -amount)
+                    amount = math.floor(amount / Data[guild]['Fed']['Rates'][item])
+                    addItem(guild, payload['Author'], 'BF', amount)
+                    addMsgQueue(message.channel, "Here is "+str(amount)+' BF. Enjoy.')
+                else:
+                    addMsgQueue(message.channel, 'Insufficient Items to Sell')
+
+    if payload['Author'] in Admins and payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge',
                                                                           'bot-lounge']:
 
             if payload['Content'] == '!newTurn':
-                onTurnChange(message.guild)
+                await onTurnChange(message.guild)
                 addMsgQueue(message.channel, "New Turn Initiated")
                 print('New Turn')
 
@@ -1004,6 +1125,28 @@ async def run(inData, payload, message):
                 else:
                     addMsgQueue(message.channel, "Unit Not Found")
 
+            if splitContent[0] == '!setTerm' and len(splitContent) == 2:
+                try:
+                    term = int(splitContent[1])
+                    Data[guild]['Fed']['Term']=term
+                except:
+                    addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into a term 0-5')
+
+            if splitContent[0] == '!adjust':
+                if splitContent[-1].lower() in ['increasing', 'static', 'decreasing']:
+                    for item in splitContent[1:-2]:
+                        if item not in Data[guild]['Fed']['Velocity']:
+                            addMsgQueue(message.channel, item+" Not Found..Skipped")
+                        elif splitContent[-1].lower() == 'increasing':
+                            Data[guild]['Fed']['Velocity'][item] = 10.0
+                        elif splitContent[-1].lower() == 'decreasing':
+                            Data[guild]['Fed']['Velocity'][item] = -10.0
+                        elif splitContent[-1].lower()  == 'static':
+                            Data[guild]['Fed']['Velocity'][item] = 0
+                else:
+                    addMsgQueue(message.channel, "Not a valid velocity")
+                addMsgQueue(message.channel,'Fed Market Updated')
+
             if splitContent[0] == '!specialCommand':
 
                 array = np.random.rand(75,75)*175
@@ -1149,7 +1292,10 @@ def onDayChange(server):
                         if ' ' in cost:
                             amount, item = cost.split(' ')
                             addItem(guild, player, item, float(amount))
-                
+
+    for item in Data[guild]['Fed']['Rates'].keys():
+        vel = Data[guild]['Fed']['Velocity'][item]
+        Data[guild]['Fed']['Rates'][item] += vel/100.0 * Data[guild]['Fed']['Rates'][item]
                     
     print("OnDayChange: ", time.time() - start)
 
@@ -1157,13 +1303,43 @@ def onDayChange(server):
 """
 Called On Turn Change
 """
-def onTurnChange(server):
+async def onTurnChange(server):
     global Data
 
     start = time.time()
     guild = server.id
-    msg = "Players Now Have The Following:\n"
+    Data[guild]['Fed']['Term'] += 1
+    if Data[guild]['Fed']['Term'] >= 5:
+        Data[guild]['Fed']['Term'] += 0
+        FedMembers = getRoleList(server,'Fed Member')
+        Inactives = getRoleList(server, 'Inactive')
+        role = getRole(server,name='Fed Member')
+        for member in FedMembers.keys():
+            Data[guild]['Fed']['MemberHistory'][member] +=1
+            await FedMembers[member].remove_roles(role)
 
+        newMembers = []
+        newMembersNames = []
+        for i in [1,2,3]:
+            minList = []
+            minVal = 10000
+            print (newMembers)
+            for member in Data[guild]['Fed']['MemberHistory'].keys():
+                print('\t', member)
+                id = server.get_member_named(member)
+                if member in Inactives or member in newMembers: continue
+                if Data[guild]['Fed']['MemberHistory'][member] < minVal:
+                    minVal = Data[guild]['Fed']['MemberHistory'][member]
+                    minList = [member]
+                elif Data[guild]['Fed']['MemberHistory'][member] == minVal:
+                    minList.append(member)
+            newMember = random.choice(minList)
+            newMembers.append(newMember)
+            newMembersNames.append(server.get_member_named(newMember).mention)
+            await server.get_member_named(newMember).add_roles(role)
+            print (newMembers)
+        msg = "The Fed Term has Ended. New Fed members are " + ' '.join(newMembersNames)
+        addMsgQueue(channels[guild]['actions'],msg)
     print("OnTurnChange: ", time.time() - start)
 
 
@@ -1262,7 +1438,12 @@ Update Messages In Annoncements
 async def updateInAnnouncements(server, reload=True, postToSpam = False):
     global Data, oldData
     guild = server.id
-    if not postToSpam and oldData == pickle.dumps(Data[guild]['Players'], protocol=pickle.HIGHEST_PROTOCOL):
+    if not postToSpam and oldData == pickle.dumps(
+            [
+                Data[guild]['Players'],
+                Data[guild]['Fed'],
+            ]
+            , protocol=pickle.HIGHEST_PROTOCOL):
         # print('Up To Date. Skipping Plot')
         return 1
     else:
@@ -1297,6 +1478,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         msg = player + ' : ' + Data[guild]['Players'][player]['Color'].upper() + '\n'
         msg += '-Claims Left Today: ' + str(1 + (hasUnit(guild, player, 'explorerguild') * 5) \
                                             - Data[guild]['Players'][player]['Claimed Today'])
+        msg += '\n-Times On Fed: '+str(Data[guild]['Fed']['MemberHistory'][player])
         msg += '\n-Tiles:'
         totalRenewableHarvests = 0
         totalNonRenewableHarvests = 0
@@ -1427,6 +1609,34 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             await msg.edit(content=url)
 
 
+    # Update Fed Board
+    msg =    "FEDERAL RATES (Turns Left in Term: " + str(5-Data[guild]['Fed']['Term'])+')'
+    msg += "\n    ITEM     :: BF RATE ::  VELOCITY "
+    msg += "\n----------------------------------------"
+    for item in rawMaterialList:
+        if Data[guild]['Fed']['Rates'].get(item) is None:
+            Data[guild]['Fed']['Rates'][item] = 100
+        if Data[guild]['Fed']['Velocity'].get(item) is None:
+            Data[guild]['Fed']['Velocity'][item] = 0
+        rate = Data[guild]['Fed']['Rates'][item]
+        vel =  Data[guild]['Fed']['Velocity'][item]
+
+        tmpmsg = "\n " + item.upper()
+        tmpmsg += (14 - len(tmpmsg)) * ' ' + '::  ' + str(round(rate,1))
+        tmpmsg += (25 - len(tmpmsg)) * ' ' + '::  ' + str(int(vel))+'% / Day'
+        msg += tmpmsg
+
+    try:
+        post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Fed'])
+    except:
+        post = None
+    if post == None:
+        post = await channels[server.id][targetChannel].send('```' + msg + '```')
+        Data[guild]['Announcements']['Fed'] = post.id
+    else:
+        await post.edit(content='```' + msg + '```')
+
+
 """
 Determines If PLayer Has A Unit
 """
@@ -1464,6 +1674,36 @@ def getPlayer(server, playerid, channel=None):
 
 
 """
+get role
+"""
+def getRole(server,name):
+    players = {}
+    role = None
+    for r in server.roles:
+        if r.name == name:
+            role = r
+            break
+    return role
+
+
+
+"""
+get all memebers with role
+"""
+def getRoleList(server,name):
+    players = {}
+    role = getRole(server,name)
+
+    if role is None:
+        print("Role Not Found")
+        return
+    for member in role.members:
+        if role in member.roles:
+            players[ member.name + '#' + member.discriminator ] = member
+    return players
+
+
+"""
 Setup Log Parameters and Channel List And Whatever You Need to Check on a Bot Reset.
 Handles Change In Server Structure and the like. Probably Can Leave Alone.
 """
@@ -1485,7 +1725,7 @@ async def setup(inData, chans, logchan, server):
     import matplotlib._color_data as mcd
 
     channels[server.id] = chans
-    print('Channels',channels.keys())
+    print('Channels',channels[server.id].keys())
     logChannel = logchan
     guild = server.id
 
@@ -1496,8 +1736,10 @@ async def setup(inData, chans, logchan, server):
         Data[guild]['Pause'] = False
     if Data[guild].get('Announcements') is None: Data[guild]['Announcements'] = {
         'Map': None,
-        'Items': None
+        'Items': None,
+        'Fed':None
     }
+    if Data[guild]['Announcements'].get('Fed') is None: Data[guild]['Announcements']['Fed']=None
     if Data[guild].get('Units') is None: Data[guild]['Units'] = {}
     if Data[guild].get('Players') is None: Data[guild]['Players'] = {}
     if Data[guild].get('Date') is None: Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -1519,6 +1761,7 @@ async def setup(inData, chans, logchan, server):
             Data[guild]['Image'] = data
         except ImportError:
             log(guild, "Error Initializing the Map: PIL and/or Numpy Not Available")
+    if Data[guild].get('Fed') is None: Data[guild]['Fed'] = {'Rates':{}, 'Velocity':{}, 'MemberHistory':{},'Term':0}
     if Data[guild]['Players'].get(botName) is None:
         Data[guild]['Players'][botName] = {
             'Markers': {
@@ -1531,9 +1774,14 @@ async def setup(inData, chans, logchan, server):
         }
 
     for player in Data[guild]['Players'].keys():
+        #if Data[guild]['Players'][player].get('Object') is None:
+        #    Data[guild]['Players'][player]['Object'] = server.get_member_named(player)
         if Data[guild]['Players'][player].get('Inventory') is None:
             Data[guild]['Players'][player]['Inventory'] = {'BF': 0, }
 
+        if player not in Data[guild]['Fed']['MemberHistory']:
+            if player in ['NomicBotPossibly#4870',botName]: continue
+            Data[guild]['Fed']['MemberHistory'][player] = 0
         if Data[guild]['Players'][player]['Markers'].get('Properties') is None:
             Data[guild]['Players'][player]['Markers']['Properties'] = []
             for tile in Data[guild]['Players'][player]['Markers']['Shape']:
@@ -1736,6 +1984,7 @@ def loadData(inData):
 '''
 Data = {
     server1 : {
+        'Fed': 'Rates':{}, 'Velocity':{}, 'MemberHistory'{},'Term':0
         'Announcements': {
             'Map': message.id
             'Items': message.id

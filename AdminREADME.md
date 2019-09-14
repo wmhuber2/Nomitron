@@ -47,6 +47,11 @@ Admin: Allowed Channels: actions, mod-lounge, bot-lounge
 +       use "" for letters. Refer to Docs otherwise
 -    !newUnit $name {dict}
 +       Creates new Unit. Leave blank to get example.
+-    !adjust item1 item2... to {'increasing', 'static', 'decreasing'}
++       sets items in Fed to velocity
+-    !setTerm #Num
++       Sets Fed Term to whatever. 5 is limit,
+
 
 
 This Bot's Code May Be Found At:
