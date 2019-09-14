@@ -1323,9 +1323,7 @@ async def onTurnChange(server):
         for i in [1,2,3]:
             minList = []
             minVal = 10000
-            print (newMembers)
             for member in Data[guild]['Fed']['MemberHistory'].keys():
-                print('\t', member)
                 id = server.get_member_named(member)
                 if member in Inactives or member in newMembers: continue
                 if Data[guild]['Fed']['MemberHistory'][member] < minVal:
@@ -1337,7 +1335,6 @@ async def onTurnChange(server):
             newMembers.append(newMember)
             newMembersNames.append(server.get_member_named(newMember).mention)
             await server.get_member_named(newMember).add_roles(role)
-            print (newMembers)
         msg = "The Fed Term has Ended. New Fed members are " + ' '.join(newMembersNames)
         addMsgQueue(channels[guild]['actions'],msg)
     print("OnTurnChange: ", time.time() - start)

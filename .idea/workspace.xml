@@ -212,13 +212,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00175" summary="Bug FIxes">
-      <created>1566063350926</created>
-      <option name="number" value="00175" />
-      <option name="presentableId" value="LOCAL-00175" />
-      <option name="project" value="LOCAL" />
-      <updated>1566063350926</updated>
-    </task>
     <task id="LOCAL-00176" summary="All Output to file.">
       <created>1566147828744</created>
       <option name="number" value="00176" />
@@ -555,7 +548,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568439260963</updated>
     </task>
-    <option name="localTasksCounter" value="224" />
+    <task id="LOCAL-00224" summary="Fixed Sermon Bug. Rule 355 added. Channel Segregation for bot and non bot actions.">
+      <created>1568494327476</created>
+      <option name="number" value="00224" />
+      <option name="presentableId" value="LOCAL-00224" />
+      <option name="project" value="LOCAL" />
+      <updated>1568494327476</updated>
+    </task>
+    <option name="localTasksCounter" value="225" />
     <servers />
   </component>
   <component name="TodoView">
@@ -594,7 +594,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Added Delta from Units." />
     <MESSAGE value="Fixed Disable In Changelog Delta" />
     <MESSAGE value="Fix Trade Bug" />
     <MESSAGE value="Added Harvest Item Delta" />
@@ -619,7 +618,8 @@
     <MESSAGE value="Bug Fix With gloop as item, and cleanup code" />
     <MESSAGE value="Bug Fix With gloop as resource." />
     <MESSAGE value="Bug Fix Sermon" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix Sermon" />
+    <MESSAGE value="Fixed Sermon Bug. Rule 355 added. Channel Segregation for bot and non bot actions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Sermon Bug. Rule 355 added. Channel Segregation for bot and non bot actions." />
   </component>
   <component name="masterDetails">
     <states>
