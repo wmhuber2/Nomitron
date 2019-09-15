@@ -932,7 +932,25 @@ async def run(inData, payload, message):
 
     if payload['Author'] in Admins and payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge',
                                                                           'bot-lounge']:
-
+            if payload['Content'] == '!csv':
+                print ('csv')
+                import csv
+                csv_columns = ['BF', 'Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop','Wine','Cracker','Cute_Dog']
+                csv_columns = ['Name',]+csv_columns
+                dict_data = []
+                for player in Data[guild]['Players'].keys():
+                    s =  dict(Data[guild]['Players'][player]['Inventory'])
+                    s['Name'] = player
+                    dict_data.append( s )
+                csv_file = "Names.csv"
+                try:
+                    with open(csv_file, 'w') as csvfile:
+                        writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+                        writer.writeheader()
+                        for data in dict_data:
+                            writer.writerow(data)
+                except IOError:
+                    print("I/O error")
             if payload['Content'] == '!newTurn':
                 await onTurnChange(message.guild)
                 addMsgQueue(message.channel, "New Turn Initiated")
