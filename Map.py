@@ -949,8 +949,8 @@ async def run(inData, payload, message):
                         writer.writeheader()
                         for data in dict_data:
                             writer.writerow(data)
-                        await message.channel.send(
-                           'CSV Inventory:', file=discord.File(open(csv_file, 'br')))
+                    await message.channel.send(
+                       'CSV Inventory:', file=discord.File(open(csv_file, 'br')))
                 except IOError:
                     print("I/O error")
             if payload['Content'] == '!newTurn':
