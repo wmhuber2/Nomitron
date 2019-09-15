@@ -1455,6 +1455,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         print('Updating Plot')
         oldData = pickle.dumps(Data[guild]['Players'], protocol=pickle.HIGHEST_PROTOCOL)
     Data[guild]['ImgLock'] = time.time()
+    
     playerOrder = [
         'Alekosen#8467',
         'Boolacha#4539',
