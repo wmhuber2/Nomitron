@@ -1460,7 +1460,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         'Boolacha#4539',
         'Krozr#0878',
         'Crorem#6962',
-        'AJuulPodNamedDesire#4155'
+        'AJuulPodNamedDesire#4155',
         'Fenris Wolf#6136',
         'Rabz12#9343',
         'Steam:HaphStealth Bnet#1191#5187',
