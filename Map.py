@@ -942,13 +942,15 @@ async def run(inData, payload, message):
                     s =  dict(Data[guild]['Players'][player]['Inventory'])
                     s['Name'] = player
                     dict_data.append( s )
-                csv_file = "Names.csv"
+                csv_file = "Inventories.csv"
                 try:
                     with open(csv_file, 'w') as csvfile:
                         writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
                         writer.writeheader()
                         for data in dict_data:
                             writer.writerow(data)
+                        await message.channel.send(
+                           'CSV Inventory:', file=discord.File(open(csv_file, 'br')))
                 except IOError:
                     print("I/O error")
             if payload['Content'] == '!newTurn':
