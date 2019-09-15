@@ -1421,7 +1421,7 @@ Update Messages In Annoncements
 async def updateInAnnouncements(server, reload=True, postToSpam = False):
     global Data, oldData
     guild = server.id
-    if time.time() - Data[guild]['ImgLock'] < 20: return 1
+    #if time.time() - Data[guild]['ImgLock'] < 20: return 1
     if not postToSpam and oldData == pickle.dumps(
             [
                 Data[guild]['Players'],
