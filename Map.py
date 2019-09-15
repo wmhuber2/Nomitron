@@ -335,21 +335,7 @@ async def reaction(inData, action, user, messageid, emoji):
                         Data[guild]['Players'][g]['Markers']['Location'].pop(index)
                         Data[guild]['Players'][g]['Markers']['Shape'].pop(index)
                         Data[guild]['Players'][g]['Markers']['Properties'].pop(index)
-    elif str(emoji) == str('🔄') and reactorName in Admins:
-        payload = {}
-        payload['Author'] = message.author.name + "#" + str(message.author.discriminator)
-        payload['Nickname'] = message.author.name
-        payload['Nickname'] = message.author.nick
-        payload['Channel'] = message.channel.name
-        payload['Channel Type'] = 'Text'
-        payload['Category'] = message.guild.get_channel(message.channel.category_id)
-        payload['Content'] = message.system_content.strip()
-        payload['Attachments'] = {}
 
-        for file in message.attachments:
-            payload['Attachments'][file.filename] = file.url
-
-        await run(inData, payload, message)
     await sendMessages()
     await updateInAnnouncements(message.guild)
     return saveData()
@@ -1435,6 +1421,7 @@ Update Messages In Annoncements
 async def updateInAnnouncements(server, reload=True, postToSpam = False):
     global Data, oldData
     guild = server.id
+    if time.time() - Data[guild]['ImgLock'] < 20: return 1
     if not postToSpam and oldData == pickle.dumps(
             [
                 Data[guild]['Players'],
@@ -1446,7 +1433,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
     else:
         print('Updating Plot')
         oldData = pickle.dumps(Data[guild]['Players'], protocol=pickle.HIGHEST_PROTOCOL)
-
+    Data[guild]['ImgLock'] = time.time()
     playerOrder = [
         'Alekosen#8467',
         'Boolacha#4539',
@@ -1633,6 +1620,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
     else:
         await post.edit(content='```' + msg + '```')
 
+    Data[guild]['ImgLock'] = 0
 
 """
 Determines If PLayer Has A Unit
@@ -1736,6 +1724,7 @@ async def setup(inData, chans, logchan, server):
         'Items': None,
         'Fed':None
     }
+    Data[guild]['ImgLock'] = False
     if Data[guild]['Announcements'].get('Fed') is None: Data[guild]['Announcements']['Fed']=None
     if Data[guild].get('Units') is None: Data[guild]['Units'] = {}
     if Data[guild].get('Players') is None: Data[guild]['Players'] = {}

@@ -88,8 +88,10 @@ async def run(inData, payload, message):
     global Data, sentences
     loadData(inData)
     # Do Stuff Here
-    if payload['Content'][0] != '!': pass
-    elif message.channel.name.lower() not in ['join', 'off-topic']:
+
+    print( message.channel.name.lower(), payload)
+
+    if message.channel.name.lower() in ['actions', 'mod-lounge', 'bot-lounge']:
 
         guild = message.guild.id
         playerData = Data[guild]['Players']
@@ -129,7 +131,6 @@ async def run(inData, payload, message):
             )
             newSermon = await channels[guild]["actions"].send(startTurnMessage)
             Data['sermonID'] = newSermon.id
-
         if payload['Content'] in ["Amen."] and (not authorData['attended']):
             authorData['attended'] = True
             await message.add_reaction('🙏')

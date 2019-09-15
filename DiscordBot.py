@@ -2,6 +2,7 @@
 import sys, asyncio, os, importlib, glob, datetime, random,socket, multiprocessing, pickle
 
 
+Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
 from threading import Thread
 discord = None
 import traceback
@@ -223,13 +224,17 @@ class DiscordNomicBot():
         channel = self.client.get_channel(payload.channel_id)
         msg = await channel.fetch_message(payload.message_id)
 
-        tasks = []
-        for mod, name in zip(self.modules, self.moduleNames):
-            if name in self.Data['disabled'][msg.guild.id]: continue
-            if hasattr(mod, 'reaction'):
-                tmp = await mod.reaction(self.Data, mode, user, msg, payload.emoji)
-                if tmp is not None: self.Data = tmp
-                else: print("None Returned OnMessage", name)
+        reactorName = user.name + '#' + user.discriminator
+        if str(payload.emoji) == str('🔄') and reactorName in Admins:
+            await self.on_message(msg)
+        else:
+            tasks = []
+            for mod, name in zip(self.modules, self.moduleNames):
+                if name in self.Data['disabled'][msg.guild.id]: continue
+                if hasattr(mod, 'reaction'):
+                    tmp = await mod.reaction(self.Data, mode, user, msg, payload.emoji)
+                    if tmp is not None: self.Data = tmp
+                    else: print("None Returned OnMessage", name)
 
         sys.stdout.flush()
         self.saveData()
