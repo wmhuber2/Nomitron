@@ -1890,6 +1890,7 @@ async def plotMap(channel, postReply=True):
             plt.grid(color='k', linestyle='-', linewidth=0.25, alpha=0.5)
             ax.imshow(Data[guild]['Image'].transpose(1, 0, 2), interpolation='none')
             plt.savefig('tmpgrid.png', format='png', dpi=500)  # , bbox_inches="tight")
+            plt.close(fig)
             del fig
             print('Saved')
             delay = None

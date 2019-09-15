@@ -89,8 +89,6 @@ async def run(inData, payload, message):
     loadData(inData)
     # Do Stuff Here
 
-    print( message.channel.name.lower(), payload)
-
     if message.channel.name.lower() in ['actions', 'mod-lounge', 'bot-lounge']:
 
         guild = message.guild.id
