@@ -1169,7 +1169,6 @@ async def run(inData, payload, message):
     if '!' in payload['Content']:
         print("Run- " + payload['Content'] + ': ', time.time() - start)
     await sendMessages()
-    await updateInAnnouncements(message.guild)
     return saveData()
 
 
@@ -1421,7 +1420,7 @@ Update Messages In Annoncements
 async def updateInAnnouncements(server, reload=True, postToSpam = False):
     global Data, oldData
     guild = server.id
-    #if time.time() - Data[guild]['ImgLock'] < 20: return 1
+    if time.time() - Data[guild]['ImgLock'] < 60: return 1
     if not postToSpam and oldData == pickle.dumps(
             [
                 Data[guild]['Players'],

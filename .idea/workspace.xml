@@ -7,7 +7,6 @@
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sermon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sermon.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00179" summary="All Output to file.">
-      <created>1566166548964</created>
-      <option name="number" value="00179" />
-      <option name="presentableId" value="LOCAL-00179" />
-      <option name="project" value="LOCAL" />
-      <updated>1566166548964</updated>
     </task>
     <task id="LOCAL-00180" summary="All Output to file.">
       <created>1566166813695</created>
@@ -553,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568564686880</updated>
     </task>
-    <option name="localTasksCounter" value="228" />
+    <task id="LOCAL-00228" summary="Close plot figures YAY!!">
+      <created>1568566348217</created>
+      <option name="number" value="00228" />
+      <option name="presentableId" value="LOCAL-00228" />
+      <option name="project" value="LOCAL" />
+      <updated>1568566348217</updated>
+    </task>
+    <option name="localTasksCounter" value="229" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Fix Trade Bug" />
     <MESSAGE value="Added Harvest Item Delta" />
     <MESSAGE value="Performance Enhancements. Oh Yeh Flex That. Seperate Post Msg Buffer and await elimation  in majority of funcitons." />
     <MESSAGE value="Added Admin Process Command" />
@@ -617,7 +615,8 @@
     <MESSAGE value="Bug Fix Sermon" />
     <MESSAGE value="Fixed Sermon Bug. Rule 355 added. Channel Segregation for bot and non bot actions." />
     <MESSAGE value="Sermon Amen player bot issue fix again. me sleepy" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sermon Amen player bot issue fix again. me sleepy" />
+    <MESSAGE value="Close plot figures YAY!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Close plot figures YAY!!" />
   </component>
   <component name="masterDetails">
     <states>
