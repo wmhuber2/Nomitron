@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -208,13 +207,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00180" summary="All Output to file.">
-      <created>1566166813695</created>
-      <option name="number" value="00180" />
-      <option name="presentableId" value="LOCAL-00180" />
-      <option name="project" value="LOCAL" />
-      <updated>1566166813695</updated>
     </task>
     <task id="LOCAL-00181" summary="All Output to file.">
       <created>1566167143337</created>
@@ -552,7 +544,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568566348217</updated>
     </task>
-    <option name="localTasksCounter" value="229" />
+    <task id="LOCAL-00229" summary="STOP U GOT A MAP PLOTTING PROBLEM.">
+      <created>1568567075004</created>
+      <option name="number" value="00229" />
+      <option name="presentableId" value="LOCAL-00229" />
+      <option name="project" value="LOCAL" />
+      <updated>1568567075004</updated>
+    </task>
+    <option name="localTasksCounter" value="230" />
     <servers />
   </component>
   <component name="TodoView">
@@ -591,7 +590,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Added Harvest Item Delta" />
     <MESSAGE value="Performance Enhancements. Oh Yeh Flex That. Seperate Post Msg Buffer and await elimation  in majority of funcitons." />
     <MESSAGE value="Added Admin Process Command" />
     <MESSAGE value="Bug FIxes" />
@@ -616,7 +614,8 @@
     <MESSAGE value="Fixed Sermon Bug. Rule 355 added. Channel Segregation for bot and non bot actions." />
     <MESSAGE value="Sermon Amen player bot issue fix again. me sleepy" />
     <MESSAGE value="Close plot figures YAY!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Close plot figures YAY!!" />
+    <MESSAGE value="STOP U GOT A MAP PLOTTING PROBLEM." />
+    <option name="LAST_COMMIT_MESSAGE" value="STOP U GOT A MAP PLOTTING PROBLEM." />
   </component>
   <component name="masterDetails">
     <states>
