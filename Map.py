@@ -935,7 +935,7 @@ async def run(inData, payload, message):
             if payload['Content'] == '!csv':
                 print ('csv')
                 import csv
-                csv_columns = ['BF', 'Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop','Wine','Cracker','Cute_Dog']
+                csv_columns = ['BF', 'Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop','Wine','Cracker','Cute_Dog', 'Cake','food']
                 csv_columns = ['Name',]+csv_columns
                 dict_data = []
                 for player in Data[guild]['Players'].keys():
