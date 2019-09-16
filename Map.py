@@ -1529,10 +1529,10 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                     'type'] == 'Non Perpetual' and 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]:
                     totalNonRenewableHarvests += 1
 
-        msg += "\n\tTotal Tiles:" + str(Total) + \
-               '\n\tRenewable Harvests:' + str(totalRenewableHarvests) + \
-               '\n\tNon-Renewable Harvests:' + str(totalNonRenewableHarvests)
-        msg += "\n-Inventory:       | Gains  | Loss   | Total "
+        msg += "\n  Total Tiles:" + str(Total) + \
+               '\n  Renewable Harvests:' + str(totalRenewableHarvests) + \
+               '\n  Non-Renewable Harvests:' + str(totalNonRenewableHarvests)
+        msg += "\n\nInventory:       |   Change "
 
         itemListtmp = list(itemList)
         playerItemSet = set(Data[guild]['Players'][player]['Inventory'].keys())
@@ -1562,10 +1562,11 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             #deltaplus = int(deltaplus)
             #delta     = int(delta)
 
-            tmpmsg = "\n   " + item + ': ' + str(amount)
-            tmpmsg += (19 - len(tmpmsg)) * ' ' + '| +'+str(deltaplus)
-            tmpmsg += (28 - len(tmpmsg)) * ' ' + '| -' + str(deltaloss)
-            tmpmsg += (37 - len(tmpmsg)) * ' ' + '| ' +sign + str(delta)
+            tmpmsg = "\n " + item
+            tmpmsg += (17 - len(tmpmsg) - len(str(int(amount)))) * ' ' + str(int(amount))
+            tmpmsg += (18 - len(tmpmsg)) * ' ' + '|+'+str(int(deltaplus))
+            tmpmsg += (22 - len(tmpmsg)) * ' ' + ' -' + str(int(deltaloss))
+            tmpmsg += (27 - len(tmpmsg)) * ' ' + '= ' +sign + str(int(delta))
             msg    += tmpmsg
         if postToSpam: log(guild,"```"+msg+"```")
 
@@ -1616,9 +1617,9 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
 
 
     # Update Fed Board
-    msg =    "FEDERAL RATES (Turns Left in Term: " + str(5-Data[guild]['Fed']['Term'])+')'
-    msg += "\n    ITEM     :: BF RATE ::  VELOCITY "
-    msg += "\n----------------------------------------"
+    msg =    "FEDERAL RATES\n(Turns Left in Term: " + str(5-Data[guild]['Fed']['Term'])+')'
+    msg += "\n   ITEM    :  RATE  : VELOCITY "
+    msg += "\n--------------------------------"
     for item in rawMaterialList:
         if Data[guild]['Fed']['Rates'].get(item) is None:
             Data[guild]['Fed']['Rates'][item] = 100
@@ -1627,9 +1628,10 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         rate = Data[guild]['Fed']['Rates'][item]
         vel =  Data[guild]['Fed']['Velocity'][item]
 
-        tmpmsg = "\n " + item.upper()
-        tmpmsg += (14 - len(tmpmsg)) * ' ' + '::  ' + str(round(rate,1))
-        tmpmsg += (25 - len(tmpmsg)) * ' ' + '::  ' + str(int(vel))+'% / Day'
+        tmpmsg = "\n" + item.upper()
+        tmpmsg += (12 - len(tmpmsg)) * ' ' + ': ' + str(round(rate,1))
+        tmpmsg += (21 - len(tmpmsg)) * ' ' + ': ' + str(int(vel))+'% '
+        tmpmsg += (28 - len(tmpmsg)) * ' ' + '/Day'
         msg += tmpmsg
 
     try:
