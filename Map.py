@@ -1189,7 +1189,7 @@ async def run(inData, payload, message):
     if '!' in payload['Content']:
         print("Run- " + payload['Content'] + ': ', time.time() - start)
     await sendMessages()
-    if payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge','bot-lounge']:
+    if payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge']:
         await updateInAnnouncements(message.guild)
     return saveData()
 
