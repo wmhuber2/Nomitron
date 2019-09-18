@@ -35,9 +35,9 @@ AllData = {}
 savefile = str(__name__)  # + '_Data.pickle'
 print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
-itemList = ['BF', 'Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop']
-resourceList = ['Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy', 'Gloop']
-rawMaterialList = ['Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
+itemList = ['BF', 'Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop','Compensation Fish']
+resourceList = ['Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy', 'Gloop','BF']
+FedMaterialList = ['Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
 import itertools
 
 letters = 'abcdefghijklmnopqrstuvwxyz'.upper()
@@ -935,7 +935,7 @@ async def run(inData, payload, message):
             if payload['Content'] == '!csv':
                 print ('csv')
                 import csv
-                csv_columns = ['BF', 'Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop','Wine','Cracker','Cute_Dog', 'Cake','food']
+                csv_columns = ['BF', 'Corn', 'Compensation Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop','Wine','Cracker','Cute_Dog', 'Cake','food']
                 csv_columns = ['Name',]+csv_columns
                 dict_data = []
                 for player in Data[guild]['Players'].keys():
@@ -1247,10 +1247,6 @@ def onDayChange(server):
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
                             'type'] == 'Perpetual':                    addItem(guild, player, 'Corn', 3)
 
-                if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER') and \
-                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Perpetual':                    addItem(guild, player, 'Fish', 3)
-
                 if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
                             'type'] == 'Non Perpetual':                    addItem(guild, player, 'Steel', 1)
@@ -1428,7 +1424,7 @@ def addItem(guild, player, item, count, testOnly=False):
         Data[guild]['Players'][player]['Inventory'][item] = 0
 
     # If Not Allowed To Be Negative
-    if inv[item] + count < 0 and item in ['BF', 'Corn', 'Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']:
+    if inv[item] + count < 0 and item in ['BF', 'Corn', 'Compensation Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']:
         return False
     elif testOnly:
         return True
@@ -1623,7 +1619,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
     msg =    "FEDERAL RATES\n(Turns Left in Term: " + str(5-Data[guild]['Fed']['Term'])+')'
     msg += "\n   ITEM    :  RATE  : VELOCITY "
     msg += "\n--------------------------------"
-    for item in rawMaterialList:
+    for item in FedMaterialList:
         if Data[guild]['Fed']['Rates'].get(item) is None:
             Data[guild]['Fed']['Rates'][item] = 100
         if Data[guild]['Fed']['Velocity'].get(item) is None:

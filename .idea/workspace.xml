@@ -209,13 +209,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00194" summary="Fixed Sermon Bug with non player chat">
-      <created>1566232542068</created>
-      <option name="number" value="00194" />
-      <option name="presentableId" value="LOCAL-00194" />
-      <option name="project" value="LOCAL" />
-      <updated>1566232542068</updated>
-    </task>
     <task id="LOCAL-00195" summary="unit command for all players now. mother russia loves you">
       <created>1566311976803</created>
       <option name="number" value="00195" />
@@ -552,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568783090775</updated>
     </task>
-    <option name="localTasksCounter" value="243" />
+    <task id="LOCAL-00243" summary="Bug Fix Lag">
+      <created>1568816552005</created>
+      <option name="number" value="00243" />
+      <option name="presentableId" value="LOCAL-00243" />
+      <option name="project" value="LOCAL" />
+      <updated>1568816552005</updated>
+    </task>
+    <option name="localTasksCounter" value="244" />
     <servers />
   </component>
   <component name="TodoView">
@@ -591,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="All Output to file." />
     <MESSAGE value="Bug Fixes and Cleaning Of Code." />
     <MESSAGE value="Fixed Rule Bug Issue with nsb; thing." />
     <MESSAGE value="Fixed Sermon Bug with non player chat" />
@@ -616,7 +615,8 @@
     <MESSAGE value="CSV FOR DOBY" />
     <MESSAGE value="@AJuulPodNamedDesire is now a player" />
     <MESSAGE value="Mobile Friendly" />
-    <option name="LAST_COMMIT_MESSAGE" value="Mobile Friendly" />
+    <MESSAGE value="Bug Fix Lag" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix Lag" />
   </component>
   <component name="masterDetails">
     <states>
