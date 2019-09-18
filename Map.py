@@ -1186,11 +1186,14 @@ async def run(inData, payload, message):
     #  IF A DM CHANNEL
     if payload['Channel Type'] == 'DM':
         pass
+
+    await sendMessages()
     if '!' in payload['Content']:
         print("Run- " + payload['Content'] + ': ', time.time() - start)
-    await sendMessages()
-    if payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge']:
-        await updateInAnnouncements(message.guild)
+        if payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge','bot-lounge']:
+            await updateInAnnouncements(message.guild)
+
+
     return saveData()
 
 
@@ -1442,12 +1445,12 @@ Update Messages In Annoncements
 async def updateInAnnouncements(server, reload=True, postToSpam = False):
     global Data, oldData
     guild = server.id
-    #if time.time() - Data[guild]['ImgLock'] < 60: return 1
+
     if not postToSpam and oldData == pickle.dumps(
-            [
-                Data[guild]['Players'],
-                Data[guild]['Fed'],
-            ]
+            {
+                'players':  Data[guild]['Players'],
+                'fed':      Data[guild]['Fed'],
+            }
             , protocol=pickle.HIGHEST_PROTOCOL):
         # print('Up To Date. Skipping Plot')
         return 1
@@ -1749,6 +1752,7 @@ async def setup(inData, chans, logchan, server):
         'Fed':None
     }
     Data[guild]['ImgLock'] = False
+    Data[guild]['ImgLockTime'] = 0
     if Data[guild]['Announcements'].get('Fed') is None: Data[guild]['Announcements']['Fed']=None
     if Data[guild].get('Units') is None: Data[guild]['Units'] = {}
     if Data[guild].get('Players') is None: Data[guild]['Players'] = {}
