@@ -42,7 +42,7 @@ async def run(inData, payload, message):
     guild = message.guild.id
     splitContent = payload['Content'].split(' ')
 
-    if payload['Channel'].lower() in ['actions', 'actions-map', 'bot-spam','bot-lounge', 'pizza-party','anti-league-league'] and len(splitContent) != 0:
+    if payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge','bot-spam','bot-lounge', 'pizza-party','anti-league-league'] and len(splitContent) != 0:
         if splitContent[0] == '!roll' and len(splitContent) == 2:
             if 'd' in splitContent[1]:
                 n, d = splitContent[1].split('d')
