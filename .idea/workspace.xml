@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dice.py" beforeDir="false" afterPath="$PROJECT_DIR$/Dice.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -207,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00197" summary="unit command for all players now. mother russia loves you">
-      <created>1566312186450</created>
-      <option name="number" value="00197" />
-      <option name="presentableId" value="LOCAL-00197" />
-      <option name="project" value="LOCAL" />
-      <updated>1566312186450</updated>
     </task>
     <task id="LOCAL-00198" summary="unit command for all players now. mother russia loves you">
       <created>1566312417174</created>
@@ -551,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568817679321</updated>
     </task>
-    <option name="localTasksCounter" value="246" />
+    <task id="LOCAL-00246" summary="DICE!!!">
+      <created>1568859471515</created>
+      <option name="number" value="00246" />
+      <option name="presentableId" value="LOCAL-00246" />
+      <option name="project" value="LOCAL" />
+      <updated>1568859471515</updated>
+    </task>
+    <option name="localTasksCounter" value="247" />
     <servers />
   </component>
   <component name="TodoView">
@@ -590,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Fixed Rule Bug Issue with nsb; thing." />
     <MESSAGE value="Fixed Sermon Bug with non player chat" />
     <MESSAGE value="unit command for all players now. mother russia loves you" />
     <MESSAGE value="Remove Case Sensitive From Unit Stuff." />
@@ -615,7 +615,8 @@
     <MESSAGE value="Mobile Friendly" />
     <MESSAGE value="Bug Fix Lag" />
     <MESSAGE value="NO FISH YAHOOOO." />
-    <option name="LAST_COMMIT_MESSAGE" value="NO FISH YAHOOOO." />
+    <MESSAGE value="DICE!!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="DICE!!!" />
   </component>
   <component name="masterDetails">
     <states>
