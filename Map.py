@@ -355,7 +355,7 @@ async def run(inData, payload, message):
 
     guild = message.guild.id
     splitContent = payload['Content'].split(' ')
-
+    update = True
     #  IF A SERVER CHANNEL
     if payload['Channel Type'] == 'Text':
         if Data[guild]['Pause'] and payload['Content'][0] == '!':
@@ -367,6 +367,7 @@ async def run(inData, payload, message):
 
         if payload['Channel'].lower() in ['bot-spam','bot-lounge', 'pizza-party','anti-league-league'] and len(splitContent) != 0:
 
+            update = False
             if payload['Content'].lower() in ['!units', '!unit']:
                 for unit in Data[guild]['Units'].keys():
                     msg = unit + ':\n'
@@ -399,7 +400,7 @@ async def run(inData, payload, message):
                         else:
                             addMsgQueue(message.channel, 'Color ' + splitContent[2] + ' is unavailable. Sorry.')
 
-            if splitContent[0] == '!claim' and len(splitContent) == 2:
+            elif splitContent[0] == '!claim' and len(splitContent) == 2:
                 if payload['Author'] not in Data[guild]['Players'].keys():
                     addMsgQueue(message.channel, "You havent established a capital yet.")
                 else:
@@ -467,7 +468,7 @@ async def run(inData, payload, message):
                             addMsgQueue(message.channel,
                                         "You cannot claim this location as you have no adjacent markers.")
 
-            if splitContent[0] == '!harvest' and len(splitContent) == 3:
+            elif splitContent[0] == '!harvest' and len(splitContent) == 3:
                 if payload['Author'] not in Data[guild]['Players'].keys():
                     addMsgQueue(message.channel, "You havent established a capital yet.")
                 elif splitContent[2].lower() not in ['perpetual', 'non-perpetual', 'p', 'n'] and \
@@ -547,7 +548,7 @@ async def run(inData, payload, message):
                         else:
                             addMsgQueue(message.channel, "You cannot harvest this location until you have claimed it.")
 
-            if splitContent[0] in ['!unit', '!units'] and len(splitContent) == 3:
+            elif splitContent[0] in ['!unit', '!units'] and len(splitContent) == 3:
                 coords, name = splitContent[1:]
                 playerName = payload['Author']
                 if coords in Data[guild]['Units'].keys(): coords, name = name, coords
@@ -609,7 +610,7 @@ async def run(inData, payload, message):
                 elif coords is not None:
                     addMsgQueue(message.channel, "Unit Not Found")
 
-            if splitContent[0] == '!move' and len(splitContent) == 3:
+            elif splitContent[0] == '!move' and len(splitContent) == 3:
                 coord1 = extractCoords(splitContent[1], message.channel)
                 coord2 = extractCoords(splitContent[2], message.channel)
                 player = payload['Author']
@@ -685,7 +686,7 @@ async def run(inData, payload, message):
                             addMsgQueue(message.channel,
                                         "Moving Unit From " + x1a + str(y1 + 1) + " to " + x2a + str(y2 + 1))
 
-            if splitContent[0] == '!toggle' and len(splitContent) == 2:
+            elif splitContent[0] == '!toggle' and len(splitContent) == 2:
                 coords = extractCoords(splitContent[1], message.channel)
                 if coords is not None:
                     xcord, xcordAlpha, ycord = coords
@@ -705,7 +706,7 @@ async def run(inData, payload, message):
                 else:
                     addMsgQueue(message.channel, "You cannot disable this location.")
 
-            if splitContent[0].lower() == '!asset':
+            elif splitContent[0].lower() == '!asset':
                 msg = payload['Content'].split('\n')
                 giver, reciptient = None, None
                 region = set()
@@ -792,6 +793,8 @@ async def run(inData, payload, message):
                     await message.add_reaction('👍')
                     await message.add_reaction('👎')
 
+            else: update = False
+
         if payload['Channel'].lower() in ['actions',] and len(splitContent) != 0:
             if splitContent[0] == '!trade':
                 for playerid in splitContent[1:-2]:
@@ -814,7 +817,7 @@ async def run(inData, payload, message):
                         else:
                             addMsgQueue(message.channel, "You Do Not Have The Resources")
 
-            if splitContent[0].lower() == '!asset':
+            elif splitContent[0].lower() == '!asset':
                 msg = payload['Content'].split('\n')
                 giver, reciptient = None, None
                 region = set()
@@ -909,7 +912,7 @@ async def run(inData, payload, message):
                     await message.add_reaction('👍')
                     await message.add_reaction('👎')
 
-            if splitContent[0] == '!sell' and len(splitContent) == 3:
+            elif splitContent[0] == '!sell' and len(splitContent) == 3:
                 print('selling')
                 amount = None
                 item = splitContent[-1]
@@ -930,6 +933,7 @@ async def run(inData, payload, message):
                 else:
                     addMsgQueue(message.channel, 'Insufficient Items to Sell')
 
+            else: update = False
     if payload['Author'] in Admins and payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge',
                                                                           'bot-lounge']:
             if payload['Content'] == '!csv':
@@ -953,20 +957,21 @@ async def run(inData, payload, message):
                        'CSV Inventory:', file=discord.File(open(csv_file, 'br')))
                 except IOError:
                     print("I/O error")
-            if payload['Content'] == '!newTurn':
+
+            elif payload['Content'] == '!newTurn':
                 await onTurnChange(message.guild)
                 addMsgQueue(message.channel, "New Turn Initiated")
                 print('New Turn')
 
-            if splitContent[0] == '!newDay':
+            elif splitContent[0] == '!newDay':
                 onDayChange(message.guild)
                 await updateInAnnouncements(message.guild, postToSpam=True)
 
-            if payload['Content'] == '!getData':
+            elif payload['Content'] == '!getData':
                 await sendMapData(guild=message.guild.id, channel=message.channel)
                 print("sending Map_Data File")
 
-            if splitContent[0] == '!remove' and len(splitContent) == 2:
+            elif splitContent[0] == '!remove' and len(splitContent) == 2:
                 if len(splitContent[1]) <= 4:
                     coords = extractCoords(splitContent[1], message.channel)
                     if coords is not None:
@@ -987,7 +992,7 @@ async def run(inData, payload, message):
                         del Data[guild]['Players'][player]
                         addMsgQueue(message.channel, 'Player ' + player + ' is removed from the Map.')
 
-            if splitContent[0] == '!setColor' and len(splitContent) == 3:
+            elif splitContent[0] == '!setColor' and len(splitContent) == 3:
                 if splitContent[1].lower() in mcd.CSS4_COLORS:
                     splitContent[1], splitContent[2] = splitContent[2], splitContent[1]
 
@@ -998,7 +1003,7 @@ async def run(inData, payload, message):
                     Data[guild]['Players'][player]['Color'] = splitContent[2].lower()
                     addMsgQueue(message.channel, 'Player ' + player + ' is now ' + splitContent[2].lower())
 
-            if splitContent[0] == '!getTile' and len(splitContent) == 2:
+            elif splitContent[0] == '!getTile' and len(splitContent) == 2:
                 coords = extractCoords(splitContent[1], message.channel)
                 if coords is not None:
                     xcord, xcordAlpha, ycord = coords
@@ -1012,7 +1017,7 @@ async def run(inData, payload, message):
                             pass
                     addMsgQueue(message.channel, msg)
 
-            if splitContent[0] == '!setTile' and len(splitContent) >= 5:
+            elif splitContent[0] == '!setTile' and len(splitContent) >= 5:
                 coords = extractCoords(splitContent[1], message.channel)
                 playerName = getPlayer(message.guild, splitContent[2], message.channel)
                 shape = splitContent[3]
@@ -1039,19 +1044,19 @@ async def run(inData, payload, message):
 
                     addMsgQueue(message.channel, 'Marker Changes Set.')
 
-            if splitContent[0] in ['!resetTimer', '!resetTimers']:
+            elif splitContent[0] in ['!resetTimer', '!resetTimers']:
                 playerid = None
                 if len(splitContent) == 2:
                     playerid = splitContent[1]
                 resetTimers(message.guild, playerid=playerid, channel=message.channel)
 
-            if splitContent[0] == ['!setTimer', '!setTimers']:
+            elif splitContent[0] == ['!setTimer', '!setTimers']:
                 playerid = None
                 if len(splitContent) == 2:
                     playerid = splitContent[1]
                 resetTimers(message.guild, playerid=playerid, channel=message.channel, mode=True)
 
-            if splitContent[0] == '!give':
+            elif splitContent[0] == '!give':
                 for playerid in splitContent[1:-2]:
                     playerName = getPlayer(message.guild, playerid, message.channel)
 
@@ -1066,11 +1071,11 @@ async def run(inData, payload, message):
                             addItem(guild, playerName, item, amount)
                             addMsgQueue(message.channel, 'Transaction Completed For ' + playerName)
 
-            if payload['Content'] == '!pause':
+            elif payload['Content'] == '!pause':
                 Data[guild]['Pause'] = not Data[guild]['Pause']
                 addMsgQueue(message.channel, "You Have Paused/Unpaused The Bot. Pause is " + str(Data[guild]['Pause']))
 
-            if payload['Content'] == '!subtractTurn':
+            elif payload['Content'] == '!subtractTurn':
                 for player in Data[guild]['Players'].keys():
                     for i in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
                         for prop in Data[guild]['Players'][player]['Markers']['Properties'][i].keys():
@@ -1078,10 +1083,10 @@ async def run(inData, payload, message):
                                 Data[guild]['Players'][player]['Markers']['Properties'][i][prop]['age'] -= 1
                 addMsgQueue(message.channel, "Every Player Had one Turn Removed Form Harvest Count")
 
-            if payload['Content'] == '!ping':
+            elif payload['Content'] == '!ping':
                 addMsgQueue(message.channel, "pong")
 
-            if splitContent[0] == '!mark' and len(splitContent) == 4:
+            elif splitContent[0] == '!mark' and len(splitContent) == 4:
                 location, marker, player = splitContent[1:]
                 if len(marker) > len(player): marker, player = player, marker
                 if marker[0] == '"' and marker[-1] == '"':
@@ -1104,10 +1109,10 @@ async def run(inData, payload, message):
                     Data[guild]['Players'][player]['Markers']['Properties'].append({'Unit': {}})
                     addMsgQueue(message.channel, "Location Marked")
 
-            if splitContent[0] == '!newUnit' and len(splitContent) == 1:
+            elif splitContent[0] == '!newUnit' and len(splitContent) == 1:
                 addMsgQueue(message.channel, str(UNIT_BASE))
 
-            if splitContent[0] == '!newUnit' and len(splitContent) > 1:
+            elif splitContent[0] == '!newUnit' and len(splitContent) > 1:
                 name = splitContent[1].lower()
                 data = dict(eval(' '.join(splitContent[2:])))
 
@@ -1122,7 +1127,7 @@ async def run(inData, payload, message):
 
                 addMsgQueue(message.channel, "Unit Saved")
 
-            if splitContent[0] == '!removeUnit' and len(splitContent) == 2:
+            elif splitContent[0] == '!removeUnit' and len(splitContent) == 2:
                 name = splitContent[1]
 
                 if name in Data[guild]['Units']:
@@ -1131,14 +1136,14 @@ async def run(inData, payload, message):
                 else:
                     addMsgQueue(message.channel, "Unit Not Found")
 
-            if splitContent[0] == '!setTerm' and len(splitContent) == 2:
+            elif splitContent[0] == '!setTerm' and len(splitContent) == 2:
                 try:
                     term = int(splitContent[1])
                     Data[guild]['Fed']['Term']=term
                 except:
                     addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into a term 0-5')
 
-            if splitContent[0] == '!adjust':
+            elif splitContent[0] == '!adjust':
                 if splitContent[-1].lower() in ['increasing', 'static', 'decreasing']:
                     for item in splitContent[1:-2]:
                         if item not in Data[guild]['Fed']['Velocity']:
@@ -1153,7 +1158,7 @@ async def run(inData, payload, message):
                     addMsgQueue(message.channel, "Not a valid velocity")
                 addMsgQueue(message.channel,'Fed Market Updated')
 
-            if splitContent[0] == '!specialCommand':
+            elif splitContent[0] == '!specialCommand':
 
                 array = np.random.rand(75,75)*175
                 array[2,13] = 0.5
@@ -1183,12 +1188,14 @@ async def run(inData, payload, message):
                                 'TownItem': random.choice(resourceList)
                             })
 
+            else: update = False
+
     #  IF A DM CHANNEL
     if payload['Channel Type'] == 'DM':
         pass
 
     await sendMessages()
-    if '!' in payload['Content']:
+    if '!' in payload['Content'] and update:
         print("Run- " + payload['Content'] + ': ', time.time() - start)
         if payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge','bot-lounge']:
             await updateInAnnouncements(message.guild)
