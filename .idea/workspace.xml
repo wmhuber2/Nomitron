@@ -4,7 +4,7 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
+    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="Better Update condiotns">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
     </list>
@@ -208,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00200" summary="Remove Case Sensitive From Unit Stuff.">
-      <created>1566421138779</created>
-      <option name="number" value="00200" />
-      <option name="presentableId" value="LOCAL-00200" />
-      <option name="project" value="LOCAL" />
-      <updated>1566421138779</updated>
     </task>
     <task id="LOCAL-00201" summary="Remove Case Sensitive From Unit Stuff.">
       <created>1566421316286</created>
@@ -552,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568859815132</updated>
     </task>
-    <option name="localTasksCounter" value="249" />
+    <task id="LOCAL-00249" summary="Better Update condiotns">
+      <created>1568860497515</created>
+      <option name="number" value="00249" />
+      <option name="presentableId" value="LOCAL-00249" />
+      <option name="project" value="LOCAL" />
+      <updated>1568860497515</updated>
+    </task>
+    <option name="localTasksCounter" value="250" />
     <servers />
   </component>
   <component name="TodoView">
@@ -591,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Fixed Sermon Bug with non player chat" />
     <MESSAGE value="unit command for all players now. mother russia loves you" />
     <MESSAGE value="Remove Case Sensitive From Unit Stuff." />
     <MESSAGE value="Added Actions to react mention" />
@@ -616,7 +615,8 @@
     <MESSAGE value="Bug Fix Lag" />
     <MESSAGE value="NO FISH YAHOOOO." />
     <MESSAGE value="DICE!!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="DICE!!!" />
+    <MESSAGE value="Better Update condiotns" />
+    <option name="LAST_COMMIT_MESSAGE" value="Better Update condiotns" />
   </component>
   <component name="masterDetails">
     <states>

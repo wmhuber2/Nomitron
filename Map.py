@@ -355,7 +355,7 @@ async def run(inData, payload, message):
 
     guild = message.guild.id
     splitContent = payload['Content'].split(' ')
-    update = True
+    update = [1,1,1,]
     #  IF A SERVER CHANNEL
     if payload['Channel Type'] == 'Text':
         if Data[guild]['Pause'] and payload['Content'][0] == '!':
@@ -367,7 +367,6 @@ async def run(inData, payload, message):
 
         if payload['Channel'].lower() in ['bot-spam','bot-lounge', 'pizza-party','anti-league-league'] and len(splitContent) != 0:
 
-            update = False
             if payload['Content'].lower() in ['!units', '!unit']:
                 for unit in Data[guild]['Units'].keys():
                     msg = unit + ':\n'
@@ -793,7 +792,7 @@ async def run(inData, payload, message):
                     await message.add_reaction('👍')
                     await message.add_reaction('👎')
 
-            else: update = False
+            else: update[0] = False
 
         if payload['Channel'].lower() in ['actions',] and len(splitContent) != 0:
             if splitContent[0] == '!trade':
@@ -933,7 +932,7 @@ async def run(inData, payload, message):
                 else:
                     addMsgQueue(message.channel, 'Insufficient Items to Sell')
 
-            else: update = False
+            else: update[1] = False
     if payload['Author'] in Admins and payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge',
                                                                           'bot-lounge']:
             if payload['Content'] == '!csv':
@@ -1188,17 +1187,16 @@ async def run(inData, payload, message):
                                 'TownItem': random.choice(resourceList)
                             })
 
-            else: update = False
+            else: update[2] = False
 
     #  IF A DM CHANNEL
     if payload['Channel Type'] == 'DM':
         pass
 
     await sendMessages()
-    if '!' in payload['Content'] and update:
+    if '!' in payload['Content'] and 1 in update:
         print("Run- " + payload['Content'] + ': ', time.time() - start)
-        if payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge','bot-lounge']:
-            await updateInAnnouncements(message.guild)
+        await updateInAnnouncements(message.guild)
 
 
     return saveData()
