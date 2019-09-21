@@ -358,8 +358,13 @@ async def run(inData, payload, message):
     update = [1,1,1,]
     #  IF A SERVER CHANNEL
     if payload['Channel Type'] == 'Text':
+
+
         if Data[guild]['Pause'] and payload['Content'][0] == '!':
             addMsgQueue(message.channel, "Warning: The Bot Has Been Paused.\n Admins May Ignore This Message")
+
+        if '!rule ' in payload['Content']:return
+        if '!f ' in payload['Content']:return
 
         if payload['Content'] == '!map':
             await plotMap(message.channel)
@@ -1429,7 +1434,7 @@ def addItem(guild, player, item, count, testOnly=False):
         Data[guild]['Players'][player]['Inventory'][item] = 0
 
     # If Not Allowed To Be Negative
-    if inv[item] + count < 0 and item in ['BF', 'Corn', 'Compensation Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']:
+    if inv[item] + count < 0 and item in ['BF', 'Corn', 'C-Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']:
         return False
     elif testOnly:
         return True

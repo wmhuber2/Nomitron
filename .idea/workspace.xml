@@ -209,13 +209,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00201" summary="Remove Case Sensitive From Unit Stuff.">
-      <created>1566421316286</created>
-      <option name="number" value="00201" />
-      <option name="presentableId" value="LOCAL-00201" />
-      <option name="project" value="LOCAL" />
-      <updated>1566421316286</updated>
-    </task>
     <task id="LOCAL-00202" summary="Remove Case Sensitive From Unit Stuff.">
       <created>1566421736045</created>
       <option name="number" value="00202" />
@@ -552,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1568860497515</updated>
     </task>
-    <option name="localTasksCounter" value="250" />
+    <task id="LOCAL-00250" summary="Better Update condiotns">
+      <created>1569008469169</created>
+      <option name="number" value="00250" />
+      <option name="presentableId" value="LOCAL-00250" />
+      <option name="project" value="LOCAL" />
+      <updated>1569008469169</updated>
+    </task>
+    <option name="localTasksCounter" value="251" />
     <servers />
   </component>
   <component name="TodoView">
