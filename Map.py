@@ -363,8 +363,8 @@ async def run(inData, payload, message):
         if Data[guild]['Pause'] and payload['Content'][0] == '!':
             addMsgQueue(message.channel, "Warning: The Bot Has Been Paused.\n Admins May Ignore This Message")
 
-        if '!rule ' in payload['Content']:return
-        if '!f ' in payload['Content']:return
+        if '!rule ' in payload['Content']:return saveData()
+        if '!f ' in payload['Content']:return saveData()
 
         if payload['Content'] == '!map':
             await plotMap(message.channel)
