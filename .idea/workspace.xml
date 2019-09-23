@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rules.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -208,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00205" summary="Added Actions to react mention">
-      <created>1566505638788</created>
-      <option name="number" value="00205" />
-      <option name="presentableId" value="LOCAL-00205" />
-      <option name="project" value="LOCAL" />
-      <updated>1566505638788</updated>
     </task>
     <task id="LOCAL-00206" summary="Rule 314 Edit">
       <created>1566797362788</created>
@@ -552,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569216487912</updated>
     </task>
-    <option name="localTasksCounter" value="254" />
+    <task id="LOCAL-00254" summary="fed fix">
+      <created>1569217743834</created>
+      <option name="number" value="00254" />
+      <option name="presentableId" value="LOCAL-00254" />
+      <option name="project" value="LOCAL" />
+      <updated>1569217743835</updated>
+    </task>
+    <option name="localTasksCounter" value="255" />
     <servers />
   </component>
   <component name="TodoView">
@@ -591,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Remove Case Sensitive From Unit Stuff." />
     <MESSAGE value="Added Actions to react mention" />
     <MESSAGE value="Rule 314 Edit" />
     <MESSAGE value="Edited Changelog Live Formats." />
@@ -616,7 +615,8 @@
     <MESSAGE value="DICE!!!" />
     <MESSAGE value="Better Update condiotns" />
     <MESSAGE value="Raze rule." />
-    <option name="LAST_COMMIT_MESSAGE" value="Raze rule." />
+    <MESSAGE value="fed fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="fed fix" />
   </component>
   <component name="masterDetails">
     <states>
