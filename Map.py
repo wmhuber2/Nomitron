@@ -797,6 +797,70 @@ async def run(inData, payload, message):
                     await message.add_reaction('👍')
                     await message.add_reaction('👎')
 
+            elif splitContent[0] == '!raze' and len(splitContent) == 3:
+                if splitContent[1] in ['claim', 'harvest', 'unit']:
+                    coords = extractCoords(splitContent[2],message.channel)
+                    if coords is not None:
+                        x,xa,y = coords
+
+                        if [x,y] not in Data[guild]['Players'][payload['Author']]['Markers']['Location']:
+                            addMsgQueue(message.channel, "You do not own the Tile")
+                        else:
+                            index = Data[guild]['Players'][payload['Author']]['Markers']['Location'].index([x,y])
+                            prop = dict( Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index] )
+                            print(prop)
+                            if splitContent[1] == 'claim':
+                                if len(prop) != 0:
+                                    Data[guild]['Players'][botName]['Markers']['Location'].append([x,y])
+                                    Data[guild]['Players'][botName]['Markers']['Shape'].append('Claim')
+                                    Data[guild]['Players'][botName]['Markers']['Properties'].append(prop)
+
+                                Data[guild]['Players'][payload['Author']]['Markers']['Location'].pop(index)
+                                Data[guild]['Players'][payload['Author']]['Markers']['Shape'].pop(index)
+                                Data[guild]['Players'][payload['Author']]['Markers']['Properties'].pop(index)
+                            elif splitContent[1] == 'harvest':
+                                if prop.get('Harvest') is None:
+                                    addMsgQueue(message.channel, "Harvest Not Found On Tile")
+                                elif addItem(guild, payload['Author'], 'BF', -1):
+                                    if prop['Harvest']['type'] == 'Non Perpetual':
+                                        addItem(guild, payload['Author'], 'Steel', 1)
+                                    if prop['Harvest']['type'] == 'Perpetual':
+                                        addItem(guild, payload['Author'], 'Corn', 1)
+                                    del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest']
+                                else:
+                                    addMsgQueue(message.channel, "You Need 1 BF to raze a harvest")
+
+                            elif splitContent[1] == 'unit':
+                                if prop.get('Unit') is None:
+                                    addMsgQueue(message.channel, "Unit Not Found On Tile")
+                                elif addItem(guild, payload['Author'], 'BF', -2):
+                                    name = prop['Unit']
+                                    unit = dict(Data[guild]['Units'][name])
+
+                                    for cost in unit['Costs']:
+                                        if ' ' in cost:
+                                            amount, item = cost.split(' ')
+                                            print('amount',math.ceil(0.2*float(amount)))
+                                            addItem(guild, payload['Author'], item, math.ceil(0.2*float(amount)))
+                                    for cost in unit['DailyCosts']:
+                                        if ' ' in cost:
+                                            amount, item = cost.split(' ')
+                                            addItem(guild, payload['Author'], item, 1)
+                                    for cost in unit['DailyReturn']:
+                                        if ' ' in cost:
+                                            amount, item = cost.split(' ')
+                                            addItem(guild, payload['Author'], item, 1)
+
+                                    del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index][
+                                        'Unit']
+                                else:
+                                    addMsgQueue(message.channel, "You Need 2 BF to raze a unit")
+
+
+
+                else:
+                    addMsgQueue(message.channel, "Can only raze a claim, harvest, or unit")
+
             else: update[0] = False
 
         if payload['Channel'].lower() in ['actions',] and len(splitContent) != 0:
@@ -1860,8 +1924,9 @@ async def plotMap(channel, postReply=True):
                 obj[obj == 'Capital'] = '*'
                 for unit in Data[guild]['Units'].keys():
                     obj[obj == unit] = Data[guild]['Units'][unit]['Marker']
+
                 for i in range(obj.shape[0]):
-                    if obj[i] != "":
+                    if obj[i] != "" and player != botName:
                         ax.scatter(x[i], y[i], c="none", edgecolors=color,
                                    linewidths=0.3, s=11, marker='s', alpha=0.7)
 
@@ -1870,6 +1935,7 @@ async def plotMap(channel, postReply=True):
                         obj[i] = Data[guild]['Units'][unit]['Marker']
                         if obj[i][0] == '"' and obj[i][-1] == '"':
                             obj[i] = '$' + obj[i][1:-1] + '$'
+
                     elif player['Markers']['Properties'][i].get('Harvest') is not None:
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
