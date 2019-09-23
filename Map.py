@@ -1375,7 +1375,7 @@ def onDayChange(server):
 
     for item in Data[guild]['Fed']['Rates'].keys():
         vel = Data[guild]['Fed']['Velocity'][item]
-        Data[guild]['Fed']['Rates'][item] += vel/100.0 * Data[guild]['Fed']['Rates'][item]
+        Data[guild]['Fed']['Rates'][item] -= vel/100.0 * Data[guild]['Fed']['Rates'][item]
                     
     print("OnDayChange: ", time.time() - start)
 
@@ -1702,7 +1702,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         vel =  Data[guild]['Fed']['Velocity'][item]
 
         tmpmsg = "\n" + item.upper()
-        tmpmsg += (12 - len(tmpmsg)) * ' ' + ': ' + str(round(rate,1))
+        tmpmsg += (12 - len(tmpmsg)) * ' ' + ': ' + str(round(1.0/rate,3))
         tmpmsg += (21 - len(tmpmsg)) * ' ' + ': ' + str(int(vel))+'% '
         tmpmsg += (28 - len(tmpmsg)) * ' ' + '/Day'
         msg += tmpmsg
