@@ -55,7 +55,11 @@ async def run(inData, payload, message):
                     #print(response)
                     await channels[payload['Channel']].send(response)
                     response = ""
-                response = response + "\n\n" + paragraph
+                if len(paragraph) >1900:
+                    print('Error: Paragrpah too long!!! Length: ', len(paragraph))
+                    print(paragraph)
+                else:
+                    response = response + "\n\n" + paragraph
             #print(response)
             await channels[payload['Channel']].send(response)
 
