@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PlayerREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/PlayerREADME.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00203" summary="Remove Case Sensitive From Unit Stuff.">
-      <created>1566422364351</created>
-      <option name="number" value="00203" />
-      <option name="presentableId" value="LOCAL-00203" />
-      <option name="project" value="LOCAL" />
-      <updated>1566422364351</updated>
     </task>
     <task id="LOCAL-00204" summary="Remove Case Sensitive From Unit Stuff.">
       <created>1566422467314</created>
@@ -553,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569085626243</updated>
     </task>
-    <option name="localTasksCounter" value="252" />
+    <task id="LOCAL-00252" summary="Raze rule.">
+      <created>1569212727642</created>
+      <option name="number" value="00252" />
+      <option name="presentableId" value="LOCAL-00252" />
+      <option name="project" value="LOCAL" />
+      <updated>1569212727643</updated>
+    </task>
+    <option name="localTasksCounter" value="253" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="unit command for all players now. mother russia loves you" />
     <MESSAGE value="Remove Case Sensitive From Unit Stuff." />
     <MESSAGE value="Added Actions to react mention" />
     <MESSAGE value="Rule 314 Edit" />
@@ -617,7 +615,8 @@
     <MESSAGE value="NO FISH YAHOOOO." />
     <MESSAGE value="DICE!!!" />
     <MESSAGE value="Better Update condiotns" />
-    <option name="LAST_COMMIT_MESSAGE" value="Better Update condiotns" />
+    <MESSAGE value="Raze rule." />
+    <option name="LAST_COMMIT_MESSAGE" value="Raze rule." />
   </component>
   <component name="masterDetails">
     <states>
