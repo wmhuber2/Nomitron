@@ -818,6 +818,8 @@ async def run(inData, payload, message):
                                 Data[guild]['Players'][payload['Author']]['Markers']['Location'].pop(index)
                                 Data[guild]['Players'][payload['Author']]['Markers']['Shape'].pop(index)
                                 Data[guild]['Players'][payload['Author']]['Markers']['Properties'].pop(index)
+                                addMsgQueue(message.channel, "Claim Razed")
+
                             elif splitContent[1] == 'harvest':
                                 if prop.get('Harvest') is None:
                                     addMsgQueue(message.channel, "Harvest Not Found On Tile")
@@ -827,6 +829,7 @@ async def run(inData, payload, message):
                                     if prop['Harvest']['type'] == 'Perpetual':
                                         addItem(guild, payload['Author'], 'Corn', 1)
                                     del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Harvest']
+                                    addMsgQueue(message.channel, "Harvest Razed")
                                 else:
                                     addMsgQueue(message.channel, "You Need 1 BF to raze a harvest")
 
@@ -853,6 +856,7 @@ async def run(inData, payload, message):
 
                                     del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index][
                                         'Unit']
+                                    addMsgQueue(message.channel, "Unit Razed")
                                 else:
                                     addMsgQueue(message.channel, "You Need 2 BF to raze a unit")
 
