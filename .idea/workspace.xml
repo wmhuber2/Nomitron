@@ -35,6 +35,7 @@
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Map.py" root0="SKIP_INSPECTION" />
@@ -46,7 +47,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AnimatorDiscord.py" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
@@ -209,13 +210,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00208" summary="Rule 314 Edit">
-      <created>1566829354037</created>
-      <option name="number" value="00208" />
-      <option name="presentableId" value="LOCAL-00208" />
-      <option name="project" value="LOCAL" />
-      <updated>1566829354037</updated>
     </task>
     <task id="LOCAL-00209" summary="Edited Changelog Live Formats.">
       <created>1566854329653</created>
@@ -553,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569248663944</updated>
     </task>
-    <option name="localTasksCounter" value="257" />
+    <task id="LOCAL-00257" summary="Raze Confirmation">
+      <created>1569335805692</created>
+      <option name="number" value="00257" />
+      <option name="presentableId" value="LOCAL-00257" />
+      <option name="project" value="LOCAL" />
+      <updated>1569335805692</updated>
+    </task>
+    <option name="localTasksCounter" value="258" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +593,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Rule 314 Edit" />
     <MESSAGE value="Edited Changelog Live Formats." />
     <MESSAGE value="Rule 347: Towns" />
     <MESSAGE value="Bug Fix: Harvest Counter" />
@@ -617,7 +617,8 @@
     <MESSAGE value="Raze rule." />
     <MESSAGE value="fed fix" />
     <MESSAGE value="Rule Print fix?" />
-    <option name="LAST_COMMIT_MESSAGE" value="Rule Print fix?" />
+    <MESSAGE value="Raze Confirmation" />
+    <option name="LAST_COMMIT_MESSAGE" value="Raze Confirmation" />
   </component>
   <component name="masterDetails">
     <states>

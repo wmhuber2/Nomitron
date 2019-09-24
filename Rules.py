@@ -51,6 +51,10 @@ async def run(inData, payload, message):
             answer = "Rule " + Data[rulequery]
             response = ""
             for paragraph in answer.split("\n\n"):
+                paragraph = paragraph.replace('\\xe2\\x95\\x9e', ' ')
+                paragraph = paragraph.replace('\\xe2\\x95\\x90', ' ')
+                paragraph = paragraph.replace('\\xe2\\x95\\xa1', ' ')
+                paragraph = paragraph.replace('\\xe2\\x94\\x80', ' ')
                 if(len(response) + len(paragraph) + 6 > 1850):
                     #print(response)
                     await channels[payload['Channel']].send(response)

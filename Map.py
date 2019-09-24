@@ -1868,7 +1868,7 @@ async def setup(inData, chans, logchan, server):
             Data[guild]['Players'][player]['Inventory'] = {'BF': 0, }
 
         if player not in Data[guild]['Fed']['MemberHistory']:
-            if player in ['NomicBotPossibly#4870',botName]: continue
+            if player in ['A Beep Booper#4870',botName]: continue
             Data[guild]['Fed']['MemberHistory'][player] = 0
         if Data[guild]['Players'][player]['Markers'].get('Properties') is None:
             Data[guild]['Players'][player]['Markers']['Properties'] = []
