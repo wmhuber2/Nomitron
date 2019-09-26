@@ -700,9 +700,9 @@ async def run(inData, payload, message):
                         index] and \
                             Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index][
                                 'DisabledAndPermanent']:
-                        Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index][
-                            'DisabledAndPermanent'] = False
-                        addMsgQueue(message.channel, "Location Enabled. Will Take Effect After Midnight")
+                        del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index][
+                            'DisabledAndPermanent']
+                        addMsgQueue(message.channel, "Location Enabled.")
                     else:
                         Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index][
                             'DisabledAndPermanent'] = True
