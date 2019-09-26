@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -209,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00210" summary="Edited Changelog Live Formats.">
-      <created>1566855420440</created>
-      <option name="number" value="00210" />
-      <option name="presentableId" value="LOCAL-00210" />
-      <option name="project" value="LOCAL" />
-      <updated>1566855420440</updated>
     </task>
     <task id="LOCAL-00211" summary="Edited Changelog Live Formats.">
       <created>1567106398428</created>
@@ -553,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569361535189</updated>
     </task>
-    <option name="localTasksCounter" value="259" />
+    <task id="LOCAL-00259" summary="Toggle effect is now immediatly visable,">
+      <created>1569475091954</created>
+      <option name="number" value="00259" />
+      <option name="presentableId" value="LOCAL-00259" />
+      <option name="project" value="LOCAL" />
+      <updated>1569475091955</updated>
+    </task>
+    <option name="localTasksCounter" value="260" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Edited Changelog Live Formats." />
     <MESSAGE value="Rule 347: Towns" />
     <MESSAGE value="Bug Fix: Harvest Counter" />
     <MESSAGE value="Bug Fix: Doby Msg in wrong location" />
@@ -617,7 +615,8 @@
     <MESSAGE value="fed fix" />
     <MESSAGE value="Rule Print fix?" />
     <MESSAGE value="Raze Confirmation" />
-    <option name="LAST_COMMIT_MESSAGE" value="Raze Confirmation" />
+    <MESSAGE value="Toggle effect is now immediatly visable," />
+    <option name="LAST_COMMIT_MESSAGE" value="Toggle effect is now immediatly visable," />
   </component>
   <component name="masterDetails">
     <states>

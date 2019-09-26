@@ -1706,7 +1706,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         vel =  Data[guild]['Fed']['Velocity'][item]
 
         tmpmsg = "\n" + item.upper()
-        tmpmsg += (12 - len(tmpmsg)) * ' ' + ': ' + str(round(1.0/rate,3))
+        tmpmsg += (12 - len(tmpmsg)) * ' ' + ': ' + str(round(1.0/rate,4))
         tmpmsg += (21 - len(tmpmsg)) * ' ' + ': ' + str(int(vel))+'% '
         tmpmsg += (28 - len(tmpmsg)) * ' ' + '/Day'
         msg += tmpmsg
