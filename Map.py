@@ -379,8 +379,8 @@ async def run(inData, payload, message):
                         msg += '\t' + k + ': ' + str(Data[guild]['Units'][unit][k]) + '\n'
                     addMsgQueue(message.channel, '```' + msg + '```')
 
-            elif splitContent[0][0] == '!' and len(splitContent) == 1:
-                coords = extractCoords(splitContent[0][1:], message.channel)
+            elif splitContent[0] == '!tile' and len(splitContent) == 2:
+                coords = extractCoords(splitContent[1], message.channel)
                 if coords is not None:
                     xcord, xcordAlpha, ycord = coords
                     msg = "Tile Data:\n"
