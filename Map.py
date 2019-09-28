@@ -379,6 +379,20 @@ async def run(inData, payload, message):
                         msg += '\t' + k + ': ' + str(Data[guild]['Units'][unit][k]) + '\n'
                     addMsgQueue(message.channel, '```' + msg + '```')
 
+            elif splitContent[0][0] == '!' and len(splitContent) == 1:
+                coords = extractCoords(splitContent[0][1:], message.channel)
+                if coords is not None:
+                    xcord, xcordAlpha, ycord = coords
+                    msg = "Tile Data:\n"
+                    for player in Data[guild]['Players'].keys():
+                        try:
+                            index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
+                            msg += '-' + player + ": " + str(Data[guild]['Players'][player]['Markers']['Shape'][index])
+                            msg += '\n EXTRA INFO: ' + str(Data[guild]['Players'][player]['Markers']['Properties'][index])
+                        except ValueError:
+                            pass
+                    addMsgQueue(message.channel, msg)
+
         if payload['Channel'].lower() in ['actions-map',] and len(splitContent) != 0:
 
             if splitContent[0] == '!start' and len(splitContent) == 3:
@@ -653,7 +667,38 @@ async def run(inData, payload, message):
                     elif not Data[guild]['Units'][
                         Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
                     ]['isMobile']:
-                        addMsgQueue(message.channel, "Unit Is Not Mobile")
+                        hist =  Data[guild]['Players'][player]['Markers']['Properties'][index1].get('MoveCount')
+                        if hist is None:
+                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['MoveCount'] = 0
+                            hist = 0
+                        Data[guild]['Players'][player]['Markers']['Properties'][index1]['MoveCount'] += 1
+                        amount = 3**hist
+                        item = 'Energy'
+                        canAfford = addItem(guild, payload['Author'], item, -float(amount),
+                                                              testOnly=True)
+                        if not canAfford:
+                            addMsgQueue(message.channel, "Insufficient Funds To Move: Energy = ", amount)
+                        else:
+                            addItem(guild, payload['Author'], item, -float(amount))
+                            if index2 is None:
+                                Data[guild]['Players'][player]['Markers']['Properties'].append({
+                                    'Unit': Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                                })
+                                Data[guild]['Players'][player]['Markers']['Shape'].append("")
+                                Data[guild]['Players'][player]['Markers']['Location'].append([x2, y2])
+                                del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                            else:
+                                Data[guild]['Players'][player]['Markers']['Properties'][index2]['Unit'] \
+                                    = "" + str(Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'])
+                                del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+
+                            if Data[guild]['Players'][player]['Markers']['Shape'][index1] == "":
+                                del Data[guild]['Players'][player]['Markers']['Location'][index1]
+                                del Data[guild]['Players'][player]['Markers']['Shape'][index1]
+                                del Data[guild]['Players'][player]['Markers']['Properties'][index1]
+                            addMsgQueue(message.channel,
+                                        "Moving Unit From " + x1a + str(y1 + 1) + " to " + x2a + str(y2 + 1))
+
                     elif 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
                         addMsgQueue(message.channel, "Unit Is Disabled")
                     else:
@@ -1216,6 +1261,7 @@ async def run(inData, payload, message):
                     addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into a term 0-5')
 
             elif splitContent[0] == '!adjust':
+                import re
                 if splitContent[-1].lower() in ['increasing', 'static', 'decreasing']:
                     for item in splitContent[1:-2]:
                         if item not in Data[guild]['Fed']['Velocity']:
@@ -1226,6 +1272,9 @@ async def run(inData, payload, message):
                             Data[guild]['Fed']['Velocity'][item] = -10.0
                         elif splitContent[-1].lower()  == 'static':
                             Data[guild]['Fed']['Velocity'][item] = 0
+                elif re.match("^\d+?\.\d+?$", splitContent[-1]) is not None:
+                    for item in splitContent[1:-2]:
+                       Data[guild]['Fed']['Rates'][item] = 1.0/float(splitContent[-1])
                 else:
                     addMsgQueue(message.channel, "Not a valid velocity")
                 addMsgQueue(message.channel,'Fed Market Updated')
@@ -1378,8 +1427,9 @@ def onDayChange(server):
                             addItem(guild, player, item, float(amount))
 
     for item in Data[guild]['Fed']['Rates'].keys():
-        vel = Data[guild]['Fed']['Velocity'][item]
-        Data[guild]['Fed']['Rates'][item] -= vel/100.0 * Data[guild]['Fed']['Rates'][item]
+        vel = Data[guild]['Fed']['Velocity'][item]+100
+        if vel != 0:
+            Data[guild]['Fed']['Rates'][item] = 100.0/vel * Data[guild]['Fed']['Rates'][item]
                     
     print("OnDayChange: ", time.time() - start)
 
