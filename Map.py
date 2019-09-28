@@ -97,7 +97,7 @@ async def reaction(inData, action, user, messageid, emoji):
                     canAfford = canAfford and addItem(guild, playerName, item, -float(amount), testOnly=True)
 
                 if Data[guild]['Players'][playerName]['Markers']['Shape'][indexTile] == "":
-                    addMsgQueue(message.channel, "Units Must Be Upgraded On Your Claimed Tile")
+                    addMsgQueue(message.channel, "Units Must Be Upgraded Adjacent To A Claimed Tile")
                 elif unit['UpgradeUnit'] != "" and unit['UpgradeUnit'] != \
                         Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']:
                     addMsgQueue(message.channel, "This location cannot be Upgraded To " + name)
@@ -435,23 +435,7 @@ async def run(inData, payload, message):
                             addMsgQueue(message.channel,
                                         "You have already purchased a claim today. Please wait until tomorrow to claim again. Have a nice day. :v:")
 
-                        elif [xcord + 1, ycord + 1] in Data[guild]['Players'][payload['Author']]['Markers'][
-                            'Location'] or \
-                                [xcord + 1, ycord] in Data[guild]['Players'][payload['Author']]['Markers'][
-                            'Location'] or \
-                                [xcord + 1, ycord - 1] in Data[guild]['Players'][payload['Author']]['Markers'][
-                            'Location'] or \
-                                [xcord, ycord + 1] in Data[guild]['Players'][payload['Author']]['Markers'][
-                            'Location'] or \
-                                [xcord, ycord - 1] in Data[guild]['Players'][payload['Author']]['Markers'][
-                            'Location'] or \
-                                [xcord - 1, ycord + 1] in Data[guild]['Players'][payload['Author']]['Markers'][
-                            'Location'] or \
-                                [xcord - 1, ycord] in Data[guild]['Players'][payload['Author']]['Markers'][
-                            'Location'] or \
-                                [xcord - 1, ycord - 1] in Data[guild]['Players'][payload['Author']]['Markers'][
-                            'Location']:
-
+                        elif isAdjacent(guild, payload['Author'], [xcord, ycord]):
                             isClaimed = False
                             for player in Data[guild]['Players'].keys(): 
                                 if botName == player: continue
@@ -581,9 +565,12 @@ async def run(inData, payload, message):
                     try:
                         indexTile = Data[guild]['Players'][playerName]['Markers']['Location'].index([x, y])
                     except:
-                        addMsgQueue(message.channel, "You Do Not Own Ths Location")
+                        pass
 
-                    if indexTile is not None:
+                    if not isAdjacent(guild,playerName, [x,y] ):
+                        addMsgQueue(message.channel, "You Do Not Own An Ajacent Location")
+
+                    elif indexTile is not None:
                         canAfford = True
                         missingItems = ""
                         for cost in unit['Costs']:
@@ -625,6 +612,89 @@ async def run(inData, payload, message):
                             addMsgQueue(message.channel, name + "Unit Added On " + str(xa) + str(y + 1) + " ")
                         else:
                             addMsgQueue(message.channel, "Insufficent Funds You Need:" + missingItems)
+                            if indexTile is not None:
+                                canAfford = True
+                                missingItems = ""
+                                for cost in unit['Costs']:
+                                    amount, item = cost.split(' ')
+                                    if not addItem(guild, playerName, item, -float(amount), testOnly=True):
+                                        canAfford = False
+                                        missingItems += '   ' + str(amount) + ' ' + item + "\n"
+
+                                if Data[guild]['Players'][playerName]['Markers']['Shape'][indexTile] == "":
+                                    addMsgQueue(message.channel, "Units Must Be Upgraded On Your Claimed Tile")
+                                elif unit['LandOnly'] and not isTileType(Data[guild]['Image'], x, y, 'LAND'):
+                                    addMsgQueue(message.channel, "This Can Only Be Placed On Land")
+                                elif unit['WaterOnly'] and not isTileType(Data[guild]['Image'], x, y, 'WATER'):
+                                    addMsgQueue(message.channel, "This Can Only Be Placed On Water")
+                                elif unit['BeachOnly'] and not (
+                                        isTileType(Data[guild]['Image'], x, y, 'LAND')
+                                        and (
+                                                isTileType(Data[guild]['Image'], x + 1, y, 'WATER') or
+                                                isTileType(Data[guild]['Image'], x - 1, y, 'WATER') or
+                                                isTileType(Data[guild]['Image'], x, y + 1, 'WATER') or
+                                                isTileType(Data[guild]['Image'], x, y - 1, 'WATER')
+                                        )
+                                ):
+                                    addMsgQueue(message.channel, "This Can Only Be Placed On A Beach")
+                                elif unit['UpgradeUnit'] != "" and unit['UpgradeUnit'] != \
+                                        Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']:
+                                    addMsgQueue(message.channel, "This location cannot be Upgraded To " + name)
+                                elif unit['UpgradeUnit'] == "" and 'Unit' in \
+                                        Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]:
+                                    addMsgQueue(message.channel, "This location Already Has Unit")
+                                elif unit['NeedAdminApproval']:
+                                    addMsgQueue(message.channel, "Awaiting Admin/Mod React on Request For Approval")
+                                elif canAfford:
+                                    for cost in unit['Costs']:
+                                        amount, item = cost.split(' ')
+                                        addItem(guild, playerName, item, -float(amount))
+
+                                    Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile][
+                                        'Unit'] = name
+                                    addMsgQueue(message.channel, name + "Unit Added On " + str(xa) + str(y + 1) + " ")
+                                else:
+                                    addMsgQueue(message.channel, "Insufficent Funds You Need:" + missingItems)
+
+                    elif indexTile is None:
+                        canAfford = True
+                        missingItems = ""
+                        for cost in unit['Costs']:
+                            amount, item = cost.split(' ')
+                            if not addItem(guild, playerName, item, -float(amount), testOnly=True):
+                                canAfford = False
+                                missingItems += '   ' + str(amount) + ' ' + item + "\n"
+
+                        if unit['LandOnly'] and not isTileType(Data[guild]['Image'], x, y, 'LAND'):
+                            addMsgQueue(message.channel, "This Can Only Be Placed On Land")
+                        elif unit['WaterOnly'] and not isTileType(Data[guild]['Image'], x, y, 'WATER'):
+                            addMsgQueue(message.channel, "This Can Only Be Placed On Water")
+                        elif unit['BeachOnly'] and not (
+                                isTileType(Data[guild]['Image'], x, y, 'LAND')
+                                and (
+                                        isTileType(Data[guild]['Image'], x + 1, y, 'WATER') or
+                                        isTileType(Data[guild]['Image'], x - 1, y, 'WATER') or
+                                        isTileType(Data[guild]['Image'], x, y + 1, 'WATER') or
+                                        isTileType(Data[guild]['Image'], x, y - 1, 'WATER')
+                                )
+                        ):
+                            addMsgQueue(message.channel, "This Can Only Be Placed On A Beach")
+                        elif unit['UpgradeUnit'] != "" :
+                            addMsgQueue(message.channel, "This location cannot be Upgraded To " + name)
+                        elif unit['NeedAdminApproval']:
+                            addMsgQueue(message.channel, "Awaiting Admin/Mod React on Request For Approval")
+                        elif canAfford:
+                            for cost in unit['Costs']:
+                                amount, item = cost.split(' ')
+                                addItem(guild, playerName, item, -float(amount))
+
+                            Data[guild]['Players'][playerName]['Markers']['Location'].append([x,y])
+                            Data[guild]['Players'][playerName]['Markers']['Shape'].append("")
+                            Data[guild]['Players'][playerName]['Markers']['Properties'].append({'Unit':name})
+                            addMsgQueue(message.channel, name + "Unit Added On " + str(xa) + str(y + 1) + " ")
+                        else:
+                            addMsgQueue(message.channel, "Insufficent Funds You Need:" + missingItems)
+
                 elif coords is not None:
                     addMsgQueue(message.channel, "Unit Not Found")
 
@@ -636,16 +706,12 @@ async def run(inData, payload, message):
                     x1, x1a, y1 = coord1
                     x2, x2a, y2 = coord2
                     index1 = None
-                    try:
-                        index1 = Data[guild]['Players'][player]['Markers']['Location'].index([x1, y1])
-                    except ValueError:
-                        pass
+                    try: index1 = Data[guild]['Players'][player]['Markers']['Location'].index([x1, y1])
+                    except ValueError: pass
 
                     index2 = None
-                    try:
-                        index2 = Data[guild]['Players'][player]['Markers']['Location'].index([x2, y2])
-                    except ValueError:
-                        pass
+                    try: index2 = Data[guild]['Players'][player]['Markers']['Location'].index([x2, y2])
+                    except ValueError: pass
 
                     targetOccupied = False
                     for playerTest in Data[guild]['Players']:
@@ -656,9 +722,7 @@ async def run(inData, payload, message):
                         except ValueError:
                             pass
 
-                    if abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2 >= 4 or abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2 == 0:
-                        addMsgQueue(message.channel, "Movement Must Be to Adjacent Tiles")
-                    elif index1 is None:
+                    if index1 is None:
                         addMsgQueue(message.channel, "No Unit There To Move")
                     elif 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
                         addMsgQueue(message.channel, "No Unit There To Move")
@@ -667,19 +731,24 @@ async def run(inData, payload, message):
                     elif not Data[guild]['Units'][
                         Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
                     ]['isMobile']:
+                        print('Non Mobile Move')
                         hist =  Data[guild]['Players'][player]['Markers']['Properties'][index1].get('MoveCount')
                         if hist is None:
                             Data[guild]['Players'][player]['Markers']['Properties'][index1]['MoveCount'] = 0
                             hist = 0
-                        Data[guild]['Players'][player]['Markers']['Properties'][index1]['MoveCount'] += 1
                         amount = 3**hist
                         item = 'Energy'
                         canAfford = addItem(guild, payload['Author'], item, -float(amount),
                                                               testOnly=True)
-                        if not canAfford:
+
+                        print('is adj',isAdjacent(guild, payload['Author'],[x2,y2]))
+                        if not isAdjacent(guild, payload['Author'],[x2,y2]):
+                            addMsgQueue(message.channel, "Target is not adjacent to a claim")
+                        elif not canAfford:
                             addMsgQueue(message.channel, "Insufficient Funds To Move: Energy = ", amount)
                         else:
                             addItem(guild, payload['Author'], item, -float(amount))
+                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['MoveCount'] += 1
                             if index2 is None:
                                 Data[guild]['Players'][player]['Markers']['Properties'].append({
                                     'Unit': Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
@@ -699,6 +768,8 @@ async def run(inData, payload, message):
                             addMsgQueue(message.channel,
                                         "Moving Unit From " + x1a + str(y1 + 1) + " to " + x2a + str(y2 + 1))
 
+                    elif abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2 > 2 or abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2 == 0:
+                        addMsgQueue(message.channel, "Movement Must Be to Adjacent Tiles")
                     elif 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
                         addMsgQueue(message.channel, "Unit Is Disabled")
                     else:
@@ -901,6 +972,8 @@ async def run(inData, payload, message):
 
                                     del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index][
                                         'Unit']
+                                    if 'TownItem' in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]:
+                                        del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['TownItem']
                                     addMsgQueue(message.channel, "Unit Razed")
                                 else:
                                     addMsgQueue(message.channel, "You Need 2 BF to raze a unit")
@@ -1432,6 +1505,27 @@ def onDayChange(server):
             Data[guild]['Fed']['Rates'][item] = 100.0/vel * Data[guild]['Fed']['Rates'][item]
                     
     print("OnDayChange: ", time.time() - start)
+
+"""
+Is tile Adjacent
+"""
+def isAdjacent(guild, player, coord):
+    global Data
+    xcord, ycord = coord
+    loc = []
+    for index in range(len(Data[guild]['Players'][player]['Markers']['Location'])):
+        if Data[guild]['Players'][player]['Markers']['Shape'][index] in ['Claim','Capital']:
+            loc.append(Data[guild]['Players'][player]['Markers']['Location'][index])
+
+    isadj = [xcord + 1, ycord + 1] in loc or \
+            [xcord + 1, ycord    ] in loc or \
+            [xcord + 1, ycord - 1] in loc or \
+            [xcord    , ycord + 1] in loc or \
+            [xcord    , ycord - 1] in loc or \
+            [xcord - 1, ycord + 1] in loc or \
+            [xcord - 1, ycord    ] in loc or \
+            [xcord - 1, ycord - 1] in loc
+    return  isadj
 
 
 """
