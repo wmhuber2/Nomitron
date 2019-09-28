@@ -34,7 +34,8 @@ ActionCommands:        Allowed Channels: actions
 +         Sell at fed rate (Rule 351)
 -    !raze @object {coord}
 +         removes a object from map (See rule 360)
-
+-    !{coord}
++         Displays Coordinate Data
 +###########################################
 -  !admin
 -     This will post the ADMIN help screen
