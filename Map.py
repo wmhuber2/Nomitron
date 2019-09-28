@@ -1927,10 +1927,14 @@ async def setup(inData, chans, logchan, server):
         else:
             for tile in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
                 props = Data[guild]['Players'][player]['Markers']['Properties'][tile]
+
                 if 'Unit' not in props:
-                    continue
+                    if 'TownItem' in props:
+                        del props[TownItem]
                 else:
-                    Data[guild]['Players'][player]['Markers']['Properties'][tile]['Unit'] = props['Unit'].lower()
+                    props['Unit'] = props['Unit'].lower()
+
+                Data[guild]['Players'][player]['Markers']['Properties'][tile] = props
 
 
 
