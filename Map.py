@@ -1930,7 +1930,7 @@ async def setup(inData, chans, logchan, server):
 
                 if 'Unit' not in props:
                     if 'TownItem' in props:
-                        del props[TownItem]
+                        del props['TownItem']
                 else:
                     props['Unit'] = props['Unit'].lower()
 
