@@ -355,7 +355,7 @@ async def run(inData, payload, message):
 
     guild = message.guild.id
     splitContent = payload['Content'].split(' ')
-    update = [1,1,1,]
+    update = [0,0,0,]
     #  IF A SERVER CHANNEL
     if payload['Channel Type'] == 'Text':
 
@@ -394,6 +394,7 @@ async def run(inData, payload, message):
                     addMsgQueue(message.channel, msg)
 
         if payload['Channel'].lower() in ['actions-map',] and len(splitContent) != 0:
+            update[0] = 1
 
             if splitContent[0] == '!start' and len(splitContent) == 3:
 
@@ -986,6 +987,8 @@ async def run(inData, payload, message):
             else: update[0] = False
 
         if payload['Channel'].lower() in ['actions',] and len(splitContent) != 0:
+            update[1] = 1
+
             if splitContent[0] == '!trade':
                 for playerid in splitContent[1:-2]:
                     playerName = getPlayer(message.guild, playerid, message.channel)
@@ -1126,263 +1129,264 @@ async def run(inData, payload, message):
             else: update[1] = False
     if payload['Author'] in Admins and payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge',
                                                                           'bot-lounge']:
-            if payload['Content'] == '!csv':
-                print ('csv')
-                import csv
-                csv_columns = ['BF', 'Corn', 'Compensation Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop','Wine','Cracker','Cute_Dog', 'Cake','food']
-                csv_columns = ['Name',]+csv_columns
-                dict_data = []
-                for player in Data[guild]['Players'].keys():
-                    s =  dict(Data[guild]['Players'][player]['Inventory'])
-                    s['Name'] = player
-                    dict_data.append( s )
-                csv_file = "Inventories.csv"
-                try:
-                    with open(csv_file, 'w') as csvfile:
-                        writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
-                        writer.writeheader()
-                        for data in dict_data:
-                            writer.writerow(data)
-                    await message.channel.send(
-                       'CSV Inventory:', file=discord.File(open(csv_file, 'br')))
-                except IOError:
-                    print("I/O error")
+        update[2] = 1
+        if payload['Content'] == '!csv':
+            print ('csv')
+            import csv
+            csv_columns = ['BF', 'Corn', 'Compensation Fish', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop','Wine','Cracker','Cute_Dog', 'Cake','food']
+            csv_columns = ['Name',]+csv_columns
+            dict_data = []
+            for player in Data[guild]['Players'].keys():
+                s =  dict(Data[guild]['Players'][player]['Inventory'])
+                s['Name'] = player
+                dict_data.append( s )
+            csv_file = "Inventories.csv"
+            try:
+                with open(csv_file, 'w') as csvfile:
+                    writer = csv.DictWriter(csvfile, fieldnames=csv_columns)
+                    writer.writeheader()
+                    for data in dict_data:
+                        writer.writerow(data)
+                await message.channel.send(
+                   'CSV Inventory:', file=discord.File(open(csv_file, 'br')))
+            except IOError:
+                print("I/O error")
 
-            elif payload['Content'] == '!newTurn':
-                await onTurnChange(message.guild)
-                addMsgQueue(message.channel, "New Turn Initiated")
-                print('New Turn')
+        elif payload['Content'] == '!newTurn':
+            await onTurnChange(message.guild)
+            addMsgQueue(message.channel, "New Turn Initiated")
+            print('New Turn')
 
-            elif splitContent[0] == '!newDay':
-                onDayChange(message.guild)
-                await updateInAnnouncements(message.guild, postToSpam=True)
+        elif splitContent[0] == '!newDay':
+            onDayChange(message.guild)
+            await updateInAnnouncements(message.guild, postToSpam=True)
 
-            elif payload['Content'] == '!getData':
-                await sendMapData(guild=message.guild.id, channel=message.channel)
-                print("sending Map_Data File")
+        elif payload['Content'] == '!getData':
+            await sendMapData(guild=message.guild.id, channel=message.channel)
+            print("sending Map_Data File")
 
-            elif splitContent[0] == '!remove' and len(splitContent) == 2:
-                if len(splitContent[1]) <= 4:
-                    coords = extractCoords(splitContent[1], message.channel)
-                    if coords is not None:
-                        xcord, xcordAlpha, ycord = coords
-                        for player in Data[guild]['Players'].keys():
-                            try:
-                                index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
-                                del Data[guild]['Players'][player]['Markers']['Location'][index]
-                                del Data[guild]['Players'][player]['Markers']['Shape'][index]
-                                del Data[guild]['Players'][player]['Markers']['Properties'][index]
-                            except ValueError:
-                                pass
-                        addMsgQueue(message.channel, "New Turn Initiated")
-
-                else:
-                    player = getPlayer(message.guild, splitContent[1], message.channel)
-                    if player is not None:
-                        del Data[guild]['Players'][player]
-                        addMsgQueue(message.channel, 'Player ' + player + ' is removed from the Map.')
-
-            elif splitContent[0] == '!setColor' and len(splitContent) == 3:
-                if splitContent[1].lower() in mcd.CSS4_COLORS:
-                    splitContent[1], splitContent[2] = splitContent[2], splitContent[1]
-
-                player = getPlayer(message.guild, splitContent[1], message.channel)
-                if splitContent[2].lower() not in mcd.CSS4_COLORS:
-                    addMsgQueue(message.channel, 'Color ' + splitContent[2] + ' is unavailable. Sorry.')
-                elif player is not None:
-                    Data[guild]['Players'][player]['Color'] = splitContent[2].lower()
-                    addMsgQueue(message.channel, 'Player ' + player + ' is now ' + splitContent[2].lower())
-
-            elif splitContent[0] == '!getTile' and len(splitContent) == 2:
+        elif splitContent[0] == '!remove' and len(splitContent) == 2:
+            if len(splitContent[1]) <= 4:
                 coords = extractCoords(splitContent[1], message.channel)
                 if coords is not None:
                     xcord, xcordAlpha, ycord = coords
-                    msg = "Tile Data:\n"
                     for player in Data[guild]['Players'].keys():
                         try:
                             index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
-                            msg += '-' + player + ": " + str(Data[guild]['Players'][player]['Markers']['Shape'][index])
-                            msg += '\n' + str(Data[guild]['Players'][player]['Markers']['Properties'][index])
+                            del Data[guild]['Players'][player]['Markers']['Location'][index]
+                            del Data[guild]['Players'][player]['Markers']['Shape'][index]
+                            del Data[guild]['Players'][player]['Markers']['Properties'][index]
                         except ValueError:
                             pass
-                    addMsgQueue(message.channel, msg)
+                    addMsgQueue(message.channel, "New Turn Initiated")
 
-            elif splitContent[0] == '!setTile' and len(splitContent) >= 5:
-                coords = extractCoords(splitContent[1], message.channel)
-                playerName = getPlayer(message.guild, splitContent[2], message.channel)
-                shape = splitContent[3]
-                properties = eval(' '.join(splitContent[4:]))
+            else:
+                player = getPlayer(message.guild, splitContent[1], message.channel)
+                if player is not None:
+                    del Data[guild]['Players'][player]
+                    addMsgQueue(message.channel, 'Player ' + player + ' is removed from the Map.')
 
-                if not isinstance(properties, (dict,)):
-                    addMsgQueue(message.channel, 'Properties Is Not Dict.')
-                elif shape not in ['Claim', 'Capital']:
-                    addMsgQueue(message.channel, 'Shape is Not Claim or Capital')
-                elif coords is not None and playerName is not None:
-                    x, xa, y = coords
-                    for player2 in Data[guild]['Players'].keys():
-                        try:
-                            index = Data[guild]['Players'][player2]['Markers']['Location'].index([x, y])
-                            del Data[guild]['Players'][player2]['Markers']['Location'][index]
-                            del Data[guild]['Players'][player2]['Markers']['Shape'][index]
-                            del Data[guild]['Players'][player2]['Markers']['Properties'][index]
-                        except ValueError:
-                            pass
+        elif splitContent[0] == '!setColor' and len(splitContent) == 3:
+            if splitContent[1].lower() in mcd.CSS4_COLORS:
+                splitContent[1], splitContent[2] = splitContent[2], splitContent[1]
 
-                    Data[guild]['Players'][playerName]['Markers']['Location'].append([x, y])
-                    Data[guild]['Players'][playerName]['Markers']['Shape'].append(shape)
-                    Data[guild]['Players'][playerName]['Markers']['Properties'].append(properties)
+            player = getPlayer(message.guild, splitContent[1], message.channel)
+            if splitContent[2].lower() not in mcd.CSS4_COLORS:
+                addMsgQueue(message.channel, 'Color ' + splitContent[2] + ' is unavailable. Sorry.')
+            elif player is not None:
+                Data[guild]['Players'][player]['Color'] = splitContent[2].lower()
+                addMsgQueue(message.channel, 'Player ' + player + ' is now ' + splitContent[2].lower())
 
-                    addMsgQueue(message.channel, 'Marker Changes Set.')
-
-            elif splitContent[0] in ['!resetTimer', '!resetTimers']:
-                playerid = None
-                if len(splitContent) == 2:
-                    playerid = splitContent[1]
-                resetTimers(message.guild, playerid=playerid, channel=message.channel)
-
-            elif splitContent[0] == ['!setTimer', '!setTimers']:
-                playerid = None
-                if len(splitContent) == 2:
-                    playerid = splitContent[1]
-                resetTimers(message.guild, playerid=playerid, channel=message.channel, mode=True)
-
-            elif splitContent[0] == '!give':
-                for playerid in splitContent[1:-2]:
-                    playerName = getPlayer(message.guild, playerid, message.channel)
-
-                    if playerName is not None:
-                        amount = None
-                        item = splitContent[-1]
-                        try:
-                            amount = float(splitContent[-2])
-                        except:
-                            addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
-                        if amount is not None:
-                            addItem(guild, playerName, item, amount)
-                            addMsgQueue(message.channel, 'Transaction Completed For ' + playerName)
-
-            elif payload['Content'] == '!pause':
-                Data[guild]['Pause'] = not Data[guild]['Pause']
-                addMsgQueue(message.channel, "You Have Paused/Unpaused The Bot. Pause is " + str(Data[guild]['Pause']))
-
-            elif payload['Content'] == '!subtractTurn':
+        elif splitContent[0] == '!getTile' and len(splitContent) == 2:
+            coords = extractCoords(splitContent[1], message.channel)
+            if coords is not None:
+                xcord, xcordAlpha, ycord = coords
+                msg = "Tile Data:\n"
                 for player in Data[guild]['Players'].keys():
-                    for i in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
-                        for prop in Data[guild]['Players'][player]['Markers']['Properties'][i].keys():
-                            if prop == 'Harvest':
-                                Data[guild]['Players'][player]['Markers']['Properties'][i][prop]['age'] -= 1
-                addMsgQueue(message.channel, "Every Player Had one Turn Removed Form Harvest Count")
+                    try:
+                        index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
+                        msg += '-' + player + ": " + str(Data[guild]['Players'][player]['Markers']['Shape'][index])
+                        msg += '\n' + str(Data[guild]['Players'][player]['Markers']['Properties'][index])
+                    except ValueError:
+                        pass
+                addMsgQueue(message.channel, msg)
 
-            elif payload['Content'] == '!ping':
-                addMsgQueue(message.channel, "pong")
+        elif splitContent[0] == '!setTile' and len(splitContent) >= 5:
+            coords = extractCoords(splitContent[1], message.channel)
+            playerName = getPlayer(message.guild, splitContent[2], message.channel)
+            shape = splitContent[3]
+            properties = eval(' '.join(splitContent[4:]))
 
-            elif splitContent[0] == '!mark' and len(splitContent) == 4:
-                location, marker, player = splitContent[1:]
-                if len(marker) > len(player): marker, player = player, marker
-                if marker[0] == '"' and marker[-1] == '"':
-                    marker = '${0}$'.format(marker[1:-1])
+            if not isinstance(properties, (dict,)):
+                addMsgQueue(message.channel, 'Properties Is Not Dict.')
+            elif shape not in ['Claim', 'Capital']:
+                addMsgQueue(message.channel, 'Shape is Not Claim or Capital')
+            elif coords is not None and playerName is not None:
+                x, xa, y = coords
+                for player2 in Data[guild]['Players'].keys():
+                    try:
+                        index = Data[guild]['Players'][player2]['Markers']['Location'].index([x, y])
+                        del Data[guild]['Players'][player2]['Markers']['Location'][index]
+                        del Data[guild]['Players'][player2]['Markers']['Shape'][index]
+                        del Data[guild]['Players'][player2]['Markers']['Properties'][index]
+                    except ValueError:
+                        pass
 
-                coords = extractCoords(location, message.channel)
-                player = getPlayer(message.guild, player, message.channel)
-                if player is not None and coords is not None:
-                    x, xa, y = coords
-                    for player2 in Data[guild]['Players'].keys():
-                        try:
-                            index = Data[guild]['Players'][player2]['Markers']['Location'].index([x, y])
-                            del Data[guild]['Players'][player2]['Markers']['Location'][index]
-                            del Data[guild]['Players'][player2]['Markers']['Shape'][index]
-                            del Data[guild]['Players'][player2]['Markers']['Properties'][index]
-                        except ValueError:
-                            pass
-                    Data[guild]['Players'][player]['Markers']['Location'].append([x, y])
-                    Data[guild]['Players'][player]['Markers']['Shape'].append(marker)
-                    Data[guild]['Players'][player]['Markers']['Properties'].append({'Unit': {}})
-                    addMsgQueue(message.channel, "Location Marked")
+                Data[guild]['Players'][playerName]['Markers']['Location'].append([x, y])
+                Data[guild]['Players'][playerName]['Markers']['Shape'].append(shape)
+                Data[guild]['Players'][playerName]['Markers']['Properties'].append(properties)
 
-            elif splitContent[0] == '!newUnit' and len(splitContent) == 1:
-                addMsgQueue(message.channel, str(UNIT_BASE))
+                addMsgQueue(message.channel, 'Marker Changes Set.')
 
-            elif splitContent[0] == '!newUnit' and len(splitContent) > 1:
-                name = splitContent[1].lower()
-                data = dict(eval(' '.join(splitContent[2:])))
+        elif splitContent[0] in ['!resetTimer', '!resetTimers']:
+            playerid = None
+            if len(splitContent) == 2:
+                playerid = splitContent[1]
+            resetTimers(message.guild, playerid=playerid, channel=message.channel)
 
-                if name in Data[guild]['Units']:
-                    addMsgQueue(message.channel, "Replacing Existing Unit...")
+        elif splitContent[0] == ['!setTimer', '!setTimers']:
+            playerid = None
+            if len(splitContent) == 2:
+                playerid = splitContent[1]
+            resetTimers(message.guild, playerid=playerid, channel=message.channel, mode=True)
 
-                requirements = dict(UNIT_BASE)
-                for key in data.keys():
-                    if requirements.get(key) is not None:
-                        requirements[key] = data[key]
-                Data[guild]['Units'][name] = requirements
+        elif splitContent[0] == '!give':
+            for playerid in splitContent[1:-2]:
+                playerName = getPlayer(message.guild, playerid, message.channel)
 
-                addMsgQueue(message.channel, "Unit Saved")
+                if playerName is not None:
+                    amount = None
+                    item = splitContent[-1]
+                    try:
+                        amount = float(splitContent[-2])
+                    except:
+                        addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
+                    if amount is not None:
+                        addItem(guild, playerName, item, amount)
+                        addMsgQueue(message.channel, 'Transaction Completed For ' + playerName)
 
-            elif splitContent[0] == '!removeUnit' and len(splitContent) == 2:
-                name = splitContent[1]
+        elif payload['Content'] == '!pause':
+            Data[guild]['Pause'] = not Data[guild]['Pause']
+            addMsgQueue(message.channel, "You Have Paused/Unpaused The Bot. Pause is " + str(Data[guild]['Pause']))
 
-                if name in Data[guild]['Units']:
-                    del Data[guild]['Units'][name]
-                    addMsgQueue(message.channel, "Removeing Existing Unit...")
-                else:
-                    addMsgQueue(message.channel, "Unit Not Found")
+        elif payload['Content'] == '!subtractTurn':
+            for player in Data[guild]['Players'].keys():
+                for i in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
+                    for prop in Data[guild]['Players'][player]['Markers']['Properties'][i].keys():
+                        if prop == 'Harvest':
+                            Data[guild]['Players'][player]['Markers']['Properties'][i][prop]['age'] -= 1
+            addMsgQueue(message.channel, "Every Player Had one Turn Removed Form Harvest Count")
 
-            elif splitContent[0] == '!setTerm' and len(splitContent) == 2:
-                try:
-                    term = int(splitContent[1])
-                    Data[guild]['Fed']['Term']=term
-                except:
-                    addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into a term 0-5')
+        elif payload['Content'] == '!ping':
+            addMsgQueue(message.channel, "pong")
 
-            elif splitContent[0] == '!adjust':
-                import re
-                if splitContent[-1].lower() in ['increasing', 'static', 'decreasing']:
-                    for item in splitContent[1:-2]:
-                        if item not in Data[guild]['Fed']['Velocity']:
-                            addMsgQueue(message.channel, item+" Not Found..Skipped")
-                        elif splitContent[-1].lower() == 'increasing':
-                            Data[guild]['Fed']['Velocity'][item] = 10.0
-                        elif splitContent[-1].lower() == 'decreasing':
-                            Data[guild]['Fed']['Velocity'][item] = -10.0
-                        elif splitContent[-1].lower()  == 'static':
-                            Data[guild]['Fed']['Velocity'][item] = 0
-                elif re.match("^\d+?\.\d+?$", splitContent[-1]) is not None:
-                    for item in splitContent[1:-2]:
-                       Data[guild]['Fed']['Rates'][item] = 1.0/float(splitContent[-1])
-                else:
-                    addMsgQueue(message.channel, "Not a valid velocity")
-                addMsgQueue(message.channel,'Fed Market Updated')
+        elif splitContent[0] == '!mark' and len(splitContent) == 4:
+            location, marker, player = splitContent[1:]
+            if len(marker) > len(player): marker, player = player, marker
+            if marker[0] == '"' and marker[-1] == '"':
+                marker = '${0}$'.format(marker[1:-1])
 
-            elif splitContent[0] == '!specialCommand':
+            coords = extractCoords(location, message.channel)
+            player = getPlayer(message.guild, player, message.channel)
+            if player is not None and coords is not None:
+                x, xa, y = coords
+                for player2 in Data[guild]['Players'].keys():
+                    try:
+                        index = Data[guild]['Players'][player2]['Markers']['Location'].index([x, y])
+                        del Data[guild]['Players'][player2]['Markers']['Location'][index]
+                        del Data[guild]['Players'][player2]['Markers']['Shape'][index]
+                        del Data[guild]['Players'][player2]['Markers']['Properties'][index]
+                    except ValueError:
+                        pass
+                Data[guild]['Players'][player]['Markers']['Location'].append([x, y])
+                Data[guild]['Players'][player]['Markers']['Shape'].append(marker)
+                Data[guild]['Players'][player]['Markers']['Properties'].append({'Unit': {}})
+                addMsgQueue(message.channel, "Location Marked")
 
-                array = np.random.rand(75,75)*175
-                array[2,13] = 0.5
+        elif splitContent[0] == '!newUnit' and len(splitContent) == 1:
+            addMsgQueue(message.channel, str(UNIT_BASE))
 
-                coords = np.where(array<=1)
-                for x,y in zip(coords[0], coords[1]):
-                    if isTileType(Data[guild]['Image'],x,y,'LAND'):
-                        print(x, y)
-                        isOnPlayer = False
-                        for player in Data[guild]['Players'].keys():
-                            if [x,y] in Data[guild]['Players'][player]['Markers']['Location']:
-                                print(1,player)
-                                index = Data[guild]['Players'][player]['Markers']['Location'].index([x,y])
+        elif splitContent[0] == '!newUnit' and len(splitContent) > 1:
+            name = splitContent[1].lower()
+            data = dict(eval(' '.join(splitContent[2:])))
 
-                                if 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][index]:
-                                    Data[guild]['Players'][player]['Markers']['Properties'][index][
-                                        'Unit'] = 'town'
-                                    Data[guild]['Players'][player]['Markers']['Properties'][index][
-                                        'TownItem'] = random.choice(resourceList)
+            if name in Data[guild]['Units']:
+                addMsgQueue(message.channel, "Replacing Existing Unit...")
 
-                                isOnPlayer = True
-                        if not isOnPlayer:
-                            Data[guild]['Players'][botName]['Markers']['Shape'].append("")
-                            Data[guild]['Players'][botName]['Markers']['Location'].append([x,y])
-                            Data[guild]['Players'][botName]['Markers']['Properties'].append({
-                                'Unit': 'town',
-                                'TownItem': random.choice(resourceList)
-                            })
+            requirements = dict(UNIT_BASE)
+            for key in data.keys():
+                if requirements.get(key) is not None:
+                    requirements[key] = data[key]
+            Data[guild]['Units'][name] = requirements
 
-            else: update[2] = False
+            addMsgQueue(message.channel, "Unit Saved")
+
+        elif splitContent[0] == '!removeUnit' and len(splitContent) == 2:
+            name = splitContent[1]
+
+            if name in Data[guild]['Units']:
+                del Data[guild]['Units'][name]
+                addMsgQueue(message.channel, "Removeing Existing Unit...")
+            else:
+                addMsgQueue(message.channel, "Unit Not Found")
+
+        elif splitContent[0] == '!setTerm' and len(splitContent) == 2:
+            try:
+                term = int(splitContent[1])
+                Data[guild]['Fed']['Term']=term
+            except:
+                addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into a term 0-5')
+
+        elif splitContent[0] == '!adjust':
+            import re
+            if splitContent[-1].lower() in ['increasing', 'static', 'decreasing']:
+                for item in splitContent[1:-2]:
+                    if item not in Data[guild]['Fed']['Velocity']:
+                        addMsgQueue(message.channel, item+" Not Found..Skipped")
+                    elif splitContent[-1].lower() == 'increasing':
+                        Data[guild]['Fed']['Velocity'][item] = 10.0
+                    elif splitContent[-1].lower() == 'decreasing':
+                        Data[guild]['Fed']['Velocity'][item] = -10.0
+                    elif splitContent[-1].lower()  == 'static':
+                        Data[guild]['Fed']['Velocity'][item] = 0
+            elif re.match("^\d+?\.\d+?$", splitContent[-1]) is not None:
+                for item in splitContent[1:-2]:
+                   Data[guild]['Fed']['Rates'][item] = 1.0/float(splitContent[-1])
+            else:
+                addMsgQueue(message.channel, "Not a valid velocity")
+            addMsgQueue(message.channel,'Fed Market Updated')
+
+        elif splitContent[0] == '!specialCommand':
+
+            array = np.random.rand(75,75)*175
+            array[2,13] = 0.5
+
+            coords = np.where(array<=1)
+            for x,y in zip(coords[0], coords[1]):
+                if isTileType(Data[guild]['Image'],x,y,'LAND'):
+                    print(x, y)
+                    isOnPlayer = False
+                    for player in Data[guild]['Players'].keys():
+                        if [x,y] in Data[guild]['Players'][player]['Markers']['Location']:
+                            print(1,player)
+                            index = Data[guild]['Players'][player]['Markers']['Location'].index([x,y])
+
+                            if 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][index]:
+                                Data[guild]['Players'][player]['Markers']['Properties'][index][
+                                    'Unit'] = 'town'
+                                Data[guild]['Players'][player]['Markers']['Properties'][index][
+                                    'TownItem'] = random.choice(resourceList)
+
+                            isOnPlayer = True
+                    if not isOnPlayer:
+                        Data[guild]['Players'][botName]['Markers']['Shape'].append("")
+                        Data[guild]['Players'][botName]['Markers']['Location'].append([x,y])
+                        Data[guild]['Players'][botName]['Markers']['Properties'].append({
+                            'Unit': 'town',
+                            'TownItem': random.choice(resourceList)
+                        })
+
+        else: update[2] = False
 
     #  IF A DM CHANNEL
     if payload['Channel Type'] == 'DM':

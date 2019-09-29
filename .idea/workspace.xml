@@ -210,13 +210,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00218" summary="AssetTrade update">
-      <created>1567956554741</created>
-      <option name="number" value="00218" />
-      <option name="presentableId" value="LOCAL-00218" />
-      <option name="project" value="LOCAL" />
-      <updated>1567956554742</updated>
-    </task>
     <task id="LOCAL-00219" summary="The Oracle Nonsense.">
       <created>1568250121608</created>
       <option name="number" value="00219" />
@@ -553,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569699663148</updated>
     </task>
-    <option name="localTasksCounter" value="267" />
+    <task id="LOCAL-00267" summary="New Rule and Info on tiles">
+      <created>1569703633718</created>
+      <option name="number" value="00267" />
+      <option name="presentableId" value="LOCAL-00267" />
+      <option name="project" value="LOCAL" />
+      <updated>1569703633718</updated>
+    </task>
+    <option name="localTasksCounter" value="268" />
     <servers />
   </component>
   <component name="TodoView">
