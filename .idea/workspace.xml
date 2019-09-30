@@ -210,13 +210,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00219" summary="The Oracle Nonsense.">
-      <created>1568250121608</created>
-      <option name="number" value="00219" />
-      <option name="presentableId" value="LOCAL-00219" />
-      <option name="project" value="LOCAL" />
-      <updated>1568250121608</updated>
-    </task>
     <task id="LOCAL-00220" summary="The Oracle Nonsense.">
       <created>1568264250909</created>
       <option name="number" value="00220" />
@@ -553,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569703633718</updated>
     </task>
-    <option name="localTasksCounter" value="268" />
+    <task id="LOCAL-00268" summary="Speed Update">
+      <created>1569768100428</created>
+      <option name="number" value="00268" />
+      <option name="presentableId" value="LOCAL-00268" />
+      <option name="project" value="LOCAL" />
+      <updated>1569768100428</updated>
+    </task>
+    <option name="localTasksCounter" value="269" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +592,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Bug Fix: Harvest Counter" />
     <MESSAGE value="Bug Fix: Doby Msg in wrong location" />
     <MESSAGE value="AssetTrade and harvest counter" />
     <MESSAGE value="AssetTrade update" />
@@ -617,7 +616,8 @@
     <MESSAGE value="Raze Confirmation" />
     <MESSAGE value="Toggle effect is now immediatly visable," />
     <MESSAGE value="New Rule and Info on tiles" />
-    <option name="LAST_COMMIT_MESSAGE" value="New Rule and Info on tiles" />
+    <MESSAGE value="Speed Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Speed Update" />
   </component>
   <component name="masterDetails">
     <states>

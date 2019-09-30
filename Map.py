@@ -36,7 +36,7 @@ savefile = str(__name__)  # + '_Data.pickle'
 print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
 itemList = ['BF', 'Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop','C-Fish']
-resourceList = ['Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy', 'Gloop','BF']
+resourceList = ['Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
 FedMaterialList = ['Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
 import itertools
 
