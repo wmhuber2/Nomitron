@@ -1542,7 +1542,7 @@ async def onTurnChange(server):
     guild = server.id
     Data[guild]['Fed']['Term'] += 1
     if Data[guild]['Fed']['Term'] >= 5:
-        Data[guild]['Fed']['Term'] += 0
+        Data[guild]['Fed']['Term'] = 0
         FedMembers = getRoleList(server,'Fed Member')
         Inactives = getRoleList(server, 'Inactive')
         role = getRole(server,name='Fed Member')

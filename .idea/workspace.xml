@@ -210,13 +210,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00220" summary="The Oracle Nonsense.">
-      <created>1568264250909</created>
-      <option name="number" value="00220" />
-      <option name="presentableId" value="LOCAL-00220" />
-      <option name="project" value="LOCAL" />
-      <updated>1568264250909</updated>
-    </task>
     <task id="LOCAL-00221" summary="Bug Fix With gloop as item, and cleanup code">
       <created>1568318434529</created>
       <option name="number" value="00221" />
@@ -553,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569768100428</updated>
     </task>
-    <option name="localTasksCounter" value="269" />
+    <task id="LOCAL-00269" summary="Speed Update">
+      <created>1569854519494</created>
+      <option name="number" value="00269" />
+      <option name="presentableId" value="LOCAL-00269" />
+      <option name="project" value="LOCAL" />
+      <updated>1569854519494</updated>
+    </task>
+    <option name="localTasksCounter" value="270" />
     <servers />
   </component>
   <component name="TodoView">
