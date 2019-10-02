@@ -5,7 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -209,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00221" summary="Bug Fix With gloop as item, and cleanup code">
-      <created>1568318434529</created>
-      <option name="number" value="00221" />
-      <option name="presentableId" value="LOCAL-00221" />
-      <option name="project" value="LOCAL" />
-      <updated>1568318434529</updated>
     </task>
     <task id="LOCAL-00222" summary="Bug Fix With gloop as resource.">
       <created>1568318625227</created>
@@ -553,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569854519494</updated>
     </task>
-    <option name="localTasksCounter" value="270" />
+    <task id="LOCAL-00270" summary="Bug Fix Fed Term Reset">
+      <created>1569907313144</created>
+      <option name="number" value="00270" />
+      <option name="presentableId" value="LOCAL-00270" />
+      <option name="project" value="LOCAL" />
+      <updated>1569907313144</updated>
+    </task>
+    <option name="localTasksCounter" value="271" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Bug Fix: Doby Msg in wrong location" />
     <MESSAGE value="AssetTrade and harvest counter" />
     <MESSAGE value="AssetTrade update" />
     <MESSAGE value="The Oracle Nonsense." />
@@ -617,7 +615,8 @@
     <MESSAGE value="Toggle effect is now immediatly visable," />
     <MESSAGE value="New Rule and Info on tiles" />
     <MESSAGE value="Speed Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Speed Update" />
+    <MESSAGE value="Bug Fix Fed Term Reset" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix Fed Term Reset" />
   </component>
   <component name="masterDetails">
     <states>

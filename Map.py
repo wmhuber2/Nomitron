@@ -1120,7 +1120,7 @@ async def run(inData, payload, message):
                 elif amount is not None \
                         and addItem(guild, payload['Author'], item, -amount, testOnly=True):
                     addItem(guild, payload['Author'], item, -amount)
-                    amount = math.floor(amount * Data[guild]['Fed']['Rates'][item])
+                    amount = math.floor(amount / Data[guild]['Fed']['Rates'][item])
                     addItem(guild, payload['Author'], 'BF', amount)
                     addMsgQueue(message.channel, "Here is "+str(amount)+' BF. Enjoy.')
                 else:
