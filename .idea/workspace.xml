@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,7 +47,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../AnimatorDiscord.py" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="preferences.editor" />
@@ -208,13 +210,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00222" summary="Bug Fix With gloop as resource.">
-      <created>1568318625227</created>
-      <option name="number" value="00222" />
-      <option name="presentableId" value="LOCAL-00222" />
-      <option name="project" value="LOCAL" />
-      <updated>1568318625227</updated>
     </task>
     <task id="LOCAL-00223" summary="Bug Fix Sermon">
       <created>1568439260963</created>
@@ -552,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1569907313144</updated>
     </task>
-    <option name="localTasksCounter" value="271" />
+    <task id="LOCAL-00271" summary="Bug Fix Sell">
+      <created>1570054585784</created>
+      <option name="number" value="00271" />
+      <option name="presentableId" value="LOCAL-00271" />
+      <option name="project" value="LOCAL" />
+      <updated>1570054585784</updated>
+    </task>
+    <option name="localTasksCounter" value="272" />
     <servers />
   </component>
   <component name="TodoView">
@@ -591,7 +593,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="AssetTrade and harvest counter" />
     <MESSAGE value="AssetTrade update" />
     <MESSAGE value="The Oracle Nonsense." />
     <MESSAGE value="Bug Fix With gloop as item, and cleanup code" />
@@ -616,7 +617,8 @@
     <MESSAGE value="New Rule and Info on tiles" />
     <MESSAGE value="Speed Update" />
     <MESSAGE value="Bug Fix Fed Term Reset" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix Fed Term Reset" />
+    <MESSAGE value="Bug Fix Sell" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix Sell" />
   </component>
   <component name="masterDetails">
     <states>

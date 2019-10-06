@@ -63,8 +63,6 @@ async def addMember(inData, member):
 """
 Function Called on Reaction
 """
-
-
 async def reaction(inData, action, user, messageid, emoji):
     global Data
     loadData(inData)
@@ -77,6 +75,8 @@ async def reaction(inData, action, user, messageid, emoji):
 
     if splitContent[0] == '!unit' and len(splitContent) == 3 and reactorName in Admins:
         coords, name = splitContent[1:]
+        addMsgQueue(message.channel, "Mod Must Add Unit Manually.")
+        """
         if coords in Data[guild]['Units'].keys(): coords, name = name, coords
 
         coords = extractCoords(coords, message.channel)
@@ -99,7 +99,7 @@ async def reaction(inData, action, user, messageid, emoji):
                 if Data[guild]['Players'][playerName]['Markers']['Shape'][indexTile] == "":
                     addMsgQueue(message.channel, "Units Must Be Upgraded Adjacent To A Claimed Tile")
                 elif unit['UpgradeUnit'] != "" and unit['UpgradeUnit'] != \
-                        Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']:
+                        Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']['Name']:
                     addMsgQueue(message.channel, "This location cannot be Upgraded To " + name)
                 elif unit['UpgradeUnit'] == "" and 'Unit' in \
                         Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]:
@@ -109,13 +109,13 @@ async def reaction(inData, action, user, messageid, emoji):
                         amount, item = cost.split(' ')
                         addItem(guild, playerName, item, -float(amount))
 
-                    Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit'] = name
+                    Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit'] = {'Name': name}
                     addMsgQueue(message.channel, name + "Unit Added On " + str(xa) + str(y + 1) + " For " + playerName)
                 else:
                     addMsgQueue(message.channel, "Insufficent Funds")
         else:
             addMsgQueue(message.channel, "Unit Not Found")
-
+        """
     elif splitContent[0] == '!claim' and len(splitContent) == 2 and reactorName == playerName and action == 'add':
         bot = None
         canContinute = True
@@ -156,12 +156,13 @@ async def reaction(inData, action, user, messageid, emoji):
                                     "Bad Kid " + reactorName + " has Claimed with " + str(amount) + ' ' + cost)
 
                     properties = {}
-                    if [xcord, ycord] in Data[guild]['Players'][botName]['Markers']['Location']:
-                        index = Data[guild]['Players'][botName]['Markers']['Location'].index([xcord,ycord])
-                        properties = dict(Data[guild]['Players'][botName]['Markers']['Properties'][index])
-                        Data[guild]['Players'][botName]['Markers']['Location'].pop(index)
-                        Data[guild]['Players'][botName]['Markers']['Properties'].pop(index)
-                        Data[guild]['Players'][botName]['Markers']['Shape'].pop(index)
+                    for player in Data[guild]['Players'].keys():
+                        if [xcord, ycord] in Data[guild]['Players'][player]['Markers']['Location']:
+                            index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord,ycord])
+                            properties = dict(Data[guild]['Players'][player]['Markers']['Properties'][index])
+                            Data[guild]['Players'][player]['Markers']['Location'].pop(index)
+                            Data[guild]['Players'][player]['Markers']['Properties'].pop(index)
+                            Data[guild]['Players'][player]['Markers']['Shape'].pop(index)
 
                     Data[guild]['Players'][playerName]['Markers']['Location'].append([xcord, ycord])
                     Data[guild]['Players'][playerName]['Markers']['Properties'].append(properties)
@@ -204,9 +205,18 @@ async def reaction(inData, action, user, messageid, emoji):
                     except:
                         addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
 
-                    if amount is not None \
+
+                    if item.lower() in ['diplomats','diplomat']:
+                        loc1 = None
+                        loc2 = None
+                        for tile in range(len(Data[guild]['Players'][giver]['Markers']['Location'])):
+                            if Data[guild]['Players'][giver]['Markers']['Properties'].get('Unit') == 'diplomats':
+                                pass
+                        addMsgQueue(message.channel, "Cannot Trade Diplomats Yet Sorry.")
+
+                    elif amount is not None \
                             and addItem(guild, playerName, item, -amount, testOnly=True) \
-                            and addItem(guild, targetName, item, amount, testOnly=True):
+                            and addItem(guild, targetName, item,  amount, testOnly=True):
                         await message.remove_reaction('👍', bot)
                         await message.remove_reaction('👎', bot)
 
@@ -344,8 +354,6 @@ async def reaction(inData, action, user, messageid, emoji):
 """
 Main Run Function On Messages
 """
-
-
 async def run(inData, payload, message):
     global Data
     loadData(inData)
@@ -440,8 +448,11 @@ async def run(inData, payload, message):
                             isClaimed = False
                             for player in Data[guild]['Players'].keys(): 
                                 if botName == player: continue
-                                isClaimed = isClaimed or (
-                                            [xcord, ycord] in Data[guild]['Players'][player]['Markers']['Location'])
+                                if [xcord, ycord] not in Data[guild]['Players'][player]['Markers']['Location']: continue
+
+                                inde = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
+                                isClaimed = isClaimed or \
+                                            Data[guild]['Players'][player]['Markers']['Shape'] in ['Claim', 'Capital']
 
                             if isClaimed:
                                 addMsgQueue(message.channel, "You cannot claim this location. It is already claimed.")
@@ -450,12 +461,13 @@ async def run(inData, payload, message):
                                 await message.add_reaction('🌮')
                             elif addItem(guild, payload['Author'], 'BF', -2):
                                 properties = {}
-                                if [xcord, ycord] in Data[guild]['Players'][botName]['Markers']['Location']:
-                                    index = Data[guild]['Players'][botName]['Markers']['Location'].index([xcord,ycord])
-                                    properties = dict(Data[guild]['Players'][botName]['Markers']['Properties'][index])
-                                    Data[guild]['Players'][botName]['Markers']['Location'].pop(index)
-                                    Data[guild]['Players'][botName]['Markers']['Properties'].pop(index)
-                                    Data[guild]['Players'][botName]['Markers']['Shape'].pop(index)
+                                for player in Data[guild]['Players'].keys():
+                                    if [xcord, ycord] in Data[guild]['Players'][player]['Markers']['Location']:
+                                        index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord,ycord])
+                                        properties = dict(Data[guild]['Players'][player]['Markers']['Properties'][index])
+                                        Data[guild]['Players'][player]['Markers']['Location'].pop(index)
+                                        Data[guild]['Players'][player]['Markers']['Properties'].pop(index)
+                                        Data[guild]['Players'][player ]['Markers']['Shape'].pop(index)
 
 
                                 Data[guild]['Players'][payload['Author']]['Markers']['Location'].append([xcord, ycord])
@@ -563,41 +575,43 @@ async def run(inData, payload, message):
                     unit = dict(Data[guild]['Units'][name])
                     indexTile = None
 
-                    try:
-                        indexTile = Data[guild]['Players'][playerName]['Markers']['Location'].index([x, y])
-                    except:
-                        pass
+                    canAfford = True
+                    missingItems = ""
+                    for cost in unit['Costs']:
+                        amount, item = cost.split(' ')
+                        if not addItem(guild, playerName, item, -float(amount), testOnly=True):
+                            canAfford = False
+                            missingItems += '   ' + str(amount) + ' ' + item + "\n"
+
+
+                    try: indexTile = Data[guild]['Players'][playerName]['Markers']['Location'].index([x, y])
+                    except:  pass
 
                     if not isAdjacent(guild,playerName, [x,y] ):
                         addMsgQueue(message.channel, "You Do Not Own An Ajacent Location")
+                    elif unit['LandOnly'] and not isTileType(Data[guild]['Image'], x, y, 'LAND'):
+                        addMsgQueue(message.channel, "This Can Only Be Placed On Land")
+                    elif unit['WaterOnly'] and not isTileType(Data[guild]['Image'], x, y, 'WATER'):
+                        addMsgQueue(message.channel, "This Can Only Be Placed On Water")
+                    elif unit['BeachOnly'] and not (
+                            isTileType(Data[guild]['Image'], x, y, 'LAND')
+                            and (
+                                    isTileType(Data[guild]['Image'], x + 1, y, 'WATER') or
+                                    isTileType(Data[guild]['Image'], x - 1, y, 'WATER') or
+                                    isTileType(Data[guild]['Image'], x, y + 1, 'WATER') or
+                                    isTileType(Data[guild]['Image'], x, y - 1, 'WATER')
+                            )
+                    ): addMsgQueue(message.channel, "This Can Only Be Placed On A Beach")
+                    elif name == 'diplomats' and hasUnit(guild,playerName,'diplomats') >= 3*hasUnit(guild,playerName,'embassy'):
+                        addMsgQueue(message.channel, "You need more Embassies to make more Diplomats.")
 
                     elif indexTile is not None:
-                        canAfford = True
-                        missingItems = ""
-                        for cost in unit['Costs']:
-                            amount, item = cost.split(' ')
-                            if not addItem(guild, playerName, item, -float(amount), testOnly=True):
-                                canAfford = False
-                                missingItems += '   ' + str(amount) + ' ' + item + "\n"
 
                         if Data[guild]['Players'][playerName]['Markers']['Shape'][indexTile] == "":
                             addMsgQueue(message.channel, "Units Must Be Upgraded On Your Claimed Tile")
-                        elif unit['LandOnly'] and not isTileType(Data[guild]['Image'], x, y, 'LAND'):
-                            addMsgQueue(message.channel, "This Can Only Be Placed On Land")
-                        elif unit['WaterOnly'] and not isTileType(Data[guild]['Image'], x, y, 'WATER'):
-                            addMsgQueue(message.channel, "This Can Only Be Placed On Water")
-                        elif unit['BeachOnly'] and not (
-                                isTileType(Data[guild]['Image'], x, y, 'LAND')
-                                and (
-                                        isTileType(Data[guild]['Image'], x + 1, y, 'WATER') or
-                                        isTileType(Data[guild]['Image'], x - 1, y, 'WATER') or
-                                        isTileType(Data[guild]['Image'], x, y + 1, 'WATER') or
-                                        isTileType(Data[guild]['Image'], x, y - 1, 'WATER')
-                                )
-                        ):
-                            addMsgQueue(message.channel, "This Can Only Be Placed On A Beach")
+
                         elif unit['UpgradeUnit'] != "" and unit['UpgradeUnit'] != \
-                                Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']:
+                                Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']['Name']:
                             addMsgQueue(message.channel, "This location cannot be Upgraded To " + name)
                         elif unit['UpgradeUnit'] == "" and 'Unit' in \
                                 Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]:
@@ -608,79 +622,17 @@ async def run(inData, payload, message):
                             for cost in unit['Costs']:
                                 amount, item = cost.split(' ')
                                 addItem(guild, playerName, item, -float(amount))
+                            Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']={'Name': name}
+                            if name == 'diplomats':
+                                Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']['Originator'] = playerName
 
-                            Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit'] = name
                             addMsgQueue(message.channel, name + "Unit Added On " + str(xa) + str(y + 1) + " ")
                         else:
                             addMsgQueue(message.channel, "Insufficent Funds You Need:" + missingItems)
-                            if indexTile is not None:
-                                canAfford = True
-                                missingItems = ""
-                                for cost in unit['Costs']:
-                                    amount, item = cost.split(' ')
-                                    if not addItem(guild, playerName, item, -float(amount), testOnly=True):
-                                        canAfford = False
-                                        missingItems += '   ' + str(amount) + ' ' + item + "\n"
-
-                                if Data[guild]['Players'][playerName]['Markers']['Shape'][indexTile] == "":
-                                    addMsgQueue(message.channel, "Units Must Be Upgraded On Your Claimed Tile")
-                                elif unit['LandOnly'] and not isTileType(Data[guild]['Image'], x, y, 'LAND'):
-                                    addMsgQueue(message.channel, "This Can Only Be Placed On Land")
-                                elif unit['WaterOnly'] and not isTileType(Data[guild]['Image'], x, y, 'WATER'):
-                                    addMsgQueue(message.channel, "This Can Only Be Placed On Water")
-                                elif unit['BeachOnly'] and not (
-                                        isTileType(Data[guild]['Image'], x, y, 'LAND')
-                                        and (
-                                                isTileType(Data[guild]['Image'], x + 1, y, 'WATER') or
-                                                isTileType(Data[guild]['Image'], x - 1, y, 'WATER') or
-                                                isTileType(Data[guild]['Image'], x, y + 1, 'WATER') or
-                                                isTileType(Data[guild]['Image'], x, y - 1, 'WATER')
-                                        )
-                                ):
-                                    addMsgQueue(message.channel, "This Can Only Be Placed On A Beach")
-                                elif unit['UpgradeUnit'] != "" and unit['UpgradeUnit'] != \
-                                        Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']:
-                                    addMsgQueue(message.channel, "This location cannot be Upgraded To " + name)
-                                elif unit['UpgradeUnit'] == "" and 'Unit' in \
-                                        Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]:
-                                    addMsgQueue(message.channel, "This location Already Has Unit")
-                                elif unit['NeedAdminApproval']:
-                                    addMsgQueue(message.channel, "Awaiting Admin/Mod React on Request For Approval")
-                                elif canAfford:
-                                    for cost in unit['Costs']:
-                                        amount, item = cost.split(' ')
-                                        addItem(guild, playerName, item, -float(amount))
-
-                                    Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile][
-                                        'Unit'] = name
-                                    addMsgQueue(message.channel, name + "Unit Added On " + str(xa) + str(y + 1) + " ")
-                                else:
-                                    addMsgQueue(message.channel, "Insufficent Funds You Need:" + missingItems)
 
                     elif indexTile is None:
-                        canAfford = True
-                        missingItems = ""
-                        for cost in unit['Costs']:
-                            amount, item = cost.split(' ')
-                            if not addItem(guild, playerName, item, -float(amount), testOnly=True):
-                                canAfford = False
-                                missingItems += '   ' + str(amount) + ' ' + item + "\n"
 
-                        if unit['LandOnly'] and not isTileType(Data[guild]['Image'], x, y, 'LAND'):
-                            addMsgQueue(message.channel, "This Can Only Be Placed On Land")
-                        elif unit['WaterOnly'] and not isTileType(Data[guild]['Image'], x, y, 'WATER'):
-                            addMsgQueue(message.channel, "This Can Only Be Placed On Water")
-                        elif unit['BeachOnly'] and not (
-                                isTileType(Data[guild]['Image'], x, y, 'LAND')
-                                and (
-                                        isTileType(Data[guild]['Image'], x + 1, y, 'WATER') or
-                                        isTileType(Data[guild]['Image'], x - 1, y, 'WATER') or
-                                        isTileType(Data[guild]['Image'], x, y + 1, 'WATER') or
-                                        isTileType(Data[guild]['Image'], x, y - 1, 'WATER')
-                                )
-                        ):
-                            addMsgQueue(message.channel, "This Can Only Be Placed On A Beach")
-                        elif unit['UpgradeUnit'] != "" :
+                        if unit['UpgradeUnit'] != "" :
                             addMsgQueue(message.channel, "This location cannot be Upgraded To " + name)
                         elif unit['NeedAdminApproval']:
                             addMsgQueue(message.channel, "Awaiting Admin/Mod React on Request For Approval")
@@ -691,7 +643,7 @@ async def run(inData, payload, message):
 
                             Data[guild]['Players'][playerName]['Markers']['Location'].append([x,y])
                             Data[guild]['Players'][playerName]['Markers']['Shape'].append("")
-                            Data[guild]['Players'][playerName]['Markers']['Properties'].append({'Unit':name})
+                            Data[guild]['Players'][playerName]['Markers']['Properties'].append({'Unit':{'Name':name}})
                             addMsgQueue(message.channel, name + "Unit Added On " + str(xa) + str(y + 1) + " ")
                         else:
                             addMsgQueue(message.channel, "Insufficent Funds You Need:" + missingItems)
@@ -730,12 +682,12 @@ async def run(inData, payload, message):
                     elif targetOccupied:
                         addMsgQueue(message.channel, "2 Units cant exist in the same location")
                     elif not Data[guild]['Units'][
-                        Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                        Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']
                     ]['isMobile']:
                         print('Non Mobile Move')
-                        hist =  Data[guild]['Players'][player]['Markers']['Properties'][index1].get('MoveCount')
+                        hist =  Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'].get('MoveCount')
                         if hist is None:
-                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['MoveCount'] = 0
+                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['MoveCount'] = 0
                             hist = 0
                         amount = 3**hist
                         item = 'Energy'
@@ -749,17 +701,17 @@ async def run(inData, payload, message):
                             addMsgQueue(message.channel, "Insufficient Funds To Move: Energy = ", amount)
                         else:
                             addItem(guild, payload['Author'], item, -float(amount))
-                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['MoveCount'] += 1
+                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['MoveCount'] += 1
                             if index2 is None:
                                 Data[guild]['Players'][player]['Markers']['Properties'].append({
-                                    'Unit': Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                                    'Unit': dict(Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'])
                                 })
                                 Data[guild]['Players'][player]['Markers']['Shape'].append("")
                                 Data[guild]['Players'][player]['Markers']['Location'].append([x2, y2])
                                 del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
                             else:
                                 Data[guild]['Players'][player]['Markers']['Properties'][index2]['Unit'] \
-                                    = "" + str(Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'])
+                                    = dict(Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'])
                                 del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
 
                             if Data[guild]['Players'][player]['Markers']['Shape'][index1] == "":
@@ -775,7 +727,7 @@ async def run(inData, payload, message):
                         addMsgQueue(message.channel, "Unit Is Disabled")
                     else:
                         unit = Data[guild]['Units'][
-                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']
                         ]
                         canAfford = True
                         for cost in unit['MobileCost']:
@@ -797,7 +749,7 @@ async def run(inData, payload, message):
                                 del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
                             else:
                                 Data[guild]['Players'][player]['Markers']['Properties'][index2]['Unit'] \
-                                    = "" + str(Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'])
+                                    = dict(Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'])
                                 del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
 
                             if Data[guild]['Players'][player]['Markers']['Shape'][index1] == "":
@@ -812,16 +764,18 @@ async def run(inData, payload, message):
                 if coords is not None:
                     xcord, xcordAlpha, ycord = coords
                     index = Data[guild]['Players'][payload['Author']]['Markers']['Location'].index([xcord, ycord])
+                    if 'Unit' not in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]:
+                        addMsgQueue(message.channel, "No Unit At That Location.")
 
-                    if 'DisabledAndPermanent' in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][
+                    elif 'DisabledAndPermanent' in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][
                         index] and \
-                            Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index][
+                            Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit'][
                                 'DisabledAndPermanent']:
-                        del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index][
+                        del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit'][
                             'DisabledAndPermanent']
                         addMsgQueue(message.channel, "Location Enabled.")
                     else:
-                        Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index][
+                        Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit'][
                             'DisabledAndPermanent'] = True
                         addMsgQueue(message.channel, "Location Disabled.")
                 else:
@@ -954,7 +908,7 @@ async def run(inData, payload, message):
                                 if prop.get('Unit') is None:
                                     addMsgQueue(message.channel, "Unit Not Found On Tile")
                                 elif addItem(guild, payload['Author'], 'BF', -2):
-                                    name = prop['Unit']
+                                    name = prop['Unit']['Name']
                                     unit = dict(Data[guild]['Units'][name])
 
                                     for cost in unit['Costs']:
@@ -971,10 +925,8 @@ async def run(inData, payload, message):
                                             amount, item = cost.split(' ')
                                             addItem(guild, payload['Author'], item, 1)
 
-                                    del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index][
-                                        'Unit']
-                                    if 'TownItem' in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]:
-                                        del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['TownItem']
+                                    del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit']
+
                                     addMsgQueue(message.channel, "Unit Razed")
                                 else:
                                     addMsgQueue(message.channel, "You Need 2 BF to raze a unit")
@@ -989,7 +941,7 @@ async def run(inData, payload, message):
         if payload['Channel'].lower() in ['actions',] and len(splitContent) != 0:
             update[1] = 1
 
-            if splitContent[0] == '!trade':
+            if splitContent[0] == '!trade' and len(splitContent) == 4:
                 for playerid in splitContent[1:-2]:
                     playerName = getPlayer(message.guild, playerid, message.channel)
 
@@ -1001,7 +953,14 @@ async def run(inData, payload, message):
                         except:
                             addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
 
-                        if amount is not None \
+                        if item in ['Diplomats','Diplomat']:
+                            if hasUnit(guild,playerName,'diplomats') and hasUnit(guild,payload['Author'],'diplomats'):
+                                await message.add_reaction('👍')
+                                await message.add_reaction('👎')
+                            else:
+                                addMsgQueue(message.channel, "One Or More Players Do Not Have Required Diplomats")
+
+                        elif amount is not None \
                                 and addItem(guild, payload['Author'], item, -amount, testOnly=True) \
                                 and addItem(guild, playerName, item, amount, testOnly=True):
 
@@ -1127,6 +1086,7 @@ async def run(inData, payload, message):
                     addMsgQueue(message.channel, 'Insufficient Items to Sell')
 
             else: update[1] = False
+
     if payload['Author'] in Admins and payload['Channel'].lower() in ['actions', 'actions-map', 'mod-lounge',
                                                                           'bot-lounge']:
         update[2] = 1
@@ -1382,8 +1342,10 @@ async def run(inData, payload, message):
                         Data[guild]['Players'][botName]['Markers']['Shape'].append("")
                         Data[guild]['Players'][botName]['Markers']['Location'].append([x,y])
                         Data[guild]['Players'][botName]['Markers']['Properties'].append({
-                            'Unit': 'town',
-                            'TownItem': random.choice(resourceList)
+                            'Unit': {
+                                'Name':'town',
+                                'TownItem': random.choice(resourceList)
+                            }
                         })
 
         else: update[2] = False
@@ -1404,8 +1366,6 @@ async def run(inData, payload, message):
 """
 Update Function Called Every 10 Seconds
 """
-
-
 async def update(inData, server):
     global Data
     loadData(inData)
@@ -1423,8 +1383,6 @@ async def update(inData, server):
 """
 Reset All Claim Timers
 """
-
-
 def onDayChange(server):
     start = time.time()
     guild = server.id
@@ -1467,8 +1425,8 @@ def onDayChange(server):
 
             # IF UNIT
             if 'Unit' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] \
-                    and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('DisabledAndPermanent') is not True:
-                name = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
+                    and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('DisabledAndPermanent') is not True:
+                name = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Name']
                 unit = dict(Data[guild]['Units'][name])
 
                 canAfford = True
@@ -1480,18 +1438,18 @@ def onDayChange(server):
                 if not canAfford:
                     addMsgQueue(channels[guild]['actions'],
                                 '@' + player + ' You Have Insufficient Funds For Your ' + name + '.\n Unit is disabled, will retry in 1 Day.')
-                    Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['DisabledAndPermanent'] = False
+                    Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['DisabledAndPermanent'] = False
                 else:
-                    if 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] and \
-                            not Data[guild]['Players'][player]['Markers']['Properties'][tileIndex][
+                    if 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'] and \
+                            not Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
                                 'DisabledAndPermanent']:
-                        del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['DisabledAndPermanent']
+                        del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['DisabledAndPermanent']
                     
                     if name == 'town':                    
-                        gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('TownItem')
+                        gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('TownItem')
                         if gift == None:
                             gift = random.choice(resourceList)
-                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['TownItem'] = gift
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['TownItem'] = gift
                         addItem(guild, player, gift, float(2))
                         
                     for cost in unit['DailyCosts']:
@@ -1509,6 +1467,7 @@ def onDayChange(server):
             Data[guild]['Fed']['Rates'][item] = 100.0/vel * Data[guild]['Fed']['Rates'][item]
                     
     print("OnDayChange: ", time.time() - start)
+
 
 """
 Is tile Adjacent
@@ -1724,15 +1683,15 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             Total += 1
             for prop in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].keys():
                 if prop == 'Unit' and \
-                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get(
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get(
                             'DisabledAndPermanent') is None:
-                    unit = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
+                    unit = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Name']
 
                     if unit == 'town':
-                        itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('TownItem')
+                        itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('TownItem')
                         if itm == None:
                             itm = random.choice(resourceList)
-                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['TownItem'] = itm
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['TownItem'] = itm
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
                         itemDelta[itm]['+'] += float(2)
@@ -1854,7 +1813,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         vel =  Data[guild]['Fed']['Velocity'][item]
 
         tmpmsg = "\n" + item.upper()
-        tmpmsg += (12 - len(tmpmsg)) * ' ' + ': ' + str(round(1.0/rate,4))
+        tmpmsg += (12 - len(tmpmsg)) * ' ' + ': ' + str(round(100.0/rate,3))+'%'
         tmpmsg += (21 - len(tmpmsg)) * ' ' + ': ' + str(int(vel))+'% '
         tmpmsg += (28 - len(tmpmsg)) * ' ' + '/Day'
         msg += tmpmsg
@@ -1880,7 +1839,7 @@ def hasUnit(guildid, player, unit):
         props = Data[guildid]['Players'][player]['Markers']['Properties'][tile]
         if 'Unit' not in props:
             continue
-        elif unit in props['Unit']:
+        elif unit in props['Unit']['Name']:
             unitCount += 1
     return unitCount
 
@@ -1941,10 +1900,9 @@ def getRoleList(server,name):
 Setup Log Parameters and Channel List And Whatever You Need to Check on a Bot Reset.
 Handles Change In Server Structure and the like. Probably Can Leave Alone.
 """
-
-
 async def setup(inData, chans, logchan, server):
     loadData(inData)
+    print('Starting Up')
     # Do Stuff Here
 
     global channels, logChannel, Data
@@ -2016,8 +1974,8 @@ async def setup(inData, chans, logchan, server):
             Data[guild]['Players'][player]['Inventory'] = {'BF': 0, }
 
         if player not in Data[guild]['Fed']['MemberHistory']:
-            if player in ['A Beep Booper#4870',botName]: continue
-            Data[guild]['Fed']['MemberHistory'][player] = 0
+            if player not in ['A Beep Booper#4870',botName]:
+                Data[guild]['Fed']['MemberHistory'][player] = 0
         if Data[guild]['Players'][player]['Markers'].get('Properties') is None:
             Data[guild]['Players'][player]['Markers']['Properties'] = []
             for tile in Data[guild]['Players'][player]['Markers']['Shape']:
@@ -2026,11 +1984,18 @@ async def setup(inData, chans, logchan, server):
             for tile in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
                 props = Data[guild]['Players'][player]['Markers']['Properties'][tile]
 
-                if 'Unit' not in props:
+                if 'Unit' in props:
+                    if isinstance(props['Unit'], str):
+                        props['Unit'] = {'Name':props['Unit'].lower()}
                     if 'TownItem' in props:
+                        props['Unit']['TownItem'] = props['TownItem']
                         del props['TownItem']
-                else:
-                    props['Unit'] = props['Unit'].lower()
+                    if 'MoveCount' in props:
+                        props['Unit']['MoveCount'] = props['MoveCount']
+                        del props['MoveCount']
+                    if 'DisabledAndPermanent' in props:
+                        props['Unit']['DisabledAndPermanent'] = props['DisabledAndPermanent']
+                        del props['DisabledAndPermanent']
 
                 Data[guild]['Players'][player]['Markers']['Properties'][tile] = props
 
@@ -2051,6 +2016,9 @@ async def setup(inData, chans, logchan, server):
     return saveData()
 
 
+"""
+Plot The Map Using Matplotlib
+"""
 async def plotMap(channel, postReply=True):
     global Data, plt
     guild = channel.guild.id
@@ -2087,7 +2055,7 @@ async def plotMap(channel, postReply=True):
                                    linewidths=0.3, s=11, marker='s', alpha=0.7)
 
                     if player['Markers']['Properties'][i].get('Unit') is not None:
-                        unit = player['Markers']['Properties'][i]['Unit']
+                        unit = player['Markers']['Properties'][i]['Unit']['Name']
                         obj[i] = Data[guild]['Units'][unit]['Marker']
                         if obj[i][0] == '"' and obj[i][-1] == '"':
                             obj[i] = '$' + obj[i][1:-1] + '$'
@@ -2104,7 +2072,7 @@ async def plotMap(channel, postReply=True):
                                        linewidths=0.1, s=2.5, 
                                        marker='$'+str(5-player['Markers']['Properties'][i]['Harvest']['age'])+'$', alpha=0.7)
                     alpha = 1.0
-                    if 'DisabledAndPermanent' in player['Markers']['Properties'][i]:
+                    if 'Unit' in player['Markers']['Properties'][i] and 'DisabledAndPermanent' in player['Markers']['Properties'][i]['Unit']:
                         alpha = 0.25
 
                     try:
@@ -2257,7 +2225,11 @@ Data = {
                                 'age': 5
                                 'type': 'Perpetual'
                             }
-                            
+                            'Unit': {
+                                'Name':
+                                'TownItm
+                                'DisabledAndPermanent'
+                            }
                         },                    
                         .
                         .
