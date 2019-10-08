@@ -205,7 +205,6 @@ async def reaction(inData, action, user, messageid, emoji):
                     except:
                         addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
 
-
                     if item.lower() in ['diplomats','diplomat']:
                         loc1 = None
                         loc2 = None
