@@ -210,20 +210,16 @@ async def reaction(inData, action, user, messageid, emoji):
                         loc1 = None
                         loc2 = None
                         for tile in range(len(Data[guild]['Players'][playerName]['Markers']['Location'])):
-                            print(tile, Data[guild]['Players'][playerName]['Markers']['Properties'][tile])
                             if 'Unit' in Data[guild]['Players'][playerName]['Markers']['Properties'][tile] \
                                and Data[guild]['Players'][playerName]['Markers']['Properties'][tile]['Unit']['Name'] == 'diplomats' \
                                and Data[guild]['Players'][playerName]['Markers']['Shape'][tile] == 'Claim':
                                 loc1 = tile
-                                print('FOund')
                                 break
                         for tile in range(len(Data[guild]['Players'][targetName]['Markers']['Location'])):
-                            print(tile, Data[guild]['Players'][targetName]['Markers']['Properties'][tile])
                             if 'Unit' in Data[guild]['Players'][targetName]['Markers']['Properties'][tile] \
                                and Data[guild]['Players'][targetName]['Markers']['Properties'][tile]['Unit']['Name'] == 'diplomats' \
                                and Data[guild]['Players'][targetName]['Markers']['Shape'][tile] == 'Claim':
                                 loc2 = tile
-                                print('FOund')
                                 break
                         if loc1 is None or loc2 is None:
                             addMsgQueue(message.channel, "Diplomat Trade Failed. No Diplomat Found.")

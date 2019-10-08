@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00224" summary="Fixed Sermon Bug. Rule 355 added. Channel Segregation for bot and non bot actions.">
-      <created>1568494327476</created>
-      <option name="number" value="00224" />
-      <option name="presentableId" value="LOCAL-00224" />
-      <option name="project" value="LOCAL" />
-      <updated>1568494327476</updated>
     </task>
     <task id="LOCAL-00225" summary="Fixed Sermon Bug. Rule 355 added. Channel Segregation for bot and non bot actions.">
       <created>1568494349461</created>
@@ -554,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1570325846520</updated>
     </task>
-    <option name="localTasksCounter" value="273" />
+    <task id="LOCAL-00273" summary="Trade Diplomon.">
+      <created>1570578771839</created>
+      <option name="number" value="00273" />
+      <option name="presentableId" value="LOCAL-00273" />
+      <option name="project" value="LOCAL" />
+      <updated>1570578771839</updated>
+    </task>
+    <option name="localTasksCounter" value="274" />
     <servers />
   </component>
   <component name="TodoView">
@@ -593,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="The Oracle Nonsense." />
     <MESSAGE value="Bug Fix With gloop as item, and cleanup code" />
     <MESSAGE value="Bug Fix With gloop as resource." />
     <MESSAGE value="Bug Fix Sermon" />
@@ -618,7 +615,8 @@
     <MESSAGE value="Bug Fix Fed Term Reset" />
     <MESSAGE value="Bug Fix Sell" />
     <MESSAGE value="Emabssy Except Trade all implemented. Restructured Units" />
-    <option name="LAST_COMMIT_MESSAGE" value="Emabssy Except Trade all implemented. Restructured Units" />
+    <MESSAGE value="Trade Diplomon." />
+    <option name="LAST_COMMIT_MESSAGE" value="Trade Diplomon." />
   </component>
   <component name="masterDetails">
     <states>
