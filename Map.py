@@ -209,10 +209,45 @@ async def reaction(inData, action, user, messageid, emoji):
                     if item.lower() in ['diplomats','diplomat']:
                         loc1 = None
                         loc2 = None
-                        for tile in range(len(Data[guild]['Players'][giver]['Markers']['Location'])):
-                            if Data[guild]['Players'][giver]['Markers']['Properties'].get('Unit') == 'diplomats':
-                                pass
-                        addMsgQueue(message.channel, "Cannot Trade Diplomats Yet Sorry.")
+                        for tile in range(len(Data[guild]['Players'][playerName]['Markers']['Location'])):
+                            print(tile, Data[guild]['Players'][playerName]['Markers']['Properties'][tile])
+                            if 'Unit' in Data[guild]['Players'][playerName]['Markers']['Properties'][tile] \
+                               and Data[guild]['Players'][playerName]['Markers']['Properties'][tile]['Unit']['Name'] == 'diplomats' \
+                               and Data[guild]['Players'][playerName]['Markers']['Shape'][tile] == 'Claim':
+                                loc1 = tile
+                                print('FOund')
+                                break
+                        for tile in range(len(Data[guild]['Players'][targetName]['Markers']['Location'])):
+                            print(tile, Data[guild]['Players'][targetName]['Markers']['Properties'][tile])
+                            if 'Unit' in Data[guild]['Players'][targetName]['Markers']['Properties'][tile] \
+                               and Data[guild]['Players'][targetName]['Markers']['Properties'][tile]['Unit']['Name'] == 'diplomats' \
+                               and Data[guild]['Players'][targetName]['Markers']['Shape'][tile] == 'Claim':
+                                loc2 = tile
+                                print('FOund')
+                                break
+                        if loc1 is None or loc2 is None:
+                            addMsgQueue(message.channel, "Diplomat Trade Failed. No Diplomat Found.")
+                            await message.remove_reaction('👍', bot)
+                            await message.remove_reaction('👎', bot)
+                        else:
+                            prop1 = Data[guild]['Players'][playerName]['Markers']['Properties'][loc1]
+                            prop2 = Data[guild]['Players'][targetName]['Markers']['Properties'][loc2]
+
+                            cord1 = Data[guild]['Players'][playerName]['Markers']['Location'][loc1]
+                            cord2 = Data[guild]['Players'][targetName]['Markers']['Location'][loc2]
+
+                            Data[guild]['Players'][playerName]['Markers']['Properties'][loc1] = {}
+                            Data[guild]['Players'][targetName]['Markers']['Properties'][loc2] = {}
+
+                            Data[guild]['Players'][playerName]['Markers']['Location'].append(cord2)
+                            Data[guild]['Players'][playerName]['Markers']['Shape'].append("")
+                            Data[guild]['Players'][playerName]['Markers']['Properties'].append(prop2)
+
+                            Data[guild]['Players'][targetName]['Markers']['Location'].append(cord1)
+                            Data[guild]['Players'][targetName]['Markers']['Shape'].append("")
+                            Data[guild]['Players'][targetName]['Markers']['Properties'].append(prop1)
+
+                            addMsgQueue(message.channel, "Diplomat Trade Successful.")
 
                     elif amount is not None \
                             and addItem(guild, playerName, item, -amount, testOnly=True) \
@@ -768,7 +803,7 @@ async def run(inData, payload, message):
                         addMsgQueue(message.channel, "No Unit At That Location.")
 
                     elif 'DisabledAndPermanent' in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][
-                        index] and \
+                        index]['Unit'] and \
                             Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit'][
                                 'DisabledAndPermanent']:
                         del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit'][
@@ -954,11 +989,28 @@ async def run(inData, payload, message):
                             addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
 
                         if item in ['Diplomats','Diplomat']:
-                            if hasUnit(guild,playerName,'diplomats') and hasUnit(guild,payload['Author'],'diplomats'):
+                            loc1 = None
+                            loc2 = None
+                            for tile in range(len(Data[guild]['Players'][playerName]['Markers']['Location'])):
+                                if 'Unit' in Data[guild]['Players'][playerName]['Markers']['Properties'][tile] \
+                                        and Data[guild]['Players'][playerName]['Markers']['Properties'][tile]['Unit'][
+                                    'Name'] == 'diplomats' \
+                                        and Data[guild]['Players'][playerName]['Markers']['Shape'][tile] == 'Claim':
+                                    loc1 = tile
+                                    break
+                            for tile in range(len(Data[guild]['Players'][payload['Author']]['Markers']['Location'])):
+                                if 'Unit' in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][tile] \
+                                        and Data[guild]['Players'][payload['Author']]['Markers']['Properties'][tile]['Unit'][
+                                    'Name'] == 'diplomats' \
+                                        and Data[guild]['Players'][payload['Author']]['Markers']['Shape'][tile] == 'Claim':
+                                    loc2 = tile
+                                    break
+                            if loc1 is None or loc2 is None:
+                               addMsgQueue(message.channel, "One Or More Players Do Not Have Required Diplomats")
+
+                            else:
                                 await message.add_reaction('👍')
                                 await message.add_reaction('👎')
-                            else:
-                                addMsgQueue(message.channel, "One Or More Players Do Not Have Required Diplomats")
 
                         elif amount is not None \
                                 and addItem(guild, payload['Author'], item, -amount, testOnly=True) \
@@ -1138,7 +1190,7 @@ async def run(inData, payload, message):
                             del Data[guild]['Players'][player]['Markers']['Properties'][index]
                         except ValueError:
                             pass
-                    addMsgQueue(message.channel, "New Turn Initiated")
+                    addMsgQueue(message.channel, "Tile Removed")
 
             else:
                 player = getPlayer(message.guild, splitContent[1], message.channel)
@@ -1839,7 +1891,7 @@ def hasUnit(guildid, player, unit):
         props = Data[guildid]['Players'][player]['Markers']['Properties'][tile]
         if 'Unit' not in props:
             continue
-        elif unit in props['Unit']['Name']:
+        elif unit == props['Unit']['Name']:
             unitCount += 1
     return unitCount
 
