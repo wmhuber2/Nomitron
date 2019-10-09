@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -208,20 +210,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00225" summary="Fixed Sermon Bug. Rule 355 added. Channel Segregation for bot and non bot actions.">
-      <created>1568494349461</created>
-      <option name="number" value="00225" />
-      <option name="presentableId" value="LOCAL-00225" />
-      <option name="project" value="LOCAL" />
-      <updated>1568494349461</updated>
-    </task>
-    <task id="LOCAL-00226" summary="Sermon Amen player bot issue fix again. me sleepy">
-      <created>1568528215614</created>
-      <option name="number" value="00226" />
-      <option name="presentableId" value="LOCAL-00226" />
-      <option name="project" value="LOCAL" />
-      <updated>1568528215614</updated>
     </task>
     <task id="LOCAL-00227" summary="Sermon Amen player bot issue fix again. me sleepy">
       <created>1568564686880</created>
@@ -552,7 +540,21 @@
       <option name="project" value="LOCAL" />
       <updated>1570578771839</updated>
     </task>
-    <option name="localTasksCounter" value="274" />
+    <task id="LOCAL-00274" summary="Trade Diplomon.">
+      <created>1570578804388</created>
+      <option name="number" value="00274" />
+      <option name="presentableId" value="LOCAL-00274" />
+      <option name="project" value="LOCAL" />
+      <updated>1570578804388</updated>
+    </task>
+    <task id="LOCAL-00275" summary="Trade Diplomon.">
+      <created>1570578823403</created>
+      <option name="number" value="00275" />
+      <option name="presentableId" value="LOCAL-00275" />
+      <option name="project" value="LOCAL" />
+      <updated>1570578823403</updated>
+    </task>
+    <option name="localTasksCounter" value="276" />
     <servers />
   </component>
   <component name="TodoView">
@@ -617,6 +619,17 @@
     <MESSAGE value="Emabssy Except Trade all implemented. Restructured Units" />
     <MESSAGE value="Trade Diplomon." />
     <option name="LAST_COMMIT_MESSAGE" value="Trade Diplomon." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/Map.py</url>
+          <line>1211</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="masterDetails">
     <states>

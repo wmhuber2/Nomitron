@@ -1395,6 +1395,10 @@ async def run(inData, payload, message):
                             }
                         })
 
+        elif splitContent[0] == '!setVinny' and len(splitContent) == 2:
+            coords = extractCoords(splitContent[1], message.channel)
+            if coords is not None:
+                Data[guild]['Vinny']['Position'] = [coords[0],coords[2]]
         else: update[2] = False
 
     #  IF A DM CHANNEL
@@ -1512,7 +1516,25 @@ def onDayChange(server):
         vel = Data[guild]['Fed']['Velocity'][item]+100
         if vel != 0:
             Data[guild]['Fed']['Rates'][item] = 100.0/vel * Data[guild]['Fed']['Rates'][item]
-                    
+
+    dir = random.randint(0,4)
+    acts = [(-1,0),(1,0),(0,1),(0,-1)]
+    for i in range(4):
+        dir = (dir + 1) % 4
+        action = acts[dir]
+        ncoords = [
+            Data[guild]['Vinny']['Position'][0] + action[0],
+            Data[guild]['Vinny']['Position'][1] + action[1],
+        ]
+        if ncoords[0] < 0 or ncoords[1] < 0 or ncoords[0] > 75 or ncoords[1] > 75: continue
+        else:
+            Data[guild]['Vinny']['Position'] = ncoords
+            addMsgQueue(channels[guild]['actions'], 'Vinny has moved to '+ labels[ncoords[0]]+str( ncoords[1]+1))
+            break
+
+
+
+
     print("OnDayChange: ", time.time() - start)
 
 
@@ -2013,7 +2035,10 @@ async def setup(inData, chans, logchan, server):
             'Color': 'Gold',
             'Inventory': {}
         }
-
+    if Data[guild].get('Vinny') is None:
+        Data[guild]['Vinny'] = {
+            'Position': [0,0],
+        }
     for player in Data[guild]['Players'].keys():
         #if Data[guild]['Players'][player].get('Object') is None:
         #    Data[guild]['Players'][player]['Object'] = server.get_member_named(player)
@@ -2080,6 +2105,12 @@ async def plotMap(channel, postReply=True):
             axisn = np.arange(0, n, 1)
             plt.xticks(axisn + 0.5)
             plt.yticks(axisn + 0.5)
+
+            ax.scatter( Data[guild]['Vinny']['Position'][0] ,
+                        Data[guild]['Vinny']['Position'][1] ,
+                        c='Gold', s=12.0, linewidths=0.075,
+                        edgecolors='black',
+                        marker='$😊$')
 
             for player in Data[guild]['Players'].keys():
                 player = Data[guild]['Players'][player]
