@@ -8,6 +8,7 @@ n = 75
 TILES = {
     'LAND': [45, 84, 55, 255],
     'WATER': [49, 108, 237, 255],
+    'MEAT': [200, 110, 110, 255]
 }
 
 UNIT_BASE = {
@@ -35,7 +36,7 @@ AllData = {}
 savefile = str(__name__)  # + '_Data.pickle'
 print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
-itemList = ['BF', 'Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop','C-Fish']
+itemList = ['BF', 'Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop','C-Fish', 'Artifact']
 resourceList = ['Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
 FedMaterialList = ['Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
 import itertools
@@ -116,6 +117,7 @@ async def reaction(inData, action, user, messageid, emoji):
         else:
             addMsgQueue(message.channel, "Unit Not Found")
         """
+
     elif splitContent[0] == '!claim' and len(splitContent) == 2 and reactorName == playerName and action == 'add':
         bot = None
         canContinute = True
@@ -467,7 +469,7 @@ async def run(inData, payload, message):
                         claimsLeft = 1 + (hasUnit(guild, payload['Author'], 'explorerguild') * 5) \
                                      - Data[guild]['Players'][payload['Author']]['Claimed Today']
 
-                        if not isTileType(Data[guild]['Image'], xcord, ycord, 'LAND'):
+                        if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER'):
                             addMsgQueue(message.channel, "Please seek more advanced technology to claim Water Tiles.")
 
                         elif claimsLeft <= 0:
@@ -528,7 +530,9 @@ async def run(inData, payload, message):
                     if coords is not None:
                         xcord, xcordAlpha, ycord = coords
 
-                        if [xcord, ycord] in Data[guild]['Players'][payload['Author']]['Markers']['Location']:
+                        if isTileType(Data[guild]['Image'], xcord, ycord, 'MEAT'):
+                            addMsgQueue(message.channel, "You Cannot Harvest A Meat Tile.")
+                        elif [xcord, ycord] in Data[guild]['Players'][payload['Author']]['Markers']['Location']:
                             index = Data[guild]['Players'][payload['Author']]['Markers']['Location'].index(
                                 [xcord, ycord])
 
@@ -623,6 +627,9 @@ async def run(inData, payload, message):
                         addMsgQueue(message.channel, "This Can Only Be Placed On Land")
                     elif unit['WaterOnly'] and not isTileType(Data[guild]['Image'], x, y, 'WATER'):
                         addMsgQueue(message.channel, "This Can Only Be Placed On Water")
+                    elif name in ['town', 'village', 'digsite', 'mill', 'oil', 'mine', 'wall']\
+                            and isTileType(Data[guild]['Image'], x, y, 'MEAT'):
+                        addMsgQueue(message.channel, "This Unit Cannot Be Placed On A Meat Tile")
                     elif unit['BeachOnly'] and not (
                             isTileType(Data[guild]['Image'], x, y, 'LAND')
                             and (
@@ -727,6 +734,10 @@ async def run(inData, payload, message):
                         print('is adj',isAdjacent(guild, payload['Author'],[x2,y2]))
                         if not isAdjacent(guild, payload['Author'],[x2,y2]):
                             addMsgQueue(message.channel, "Target is not adjacent to a claim")
+                        elif Data[guild]['Players'][player]['Markers']['Properties'][index1]['Name']\
+                                in ['town', 'village', 'digsite', 'mill', 'oil', 'mine', 'wall'] \
+                                and isTileType(Data[guild]['Image'], x, y, 'MEAT'):
+                            addMsgQueue(message.channel, "This Unit Cannot Be Placed On A Meat Tile")
                         elif not canAfford:
                             addMsgQueue(message.channel, "Insufficient Funds To Move: Energy = ", amount)
                         else:
@@ -965,6 +976,20 @@ async def run(inData, payload, message):
 
                 else:
                     addMsgQueue(message.channel, "Can only raze a claim, harvest, or unit")
+
+            elif splitContent[0] == '!dig' and len(splitContent) == 2:
+                coords = extractCoords(splitContent[1], message.channel)
+                if coords is not None:
+                    xcord, xcordAlpha, ycord = coords
+                    index = Data[guild]['Players'][payload['Author']]['Markers']['Location'].index([xcord, ycord])
+                    if 'Unit' not in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]\
+                            or 'digsite' != Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit']['Name']:
+                        addMsgQueue(message.channel, "No Dig Site At That Location.")
+
+                    elif Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit']['Artifact']:
+                        Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit']['Artifact'] = False
+                        addItem(guild,payload['Author'],'Artifact',1)
+                        addMsgQueue(message.channel, "You Collected 1 Artifact.")
 
             else: update[0] = False
 
@@ -1455,18 +1480,21 @@ def onDayChange(server):
             if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Harvest') is not None \
                     and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Unit') is None:
                 xcord, ycord = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
+                double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']
+                if double:
+                    del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['Boost']
 
                 if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Perpetual':                    addItem(guild, player, 'Corn', 3)
+                            'type'] == 'Perpetual':                    addItem(guild, player, 'Corn', 3 * (2 ** double))
 
                 if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Non Perpetual':                    addItem(guild, player, 'Steel', 1)
+                            'type'] == 'Non Perpetual':                    addItem(guild, player, 'Steel', 1 * (2 ** double))
 
                 if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Non Perpetual':                    addItem(guild, player, 'Oil', 1)
+                            'type'] == 'Non Perpetual':                    addItem(guild, player, 'Oil', 1 * (2 ** double))
 
                 Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] += 1
                 if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
@@ -1479,6 +1507,10 @@ def onDayChange(server):
                     and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('DisabledAndPermanent') is not True:
                 name = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Name']
                 unit = dict(Data[guild]['Units'][name])
+
+                double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
+                if double: del \
+                    Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Boost']
 
                 canAfford = True
                 for cost in unit['DailyCosts']:
@@ -1500,9 +1532,25 @@ def onDayChange(server):
                         gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('TownItem')
                         if gift == None:
                             gift = random.choice(resourceList)
-                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['TownItem'] = gift
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
+                                'TownItem'] = gift
                         addItem(guild, player, gift, float(2))
-                        
+
+                    if name == 'village':
+                        gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get(
+                            'VillageItem')
+                        if gift == None:
+                            gift = random.choice(resourceList)
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
+                                'VillageItem'] = gift
+                        addItem(guild, player, gift, float(1))
+
+                    if name == 'digsite':
+                        if random.randint(0,100) < 5:
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
+                                'Artifact'] = True
+                        addItem(guild, player, gift, float(1))
+
                     for cost in unit['DailyCosts']:
                         if ' ' in cost:
                             amount, item = cost.split(' ')
@@ -1510,14 +1558,18 @@ def onDayChange(server):
                     for cost in unit['DailyReturn']:
                         if ' ' in cost:
                             amount, item = cost.split(' ')
-                            addItem(guild, player, item, float(amount))
+                            addItem(guild, player, item, float(amount)* (2**double))
 
     for item in Data[guild]['Fed']['Rates'].keys():
         vel = Data[guild]['Fed']['Velocity'][item]+100
         if vel != 0:
             Data[guild]['Fed']['Rates'][item] = 100.0/vel * Data[guild]['Fed']['Rates'][item]
 
-    dir = random.randint(0,4)
+    dir = random.randint(0,3)
+    atlantean = 'ATLANTEAN' in Data[guild]['Vinny']
+    if atlantean: Data[guild]['Vinny']['ATLANTEAN'] -= 1
+    if atlantean and Data[guild]['Vinny']['ATLANTEAN'] <=0 : del Data[guild]['Vinny']['ATLANTEAN']
+
     acts = [(-1,0),(1,0),(0,1),(0,-1)]
     for i in range(4):
         dir = (dir + 1) % 4
@@ -1526,15 +1578,135 @@ def onDayChange(server):
             Data[guild]['Vinny']['Position'][0] + action[0],
             Data[guild]['Vinny']['Position'][1] + action[1],
         ]
-        if ncoords[0] < 0 or ncoords[1] < 0 or ncoords[0] > 75 or ncoords[1] > 75: continue
+        if ncoords[0] < 0 or ncoords[1] < 0 or ncoords[0] >= 75 or ncoords[1] >= 75: continue
         else:
             Data[guild]['Vinny']['Position'] = ncoords
             addMsgQueue(channels[guild]['actions'], 'Vinny has moved to '+ labels[ncoords[0]]+str( ncoords[1]+1))
             break
 
+    vx, vy = Data[guild]['Vinny']['Position']
+    if atlantean and isTileType(Data[guild]['Image'], vx, vy, 'WATER'):
+        for i in range(4):
+            dir = (dir + 1) % 4
+            action = acts[dir]
+            ncoords = [
+                Data[guild]['Vinny']['Position'][0] + action[0],
+                Data[guild]['Vinny']['Position'][1] + action[1],
+            ]
+            if ncoords[0] < 0 or ncoords[1] < 0 or ncoords[0] >= 75 or ncoords[1] >= 75:
+                continue
+            else:
+                Data[guild]['Vinny']['Position'] = ncoords
+                addMsgQueue(channels[guild]['actions'],
+                            'Vinny has moved to ' + labels[ncoords[0]] + str(ncoords[1] + 1))
+                break
 
+    event = random.randint(0,100)
+    event = 5
+    vx, vy = Data[guild]['Vinny']['Position']
+    if event < 6 and not isTileType(Data[guild]['Image'], vx, vy, 'MEAT'):
+        for i in range(6):
+            event = (event + 1) % 6
+            if event == 1:
+                addMsgQueue(channels[guild]['actions'], "Vinny has triggered an event: ARCHAEOLOGICAL DISCOVERY")
+                isOnPlayer = False
+                for player in Data[guild]['Players'].keys():
+                    if [vx, vy] in Data[guild]['Players'][player]['Markers']['Location']:
+                        print(1, player)
+                        index = Data[guild]['Players'][player]['Markers']['Location'].index([vx, vy])
 
+                        if 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][index]:
+                            Data[guild]['Players'][player]['Markers']['Properties'][index][
+                                'Unit']['Name'] = {
+                                    'Name': 'digsite',
+                                    'Artifact': False
+                            }
+                            isOnPlayer = True
+                if not isOnPlayer:
+                    Data[guild]['Players'][botName]['Markers']['Shape'].append("")
+                    Data[guild]['Players'][botName]['Markers']['Location'].append([vx, vy])
+                    Data[guild]['Players'][botName]['Markers']['Properties'].append({
+                        'Unit': {
+                            'Name': 'digsite',
+                            'Artifact': False
+                        }
+                    })
 
+            elif event == 2 and isTileType(Data[guild]['Image'], vx, vy, 'LAND'):
+                addMsgQueue(channels[guild]['actions'], "Vinny has triggered an event: FIRST CONTACT")
+                isOnPlayer = False
+                for player in Data[guild]['Players'].keys():
+                    if [vx, vy] in Data[guild]['Players'][player]['Markers']['Location']:
+                        print(1, player)
+                        index = Data[guild]['Players'][player]['Markers']['Location'].index([vx, vy])
+
+                        if 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][index]:
+                            Data[guild]['Players'][player]['Markers']['Properties'][index][
+                                'Unit'] ={'Name': 'village',
+                                          'VillageItem': random.choice(resourceList)}
+                            isOnPlayer = True
+                if not isOnPlayer:
+                    Data[guild]['Players'][botName]['Markers']['Shape'].append("")
+                    Data[guild]['Players'][botName]['Markers']['Location'].append([vx, vy])
+                    Data[guild]['Players'][botName]['Markers']['Properties'].append({
+                        'Unit': {
+                            'Name': 'village',
+                            'VillageItem': random.choice(resourceList)
+                        }
+                    })
+
+            elif event == 3 and isTileType(Data[guild]['Image'], vx, vy, 'WATER'):
+                addMsgQueue(channels[guild]['actions'], "Vinny has triggered an event: ATLANTEAN ENVOY")
+                Data[guild]['Vinny']['ATLANTEAN'] = 5
+
+            elif event == 4 and isTileType(Data[guild]['Image'], vx, vy, 'WATER'):
+                Data[guild]['Image'][vx, vy] = TILES['MEAT']
+                addMsgQueue(channels[guild]['actions'], "Vinny has triggered an event: RELEASE THE KRAKEN")
+
+            elif event == 5: # LEGENDARY EXPLORER
+                addMsgQueue(channels[guild]['actions'], "Vinny has triggered an event: LEGENDARY EXPLORER")
+                radius = [
+                    (0, 0),
+
+                    (0,1),(0,-1),(1,0),(-1,0),
+                    (-1, -1),(1,-1),(-1,1),(1,1),
+
+                    (0, 2),(2,0),(0,-2),(-2,0),
+                    (1, 2),(2,1),(1,-2),(-2,1),
+                    (-1, 2), (2, -1), (-1, -2), (-2, -1),
+                    (-2, 2), (2, -2), (-2, -2), (2, 2),
+
+                    (0, 3),(3,0),(0,-3),(-3,0),
+                ]
+                addMsgQueue(channels[guild]['actions'], "Nearby Production Has Been Doubled")
+                for player in Data[guild]['Players'].keys():
+                    for offsetx, offsety in radius:
+                        coor = [vx + offsetx, vy + offsety]
+                        if coor in Data[guild]['Players'][player]['Markers']['Location']:
+                            index = Data[guild]['Players'][player]['Markers']['Location'].index(coor)
+                            if 'Unit' in Data[guild]['Players'][player]['Markers']['Properties'][index]:
+                                Data[guild]['Players'][player]['Markers']['Properties'][index]['Unit']['Boost'] = True
+                            if 'Harvest' in Data[guild]['Players'][player]['Markers']['Properties'][index]:
+                                Data[guild]['Players'][player]['Markers']['Properties'][index]['Harvest']['Boost'] = True
+
+            elif event == 0: #explosive Adventure
+                addMsgQueue(channels[guild]['actions'], "Vinny has triggered an event: EXPLOSIVE ADVENTURE")
+                dir = random.randint(0, 3)
+                action = acts[dir]
+                ncoords = [
+                    Data[guild]['Vinny']['Position'][0] + 10*action[0],
+                    Data[guild]['Vinny']['Position'][1] + 10*action[1],
+                ]
+                if ncoords[0] < 0: ncoords[0] = 0
+                if ncoords[1] < 0: ncoords[1] = 0
+                if ncoords[0] > 74: ncoords[0] = 74
+                if ncoords[1] > 74: ncoords[1] = 74
+
+                Data[guild]['Vinny']['Position'] = ncoords
+                addMsgQueue(channels[guild]['actions'], "Vinny is sent flying to "+labels[ncoords[0]]+str( ncoords[1]+1))
+
+            else: continue
+            break
     print("OnDayChange: ", time.time() - start)
 
 
@@ -1764,6 +1936,15 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
                         itemDelta[itm]['+'] += float(2)
+
+                    if unit == 'village':
+                        itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('VillageItem')
+                        if itm == None:
+                            itm = random.choice(resourceList)
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['VillageItem'] = itm
+                        if itemDelta.get(itm) is None:
+                            itemDelta[itm] = {'-': 0.0, '+': 0.0}
+                        itemDelta[itm]['+'] += float(1)
                         
                     for cst in Data[guild]['Units'][unit]['DailyCosts']:
                         a, itm = cst.split(' ')
@@ -1899,6 +2080,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
 
     Data[guild]['ImgLock'] = 0
 
+
 """
 Determines If PLayer Has A Unit
 """
@@ -1980,6 +2162,7 @@ async def setup(inData, chans, logchan, server):
     import matplotlib
 
     matplotlib.use('Agg')
+    #matplotlib.rc('font', family='Arial')
 
     import matplotlib.pyplot as plt
     import matplotlib.ticker as ticker
@@ -2062,6 +2245,9 @@ async def setup(inData, chans, logchan, server):
                     if 'TownItem' in props:
                         props['Unit']['TownItem'] = props['TownItem']
                         del props['TownItem']
+                    if 'VillageItem' in props:
+                        props['Unit']['VillageItem'] = props['VillageItem']
+                        del props['VillageItem']
                     if 'MoveCount' in props:
                         props['Unit']['MoveCount'] = props['MoveCount']
                         del props['MoveCount']
@@ -2115,9 +2301,6 @@ async def plotMap(channel, postReply=True):
             for player in Data[guild]['Players'].keys():
                 player = Data[guild]['Players'][player]
                 color = player['Color']
-                
-                outline = 'black'
-                if color == 'black': outline = 'white'
 
                 if len(player['Markers']['Location']) == 0: continue
                 x, y = np.asarray(player['Markers']['Location']).T
@@ -2128,16 +2311,23 @@ async def plotMap(channel, postReply=True):
                     obj[obj == unit] = Data[guild]['Units'][unit]['Marker']
 
                 for i in range(obj.shape[0]):
+                    outline = 'black'
+                    if color == 'black': outline = 'white'
+
                     if obj[i] != "" and player != botName:
                         ax.scatter(x[i], y[i], c="none", edgecolors=color,
                                    linewidths=0.3, s=11, marker='s', alpha=0.7)
 
+                    alpha = 1.0
+                    if 'Unit' in player['Markers']['Properties'][i] and 'DisabledAndPermanent' in player['Markers']['Properties'][i]['Unit']:
+                        alpha = 0.25
                     if player['Markers']['Properties'][i].get('Unit') is not None:
                         unit = player['Markers']['Properties'][i]['Unit']['Name']
                         obj[i] = Data[guild]['Units'][unit]['Marker']
                         if obj[i][0] == '"' and obj[i][-1] == '"':
                             obj[i] = '$' + obj[i][1:-1] + '$'
-
+                        if player['Markers']['Properties'][i]['Unit'].get('Boost'):
+                            outline = 'Gold'
                     elif player['Markers']['Properties'][i].get('Harvest') is not None:
                         if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
                             ax.scatter(x[i], y[i], c="none", edgecolors=color,
@@ -2147,31 +2337,33 @@ async def plotMap(channel, postReply=True):
                             ax.scatter(x[i], y[i], c=color, edgecolors=color,
                                        linewidths=0.2, s=14, marker='.', alpha=0.7)
                             ax.scatter(x[i], y[i], c=outline, edgecolors=outline,
-                                       linewidths=0.1, s=2.5, 
-                                       marker='$'+str(5-player['Markers']['Properties'][i]['Harvest']['age'])+'$', alpha=0.7)
-                    alpha = 1.0
-                    if 'Unit' in player['Markers']['Properties'][i] and 'DisabledAndPermanent' in player['Markers']['Properties'][i]['Unit']:
-                        alpha = 0.25
+                                       linewidths=0.1, s=2.5,
+                                       marker='$' + str(5 - player['Markers']['Properties'][i]['Harvest']['age']) + '$',
+                                       alpha=0.7)
 
                     try:
-                        if len(obj[i]) <= 3:
-                            ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
+                        if len(obj[i]) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
                                        marker=obj[i])
-                        else:
-                            ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
+                        else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
                                        marker=obj[i])
                     except:
-                        if len(obj[i]) <= 3:
-                            ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
+                        if len(obj[i]) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
                                        marker='$' + obj[i] + '$')
-                        else:
-                            ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
+                        else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
                                        marker='$' + obj[i] + '$')
                     '''
                     if 'DisabledAndPermanent' in player['Markers']['Properties'][i]:
                         if player['Markers']['Properties'][i]['DisabledAndPermanent']: color = 'red'
                         ax.scatter(x[i], y[i], c=color, alpha='1.0', s=8.0, marker='$X$', edgecolors='None')
                     '''
+
+                    if player['Markers']['Properties'][i].get('Unit') is not None:
+                        if player['Markers']['Properties'][i]['Unit'].get('Artifact'):
+                            ax.scatter(x[i] + 0.25, y[i] + 0.25, c="gold", edgecolors='k',
+                                       linewidths=0.2, s=7, marker='$✓$', alpha=0.7)
+
+
+
             ax.yaxis.set_major_formatter(ticker.NullFormatter())
             ax.yaxis.set_minor_locator(ticker.FixedLocator(axisn))
             ax.yaxis.set_minor_formatter(ticker.FixedFormatter(axisn + 1))
