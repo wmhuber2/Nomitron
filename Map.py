@@ -1475,6 +1475,8 @@ def onDayChange(server):
 
     for player in Data[guild]['Players']:
         cursed = 0.5 + 0.5 * (Data[guild]['Players'][player]['Inventory'].get('Curse') not in [0,None])
+        if cursed == 0.5:
+            del Data[guild]['Players'][player]['Inventory']['Curse']
         for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
 
             # IF HARVEST
