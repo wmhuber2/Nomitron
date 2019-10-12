@@ -119,7 +119,7 @@ async def run(inData, payload, message):
                         addItem(guild, player, 'Curse', 1)
                         endTurnMessage += "a Terrible Curse."
 
-                    if playerData[player].get('razed') is not None:
+                    elif playerData[player].get('razed') is not None:
                         if c < 66 + 13 + 3 + 6:
                             endTurnMessage += "1d66 of any Non-BF and Non-Artifact item."
                         elif c < 66 + 13 + 3 + 6 + 6:
@@ -166,6 +166,12 @@ async def run(inData, payload, message):
         if payload['Content'] in ["Hail Satron."] and authorData.get('hailed') is None and not authorData['attended']:
             authorData['hailed'] = True
             await message.add_reaction('😈')
+
+    if message.channel.name.lower() in ['actions-map', 'mod-lounge', 'bot-lounge']:
+        guild = message.guild.id
+        playerData = Data[guild]['Players']
+        authorData = playerData[payload['Author']]
+
         if '!raze' in payload['Content'] and authorData.get('hailed') is None:
             authorData['razed'] = True
 
