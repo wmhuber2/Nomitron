@@ -1606,13 +1606,14 @@ def onDayChange(server):
 
     event = random.randint(0,100)
 
-    vx, vy = Data[guild]['Vinny']['Position']
+    vx, vy = Data[guild]['Vinny']['Position'] # Process Vinny Events Here
     if event < 6 and not isTileType(Data[guild]['Image'], vx, vy, 'MEAT'):
         for i in range(6):
             event = (event + 1) % 6
             if event == 1:
                 addMsgQueue(channels[guild]['actions'], "Vinny has triggered an event: ARCHAEOLOGICAL DISCOVERY")
                 isOnPlayer = False
+                isOnUnit = False
                 for player in Data[guild]['Players'].keys():
                     if [vx, vy] in Data[guild]['Players'][player]['Markers']['Location']:
                         print(1, player)
@@ -1625,7 +1626,8 @@ def onDayChange(server):
                                     'Artifact': False
                             }
                             isOnPlayer = True
-                if not isOnPlayer:
+                        else: isOnUnit = True
+                if not isOnPlayer and not isOnUnit:
                     Data[guild]['Players'][botName]['Markers']['Shape'].append("")
                     Data[guild]['Players'][botName]['Markers']['Location'].append([vx, vy])
                     Data[guild]['Players'][botName]['Markers']['Properties'].append({
@@ -1638,6 +1640,7 @@ def onDayChange(server):
             elif event == 2 and isTileType(Data[guild]['Image'], vx, vy, 'LAND'):
                 addMsgQueue(channels[guild]['actions'], "Vinny has triggered an event: FIRST CONTACT")
                 isOnPlayer = False
+                isOnUnit = False
                 for player in Data[guild]['Players'].keys():
                     if [vx, vy] in Data[guild]['Players'][player]['Markers']['Location']:
                         print(1, player)
@@ -1648,7 +1651,8 @@ def onDayChange(server):
                                 'Unit'] ={'Name': 'village',
                                           'VillageItem': random.choice(resourceList)}
                             isOnPlayer = True
-                if not isOnPlayer:
+                        else: isOnUnit = True
+                if not isOnPlayer and not isOnUnit:
                     Data[guild]['Players'][botName]['Markers']['Shape'].append("")
                     Data[guild]['Players'][botName]['Markers']['Location'].append([vx, vy])
                     Data[guild]['Players'][botName]['Markers']['Properties'].append({
