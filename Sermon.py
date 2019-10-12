@@ -106,8 +106,34 @@ async def run(inData, payload, message):
                 # Gifts for the flock!
                 if(playerAttended and (not playerTithed)): # Tithed item rolls are handled separately
                     endTurnMessage = endTurnMessage + await giveReward(player, 0.2, 0.1,guild) + "\n"
+                elif playerData[player].get('hailed') is not None:
+                    endTurnMessage = "Praise! The Dark Lord Has Gifted "+str(Players[player]['id'])+" with "
+                    c = random.randint(0,100)
+                    if c < 66:
+                        endTurnMessage += "1 Artifact."
+                        addItem(guild, player, 'Artifact', 1)
+                    elif c < 66 + 13:
+                        endTurnMessage += "2 Artifacts."
+                        addItem(guild, player, 'Artifact', 2)
+                    elif c < 66 + 13 + 3:
+                        addItem(guild, player, 'Curse', 1)
+                        endTurnMessage += "a Terrible Curse."
+
+                    if playerData[player].get('razed') is not None:
+                        if c < 66 + 13 + 3 + 6:
+                            endTurnMessage += "1d66 of any Non-BF and Non-Artifact item."
+                        elif c < 66 + 13 + 3 + 6 + 6:
+                            addItem(guild, player, 'Curse', 1)
+                            endTurnMessage += "a Terrible Curse."
+                        elif c < 66 + 13 + 3 + 6 + 6 + 6:
+                            endTurnMessage += "to destroy any unit/harvest on the map."
 
                 # Reset attendance
+
+                if playerData[player].get('razed'):
+                    del playerData[player]['razed']
+                if playerData[player].get('hailed'):
+                    del playerData[player]['hailed']
                 playerData[player]['attended'] = False
                 playerData[player]['tithed']   = False
 
@@ -129,7 +155,7 @@ async def run(inData, payload, message):
             )
             newSermon = await channels[guild]["actions"].send(startTurnMessage)
             Data['sermonID'] = newSermon.id
-        if payload['Content'] in ["Amen."] and (not authorData['attended']):
+        if payload['Content'] in ["Amen."] and (not authorData['attended']) and authorData.get('hailed') is None:
             authorData['attended'] = True
             await message.add_reaction('🙏')
             #emoji = get(message.guild.emojis, name='pray')
@@ -137,6 +163,11 @@ async def run(inData, payload, message):
             if(authorData['tithed']):
                 message = await giveReward(payload['Author'], 0.3, 0.2,guild)
                 await channels[guild]["actions"].send(message)
+        if payload['Content'] in ["Hail Satron."] and authorData.get('hailed') is None and not authorData['attended']:
+            authorData['hailed'] = True
+            await message.add_reaction('😈')
+        if '!raze' in payload['Content'] and authorData.get('hailed') is None:
+            authorData['razed'] = True
 
     return saveData()
 
