@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Sermon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sermon.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
@@ -211,13 +209,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00229" summary="STOP U GOT A MAP PLOTTING PROBLEM.">
-      <created>1568567075004</created>
-      <option name="number" value="00229" />
-      <option name="presentableId" value="LOCAL-00229" />
-      <option name="project" value="LOCAL" />
-      <updated>1568567075004</updated>
     </task>
     <task id="LOCAL-00230" summary="STOP U GOT A MAP PLOTTING PROBLEM.">
       <created>1568567177108</created>
@@ -555,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1570862672772</updated>
     </task>
-    <option name="localTasksCounter" value="278" />
+    <task id="LOCAL-00278" summary="Vinny Bug fix and Hail Satron">
+      <created>1570867394182</created>
+      <option name="number" value="00278" />
+      <option name="presentableId" value="LOCAL-00278" />
+      <option name="project" value="LOCAL" />
+      <updated>1570867394182</updated>
+    </task>
+    <option name="localTasksCounter" value="279" />
     <servers />
   </component>
   <component name="TodoView">
@@ -594,7 +592,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Bug Fix Sermon" />
     <MESSAGE value="Fixed Sermon Bug. Rule 355 added. Channel Segregation for bot and non bot actions." />
     <MESSAGE value="Sermon Amen player bot issue fix again. me sleepy" />
     <MESSAGE value="Close plot figures YAY!!" />
@@ -619,7 +616,8 @@
     <MESSAGE value="Trade Diplomon." />
     <MESSAGE value="Vinny Movement" />
     <MESSAGE value="Vinny Events ALL done. Finally." />
-    <option name="LAST_COMMIT_MESSAGE" value="Vinny Events ALL done. Finally." />
+    <MESSAGE value="Vinny Bug fix and Hail Satron" />
+    <option name="LAST_COMMIT_MESSAGE" value="Vinny Bug fix and Hail Satron" />
   </component>
   <component name="masterDetails">
     <states>
