@@ -1493,7 +1493,8 @@ def onDayChange(server):
     log(guild, "Day " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
 
     for player in Data[guild]['Players']:
-        cursed = 0.5 + 0.5 * (Data[guild]['Players'][player]['Inventory'].get('Curse') not in [0,None])
+        cursed = not Data[guild]['Players'][player]['Inventory'].get('Curse') in [0, None]
+
         if Data[guild]['Players'][player]['Inventory'].get('Curse') not in [0,None]:
             del Data[guild]['Players'][player]['Inventory']['Curse']
         for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
@@ -1503,20 +1504,22 @@ def onDayChange(server):
                     and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Unit') is None:
                 xcord, ycord = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
                 double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']
+                modifier = (1 - cursed * 0.5) * (double + 1)
+
                 if double:
                     del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['Boost']
 
                 if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Perpetual':                    addItem(guild, player, 'Corn', 3 * (2 ** double) * cursed)
+                            'type'] == 'Perpetual':                    addItem(guild, player, 'Corn', 3 * modifier)
 
                 if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Non Perpetual':                    addItem(guild, player, 'Steel', 1 * (2 ** double) * cursed)
+                            'type'] == 'Non Perpetual':                    addItem(guild, player, 'Steel', 1 * modifier)
 
                 if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER') and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Non Perpetual':                    addItem(guild, player, 'Oil', 1 * (2 ** double) * cursed)
+                            'type'] == 'Non Perpetual':                    addItem(guild, player, 'Oil', 1 * modifier)
 
                 Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] += 1
                 if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
@@ -1531,6 +1534,7 @@ def onDayChange(server):
                 unit = dict(Data[guild]['Units'][name])
 
                 double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
+                modifier = (1 - cursed * 0.5) * (double + 1)
                 if double: del \
                     Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Boost']
 
@@ -1556,7 +1560,7 @@ def onDayChange(server):
                             gift = random.choice(resourceList)
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
                                 'TownItem'] = gift
-                        addItem(guild, player, gift, float(2) * (2 ** double) * cursed )
+                        addItem(guild, player, gift, float(2) * modifier)
 
                     if name == 'village':
                         gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get(
@@ -1565,13 +1569,13 @@ def onDayChange(server):
                             gift = random.choice(resourceList)
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
                                 'VillageItem'] = gift
-                        addItem(guild, player, gift, float(1) * (2 ** double) * cursed)
+                        addItem(guild, player, gift, float(1) * modifier)
 
                     if name == 'digsite':
                         if random.randint(0,100) < 5:
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
                                 'Artifact'] = True
-                        addItem(guild, player, gift, float(1) * (2 ** double) * cursed)
+                        addItem(guild, player, gift, float(1) * modifier)
 
                     for cost in unit['DailyCosts']:
                         if ' ' in cost:
@@ -1580,7 +1584,7 @@ def onDayChange(server):
                     for cost in unit['DailyReturn']:
                         if ' ' in cost:
                             amount, item = cost.split(' ')
-                            addItem(guild, player, item, float(amount) * (2 ** double) * cursed)
+                            addItem(guild, player, item, float(amount) * modifier)
 
     for item in Data[guild]['Fed']['Rates'].keys():
         vel = Data[guild]['Fed']['Velocity'][item]+100
@@ -1943,7 +1947,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         itemDelta = {
             'BF': {'-': 0.0, '+': 0.0},
         }
-        cursed = 0.5 + 0.5 * (Data[guild]['Players'][player]['Inventory'].get('Curse') in [0, None])
+        cursed = not Data[guild]['Players'][player]['Inventory'].get('Curse') in [0, None]
 
         for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
             x, y = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
@@ -1957,6 +1961,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                     unit = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Name']
                     double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
 
+                    modifier = (1 - cursed * 0.5) * (double + 1)
                     if unit == 'town':
                         itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('TownItem')
                         if itm == None:
@@ -1964,7 +1969,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['TownItem'] = itm
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
-                        itemDelta[itm]['+'] += float(2) * (2 ** double) * cursed
+                        itemDelta[itm]['+'] += float(2) * modifier
 
                     if unit == 'village':
                         itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('VillageItem')
@@ -1973,7 +1978,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['VillageItem'] = itm
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
-                        itemDelta[itm]['+'] += float(1) * (2 ** double) * cursed
+                        itemDelta[itm]['+'] += float(1) * modifier
                         
                     for cst in Data[guild]['Units'][unit]['DailyCosts']:
                         a, itm = cst.split(' ')
@@ -1984,7 +1989,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                         a, itm = cst.split(' ')
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
-                        itemDelta[itm]['+'] += float(a) * (2 ** double) * cursed
+                        itemDelta[itm]['+'] += float(a) * modifier
                 elif prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
                     'type'] == 'Perpetual' and 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]:
                     totalRenewableHarvests += 1

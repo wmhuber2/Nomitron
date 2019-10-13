@@ -211,13 +211,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00235" summary="CSV FOR DOBY">
-      <created>1568571956688</created>
-      <option name="number" value="00235" />
-      <option name="presentableId" value="LOCAL-00235" />
-      <option name="project" value="LOCAL" />
-      <updated>1568571956688</updated>
-    </task>
     <task id="LOCAL-00236" summary="CSV FOR DOBY">
       <created>1568572288405</created>
       <option name="number" value="00236" />
@@ -554,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1570934933392</updated>
     </task>
-    <option name="localTasksCounter" value="284" />
+    <task id="LOCAL-00284" summary="Bug Fix On New Day Curse Error">
+      <created>1570943756024</created>
+      <option name="number" value="00284" />
+      <option name="presentableId" value="LOCAL-00284" />
+      <option name="project" value="LOCAL" />
+      <updated>1570943756024</updated>
+    </task>
+    <option name="localTasksCounter" value="285" />
     <servers />
   </component>
   <component name="TodoView">
@@ -593,7 +593,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Close plot figures YAY!!" />
     <MESSAGE value="STOP U GOT A MAP PLOTTING PROBLEM." />
     <MESSAGE value="CSV FOR DOBY" />
     <MESSAGE value="@AJuulPodNamedDesire is now a player" />
@@ -618,7 +617,8 @@
     <MESSAGE value="Vinny Bug fix and Hail Satron" />
     <MESSAGE value="Vinny Bug fix." />
     <MESSAGE value="MoveMent of Harvests" />
-    <option name="LAST_COMMIT_MESSAGE" value="MoveMent of Harvests" />
+    <MESSAGE value="Bug Fix On New Day Curse Error" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix On New Day Curse Error" />
   </component>
   <component name="masterDetails">
     <states>
