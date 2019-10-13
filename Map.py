@@ -704,101 +704,120 @@ async def run(inData, payload, message):
                     except ValueError: pass
 
                     targetOccupied = False
+                    unitOccupied = False
+                    toMove = None
+                    harvOccupied = False
                     for playerTest in Data[guild]['Players']:
                         try:
                             ind = Data[guild]['Players'][playerTest]['Markers']['Location'].index([x2, y2])
                             if 'Unit' in Data[guild]['Players'][playerTest]['Markers']['Properties'][ind]:
-                                targetOccupied = True
+                                unitOccupied = True
+                            if 'Harvest' in Data[guild]['Players'][playerTest]['Markers']['Properties'][ind]:
+                                harvOccupied = True
                         except ValueError:
                             pass
 
                     if index1 is None:
-                        addMsgQueue(message.channel, "No Unit There To Move")
-                    elif 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
-                        addMsgQueue(message.channel, "No Unit There To Move")
-                    elif targetOccupied:
+                        addMsgQueue(message.channel, "Nothing There To Move")
+                    elif 'Harvest' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
+                        toMove = 'Harvest'
+                    elif 'Unit' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
+                        toMove = 'Unit'
+                    else:
+                        addMsgQueue(message.channel, "Nothing There To Move")
+
+                    if unitOccupied and toMove == 'Unit':
                         addMsgQueue(message.channel, "2 Units cant exist in the same location")
-                    elif not Data[guild]['Units'][
-                        Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']
-                    ]['isMobile']:
-                        print('Non Mobile Move')
-                        hist =  Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'].get('MoveCount')
+                    elif harvOccupied and toMove == 'Harvest':
+                        addMsgQueue(message.channel, "2 Harvests cant exist in the same location")
+
+                    elif toMove == 'Unit' and Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']\
+                            in ['town', 'village', 'digsite', 'mill', 'oil', 'mine', 'wall'] \
+                            and isTileType(Data[guild]['Image'], x2, y2, 'MEAT'):
+                        addMsgQueue(message.channel, "This Unit Cannot Be Placed On A Meat Tile")
+
+                    elif toMove == 'Harvest' and isTileType(Data[guild]['Image'], x2, y2, 'MEAT'):
+                        addMsgQueue(message.channel, "This Harvest Cannot Be Placed On A Meat Tile")
+
+                    elif toMove == 'Unit' and Data[guild]['Units'][
+                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']
+                        ]['isMobile']:
+                        if abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2 > 2 or abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2 == 0:
+                            addMsgQueue(message.channel, "Movement Must Be to Adjacent Tiles")
+                        elif 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
+                            addMsgQueue(message.channel, "Unit Is Disabled")
+                        else:
+                            unit = Data[guild]['Units'][
+                                Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']
+                            ]
+                            canAfford = True
+                            for cost in unit['MobileCost']:
+                                amount, item = cost.split(' ')
+                                canAfford = canAfford and addItem(guild, payload['Author'], item, -float(amount),
+                                                                  testOnly=True)
+                            if not canAfford:
+                                addMsgQueue(message.channel, "Insufficient Funds To Move")
+                            else:
+                                for cost in unit['MobileCost']:
+                                    amount, item = cost.split(' ')
+                                    addItem(guild, payload['Author'], item, -float(amount))
+                                if index2 is None:
+                                    Data[guild]['Players'][player]['Markers']['Properties'].append({
+                                        'Unit': Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                                    })
+                                    Data[guild]['Players'][player]['Markers']['Shape'].append("")
+                                    Data[guild]['Players'][player]['Markers']['Location'].append([x2, y2])
+                                    del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                                else:
+                                    Data[guild]['Players'][player]['Markers']['Properties'][index2]['Unit'] \
+                                        = dict(Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'])
+                                    del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+
+                                if Data[guild]['Players'][player]['Markers']['Shape'][index1] == "":
+                                    del Data[guild]['Players'][player]['Markers']['Location'][index1]
+                                    del Data[guild]['Players'][player]['Markers']['Shape'][index1]
+                                    del Data[guild]['Players'][player]['Markers']['Properties'][index1]
+                                addMsgQueue(message.channel,
+                                            "Moving Unit From " + x1a + str(y1 + 1) + " to " + x2a + str(y2 + 1))
+
+                    elif toMove is not None:
+                        hist =  Data[guild]['Players'][player]['Markers']['Properties'][index1][toMove].get('MoveCount')
                         if hist is None:
-                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['MoveCount'] = 0
+                            Data[guild]['Players'][player]['Markers']['Properties'][index1][toMove]['MoveCount'] = 0
                             hist = 0
                         amount = 3**hist
                         item = 'Energy'
                         canAfford = addItem(guild, payload['Author'], item, -float(amount),
                                                               testOnly=True)
-
-                        print('is adj',isAdjacent(guild, payload['Author'],[x2,y2]))
-                        if not isAdjacent(guild, payload['Author'],[x2,y2]):
+                        if not isAdjacent(guild, payload['Author'], [x2, y2]):
                             addMsgQueue(message.channel, "Target is not adjacent to a claim")
-                        elif Data[guild]['Players'][player]['Markers']['Properties'][index1]['Name']\
-                                in ['town', 'village', 'digsite', 'mill', 'oil', 'mine', 'wall'] \
-                                and isTileType(Data[guild]['Image'], x, y, 'MEAT'):
-                            addMsgQueue(message.channel, "This Unit Cannot Be Placed On A Meat Tile")
-                        elif not canAfford:
-                            addMsgQueue(message.channel, "Insufficient Funds To Move: Energy = ", amount)
-                        else:
+
+                        elif canAfford:
                             addItem(guild, payload['Author'], item, -float(amount))
-                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['MoveCount'] += 1
+                            Data[guild]['Players'][player]['Markers']['Properties'][index1][toMove]['MoveCount'] += 1
                             if index2 is None:
                                 Data[guild]['Players'][player]['Markers']['Properties'].append({
-                                    'Unit': dict(Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'])
+                                    toMove: dict(
+                                        Data[guild]['Players'][player]['Markers']['Properties'][index1][toMove])
                                 })
                                 Data[guild]['Players'][player]['Markers']['Shape'].append("")
                                 Data[guild]['Players'][player]['Markers']['Location'].append([x2, y2])
-                                del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                                del Data[guild]['Players'][player]['Markers']['Properties'][index1][toMove]
                             else:
-                                Data[guild]['Players'][player]['Markers']['Properties'][index2]['Unit'] \
-                                    = dict(Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'])
-                                del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
+                                Data[guild]['Players'][player]['Markers']['Properties'][index2][toMove] \
+                                    = dict(Data[guild]['Players'][player]['Markers']['Properties'][index1][toMove])
+                                del Data[guild]['Players'][player]['Markers']['Properties'][index1][toMove]
 
                             if Data[guild]['Players'][player]['Markers']['Shape'][index1] == "":
                                 del Data[guild]['Players'][player]['Markers']['Location'][index1]
                                 del Data[guild]['Players'][player]['Markers']['Shape'][index1]
                                 del Data[guild]['Players'][player]['Markers']['Properties'][index1]
-                            addMsgQueue(message.channel,
-                                        "Moving Unit From " + x1a + str(y1 + 1) + " to " + x2a + str(y2 + 1))
 
-                    elif abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2 > 2 or abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2 == 0:
-                        addMsgQueue(message.channel, "Movement Must Be to Adjacent Tiles")
-                    elif 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
-                        addMsgQueue(message.channel, "Unit Is Disabled")
-                    else:
-                        unit = Data[guild]['Units'][
-                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']
-                        ]
-                        canAfford = True
-                        for cost in unit['MobileCost']:
-                            amount, item = cost.split(' ')
-                            canAfford = canAfford and addItem(guild, payload['Author'], item, -float(amount),
-                                                              testOnly=True)
-                        if not canAfford:
-                            addMsgQueue(message.channel, "Insufficient Funds To Move")
-                        else:
-                            for cost in unit['MobileCost']:
-                                amount, item = cost.split(' ')
-                                addItem(guild, payload['Author'], item, -float(amount))
-                            if index2 is None:
-                                Data[guild]['Players'][player]['Markers']['Properties'].append({
-                                    'Unit': Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
-                                })
-                                Data[guild]['Players'][player]['Markers']['Shape'].append("")
-                                Data[guild]['Players'][player]['Markers']['Location'].append([x2, y2])
-                                del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
-                            else:
-                                Data[guild]['Players'][player]['Markers']['Properties'][index2]['Unit'] \
-                                    = dict(Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'])
-                                del Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
-
-                            if Data[guild]['Players'][player]['Markers']['Shape'][index1] == "":
-                                del Data[guild]['Players'][player]['Markers']['Location'][index1]
-                                del Data[guild]['Players'][player]['Markers']['Shape'][index1]
-                                del Data[guild]['Players'][player]['Markers']['Properties'][index1]
                             addMsgQueue(message.channel,
-                                        "Moving Unit From " + x1a + str(y1 + 1) + " to " + x2a + str(y2 + 1))
+                                        "Moving From " + x1a + str(y1 + 1) + " to " + x2a + str(y2 + 1))
+
+
+
 
             elif splitContent[0] == '!toggle' and len(splitContent) == 2:
                 coords = extractCoords(splitContent[1], message.channel)
