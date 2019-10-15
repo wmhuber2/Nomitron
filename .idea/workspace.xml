@@ -7,7 +7,6 @@
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Sermon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sermon.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,13 +209,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00237" summary="@AJuulPodNamedDesire is now a player">
-      <created>1568589379411</created>
-      <option name="number" value="00237" />
-      <option name="presentableId" value="LOCAL-00237" />
-      <option name="project" value="LOCAL" />
-      <updated>1568589379411</updated>
     </task>
     <task id="LOCAL-00238" summary="@AJuulPodNamedDesire is now a player">
       <created>1568589740835</created>
@@ -554,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1570945025598</updated>
     </task>
-    <option name="localTasksCounter" value="286" />
+    <task id="LOCAL-00286" summary="Bug Fix On New Day Curse Error. Trade isssue fixxed">
+      <created>1571117056334</created>
+      <option name="number" value="00286" />
+      <option name="presentableId" value="LOCAL-00286" />
+      <option name="project" value="LOCAL" />
+      <updated>1571117056334</updated>
+    </task>
+    <option name="localTasksCounter" value="287" />
     <servers />
   </component>
   <component name="TodoView">
@@ -593,7 +592,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="STOP U GOT A MAP PLOTTING PROBLEM." />
     <MESSAGE value="CSV FOR DOBY" />
     <MESSAGE value="@AJuulPodNamedDesire is now a player" />
     <MESSAGE value="Mobile Friendly" />
@@ -618,7 +616,8 @@
     <MESSAGE value="Vinny Bug fix." />
     <MESSAGE value="MoveMent of Harvests" />
     <MESSAGE value="Bug Fix On New Day Curse Error" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix On New Day Curse Error" />
+    <MESSAGE value="Bug Fix On New Day Curse Error. Trade isssue fixxed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug Fix On New Day Curse Error. Trade isssue fixxed" />
   </component>
   <component name="masterDetails">
     <states>

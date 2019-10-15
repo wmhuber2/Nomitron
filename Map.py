@@ -1083,7 +1083,6 @@ async def run(inData, payload, message):
                         else:
                             addMsgQueue(message.channel, "Resources Unavailable")
 
-
             elif splitContent[0].lower() == '!asset':
                 msg = payload['Content'].split('\n')
                 giver, reciptient = None, None
@@ -1294,9 +1293,10 @@ async def run(inData, payload, message):
 
             if not isinstance(properties, (dict,)):
                 addMsgQueue(message.channel, 'Properties Is Not Dict.')
-            elif shape not in ['Claim', 'Capital']:
+            elif shape not in ['Claim', 'Capital', 'None']:
                 addMsgQueue(message.channel, 'Shape is Not Claim or Capital')
             elif coords is not None and playerName is not None:
+                if shape in 'None':shape = ""
                 x, xa, y = coords
                 for player2 in Data[guild]['Players'].keys():
                     try:
