@@ -4,7 +4,10 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="" />
+    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -206,13 +209,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00240" summary="@AJuulPodNamedDesire is now a player">
-      <created>1568589774396</created>
-      <option name="number" value="00240" />
-      <option name="presentableId" value="LOCAL-00240" />
-      <option name="project" value="LOCAL" />
-      <updated>1568589774396</updated>
     </task>
     <task id="LOCAL-00241" summary="Mobile Friendly">
       <created>1568599818875</created>
@@ -550,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571149296987</updated>
     </task>
-    <option name="localTasksCounter" value="289" />
+    <task id="LOCAL-00289" summary="SetTile Fix/Update">
+      <created>1571159990319</created>
+      <option name="number" value="00289" />
+      <option name="presentableId" value="LOCAL-00289" />
+      <option name="project" value="LOCAL" />
+      <updated>1571159990319</updated>
+    </task>
+    <option name="localTasksCounter" value="290" />
     <servers />
   </component>
   <component name="TodoView">
@@ -589,7 +592,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="@AJuulPodNamedDesire is now a player" />
     <MESSAGE value="Mobile Friendly" />
     <MESSAGE value="Bug Fix Lag" />
     <MESSAGE value="NO FISH YAHOOOO." />
@@ -614,7 +616,8 @@
     <MESSAGE value="Bug Fix On New Day Curse Error" />
     <MESSAGE value="Bug Fix On New Day Curse Error. Trade isssue fixxed" />
     <MESSAGE value="SetTiel Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="SetTiel Update" />
+    <MESSAGE value="SetTile Fix/Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="SetTile Fix/Update" />
   </component>
   <component name="masterDetails">
     <states>

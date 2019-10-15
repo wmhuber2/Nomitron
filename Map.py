@@ -1308,6 +1308,13 @@ async def run(inData, payload, message):
                     except ValueError:
                         pass
                 '''
+                try:
+                    index = Data[guild]['Players'][playerName]['Markers']['Location'].index([x, y])
+                    del Data[guild]['Players'][playerName]['Markers']['Location'][index]
+                    del Data[guild]['Players'][playerName]['Markers']['Shape'][index]
+                    del Data[guild]['Players'][playerName]['Markers']['Properties'][index]
+                except ValueError:
+                    pass
                 Data[guild]['Players'][playerName]['Markers']['Location'].append([x, y])
                 Data[guild]['Players'][playerName]['Markers']['Shape'].append(shape)
                 Data[guild]['Players'][playerName]['Markers']['Properties'].append(properties)
