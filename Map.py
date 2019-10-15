@@ -1298,6 +1298,7 @@ async def run(inData, payload, message):
             elif coords is not None and playerName is not None:
                 if shape == 'None':shape = ""
                 x, xa, y = coords
+                '''
                 for player2 in Data[guild]['Players'].keys():
                     try:
                         index = Data[guild]['Players'][player2]['Markers']['Location'].index([x, y])
@@ -1306,7 +1307,7 @@ async def run(inData, payload, message):
                         del Data[guild]['Players'][player2]['Markers']['Properties'][index]
                     except ValueError:
                         pass
-
+                '''
                 Data[guild]['Players'][playerName]['Markers']['Location'].append([x, y])
                 Data[guild]['Players'][playerName]['Markers']['Shape'].append(shape)
                 Data[guild]['Players'][playerName]['Markers']['Properties'].append(properties)
