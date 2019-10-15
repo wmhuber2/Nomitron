@@ -498,7 +498,7 @@ async def run(inData, payload, message):
                             addMsgQueue(message.channel,
                                         "You have already purchased a claim today. Please wait until tomorrow to claim again. Have a nice day. :v:")
 
-                        elif isAdjacent(guild, payload['Author'], [xcord, ycord]):
+                        elif isAdjacent(guild, payload['Author'], [xcord, ycord], False):
                             isClaimed = False
                             for player in Data[guild]['Players'].keys(): 
                                 if botName == player: continue
@@ -1775,12 +1775,12 @@ def onDayChange(server):
 """
 Is tile Adjacent
 """
-def isAdjacent(guild, player, coord):
+def isAdjacent(guild, player, coord, claimAdjacencyOnly = True):
     global Data
     xcord, ycord = coord
     loc = []
     for index in range(len(Data[guild]['Players'][player]['Markers']['Location'])):
-        if Data[guild]['Players'][player]['Markers']['Shape'][index] in ['Claim','Capital']:
+        if Data[guild]['Players'][player]['Markers']['Shape'][index] in ['Claim','Capital'] or not claimAdjacencyOnly:
             loc.append(Data[guild]['Players'][player]['Markers']['Location'][index])
 
     isadj = [xcord + 1, ycord + 1] in loc or \
