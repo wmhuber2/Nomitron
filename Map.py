@@ -1296,7 +1296,7 @@ async def run(inData, payload, message):
             elif shape not in ['Claim', 'Capital', 'None']:
                 addMsgQueue(message.channel, 'Shape is Not Claim or Capital')
             elif coords is not None and playerName is not None:
-                if shape in 'None':shape = ""
+                if shape == 'None':shape = ""
                 x, xa, y = coords
                 for player2 in Data[guild]['Players'].keys():
                     try:
