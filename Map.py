@@ -174,7 +174,7 @@ async def reaction(inData, action, user, messageid, emoji):
                 else:
                     addMsgQueue(message.channel, "You Do Not Have " + str(amount) + ' ' + cost + " To Claim The Tile")
 
-    elif splitContent[0] == '!trade':
+    elif splitContent[0] == '!trade' and len(splitContent) == 4:
         bot = None
         canContinute = False
         for r in message.reactions:
@@ -207,46 +207,7 @@ async def reaction(inData, action, user, messageid, emoji):
                     except:
                         addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
 
-                    if item.lower() in ['diplomats','diplomat']:
-                        loc1 = None
-                        loc2 = None
-                        for tile in range(len(Data[guild]['Players'][playerName]['Markers']['Location'])):
-                            if 'Unit' in Data[guild]['Players'][playerName]['Markers']['Properties'][tile] \
-                               and Data[guild]['Players'][playerName]['Markers']['Properties'][tile]['Unit']['Name'] == 'diplomats' \
-                               and Data[guild]['Players'][playerName]['Markers']['Shape'][tile] == 'Claim':
-                                loc1 = tile
-                                break
-                        for tile in range(len(Data[guild]['Players'][targetName]['Markers']['Location'])):
-                            if 'Unit' in Data[guild]['Players'][targetName]['Markers']['Properties'][tile] \
-                               and Data[guild]['Players'][targetName]['Markers']['Properties'][tile]['Unit']['Name'] == 'diplomats' \
-                               and Data[guild]['Players'][targetName]['Markers']['Shape'][tile] == 'Claim':
-                                loc2 = tile
-                                break
-                        if loc1 is None or loc2 is None:
-                            addMsgQueue(message.channel, "Diplomat Trade Failed. No Diplomat Found.")
-                            await message.remove_reaction('👍', bot)
-                            await message.remove_reaction('👎', bot)
-                        else:
-                            prop1 = Data[guild]['Players'][playerName]['Markers']['Properties'][loc1]
-                            prop2 = Data[guild]['Players'][targetName]['Markers']['Properties'][loc2]
-
-                            cord1 = Data[guild]['Players'][playerName]['Markers']['Location'][loc1]
-                            cord2 = Data[guild]['Players'][targetName]['Markers']['Location'][loc2]
-
-                            Data[guild]['Players'][playerName]['Markers']['Properties'][loc1] = {}
-                            Data[guild]['Players'][targetName]['Markers']['Properties'][loc2] = {}
-
-                            Data[guild]['Players'][playerName]['Markers']['Location'].append(cord2)
-                            Data[guild]['Players'][playerName]['Markers']['Shape'].append("")
-                            Data[guild]['Players'][playerName]['Markers']['Properties'].append(prop2)
-
-                            Data[guild]['Players'][targetName]['Markers']['Location'].append(cord1)
-                            Data[guild]['Players'][targetName]['Markers']['Shape'].append("")
-                            Data[guild]['Players'][targetName]['Markers']['Properties'].append(prop1)
-
-                            addMsgQueue(message.channel, "Diplomat Trade Successful.")
-
-                    elif amount is not None \
+                    if amount is not None \
                             and addItem(guild, playerName, item, -amount, testOnly=True) \
                             and addItem(guild, targetName, item,  amount, testOnly=True):
                         await message.remove_reaction('👍', bot)
@@ -262,7 +223,68 @@ async def reaction(inData, action, user, messageid, emoji):
                     await message.remove_reaction('👍', bot)
                     await message.remove_reaction('👎', bot)
                     addMsgQueue(message.channel, 'Transaction Rejected')
-                    
+
+    elif splitContent[0] == '!trade' and len(splitContent) == 6:
+        bot = None
+        canContinute = False
+        for r in message.reactions:
+            isBot = False
+            for u in await r.users().flatten():
+                isBot = u.bot or isBot
+                if u.bot:  bot = u
+            canContinute = canContinute or isBot
+
+        if canContinute:
+            canContinute = False
+
+            targetName = getPlayer(message.guild, splitContent[1], message.channel)
+            if targetName is not None:
+                for r in message.reactions:
+                    if not r.emoji in ['👍', '👎']:
+                        continue
+                    for u in await r.users().flatten():
+                        if u.name + '#' + u.discriminator == targetName:
+                            canContinute = True
+                            emoji = r.emoji
+
+                if not canContinute:
+                    pass
+                elif str(emoji) == '👍':
+                    buyamount = None
+                    buyitem = splitContent[-1]
+                    sellamount = None
+                    sellitem = splitContent[-3]
+                    try:
+                        buyamount = float(splitContent[-2])
+                        sellamount = float(splitContent[-4])
+                    except:
+                        addMsgQueue(message.channel, 'Item Count cannot be quantified into an amount.')
+
+
+                    if buyamount is not None \
+                        and sellamount is not None \
+                        and addItem(guild, playerName, sellitem, -sellamount, testOnly=True) \
+                        and addItem(guild, targetName, sellitem, sellamount, testOnly=True) \
+                        and addItem(guild, playerName, buyitem, buyamount, testOnly=True) \
+                        and addItem(guild, targetName, buyitem, -buyamount, testOnly=True):
+
+                        await message.remove_reaction('👍', bot)
+                        await message.remove_reaction('👎', bot)
+
+                        addItem(guild, playerName, buyitem, buyamount)
+                        addItem(guild, targetName, sellitem, sellamount)
+
+                        addItem(guild, playerName, sellitem, -sellamount)
+                        addItem(guild, targetName, buyitem, -buyamount)
+
+                        addMsgQueue(message.channel, 'Transaction Completed For ' + playerName + ' to ' + targetName)
+                    else:
+                        addMsgQueue(message.channel, "Resources Unavailable For Trade")
+                elif str(emoji) == '👎':
+                    await message.remove_reaction('👍', bot)
+                    await message.remove_reaction('👎', bot)
+                    addMsgQueue(message.channel, 'Transaction Rejected')
+
     elif splitContent[0].lower() == '!asset':
         bot = None
         canContinute = False
@@ -816,9 +838,6 @@ async def run(inData, payload, message):
                             addMsgQueue(message.channel,
                                         "Moving From " + x1a + str(y1 + 1) + " to " + x2a + str(y2 + 1))
 
-
-
-
             elif splitContent[0] == '!toggle' and len(splitContent) == 2:
                 coords = extractCoords(splitContent[1], message.channel)
                 if coords is not None:
@@ -1027,31 +1046,8 @@ async def run(inData, payload, message):
                         except:
                             addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
 
-                        if item in ['Diplomats','Diplomat']:
-                            loc1 = None
-                            loc2 = None
-                            for tile in range(len(Data[guild]['Players'][playerName]['Markers']['Location'])):
-                                if 'Unit' in Data[guild]['Players'][playerName]['Markers']['Properties'][tile] \
-                                        and Data[guild]['Players'][playerName]['Markers']['Properties'][tile]['Unit'][
-                                    'Name'] == 'diplomats' \
-                                        and Data[guild]['Players'][playerName]['Markers']['Shape'][tile] == 'Claim':
-                                    loc1 = tile
-                                    break
-                            for tile in range(len(Data[guild]['Players'][payload['Author']]['Markers']['Location'])):
-                                if 'Unit' in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][tile] \
-                                        and Data[guild]['Players'][payload['Author']]['Markers']['Properties'][tile]['Unit'][
-                                    'Name'] == 'diplomats' \
-                                        and Data[guild]['Players'][payload['Author']]['Markers']['Shape'][tile] == 'Claim':
-                                    loc2 = tile
-                                    break
-                            if loc1 is None or loc2 is None:
-                               addMsgQueue(message.channel, "One Or More Players Do Not Have Required Diplomats")
 
-                            else:
-                                await message.add_reaction('👍')
-                                await message.add_reaction('👎')
-
-                        elif amount is not None \
+                        if amount is not None \
                                 and addItem(guild, payload['Author'], item, -amount, testOnly=True) \
                                 and addItem(guild, playerName, item, amount, testOnly=True):
 
@@ -1059,6 +1055,34 @@ async def run(inData, payload, message):
                             await message.add_reaction('👎')
                         else:
                             addMsgQueue(message.channel, "You Do Not Have The Resources")
+
+            elif splitContent[0] == '!trade' and len(splitContent) == 6:
+                for playerid in splitContent[1:-4]:
+                    playerName = getPlayer(message.guild, playerid, message.channel)
+
+                    if playerName is not None:
+                        buyamount = None
+                        buyitem = splitContent[-1]
+                        sellamount = None
+                        sellitem = splitContent[-3]
+                        try:
+                            buyamount = float(splitContent[-2])
+                            sellamount = float(splitContent[-4])
+                        except:
+                            addMsgQueue(message.channel, 'Item Count cannot be quantified into an amount.')
+
+                        if buyamount is not None \
+                                and sellamount is not None \
+                                and addItem(guild, payload['Author'],   sellitem, -sellamount, testOnly=True) \
+                                and addItem(guild, playerName,          sellitem, sellamount, testOnly=True) \
+                                and addItem(guild, payload['Author'],   buyitem, buyamount, testOnly=True) \
+                                and addItem(guild, playerName,          buyitem, -buyamount, testOnly=True):
+
+                            await message.add_reaction('👍')
+                            await message.add_reaction('👎')
+                        else:
+                            addMsgQueue(message.channel, "Resources Unavailable")
+
 
             elif splitContent[0].lower() == '!asset':
                 msg = payload['Content'].split('\n')

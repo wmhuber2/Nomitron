@@ -107,7 +107,7 @@ async def run(inData, payload, message):
                 if(playerAttended and (not playerTithed)): # Tithed item rolls are handled separately
                     endTurnMessage = endTurnMessage + await giveReward(player, 0.2, 0.1,guild) + "\n"
                 elif playerData[player].get('hailed') is not None:
-                    endTurnMessage = "Praise! The Dark Lord Has Gifted <@"+str(Players[player]['id'])+"> with "
+                    endTurnMessage += "Praise! The Dark Lord Has Gifted <@"+str(Players[player]['id'])+"> with "
                     c = random.randint(0,100)
                     if c < 66:
                         endTurnMessage += "1 Artifact."
@@ -127,7 +127,7 @@ async def run(inData, payload, message):
                             endTurnMessage += "a Terrible Curse."
                         elif c < 66 + 13 + 3 + 6 + 6 + 6:
                             endTurnMessage += "to destroy any unit/harvest on the map."
-
+                    endTurnMessage += '\n'
                 # Reset attendance
 
                 if playerData[player].get('razed'):
