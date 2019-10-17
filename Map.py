@@ -158,13 +158,14 @@ async def reaction(inData, action, user, messageid, emoji):
                                     "Bad Kid " + reactorName + " has Claimed with " + str(amount) + ' ' + cost)
 
                     properties = {}
-                    for player in Data[guild]['Players'].keys():
-                        if [xcord, ycord] in Data[guild]['Players'][player]['Markers']['Location']:
-                            index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord,ycord])
-                            properties = dict(Data[guild]['Players'][player]['Markers']['Properties'][index])
-                            Data[guild]['Players'][player]['Markers']['Location'].pop(index)
-                            Data[guild]['Players'][player]['Markers']['Properties'].pop(index)
-                            Data[guild]['Players'][player]['Markers']['Shape'].pop(index)
+                    #for player in Data[guild]['Players'].keys():
+                    player = botName
+                    if [xcord, ycord] in Data[guild]['Players'][player]['Markers']['Location']:
+                        index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord,ycord])
+                        properties = dict(Data[guild]['Players'][player]['Markers']['Properties'][index])
+                        Data[guild]['Players'][player]['Markers']['Location'].pop(index)
+                        Data[guild]['Players'][player]['Markers']['Properties'].pop(index)
+                        Data[guild]['Players'][player]['Markers']['Shape'].pop(index)
 
                     Data[guild]['Players'][playerName]['Markers']['Location'].append([xcord, ycord])
                     Data[guild]['Players'][playerName]['Markers']['Properties'].append(properties)
@@ -515,13 +516,14 @@ async def run(inData, payload, message):
                                 await message.add_reaction('🌮')
                             elif addItem(guild, payload['Author'], 'BF', -2):
                                 properties = {}
-                                for player in Data[guild]['Players'].keys():
-                                    if [xcord, ycord] in Data[guild]['Players'][player]['Markers']['Location']:
-                                        index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord,ycord])
-                                        properties = dict(Data[guild]['Players'][player]['Markers']['Properties'][index])
-                                        Data[guild]['Players'][player]['Markers']['Location'].pop(index)
-                                        Data[guild]['Players'][player]['Markers']['Properties'].pop(index)
-                                        Data[guild]['Players'][player ]['Markers']['Shape'].pop(index)
+                                #for player in Data[guild]['Players'].keys():
+                                player = botName
+                                if [xcord, ycord] in Data[guild]['Players'][player]['Markers']['Location']:
+                                    index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord,ycord])
+                                    properties = dict(Data[guild]['Players'][player]['Markers']['Properties'][index])
+                                    Data[guild]['Players'][player]['Markers']['Location'].pop(index)
+                                    Data[guild]['Players'][player]['Markers']['Properties'].pop(index)
+                                    Data[guild]['Players'][player ]['Markers']['Shape'].pop(index)
 
 
                                 Data[guild]['Players'][payload['Author']]['Markers']['Location'].append([xcord, ycord])
@@ -1624,6 +1626,7 @@ def onDayChange(server):
             Data[guild]['Fed']['Rates'][item] = 100.0/vel * Data[guild]['Fed']['Rates'][item]
 
     dir = random.randint(0,3)
+    stepsize = random.randint(2,4)
     atlantean = 'ATLANTEAN' in Data[guild]['Vinny']
     if atlantean: Data[guild]['Vinny']['ATLANTEAN'] -= 1
     if atlantean and Data[guild]['Vinny']['ATLANTEAN'] <=0 : del Data[guild]['Vinny']['ATLANTEAN']
@@ -1633,25 +1636,33 @@ def onDayChange(server):
         dir = (dir + 1) % 4
         action = acts[dir]
         ncoords = [
-            Data[guild]['Vinny']['Position'][0] + action[0],
-            Data[guild]['Vinny']['Position'][1] + action[1],
+            Data[guild]['Vinny']['Position'][0] + action[0]*stepsize,
+            Data[guild]['Vinny']['Position'][1] + action[1]*stepsize,
         ]
         if ncoords[0] < 0 or ncoords[1] < 0 or ncoords[0] >= 75 or ncoords[1] >= 75: continue
+        elif ncoords in Data[guild]['Vinny']['History'] and random.randint(0,1) and i != 3:
+            print("Skipping Past Place")
+            continue
         else:
             Data[guild]['Vinny']['Position'] = ncoords
             addMsgQueue(channels[guild]['actions'], 'Vinny has moved to '+ labels[ncoords[0]]+str( ncoords[1]+1))
             break
 
     vx, vy = Data[guild]['Vinny']['Position']
+    Data[guild]['Vinny']['History'].add([vx,vy])
     if atlantean and isTileType(Data[guild]['Image'], vx, vy, 'WATER'):
         for i in range(4):
             dir = (dir + 1) % 4
+            stepsize = random.randint(2, 4)
             action = acts[dir]
             ncoords = [
-                Data[guild]['Vinny']['Position'][0] + action[0],
-                Data[guild]['Vinny']['Position'][1] + action[1],
+                Data[guild]['Vinny']['Position'][0] + action[0]*stepsize,
+                Data[guild]['Vinny']['Position'][1] + action[1]*stepsize,
             ]
             if ncoords[0] < 0 or ncoords[1] < 0 or ncoords[0] >= 75 or ncoords[1] >= 75:
+                continue
+            elif ncoords in Data[guild]['Vinny']['History'] and random.randint(0, 1) and i != 3:
+                print("Skipping Past Place")
                 continue
             else:
                 Data[guild]['Vinny']['Position'] = ncoords
@@ -1662,7 +1673,8 @@ def onDayChange(server):
     event = random.randint(0,100)
 
     vx, vy = Data[guild]['Vinny']['Position'] # Process Vinny Events Here
-    if event < 6 and not isTileType(Data[guild]['Image'], vx, vy, 'MEAT'):
+    Data[guild]['Vinny']['History'].add((vx,vy))
+    if event < 10 and not isTileType(Data[guild]['Image'], vx, vy, 'MEAT'):
         for i in range(6):
             event = (event + 1) % 6
             if event == 1:
@@ -1756,8 +1768,8 @@ def onDayChange(server):
                 dir = random.randint(0, 3)
                 action = acts[dir]
                 ncoords = [
-                    Data[guild]['Vinny']['Position'][0] + 10*action[0],
-                    Data[guild]['Vinny']['Position'][1] + 10*action[1],
+                    Data[guild]['Vinny']['Position'][0] + 12*action[0],
+                    Data[guild]['Vinny']['Position'][1] + 12*action[1],
                 ]
                 if ncoords[0] < 0: ncoords[0] = 0
                 if ncoords[1] < 0: ncoords[1] = 0
@@ -2287,6 +2299,9 @@ async def setup(inData, chans, logchan, server):
         Data[guild]['Vinny'] = {
             'Position': [0,0],
         }
+
+    if Data[guild]['Vinny'].get('History') is None:
+        Data[guild]['Vinny']['History'] = set()
     for player in Data[guild]['Players'].keys():
         #if Data[guild]['Players'][player].get('Object') is None:
         #    Data[guild]['Players'][player]['Object'] = server.get_member_named(player)
