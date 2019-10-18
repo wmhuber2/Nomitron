@@ -1649,7 +1649,7 @@ def onDayChange(server):
             break
 
     vx, vy = Data[guild]['Vinny']['Position']
-    Data[guild]['Vinny']['History'].add([vx,vy])
+    Data[guild]['Vinny']['History'].append([vx,vy])
     if atlantean and isTileType(Data[guild]['Image'], vx, vy, 'WATER'):
         for i in range(4):
             dir = (dir + 1) % 4
@@ -1673,7 +1673,7 @@ def onDayChange(server):
     event = random.randint(0,100)
 
     vx, vy = Data[guild]['Vinny']['Position'] # Process Vinny Events Here
-    Data[guild]['Vinny']['History'].add((vx,vy))
+    Data[guild]['Vinny']['History'].append([vx,vy])
     if event < 10 and not isTileType(Data[guild]['Image'], vx, vy, 'MEAT'):
         for i in range(6):
             event = (event + 1) % 6
@@ -2300,8 +2300,8 @@ async def setup(inData, chans, logchan, server):
             'Position': [0,0],
         }
 
-    if Data[guild]['Vinny'].get('History') is None:
-        Data[guild]['Vinny']['History'] = set()
+    if Data[guild]['Vinny'].get('History') in [None, set()]:
+        Data[guild]['Vinny']['History'] = list()
     for player in Data[guild]['Players'].keys():
         #if Data[guild]['Players'][player].get('Object') is None:
         #    Data[guild]['Players'][player]['Object'] = server.get_member_named(player)
