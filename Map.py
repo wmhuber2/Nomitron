@@ -1647,7 +1647,7 @@ def onDayChange(server):
             continue
         else:
             Data[guild]['Vinny']['Position'] = ncoords
-            addMsgQueue(channels[guild]['actions'], 'Vinny has moved to '+ labels[ncoords[0]]+str( ncoords[1]+1) + 'Rolled: ' +str(event) )
+            addMsgQueue(channels[guild]['actions'], 'Vinny has moved to '+ labels[ncoords[0]]+str( ncoords[1]+1) + ' Rolled: ' +str(event) )
             break
 
     vx, vy = Data[guild]['Vinny']['Position']
@@ -1669,7 +1669,7 @@ def onDayChange(server):
             else:
                 Data[guild]['Vinny']['Position'] = ncoords
                 addMsgQueue(channels[guild]['actions'],
-                            'Vinny has moved to ' + labels[ncoords[0]] + str(ncoords[1] + 1) + 'Rolled: ' +str(event) )
+                            'Vinny has moved to ' + labels[ncoords[0]] + str(ncoords[1] + 1) + ' Rolled: ' +str(event) )
                 break
 
 
