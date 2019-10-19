@@ -1632,6 +1632,8 @@ def onDayChange(server):
     if atlantean and Data[guild]['Vinny']['ATLANTEAN'] <=0 : del Data[guild]['Vinny']['ATLANTEAN']
 
     acts = [(-1,0),(1,0),(0,1),(0,-1)]
+    event = random.randint(0, 100)
+
     for i in range(4):
         dir = (dir + 1) % 4
         action = acts[dir]
@@ -1645,7 +1647,7 @@ def onDayChange(server):
             continue
         else:
             Data[guild]['Vinny']['Position'] = ncoords
-            addMsgQueue(channels[guild]['actions'], 'Vinny has moved to '+ labels[ncoords[0]]+str( ncoords[1]+1))
+            addMsgQueue(channels[guild]['actions'], 'Vinny has moved to '+ labels[ncoords[0]]+str( ncoords[1]+1) + 'Rolled: ' +str(event) )
             break
 
     vx, vy = Data[guild]['Vinny']['Position']
@@ -1667,10 +1669,9 @@ def onDayChange(server):
             else:
                 Data[guild]['Vinny']['Position'] = ncoords
                 addMsgQueue(channels[guild]['actions'],
-                            'Vinny has moved to ' + labels[ncoords[0]] + str(ncoords[1] + 1))
+                            'Vinny has moved to ' + labels[ncoords[0]] + str(ncoords[1] + 1) + 'Rolled: ' +str(event) )
                 break
 
-    event = random.randint(0,100)
 
     vx, vy = Data[guild]['Vinny']['Position'] # Process Vinny Events Here
     Data[guild]['Vinny']['History'].append([vx,vy])
