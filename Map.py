@@ -36,9 +36,13 @@ AllData = {}
 savefile = str(__name__)  # + '_Data.pickle'
 print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
-itemList = ['BF', 'Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy','Gloop','C-Fish', 'Artifact', 'Curse']
-resourceList = ['Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
-FedMaterialList = ['Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
+
+itemList = ['BF', 'Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy', 'C-Fish', 'Artifact', 'Curse']
+rawMaterialsList = ['BF','Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
+resourceList = ['Corn', 'Steel', 'Oil']
+FedMaterialList = list(rawMaterialsList)
+FedMaterialList.remove('BF')
+
 import itertools
 
 letters = 'abcdefghijklmnopqrstuvwxyz'.upper()
@@ -1460,7 +1464,7 @@ async def run(inData, payload, message):
                                 Data[guild]['Players'][player]['Markers']['Properties'][index][
                                     'Unit'] = 'town'
                                 Data[guild]['Players'][player]['Markers']['Properties'][index][
-                                    'TownItem'] = random.choice(resourceList)
+                                    'TownItem'] = random.choice(rawMaterialsList)
 
                             isOnPlayer = True
                     if not isOnPlayer:
@@ -1469,7 +1473,7 @@ async def run(inData, payload, message):
                         Data[guild]['Players'][botName]['Markers']['Properties'].append({
                             'Unit': {
                                 'Name':'town',
-                                'TownItem': random.choice(resourceList)
+                                'TownItem': random.choice(rawMaterialsList)
                             }
                         })
 
@@ -1591,7 +1595,7 @@ def onDayChange(server):
                     if name == 'town':                    
                         gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('TownItem')
                         if gift == None:
-                            gift = random.choice(resourceList)
+                            gift = random.choice(rawMaterialsList)
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
                                 'TownItem'] = gift
                         addItem(guild, player, gift, float(2) * modifier)
@@ -1600,7 +1604,7 @@ def onDayChange(server):
                         gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get(
                             'VillageItem')
                         if gift == None:
-                            gift = random.choice(resourceList)
+                            gift = random.choice(rawMaterialsList)
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
                                 'VillageItem'] = gift
                         addItem(guild, player, gift, float(1) * modifier)
@@ -1717,7 +1721,7 @@ def onDayChange(server):
                         if 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][index]:
                             Data[guild]['Players'][player]['Markers']['Properties'][index][
                                 'Unit'] ={'Name': 'village',
-                                          'VillageItem': random.choice(resourceList)}
+                                          'VillageItem': random.choice(rawMaterialsList)}
                             isOnPlayer = True
                         else: isOnUnit = True
                 if not isOnPlayer and not isOnUnit:
@@ -1726,7 +1730,7 @@ def onDayChange(server):
                     Data[guild]['Players'][botName]['Markers']['Properties'].append({
                         'Unit': {
                             'Name': 'village',
-                            'VillageItem': random.choice(resourceList)
+                            'VillageItem': random.choice(rawMaterialsList)
                         }
                     })
 
@@ -2010,7 +2014,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                     if unit == 'town':
                         itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('TownItem')
                         if itm == None:
-                            itm = random.choice(resourceList)
+                            itm = random.choice(rawMaterialsList)
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['TownItem'] = itm
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
@@ -2019,7 +2023,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                     if unit == 'village':
                         itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('VillageItem')
                         if itm == None:
-                            itm = random.choice(resourceList)
+                            itm = random.choice(rawMaterialsList)
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['VillageItem'] = itm
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
@@ -2132,6 +2136,9 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
     msg =    "FEDERAL RATES\n(Turns Left in Term: " + str(5-Data[guild]['Fed']['Term'])+')'
     msg += "\n   ITEM    :  RATE  : VELOCITY "
     msg += "\n--------------------------------"
+    for item in dict(Data[guild]['Fed']['Rates']).keys():
+        if item not in FedMaterialList:
+            del Data[guild]['Fed']['Rates'][item]
     for item in FedMaterialList:
         if Data[guild]['Fed']['Rates'].get(item) is None:
             Data[guild]['Fed']['Rates'][item] = 100
