@@ -511,7 +511,7 @@ async def run(inData, payload, message):
 
                                 inde = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
                                 isClaimed = isClaimed or \
-                                            Data[guild]['Players'][player]['Markers']['Shape'] in ['Claim', 'Capital']
+                                            Data[guild]['Players'][player]['Markers']['Shape'][inde] in ['Claim', 'Capital']
 
                             if isClaimed:
                                 addMsgQueue(message.channel, "You cannot claim this location. It is already claimed.")
