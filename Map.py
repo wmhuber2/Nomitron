@@ -767,6 +767,9 @@ async def run(inData, payload, message):
                     elif toMove == 'Harvest' and isTileType(Data[guild]['Image'], x2, y2, 'MEAT'):
                         addMsgQueue(message.channel, "This Harvest Cannot Be Placed On A Meat Tile")
 
+                    elif toMove == 'Harvest' and Data[guild]['Players'][player]['Markers']['Shape'][index2] == 'Claim':
+                        addMsgQueue(message.channel, "This Harvest Must be placed on a Claim")
+
                     elif toMove == 'Unit' and Data[guild]['Units'][
                             Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']
                         ]['isMobile']:
