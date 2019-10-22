@@ -107,6 +107,8 @@ async def run(inData, payload, message):
                 if(playerAttended and (not playerTithed)): # Tithed item rolls are handled separately
                     endTurnMessage = endTurnMessage + await giveReward(player, 0.2, 0.1,guild) + "\n"
                 elif playerData[player].get('hailed') is not None:
+                    if playerData[player].get('razed'):
+                        endTurnMessage += 'Double '
                     endTurnMessage += "Praise! The Dark Lord Has Gifted <@"+str(Players[player]['id'])+"> with "
                     c = random.randint(0,100)
                     if c < 66:
@@ -166,13 +168,16 @@ async def run(inData, payload, message):
         if payload['Content'] in ["Hail Satron."] and authorData.get('hailed') is None and not authorData['attended']:
             authorData['hailed'] = True
             await message.add_reaction('😈')
+            if authorData.get('razed'):
+                await message.add_reaction('🔥')
 
     if message.channel.name.lower() in ['actions-map', 'mod-lounge', 'bot-lounge']:
         guild = message.guild.id
         playerData = Data[guild]['Players']
         authorData = playerData[payload['Author']]
 
-        if '!raze' in payload['Content'] and authorData.get('hailed') is None:
+        if '!raze' in payload['Content'] and 'claim' not in payload['Content'] and authorData.get('hailed') is None:
+
             authorData['razed'] = True
 
     return saveData()
