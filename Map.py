@@ -29,31 +29,38 @@ UNIT_BASE = {
 TECH_TREE = {
     'granary update': {
         'MaxLevel': 10,
-        'BaseCost': '5 Technology'
+        'BaseCost': '5 Technology',
+        'AddResource': 'granary'
     },
     'mine update': {
         'MaxLevel': 10,
-        'BaseCost': '5 Technology'
+        'BaseCost': '5 Technology',
+        'AddResource': 'mines'
     },
     'oil update': {
         'MaxLevel': 10,
-        'BaseCost': '5 Technology'
+        'BaseCost': '5 Technology',
+        'AddResource': 'oil'
     },
     'powerplant update': {
         'MaxLevel': 10,
-        'BaseCost': '5 Technology'
+        'BaseCost': '5 Technology',
+        'AddResource': 'powerplant'
     },
     'university': {
         'MaxLevel': 10,
-        'BaseCost': '5 Technology'
+        'BaseCost': '5 Technology',
+        'AddResource': 'university'
     },
     'sailing': {
         'MaxLevel': 1,
-        'BaseCost': '40 Technology'
+        'BaseCost': '40 Technology',
+        'AddResource': 'None'
     },
     'sailing upgrade': {
         'MaxLevel': 10,
-        'BaseCost': '15 Technology'
+        'BaseCost': '15 Technology',
+        'AddResource': 'None'
     },
 }
 
@@ -1709,6 +1716,11 @@ def onDayChange(server):
                     for cost in unit['DailyReturn']:
                         if ' ' in cost:
                             amount, item = cost.split(' ')
+                            amount = int(amount)
+                            for technode in TECH_TREE:
+                                if TECH_TREE[technode]['AddResource'] == name:
+                                    amount += Data[guild]['Players'][player]['TechTree'][technode]
+
                             addItem(guild, player, item, float(amount) * modifier)
 
     for item in Data[guild]['Fed']['Rates'].keys():
@@ -2123,6 +2135,12 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                         itemDelta[itm]['-'] += float(a)
                     for cst in Data[guild]['Units'][unit]['DailyReturn']:
                         a, itm = cst.split(' ')
+                        a = int(a)
+
+                        for technode in TECH_TREE:
+                            if TECH_TREE[technode]['AddResource'] == unit:
+                                a += Data[guild]['Players'][player]['TechTree'][technode]
+
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
                         itemDelta[itm]['+'] += float(a) * modifier

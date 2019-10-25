@@ -211,13 +211,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00251" summary="Better Update condiotns">
-      <created>1569085626243</created>
-      <option name="number" value="00251" />
-      <option name="presentableId" value="LOCAL-00251" />
-      <option name="project" value="LOCAL" />
-      <updated>1569085626243</updated>
-    </task>
     <task id="LOCAL-00252" summary="Raze rule.">
       <created>1569212727642</created>
       <option name="number" value="00252" />
@@ -554,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1571718122728</updated>
     </task>
-    <option name="localTasksCounter" value="300" />
+    <task id="LOCAL-00300" summary="Tech Tree">
+      <created>1571980028250</created>
+      <option name="number" value="00300" />
+      <option name="presentableId" value="LOCAL-00300" />
+      <option name="project" value="LOCAL" />
+      <updated>1571980028251</updated>
+    </task>
+    <option name="localTasksCounter" value="301" />
     <servers />
   </component>
   <component name="TodoView">
@@ -593,7 +593,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="DICE!!!" />
     <MESSAGE value="Better Update condiotns" />
     <MESSAGE value="Raze rule." />
     <MESSAGE value="fed fix" />
@@ -618,7 +617,8 @@
     <MESSAGE value="Roll info in Vinny" />
     <MESSAGE value="Sermon updated" />
     <MESSAGE value="Harvest Move Update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Harvest Move Update" />
+    <MESSAGE value="Tech Tree" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tech Tree" />
   </component>
   <component name="masterDetails">
     <states>
