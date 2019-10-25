@@ -26,6 +26,37 @@ UNIT_BASE = {
     'BeachOnly': False
 }
 
+TECH_TREE = {
+    'granary update': {
+        'MaxLevel': 10,
+        'BaseCost': '5 Technology'
+    },
+    'mine update': {
+        'MaxLevel': 10,
+        'BaseCost': '5 Technology'
+    },
+    'oil update': {
+        'MaxLevel': 10,
+        'BaseCost': '5 Technology'
+    },
+    'powerplant update': {
+        'MaxLevel': 10,
+        'BaseCost': '5 Technology'
+    },
+    'university': {
+        'MaxLevel': 10,
+        'BaseCost': '5 Technology'
+    },
+    'sailing': {
+        'MaxLevel': 1,
+        'BaseCost': '40 Technology'
+    },
+    'sailing upgrade': {
+        'MaxLevel': 10,
+        'BaseCost': '15 Technology'
+    },
+}
+
 botName = "Nomitron#3034"
 oldData = {}
 msgQueue = []
@@ -299,7 +330,7 @@ async def reaction(inData, action, user, messageid, emoji):
                 isBot = u.bot or isBot
                 if u.bot:  bot = u
             canContinute = canContinute or isBot
-        
+
         if canContinute:
             canContinute = False
             approvedPlayers = set()
@@ -308,7 +339,7 @@ async def reaction(inData, action, user, messageid, emoji):
                 for u in await r.users().flatten():
                     if r.emoji == '👍':
                         approvedPlayers.add( u.name + '#' + u.discriminator)
-            if 1:             
+            if 1:
                 msg =  messageid.content.split('\n')
                 giver, reciptient = None, None
                 region = set()
@@ -324,7 +355,7 @@ async def reaction(inData, action, user, messageid, emoji):
                         asset = line.strip()
                         coord = extractCoords(asset, message.channel)
                         if coord == None:
-                            failed = True        
+                            failed = True
                             addMsgQueue(message.channel, 'Failed with bad coord')
                             break
                         else:
@@ -374,7 +405,7 @@ async def reaction(inData, action, user, messageid, emoji):
                                         region.add((x  ,y-1))
                                         region.add((x-1,y-1))
                             print('End ATM', assetsToMap)
-                            if len(assetsToMap) != 0:            
+                            if len(assetsToMap) != 0:
                                 addMsgQueue(message.channel, "Error Trading Tiles:\n "+str('\n\t'.join(badassets)))
                                 failed = True
                             else:
@@ -446,6 +477,23 @@ async def run(inData, payload, message):
                         msg += '\t' + k + ': ' + str(Data[guild]['Units'][unit][k]) + '\n'
                     addMsgQueue(message.channel, '```' + msg + '```')
 
+            if payload['Content'].lower() in ['!tech', '!techs']:
+                msgt = ""
+                for technode in TECH_TREE.keys():
+                    amount, item = TECH_TREE[technode]['BaseCost'].split(' ')
+                    amount = int(amount)
+
+                    msg = '\n\n'+technode.title()
+                    msg += '\n  Max Level   : ' + str(TECH_TREE[technode]['MaxLevel'])
+                    msg += '\n  Base Cost   : ' + str(TECH_TREE[technode]['BaseCost'])
+                    if Data[guild]['Players'][payload['Author']]['TechTree'].get(technode) == TECH_TREE[technode]['MaxLevel']:
+                        msg += '\n  Upgrade Cost: At Max Level'
+                    else:
+                        msg += '\n  Upgrade Cost: ' + str(amount * \
+                            (2 ** Data[guild]['Players'][payload['Author']]['TechTree'].get(technode))) +' '+ str(item)
+                    msgt += msg
+                addMsgQueue(message.channel, '```' + msgt + '```')
+
             elif splitContent[0] == '!tile' and len(splitContent) == 2:
                 coords = extractCoords(splitContent[1], message.channel)
                 if coords is not None:
@@ -505,7 +553,7 @@ async def run(inData, payload, message):
 
                         elif isAdjacent(guild, payload['Author'], [xcord, ycord], False):
                             isClaimed = False
-                            for player in Data[guild]['Players'].keys(): 
+                            for player in Data[guild]['Players'].keys():
                                 if botName == player: continue
                                 if [xcord, ycord] not in Data[guild]['Players'][player]['Markers']['Location']: continue
 
@@ -885,7 +933,7 @@ async def run(inData, payload, message):
                         asset = line.strip()
                         coord = extractCoords(asset, message.channel)
                         if coord == None:
-                            failed = True        
+                            failed = True
                             addMsgQueue(message.channel, 'Failed with bad coord')
                             break
                         else:
@@ -935,7 +983,7 @@ async def run(inData, payload, message):
                                         region.add((x  ,y-1))
                                         region.add((x-1,y-1))
                             print('End ATM', assetsToMap)
-                            if len(assetsToMap) != 0:            
+                            if len(assetsToMap) != 0:
                                 addMsgQueue(message.channel, "Error Trading Tiles:\n "+str('\n\t'.join(badassets)))
                                 failed = True
                             else:
@@ -1037,6 +1085,28 @@ async def run(inData, payload, message):
                         Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit']['Artifact'] = False
                         addItem(guild,payload['Author'],'Artifact',1)
                         addMsgQueue(message.channel, "You Collected 1 Artifact.")
+
+            elif splitContent[0] == '!tech' and len(splitContent) >=2:
+                technode = ' '.join(splitContent[1:]).lower()
+                if technode in TECH_TREE:
+
+                    amount, item = TECH_TREE[technode]['BaseCost'].split(' ')
+                    amount = int(amount) * (2 ** Data[guild]['Players'][payload['Author']]['TechTree'].get(technode))
+                    print(amount, item)
+
+                    if addItem(guild, payload['Author'], item, -float(amount), testOnly=True):
+                        addItem(guild, payload['Author'], item, -float(amount))
+                        Data[guild]['Players'][payload['Author']]['TechTree'][technode] += 1
+
+                        addMsgQueue(message.channel, "Tech Node Updated ")
+                    else:
+                        addMsgQueue(message.channel, "You do not have "+str(amount) + ' '+item)
+
+
+                else:
+                    addMsgQueue(message.channel, "Tech Node not Found.")
+
+
 
             else: update[0] = False
 
@@ -1484,6 +1554,20 @@ async def run(inData, payload, message):
             coords = extractCoords(splitContent[1], message.channel)
             if coords is not None:
                 Data[guild]['Vinny']['Position'] = [coords[0],coords[2]]
+
+        elif splitContent[0] == '!setTech' and len(splitContent) > 3:
+            playerName = getPlayer(message.guild, splitContent[1], message.channel)
+            technode = ' '.join(splitContent[2:-1]).lower()
+            try: level = int(splitContent[-1])
+            except: addMsgQueue(message.channel, splitContent[-1] + ' cannot be quantified into a level 0-10')
+
+            print([playerName,technode,level])
+            if technode in TECH_TREE:
+                Data[guild]['Players'][playerName]['TechTree'][technode] = level
+                addMsgQueue(message.channel, 'Level Changed')
+            else:
+                addMsgQueue(message.channel, 'Node Not Found')
+
         else: update[2] = False
 
     #  IF A DM CHANNEL
@@ -1594,8 +1678,8 @@ def onDayChange(server):
                             not Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
                                 'DisabledAndPermanent']:
                         del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['DisabledAndPermanent']
-                    
-                    if name == 'town':                    
+
+                    if name == 'town':
                         gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('TownItem')
                         if gift == None:
                             gift = random.choice(rawMaterialsList)
@@ -2031,7 +2115,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
                         itemDelta[itm]['+'] += float(1) * modifier
-                        
+
                     for cst in Data[guild]['Units'][unit]['DailyCosts']:
                         a, itm = cst.split(' ')
                         if itemDelta.get(itm) is None:
@@ -2052,6 +2136,14 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         msg += "\n  Total Tiles:" + str(Total) + \
                '\n  Renewable Harvests:' + str(totalRenewableHarvests) + \
                '\n  Non-Renewable Harvests:' + str(totalNonRenewableHarvests)
+
+        msg += '\n-Tech Tree Levels:'
+
+        for technode in TECH_TREE.keys():
+            level =  Data[guild]['Players'][player]['TechTree'].get(technode)
+            if level not in [None, 0]:
+                msg += "\n  " + technode.title() + ' : ' + str(level)
+
         msg += "\n\nInventory:       |   Change "
 
         itemListtmp = list(itemList)
@@ -2313,11 +2405,20 @@ async def setup(inData, chans, logchan, server):
 
     if Data[guild]['Vinny'].get('History') in [None, set()]:
         Data[guild]['Vinny']['History'] = list()
+
     for player in Data[guild]['Players'].keys():
         #if Data[guild]['Players'][player].get('Object') is None:
         #    Data[guild]['Players'][player]['Object'] = server.get_member_named(player)
         if Data[guild]['Players'][player].get('Inventory') is None:
             Data[guild]['Players'][player]['Inventory'] = {'BF': 0, }
+
+
+        if Data[guild]['Players'][player].get('TechTree') is None:
+            Data[guild]['Players'][player]['TechTree'] = {}
+        for technode in TECH_TREE:
+            if technode not in Data[guild]['Players'][player]['TechTree']:
+                Data[guild]['Players'][player]['TechTree'][technode] = 0
+
 
         if player not in Data[guild]['Fed']['MemberHistory']:
             if player not in ['A Beep Booper#4870',botName]:
@@ -2621,3 +2722,4 @@ Data = {
     serverN : {...}
 }
 '''
+
