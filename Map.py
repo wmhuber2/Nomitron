@@ -64,6 +64,48 @@ TECH_TREE = {
     },
 }
 
+TIERLIST = [
+    {'Harvest': {
+        'type': 'Perpetual'
+    }},
+    {'Harvest':{
+        'type':'Non Perpetual'
+    }},
+    {'Unit':{
+        'Name':'town'
+    }},
+    {'Unit':{
+        'Name':'village'
+    }},
+    {'Unit':{
+        'Name':'granary'
+    }},
+    {'Unit':{
+        'Name':'mines'
+    }},
+    {'Unit': {
+        'Name': 'mill'
+    }},
+    {'Unit':{
+        'Name':'oil'
+    }},
+    {'Unit':{
+        'Name':'sailboat'
+    }},
+    {'Unit':{
+        'Name':'powerplant'
+    }},
+    {'Unit':{
+        'Name':'university'
+    }},
+    {'Unit':{
+        'Name':'diplomats'
+    }},
+    {'Unit':{
+        'Name':'digsite'
+    }},
+]
+
 botName = "Nomitron#3034"
 oldData = {}
 msgQueue = []
@@ -1600,8 +1642,8 @@ async def update(inData, server):
 
     guild = server.id
     if datetime.datetime.now().strftime("%Y-%m-%d") != Data[guild]['Date']:
-        onDayChange(server)
         await sendMapData(guild, channels[guild][logChannel])
+        onDayChange(server)
         await updateInAnnouncements(server,postToSpam=True)
     await sendMessages()
     return saveData()
@@ -1625,103 +1667,119 @@ def onDayChange(server):
     log(guild, "Day " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M"))
 
     for player in Data[guild]['Players']:
+
         cursed = not Data[guild]['Players'][player]['Inventory'].get('Curse') in [0, None]
 
         if Data[guild]['Players'][player]['Inventory'].get('Curse') not in [0,None]:
             del Data[guild]['Players'][player]['Inventory']['Curse']
-        for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
+        for markerTier in TIERLIST:
 
-            # IF HARVEST
-            if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Harvest') is not None \
-                    and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Unit') is None:
-                xcord, ycord = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
-                double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']
-                modifier = (1 - cursed * 0.5) * (double + 1)
+            def checktier(prop,tier):
+                subtiers = True
+                for name, subtier in tier.items():
+                    subtiers = subtiers and (name in prop)
+                    if isinstance(subtier,dict) and subtiers:
+                        subtiers = subtiers and checktier(prop[name],subtier)
+                    elif isinstance(subtier,str) and subtiers:
+                        subtiers = subtiers and subtier == prop[name]
 
-                if double:
-                    del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['Boost']
+                return subtiers
 
-                if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
-                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Perpetual':                    addItem(guild, player, 'Corn', 3 * modifier)
+            numFound = 0
+            for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
+                if not checktier(Data[guild]['Players'][player]['Markers']['Properties'][tileIndex],markerTier): continue
+                numFound += 1
+                # IF HARVEST
+                if 'Harvest' in markerTier and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Harvest') is not None \
+                        and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Unit') is None:
+                    xcord, ycord = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
+                    double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']
+                    modifier = (1 - cursed * 0.5) * (double + 1)
 
-                if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
-                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Non Perpetual':                    addItem(guild, player, 'Steel', 1 * modifier)
+                    if double:
+                        del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['Boost']
 
-                if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER') and \
-                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                            'type'] == 'Non Perpetual':                    addItem(guild, player, 'Oil', 1 * modifier)
+                    if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                                'type'] == 'Perpetual':                    addItem(guild, player, 'Corn', 3 * modifier)
 
-                Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] += 1
-                if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                    'type'] == 'Non Perpetual' and \
-                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] >= 5:
-                    del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']
+                    if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                                'type'] == 'Non Perpetual':                    addItem(guild, player, 'Steel', 1 * modifier)
 
-            # IF UNIT
-            if 'Unit' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] \
-                    and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('DisabledAndPermanent') is not True:
-                name = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Name']
-                unit = dict(Data[guild]['Units'][name])
+                    if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER') and \
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                                'type'] == 'Non Perpetual':                    addItem(guild, player, 'Oil', 1 * modifier)
 
-                double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
-                modifier = (1 - cursed * 0.5) * (double + 1)
-                if double: del \
-                    Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Boost']
+                    Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] += 1
+                    if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                        'type'] == 'Non Perpetual' and \
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['age'] >= 5:
+                        del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']
 
-                canAfford = True
-                for cost in unit['DailyCosts']:
-                    if ' ' in cost:
-                        amount, item = cost.split(' ')
-                        canAfford = canAfford and addItem(guild, player, item, -float(amount), testOnly=True)
+                # IF UNIT
+                if 'Unit' in markerTier and 'Unit' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] \
+                        and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('DisabledAndPermanent') is not True:
+                    name = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Name']
+                    unit = dict(Data[guild]['Units'][name])
 
-                if not canAfford:
-                    addMsgQueue(channels[guild]['actions'],
-                                '@' + player + ' You Have Insufficient Funds For Your ' + name + '.\n Unit is disabled, will retry in 1 Day.')
-                    Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['DisabledAndPermanent'] = False
-                else:
-                    if 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'] and \
-                            not Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
-                                'DisabledAndPermanent']:
-                        del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['DisabledAndPermanent']
+                    double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
+                    modifier = (1 - cursed * 0.5) * (double + 1)
+                    if double: del \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Boost']
 
-                    if name == 'town':
-                        gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('TownItem')
-                        if gift == None:
-                            gift = random.choice(rawMaterialsList)
-                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
-                                'TownItem'] = gift
-                        addItem(guild, player, gift, float(2) * modifier)
-
-                    if name == 'village':
-                        gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get(
-                            'VillageItem')
-                        if gift == None:
-                            gift = random.choice(rawMaterialsList)
-                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
-                                'VillageItem'] = gift
-                        addItem(guild, player, gift, float(1) * modifier)
-
-                    if name == 'digsite':
-                        if random.randint(0,100) < 5:
-                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
-                                'Artifact'] = True
-                        addItem(guild, player, gift, float(1) * modifier)
-
+                    canAfford = True
                     for cost in unit['DailyCosts']:
                         if ' ' in cost:
                             amount, item = cost.split(' ')
-                            addItem(guild, player, item, -float(amount) )
-                    for cost in unit['DailyReturn']:
-                        if ' ' in cost:
-                            amount, item = cost.split(' ')
-                            amount = int(amount)
-                            for technode in TECH_TREE:
-                                if TECH_TREE[technode]['AddResource'] == name:
-                                    amount += Data[guild]['Players'][player]['TechTree'][technode]
+                            canAfford = canAfford and addItem(guild, player, item, -float(amount), testOnly=True)
 
-                            addItem(guild, player, item, float(amount) * modifier)
+                    if not canAfford:
+                        addMsgQueue(channels[guild]['actions'],
+                                    '@' + player + ' You Have Insufficient Funds For Your ' + name + '.\n Unit is disabled, will retry in 1 Day.')
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['DisabledAndPermanent'] = False
+                    else:
+                        if 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'] and \
+                                not Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
+                                    'DisabledAndPermanent']:
+                            del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['DisabledAndPermanent']
+
+                        if name == 'town':
+                            gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('TownItem')
+                            if gift == None:
+                                gift = random.choice(rawMaterialsList)
+                                Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
+                                    'TownItem'] = gift
+                            addItem(guild, player, gift, float(2) * modifier)
+
+                        if name == 'village':
+                            gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get(
+                                'VillageItem')
+                            if gift == None:
+                                gift = random.choice(rawMaterialsList)
+                                Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
+                                    'VillageItem'] = gift
+                            addItem(guild, player, gift, float(1) * modifier)
+
+                        if name == 'digsite':
+                            if random.randint(0,100) < 5:
+                                Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
+                                    'Artifact'] = True
+
+                        for cost in unit['DailyCosts']:
+                            if ' ' in cost:
+                                amount, item = cost.split(' ')
+                                addItem(guild, player, item, -float(amount) )
+
+                        for cost in unit['DailyReturn']:
+                            if ' ' in cost:
+                                amount, item = cost.split(' ')
+                                amount = int(amount)
+                                for technode in TECH_TREE:
+                                    if TECH_TREE[technode]['AddResource'] == name:
+                                        amount += Data[guild]['Players'][player]['TechTree'][technode]
+
+                                addItem(guild, player, item, float(amount) * modifier)
 
     for item in Data[guild]['Fed']['Rates'].keys():
         vel = Data[guild]['Fed']['Velocity'][item]+100
@@ -2617,6 +2675,7 @@ async def sendMessages():
     global msgQueue
     while len(msgQueue) != 0:
         msg = msgQueue.pop(0)
+        if len(str(msg).strip()) == 0: continue
         print('Sending Msg #', len(msgQueue),'to', msg['channel'].name)
         msg['text'] = msg['text'].replace('@Krozr#0878','\"The Oracle\"')
         msg['text'] = msg['text'].replace('@392883201061814282','\"The Oracle\"')

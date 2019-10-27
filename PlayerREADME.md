@@ -18,7 +18,7 @@ ActionCommands:        Allowed Channels: actions
 -    !claim {coordinates}
 +        Claim Coordinates (Rule: 312)
 -    !harvest {coordinates} {mode}
-+        Harvests a location with this as mode ['perpetual', 'non-perpetual', 'p', 'n']
++        Harvests a tile with mode ['perpetual', 'non-perpetual', 'p', 'n']
 +        (Rule: 314)
 -    !unit {coords} $name OR !unit
 +        Buy Unit at coords, if just !unit, display all units (Rule: 321)
@@ -36,6 +36,9 @@ ActionCommands:        Allowed Channels: actions
 +         removes a object from map (See rule 360)
 -    !tile {coord}
 +         Displays Coordinate Data
+-    !tech name
++         Tech Tree Display/Buy - Rule 374
+
 +###########################################
 -  !admin
 -     This will post the ADMIN help screen
