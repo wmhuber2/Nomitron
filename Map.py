@@ -2056,7 +2056,7 @@ def extractCoords(coords, channel):
         if xcord is None and ycord is None:
             return None
         elif ycord >= n or ycord < 0 or xcord >= n or xcord < 0:
-            addMsgQueue(channel, Coords +" is outside the map.")
+            addMsgQueue(channel, coords +" is outside the map.")
             return None
 
         return xcord, xcordAlpha, ycord
