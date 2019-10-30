@@ -7,6 +7,8 @@
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Sermon.py" beforeDir="false" afterPath="$PROJECT_DIR$/Sermon.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,13 +211,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00254" summary="fed fix">
-      <created>1569217743834</created>
-      <option name="number" value="00254" />
-      <option name="presentableId" value="LOCAL-00254" />
-      <option name="project" value="LOCAL" />
-      <updated>1569217743835</updated>
     </task>
     <task id="LOCAL-00255" summary="Rule Print fix?">
       <created>1569248292759</created>
@@ -553,7 +548,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572157649456</updated>
     </task>
-    <option name="localTasksCounter" value="303" />
+    <task id="LOCAL-00303" summary="coord formatting fix">
+      <created>1572210333430</created>
+      <option name="number" value="00303" />
+      <option name="presentableId" value="LOCAL-00303" />
+      <option name="project" value="LOCAL" />
+      <updated>1572210333430</updated>
+    </task>
+    <option name="localTasksCounter" value="304" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +594,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Raze rule." />
     <MESSAGE value="fed fix" />
     <MESSAGE value="Rule Print fix?" />
     <MESSAGE value="Raze Confirmation" />
@@ -617,7 +618,8 @@
     <MESSAGE value="Harvest Move Update" />
     <MESSAGE value="Tech Tree" />
     <MESSAGE value="Tier List" />
-    <option name="LAST_COMMIT_MESSAGE" value="Tier List" />
+    <MESSAGE value="coord formatting fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="coord formatting fix" />
   </component>
   <component name="masterDetails">
     <states>

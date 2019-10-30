@@ -129,6 +129,8 @@ async def run(inData, payload, message):
                             endTurnMessage += "a Terrible Curse."
                         elif c < 66 + 13 + 3 + 6 + 6 + 6:
                             endTurnMessage += "to destroy any unit/harvest on the map."
+                    else:
+                        endTurnMessage += "Nothing"
                     endTurnMessage += '\n'
                 # Reset attendance
 

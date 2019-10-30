@@ -8,7 +8,9 @@ n = 75
 TILES = {
     'LAND': [45, 84, 55, 255],
     'WATER': [49, 108, 237, 255],
-    'MEAT': [200, 110, 110, 255]
+    'MEAT': [200, 110, 110, 255],
+    'MOONDUST': [127, 127, 127, 255],
+    'STARSEA': [64, 64, 64, 255],
 }
 
 UNIT_BASE = {
@@ -130,6 +132,13 @@ labels = []
 plotLables = []
 for l1, l2 in list(itertools.product(letters, letters))[:75]:
     plotLables.append(l1 + '\n' + l2)
+    labels.append(l1 + l2)
+
+labels.append("TheDarkColdVoidBetweenWorldAndSky")
+
+plotmoonLables = []
+for l1, l2 in list(itertools.product('MNO', letters))[:30]:
+    plotmoonLables.append(l1 + '\n' + l2)
     labels.append(l1 + l2)
 
 """
@@ -1404,6 +1413,10 @@ async def run(inData, payload, message):
             if coords is not None:
                 xcord, xcordAlpha, ycord = coords
                 msg = "Tile Data:\n"
+                if xcord < 75:
+                    msg += str(Data[guild]["Image"][xcord,ycord]) + "\n"
+                else:
+                    msg += str(Data[guild]["ImageMoon"][xcord-75, ycord]) + "\n"
                 for player in Data[guild]['Players'].keys():
                     try:
                         index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
@@ -2055,7 +2068,7 @@ def extractCoords(coords, channel):
 
         if xcord is None and ycord is None:
             return None
-        elif ycord >= n or ycord < 0 or xcord >= n or xcord < 0:
+        elif ycord >= n or ycord < 0 or xcord >= n+30 or xcord < 0 or xcord == n:
             addMsgQueue(channel, coords +" is outside the map.")
             return None
 
@@ -2281,13 +2294,14 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         except:
             del Data[guild]['Announcements']['Items'][i]
 
+
+
     # Update Map
     if reload: await plotMap(channels[guild][logChannel], False)
-
     junkmsg = await channels[server.id][logChannel].send(
         'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
     url = "World Map: " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M") + "\n " + junkmsg.attachments[0].url
-    if Data[guild]['Announcements']['Map'] is None:
+    if Data[guild]['Announcements'].get('Map') is None:
         Data[guild]['Announcements']['Map'] = await channels[server.id][targetChannel].send(url)
         Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
     else:
@@ -2301,6 +2315,30 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
         else:
             await msg.edit(content=url)
+
+
+    # Update Moon
+    if reload: await plotMoon(channels[guild][logChannel], False)
+    junkmsg = await channels[server.id][logChannel].send(
+        'Moon Map:', file=discord.File(open('tmpMoon.png', 'br')))
+    url = "Moon Map: " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M") + "\n " + junkmsg.attachments[0].url
+
+    if Data[guild]['Announcements'].get('Moon') is None:
+        Data[guild]['Announcements']['Moon'] = await channels[server.id][targetChannel].send(url)
+        Data[guild]['Announcements']['Moon'] = Data[guild]['Announcements']['Moon'].id
+    else:
+        msg = None
+        try:
+            msg = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Moon'])
+        except:
+            msg = None
+        if msg is None:
+            Data[guild]['Announcements']['Moon'] = await channels[server.id][targetChannel].send(url)
+            Data[guild]['Announcements']['Moon'] = Data[guild]['Announcements']['Moon'].id
+        else:
+            await msg.edit(content=url)
+
+
 
 
     # Update Fed Board
@@ -2446,23 +2484,43 @@ async def setup(inData, chans, logchan, server):
     if Data[guild].get('Players') is None: Data[guild]['Players'] = {}
     if Data[guild].get('Date') is None: Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
     if Data[guild].get('Log'): del Data[guild]['Log']
-    if Data[guild].get('Image') is None:
+
+    if Data[guild].get('Image') is not None:
         try:
             from PIL import Image
             import numpy as np
 
             img = Image.open('map.png')
             img.load()
-            data = np.asarray(img).copy()
-            for r in range(data.shape[0]):
-                for c in range(data.shape[1]):
-                    if data[r, c, 2] > 150:
+
+            data = np.zeros((75, 75 +31, 4), dtype=np.uint8)
+            dataIMG = np.asarray(img).copy()
+            for r in range(dataIMG.shape[0]):
+                for c in range(dataIMG.shape[1]):
+                    if dataIMG[r, c, 2] > 150:
                         data[r, c] = [49, 108, 237, 255]
                     else:
                         data[r, c] = [45, 84, 55, 255]
+        except ImportError:
+            log(guild, "Error Initializing the Map: PIL and/or Numpy Not Available")
+
+        try:
+            from PIL import Image
+            import numpy as np
+
+            img = Image.open('moon.png')
+            img.load()
+            dataIMG = np.asarray(img).copy()
+            for r in range(dataIMG.shape[0]):
+                for c in range(dataIMG.shape[1]):
+                    if dataIMG[r, c, 2] > 100:
+                        data[r, c + n + 1] = TILES['MOONDUST']
+                    else:
+                        data[r, c + n + 1] =  TILES['STARSEA']
             Data[guild]['Image'] = data
         except ImportError:
             log(guild, "Error Initializing the Map: PIL and/or Numpy Not Available")
+
     if Data[guild].get('Fed') is None: Data[guild]['Fed'] = {'Rates':{}, 'Velocity':{}, 'MemberHistory':{},'Term':0}
     if Data[guild]['Players'].get(botName) is None:
         Data[guild]['Players'][botName] = {
@@ -2615,10 +2673,16 @@ async def plotMap(channel, postReply=True):
                         else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
                                        marker=obj[i])
                     except:
-                        if len(obj[i]) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
-                                       marker='$' + obj[i] + '$')
-                        else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
-                                       marker='$' + obj[i] + '$')
+                        try:
+                            if len(obj[i]) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
+                                           marker='$' + obj[i] + '$')
+                            else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
+                                           marker='$' + obj[i] + '$')
+                        except:
+                            if len(obj[i]) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
+                                           marker='$?$')
+                            else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
+                                           marker='$?$')
                     '''
                     if 'DisabledAndPermanent' in player['Markers']['Properties'][i]:
                         if player['Markers']['Properties'][i]['DisabledAndPermanent']: color = 'red'
@@ -2650,7 +2714,7 @@ async def plotMap(channel, postReply=True):
                            left=True, right=True)
 
             plt.grid(color='k', linestyle='-', linewidth=0.25, alpha=0.5)
-            ax.imshow(Data[guild]['Image'].transpose(1, 0, 2), interpolation='none')
+            ax.imshow(Data[guild]['Image'][:,:75,:].transpose(1, 0, 2), interpolation='none')
             plt.savefig('tmpgrid.png', format='png', dpi=500)  # , bbox_inches="tight")
             plt.close(fig)
             del fig
@@ -2662,6 +2726,117 @@ async def plotMap(channel, postReply=True):
                 await channel.send(
                     'World Map, You may view a constantly updated map in #changelog-live \n[Auto Delete: 2 mins]:',
                     delete_after=delay, file=discord.File(open('tmpgrid.png', 'br')))
+        try:pass
+        except Exception as e:
+            print('Plot Error', str(e))
+
+"""
+Plot The Moon Using Matplotlib
+"""
+async def plotMoon(channel, postReply=True):
+    global Data, plt
+    guild = channel.guild.id
+    async with channel.typing():
+        if 1:#try:
+            if channel is None: channel = channels[guild][logChannel]
+            # fig, ax = plt.subplots()
+            fig = plt.figure(figsize=(5.0, 5.1))
+            plt.subplots_adjust(left=0.04, bottom=0.04, right=0.96, top=0.96)
+            ax = fig.add_subplot(111)
+
+            axisn = np.arange(0, n, 1)
+            plt.xticks(axisn + 0.5)
+            plt.yticks(axisn + 0.5)
+
+
+            for player in Data[guild]['Players'].keys():
+                player = Data[guild]['Players'][player]
+                color = player['Color']
+
+                if len(player['Markers']['Location']) == 0: continue
+                x, y = np.asarray(player['Markers']['Location']).T
+                x = x - 75
+
+                obj = np.asarray(player['Markers']['Shape'])
+                obj[obj == 'Claim'] = 'None'
+                obj[obj == 'Capital'] = '*'
+                for unit in Data[guild]['Units'].keys():
+                    obj[obj == unit] = Data[guild]['Units'][unit]['Marker']
+
+                for i in range(obj.shape[0]):
+                    outline = 'black'
+                    if color == 'black': outline = 'white'
+
+                    if obj[i] != "" and player != botName:
+                        ax.scatter(x[i], y[i], c="none", edgecolors=color,
+                                   linewidths=0.9, s=11*8, marker='s', alpha=0.7)
+
+                    alpha = 1.0
+                    if 'Unit' in player['Markers']['Properties'][i] and 'DisabledAndPermanent' in player['Markers']['Properties'][i]['Unit']:
+                        alpha = 0.25
+                    if player['Markers']['Properties'][i].get('Unit') is not None:
+                        unit = player['Markers']['Properties'][i]['Unit']['Name']
+                        obj[i] = Data[guild]['Units'][unit]['Marker']
+                        if obj[i][0] == '"' and obj[i][-1] == '"':
+                            obj[i] = '$' + obj[i][1:-1] + '$'
+                        if player['Markers']['Properties'][i]['Unit'].get('Boost'):
+                            outline = 'Gold'
+                    elif player['Markers']['Properties'][i].get('Harvest') is not None:
+                        if player['Markers']['Properties'][i]['Harvest']['type'] == 'Perpetual':
+                            ax.scatter(x[i], y[i], c="none", edgecolors=color,
+                                       linewidths=0.2, s=14*8, marker='.', alpha=0.7)
+
+                        if player['Markers']['Properties'][i]['Harvest']['type'] == 'Non Perpetual':
+                            ax.scatter(x[i], y[i], c=color, edgecolors=color,
+                                       linewidths=0.2*3, s=14*8, marker='.', alpha=0.7)
+                            ax.scatter(x[i], y[i], c=outline, edgecolors=outline,
+                                       linewidths=0.1*3, s=2.5*8,
+                                       marker='$' + str(5 - player['Markers']['Properties'][i]['Harvest']['age']) + '$',
+                                       alpha=0.7)
+
+                    try:
+                        if len(obj[i]) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0*8, linewidths=0.075*3, edgecolors=outline,
+                                       marker=obj[i])
+                        else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0*8, linewidths=0.06*3, edgecolors=outline,
+                                       marker=obj[i])
+                    except:
+                        if len(obj[i]) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0*8, linewidths=0.075*3, edgecolors=outline,
+                                       marker='$' + obj[i] + '$')
+                        else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0*8, linewidths=0.06*3, edgecolors=outline,
+                                       marker='$' + obj[i] + '$')
+
+
+
+            ax.yaxis.set_major_formatter(ticker.NullFormatter())
+            ax.yaxis.set_minor_locator(ticker.FixedLocator(axisn))
+            ax.yaxis.set_minor_formatter(ticker.FixedFormatter(axisn + 1))
+
+            ax.xaxis.set_major_formatter(ticker.NullFormatter())
+            ax.xaxis.set_minor_locator(ticker.FixedLocator(axisn))
+            ax.xaxis.set_minor_formatter(ticker.FixedFormatter(plotmoonLables))
+
+            ax.tick_params(axis='both', which='minor', labelsize=2.5*1.5, labeltop=True, labelright=True, bottom=True,
+                           top=True, left=True, right=True)
+            ax.tick_params(axis='both', which='minor', width=1, labeltop=True, labelright=True, bottom=True, top=True,
+                           left=True, right=True)
+            ax.tick_params(axis='both', which='minor', length=3, labeltop=True, labelright=True, bottom=True, top=True,
+                           left=True, right=True)
+            ax.tick_params(axis='both', which='major', length=0, labeltop=True, labelright=True, bottom=True, top=True,
+                           left=True, right=True)
+
+            plt.grid(color='k', linestyle='-', linewidth=0.25, alpha=0.5)
+            ax.imshow(Data[guild]['Image'][:30,76:,:].transpose(1, 0, 2), interpolation='none')
+            plt.savefig('tmpMoon.png', format='png', dpi=150)  # , bbox_inches="tight")
+            plt.close(fig)
+            del fig
+            print('Saved')
+            delay = None
+            if channel.id != channels[guild][logChannel].id:
+                delay = 60 * 2
+            if postReply:
+                await channel.send(
+                    'Moon Map, You may view a constantly updated map in #changelog-live \n[Auto Delete: 2 mins]:',
+                    delete_after=delay, file=discord.File(open('tmpMoon.png', 'br')))
         try:pass
         except Exception as e:
             print('Plot Error', str(e))
