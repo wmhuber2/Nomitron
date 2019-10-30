@@ -50,8 +50,7 @@ class DiscordNomicBot():
             self.Data['disabled'] = {}
             self.saveData()
 
-        self.token = "NDkyMzc3NDk0NTA3MzU2MTcx.XQ8RZQ.xgG8osnCwXNWDeXDZEqWOxCrc-Y"
-        #open('/home/nomitron/secret.psk','r').read().strip()
+        self.token = open('/home/nomitron/secret.psk','r').read().strip()
         # If Host Is Insperon Use Daniel's Bot Account
         if socket.gethostname() == 'daniel-Inspiron-660s':
             pass
