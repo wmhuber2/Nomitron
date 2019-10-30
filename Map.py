@@ -1655,6 +1655,8 @@ async def update(inData, server):
 
     guild = server.id
     if datetime.datetime.now().strftime("%Y-%m-%d") != Data[guild]['Date']:
+        Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
+
         await sendMapData(guild, channels[guild][logChannel])
         onDayChange(server)
         await updateInAnnouncements(server,postToSpam=True)
@@ -1671,7 +1673,6 @@ def onDayChange(server):
     print('Day Changing...')
 
     resetTimers(server)
-    Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
 
     for chan in ['action', 'actions']:
         if chan in channels[guild].keys():
@@ -2485,7 +2486,7 @@ async def setup(inData, chans, logchan, server):
     if Data[guild].get('Date') is None: Data[guild]['Date'] = datetime.datetime.now().strftime("%Y-%m-%d")
     if Data[guild].get('Log'): del Data[guild]['Log']
 
-    if Data[guild].get('Image') is not None:
+    if Data[guild].get('Image') is None:
         try:
             from PIL import Image
             import numpy as np
