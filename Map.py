@@ -1,7 +1,7 @@
 #
 # Map Module For Discord Bot
 ################################
-import pickle, sys, datetime, os, discord, math, re, socket, time, random
+import pickle, sys, datetime, os, discord, math, re, socket, time, random, asyncio
 np, plt, ticker, mcd = None,None,None,None
 n = 75
 
@@ -108,6 +108,21 @@ TIERLIST = [
     }},
 ]
 
+playerOrder = [
+        'Alekosen#8467',
+        'Boolacha#4539',
+        'Krozr#0878',
+        'Crorem#6962',
+        'AJuulPodNamedDesire#4155',
+        'Fenris Wolf#6136',
+        'Rabz12#9343',
+        'Steam:HaphStealth Bnet#1191#5187',
+        "Doby's Peri#6151",
+        'Janwich#4842',
+        'gfigs#6656',
+        'iann39#8298',
+    ]
+
 botName = "Nomitron#3034"
 oldData = {}
 msgQueue = []
@@ -119,9 +134,9 @@ savefile = str(__name__)  # + '_Data.pickle'
 print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
 
-itemList = ['BF', 'Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy', 'C-Fish', 'Artifact', 'Curse']
+itemList = ['BF', 'Cheese', 'Silica','Starfish','Aether', 'Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy', 'C-Fish', 'Artifact', 'Curse']
 rawMaterialsList = ['BF','Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
-resourceList = ['Corn', 'Steel', 'Oil']
+resourceList = ['Corn', 'Cheese', 'Silica','Starfish','Aether','Steel', 'Oil']
 FedMaterialList = list(rawMaterialsList)
 FedMaterialList.remove('BF')
 
@@ -500,7 +515,8 @@ async def reaction(inData, action, user, messageid, emoji):
                         Data[guild]['Players'][g]['Markers']['Properties'].pop(index)
 
     await sendMessages()
-    await updateInAnnouncements(message.guild)
+    task1 = asyncio.ensure_future(
+        updateInAnnouncements(message.guild))
     return saveData()
 
 
@@ -1372,7 +1388,8 @@ async def run(inData, payload, message):
 
         elif splitContent[0] == '!newDay':
             onDayChange(message.guild)
-            await updateInAnnouncements(message.guild, postToSpam=True)
+            task1 = asyncio.ensure_future(
+                updateInAnnouncements(message.guild, postToSpam=True))
 
         elif payload['Content'] == '!getData':
             await sendMapData(guild=message.guild.id, channel=message.channel)
@@ -1640,7 +1657,8 @@ async def run(inData, payload, message):
     await sendMessages()
     if '!' in payload['Content'] and 1 in update:
         print("Run- " + payload['Content'] + ': ', time.time() - start)
-        await updateInAnnouncements(message.guild)
+        asyncio.ensure_future(
+            updateInAnnouncements(message.guild))
 
 
     return saveData()
@@ -1660,7 +1678,8 @@ async def update(inData, server):
 
         await sendMapData(guild, channels[guild][logChannel])
         onDayChange(server)
-        await updateInAnnouncements(server,postToSpam=True)
+        asyncio.ensure_future(
+            updateInAnnouncements(server,postToSpam=True))
     await sendMessages()
     return saveData()
 
@@ -2119,6 +2138,252 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
     global Data, oldData
     guild = server.id
 
+
+    targetChannel = "changelog-live"
+    if targetChannel not in channels[guild]:
+        targetChannel = 'bot-lounge'
+
+    # Update Player Stuffs
+    if not isinstance(Data[guild]['Announcements']['Items'], (list,)):
+        Data[guild]['Announcements']['Items'] = []
+    sortedPlayers = list(Data[guild]['Players'].keys())
+
+    i = 0
+    for player in playerOrder:
+        if player not in sortedPlayers: continue
+        msg = player + ' : ' + Data[guild]['Players'][player]['Color'].upper() + '\n'
+        msg += '-Claims Left Today: ' + str(1 + (hasUnit(guild, player, 'explorerguild') * 5) \
+                                            - Data[guild]['Players'][player]['Claimed Today'])
+        msg += '\n-Times On Fed: '+str(Data[guild]['Fed']['MemberHistory'][player])
+        msg += '\n-Tiles:'
+        totalRenewableHarvests = 0
+        totalNonRenewableHarvests = 0
+        Total = 0
+        itemDelta = {
+            'BF': {'-': 0.0, '+': 0.0},
+        }
+        cursed = not Data[guild]['Players'][player]['Inventory'].get('Curse') in [0, None]
+
+        for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
+            x, y = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
+            # if isTileType(Data[guild]['Image'],x , y, 'LAND'): totalLand+=1
+            # if isTileType(Data[guild]['Image'],x , y, 'WATER'): totalWater+=1
+            Total += 1
+            for prop in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].keys():
+                if prop == 'Unit' and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get(
+                            'DisabledAndPermanent') is None:
+                    unit = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Name']
+                    double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
+
+                    modifier = (1 - cursed * 0.5) * (double + 1)
+                    if unit == 'town':
+                        itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('TownItem')
+                        if itm == None:
+                            itm = random.choice(rawMaterialsList)
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['TownItem'] = itm
+                        if itemDelta.get(itm) is None:
+                            itemDelta[itm] = {'-': 0.0, '+': 0.0}
+                        itemDelta[itm]['+'] += float(2) * modifier
+
+                    if unit == 'village':
+                        itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('VillageItem')
+                        if itm == None:
+                            itm = random.choice(rawMaterialsList)
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['VillageItem'] = itm
+                        if itemDelta.get(itm) is None:
+                            itemDelta[itm] = {'-': 0.0, '+': 0.0}
+                        itemDelta[itm]['+'] += float(1) * modifier
+
+                    for cst in Data[guild]['Units'][unit]['DailyCosts']:
+                        a, itm = cst.split(' ')
+                        if itemDelta.get(itm) is None:
+                            itemDelta[itm] = {'-': 0.0, '+': 0.0}
+                        itemDelta[itm]['-'] += float(a)
+                    for cst in Data[guild]['Units'][unit]['DailyReturn']:
+                        a, itm = cst.split(' ')
+                        a = int(a)
+
+                        for technode in TECH_TREE:
+                            if TECH_TREE[technode]['AddResource'] == unit:
+                                a += Data[guild]['Players'][player]['TechTree'][technode]
+
+                        if itemDelta.get(itm) is None:
+                            itemDelta[itm] = {'-': 0.0, '+': 0.0}
+                        itemDelta[itm]['+'] += float(a) * modifier
+                elif prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                    'type'] == 'Perpetual' and 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]:
+                    totalRenewableHarvests += 1
+                elif prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                    'type'] == 'Non Perpetual' and 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]:
+                    totalNonRenewableHarvests += 1
+
+        msg += "\n  Total Tiles:" + str(Total) + \
+               '\n  Renewable Harvests:' + str(totalRenewableHarvests) + \
+               '\n  Non-Renewable Harvests:' + str(totalNonRenewableHarvests)
+
+        msg += '\n-Tech Tree Levels:'
+
+        for technode in TECH_TREE.keys():
+            level =  Data[guild]['Players'][player]['TechTree'].get(technode)
+            if level not in [None, 0]:
+                msg += "\n  " + technode.title() + ' : ' + str(level)
+
+        msg += "\n\nInventory:       |   Change "
+
+        itemListtmp = list(itemList)
+        playerItemSet = set(Data[guild]['Players'][player]['Inventory'].keys())
+        playerItemSet = list((set(itemListtmp) | playerItemSet) - set(itemListtmp))
+        playerItemSet.sort()
+        itemListtmp = itemListtmp + playerItemSet
+        for item in itemListtmp:
+            amount = 0.0
+            deltaplus = 0.0
+            deltaloss = 0.0
+            sign = '+'
+            if item == 'Corn':
+                deltaplus += totalRenewableHarvests * 3.0
+            if item == 'Steel':
+                deltaplus += totalNonRenewableHarvests
+            if item in Data[guild]['Players'][player]['Inventory'].keys():
+                amount = float(Data[guild]['Players'][player]['Inventory'][item])
+            if item in itemDelta.keys():
+                deltaplus += float(itemDelta[item]['+'])
+                deltaloss += float(itemDelta[item]['-'])
+            delta = deltaplus - deltaloss
+            if delta < 0:  sign = ""
+            if delta == 0 and amount == 0: continue
+
+            #deltaloss = int(deltaloss)
+            #deltaplus = int(deltaplus)
+            #delta     = int(delta)
+
+            tmpmsg = "\n " + item
+            tmpmsg += (17 - len(tmpmsg) - len(str(int(amount)))) * ' ' + str(int(amount))
+            tmpmsg += (18 - len(tmpmsg)) * ' ' + '|+'+str(int(deltaplus))
+            tmpmsg += (22 - len(tmpmsg)) * ' ' + ' -' + str(int(deltaloss))
+            tmpmsg += (27 - len(tmpmsg)) * ' ' + '= ' +sign + str(int(delta))
+            msg    += tmpmsg
+        if postToSpam: log(guild,"```"+msg+"```")
+
+        if i >= len(Data[guild]['Announcements']['Items']):
+            post = await channels[server.id][targetChannel].send('```' + msg + '```')
+            Data[guild]['Announcements']['Items'].append(post.id)
+        else:
+            try:
+                post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][i])
+            except:
+                post = None
+
+            if post is None:
+                post = await channels[server.id][targetChannel].send('```' + msg + '```')
+                Data[guild]['Announcements']['Items'][i] = post.id
+            else:
+                await post.edit(content='```' + msg + '```')
+        i += 1
+
+    for n in range(i, len(Data[guild]['Announcements']['Items'])):
+        try:
+            post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Items'][i])
+            await post.delete()
+            del Data[guild]['Announcements']['Items'][i]
+        except:
+            del Data[guild]['Announcements']['Items'][i]
+
+
+    #Moon and World Images
+    if reload:
+        task1 = asyncio.create_task(
+            plotMap(channels[guild][logChannel], False))
+
+        task2 = asyncio.create_task(
+            plotMoon(channels[guild][logChannel], False))
+        await task1
+        await task2
+    # Update Map
+    junkmsg = await channels[server.id][logChannel].send(
+        'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
+    url = "World Map: " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M") + "\n " + junkmsg.attachments[0].url
+    if Data[guild]['Announcements'].get('Map') is None:
+        Data[guild]['Announcements']['Map'] = await channels[server.id][targetChannel].send(url)
+        Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
+    else:
+        msg = None
+        try:
+            msg = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Map'])
+        except:
+            msg = None
+        if msg is None:
+            Data[guild]['Announcements']['Map'] = await channels[server.id][targetChannel].send(url)
+            Data[guild]['Announcements']['Map'] = Data[guild]['Announcements']['Map'].id
+        else:
+            await msg.edit(content=url)
+
+
+    # Update Moon
+    junkmsg = await channels[server.id][logChannel].send(
+        'Moon Map:', file=discord.File(open('tmpMoon.png', 'br')))
+    url = "Moon Map: " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M") + "\n " + junkmsg.attachments[0].url
+
+    if Data[guild]['Announcements'].get('Moon') is None:
+        Data[guild]['Announcements']['Moon'] = await channels[server.id][targetChannel].send(url)
+        Data[guild]['Announcements']['Moon'] = Data[guild]['Announcements']['Moon'].id
+    else:
+        msg = None
+        try:
+            msg = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Moon'])
+        except:
+            msg = None
+        if msg is None:
+            Data[guild]['Announcements']['Moon'] = await channels[server.id][targetChannel].send(url)
+            Data[guild]['Announcements']['Moon'] = Data[guild]['Announcements']['Moon'].id
+        else:
+            await msg.edit(content=url)
+
+
+
+
+    # Update Fed Board
+    msg =    "FEDERAL RATES\n(Turns Left in Term: " + str(5-Data[guild]['Fed']['Term'])+')'
+    msg += "\n   ITEM    :  RATE  : VELOCITY "
+    msg += "\n--------------------------------"
+    for item in dict(Data[guild]['Fed']['Rates']).keys():
+        if item not in FedMaterialList:
+            del Data[guild]['Fed']['Rates'][item]
+    for item in FedMaterialList:
+        if Data[guild]['Fed']['Rates'].get(item) is None:
+            Data[guild]['Fed']['Rates'][item] = 100
+        if Data[guild]['Fed']['Velocity'].get(item) is None:
+            Data[guild]['Fed']['Velocity'][item] = 0
+        rate = Data[guild]['Fed']['Rates'][item]
+        vel =  Data[guild]['Fed']['Velocity'][item]
+
+        tmpmsg = "\n" + item.upper()
+        tmpmsg += (12 - len(tmpmsg)) * ' ' + ': ' + str(round(100.0/rate,3))+'%'
+        tmpmsg += (21 - len(tmpmsg)) * ' ' + ': ' + str(int(vel))+'% '
+        tmpmsg += (28 - len(tmpmsg)) * ' ' + '/Day'
+        msg += tmpmsg
+
+    try:
+        post = await channels[server.id][targetChannel].fetch_message(Data[guild]['Announcements']['Fed'])
+    except:
+        post = None
+    if post == None:
+        post = await channels[server.id][targetChannel].send('```' + msg + '```')
+        Data[guild]['Announcements']['Fed'] = post.id
+    else:
+        await post.edit(content='```' + msg + '```')
+
+    Data[guild]['ImgLock'] = 0
+
+
+"""
+Update Messages In Annoncements, OLD
+"""
+async def updateInAnnouncements(server, reload=True, postToSpam = False):
+    global Data, oldData
+    guild = server.id
+
     if not postToSpam and oldData == pickle.dumps(
             {
                 'players':  Data[guild]['Players'],
@@ -2130,21 +2395,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
     else:
         print('Updating Plot')
         oldData = pickle.dumps(Data[guild]['Players'], protocol=pickle.HIGHEST_PROTOCOL)
-    Data[guild]['ImgLock'] = time.time()
-    playerOrder = [
-        'Alekosen#8467',
-        'Boolacha#4539',
-        'Krozr#0878',
-        'Crorem#6962',
-        'AJuulPodNamedDesire#4155',
-        'Fenris Wolf#6136',
-        'Rabz12#9343',
-        'Steam:HaphStealth Bnet#1191#5187',
-        "Doby's Peri#6151",
-        'Janwich#4842',
-        'gfigs#6656',
-        'iann39#8298',
-    ]
+
     targetChannel = "changelog-live"
     if targetChannel not in channels[guild]:
         targetChannel = 'bot-lounge'
@@ -2597,7 +2848,8 @@ async def setup(inData, chans, logchan, server):
                 requirements[key] = data[key]
         Data[guild]['Units'][name.lower()] = requirements
 
-    await updateInAnnouncements(server)
+    asyncio.ensure_future(
+        updateInAnnouncements(server))
     await sendMessages()
     return saveData()
 
