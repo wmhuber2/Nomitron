@@ -137,7 +137,7 @@ async def setup(inData, chans, logchan, guild):
     Data = {}
     with urllib.request.urlopen('https://raw.githubusercontent.com/dmouscher/nomic/master/rules-3.md') as response:
         rules = response.read().decode("utf-8")
-        ruletxt = rules.split("##")[1:]
+        ruletxt = rules.split("## ")[1:]
         for rule in ruletxt:
             try:
                 rule = rule.strip()
