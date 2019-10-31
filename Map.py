@@ -245,8 +245,8 @@ async def reaction(inData, action, user, messageid, emoji):
 
                 await message.remove_reaction('💵', bot)
                 await message.remove_reaction('🌮', bot)
-                claimsLeft = 1 + (hasUnit(guild, payload['Author'], 'explorerguild') * 5) \
-                - Data[guild]['Players'][payload['Author']]['Claimed Today']
+                claimsLeft = 1 + (hasUnit(guild, playerName, 'explorerguild') * 5) \
+                - Data[guild]['Players'][playerName]['Claimed Today']
                 if claimsLeft <= 0 and cost == "Food":
                     addMsgQueue(message.channel,
                                 "You have reached your limit of Non-BF claims. Please wait until tomorrow to claim again. Have a nice day. :v:")
