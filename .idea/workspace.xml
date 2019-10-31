@@ -8,6 +8,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DiscordBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/DiscordBot.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rules.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -211,27 +212,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00256" summary="Rule Print fix?">
-      <created>1569248663944</created>
-      <option name="number" value="00256" />
-      <option name="presentableId" value="LOCAL-00256" />
-      <option name="project" value="LOCAL" />
-      <updated>1569248663944</updated>
-    </task>
-    <task id="LOCAL-00257" summary="Raze Confirmation">
-      <created>1569335805692</created>
-      <option name="number" value="00257" />
-      <option name="presentableId" value="LOCAL-00257" />
-      <option name="project" value="LOCAL" />
-      <updated>1569335805692</updated>
-    </task>
-    <task id="LOCAL-00258" summary="Raze Confirmation">
-      <created>1569361535189</created>
-      <option name="number" value="00258" />
-      <option name="presentableId" value="LOCAL-00258" />
-      <option name="project" value="LOCAL" />
-      <updated>1569361535189</updated>
     </task>
     <task id="LOCAL-00259" summary="Toggle effect is now immediatly visable,">
       <created>1569475091954</created>
@@ -555,7 +535,28 @@
       <option name="project" value="LOCAL" />
       <updated>1572412932584</updated>
     </task>
-    <option name="localTasksCounter" value="305" />
+    <task id="LOCAL-00305" summary="Temp Fix">
+      <created>1572413582242</created>
+      <option name="number" value="00305" />
+      <option name="presentableId" value="LOCAL-00305" />
+      <option name="project" value="LOCAL" />
+      <updated>1572413582242</updated>
+    </task>
+    <task id="LOCAL-00306" summary="Temp Fix">
+      <created>1572413652216</created>
+      <option name="number" value="00306" />
+      <option name="presentableId" value="LOCAL-00306" />
+      <option name="project" value="LOCAL" />
+      <updated>1572413652216</updated>
+    </task>
+    <task id="LOCAL-00307" summary="Temp Fix 2">
+      <created>1572413783376</created>
+      <option name="number" value="00307" />
+      <option name="presentableId" value="LOCAL-00307" />
+      <option name="project" value="LOCAL" />
+      <updated>1572413783376</updated>
+    </task>
+    <option name="localTasksCounter" value="308" />
     <servers />
   </component>
   <component name="TodoView">
@@ -594,7 +595,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Rule Print fix?" />
     <MESSAGE value="Raze Confirmation" />
     <MESSAGE value="Toggle effect is now immediatly visable," />
     <MESSAGE value="New Rule and Info on tiles" />
@@ -619,7 +619,8 @@
     <MESSAGE value="Tier List" />
     <MESSAGE value="coord formatting fix" />
     <MESSAGE value="Temp Fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Temp Fix" />
+    <MESSAGE value="Temp Fix 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Temp Fix 2" />
   </component>
   <component name="masterDetails">
     <states>

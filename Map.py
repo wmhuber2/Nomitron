@@ -245,7 +245,12 @@ async def reaction(inData, action, user, messageid, emoji):
 
                 await message.remove_reaction('💵', bot)
                 await message.remove_reaction('🌮', bot)
-                if addItem(guild, playerName, cost, -1 * amount):
+                claimsLeft = 1 + (hasUnit(guild, payload['Author'], 'explorerguild') * 5) \
+                - Data[guild]['Players'][payload['Author']]['Claimed Today']
+                if claimsLeft <= 0 and cost == "Food":
+                    addMsgQueue(message.channel,
+                                "You have reached your limit of Non-BF claims. Please wait until tomorrow to claim again. Have a nice day. :v:")
+                elif addItem(guild, playerName, cost, -1 * amount):
                     if reactorName in ["Doby's Peri#6151", ]:
                         addMsgQueue(message.channel,
                                     "Bad Kid " + reactorName + " has Claimed with " + str(amount) + ' ' + cost)
@@ -605,10 +610,6 @@ async def run(inData, payload, message):
                         if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER'):
                             addMsgQueue(message.channel, "Please seek more advanced technology to claim Water Tiles.")
 
-                        elif claimsLeft <= 0:
-                            addMsgQueue(message.channel,
-                                        "You have already purchased a claim today. Please wait until tomorrow to claim again. Have a nice day. :v:")
-
                         elif isAdjacent(guild, payload['Author'], [xcord, ycord], False):
                             isClaimed = False
                             for player in Data[guild]['Players'].keys():
@@ -639,6 +640,7 @@ async def run(inData, payload, message):
                                 Data[guild]['Players'][payload['Author']]['Markers']['Location'].append([xcord, ycord])
                                 Data[guild]['Players'][payload['Author']]['Markers']['Properties'].append(properties)
                                 Data[guild]['Players'][payload['Author']]['Markers']['Shape'].append('Claim')
+
                                 Data[guild]['Players'][payload['Author']]['Claimed Today'] += 1
                                 addMsgQueue(message.channel, "You have claimed the location. ")
                             else:
@@ -1413,10 +1415,9 @@ async def run(inData, payload, message):
             if coords is not None:
                 xcord, xcordAlpha, ycord = coords
                 msg = "Tile Data:\n"
-                if xcord < 75:
-                    msg += str(Data[guild]["Image"][xcord,ycord]) + "\n"
-                else:
-                    msg += str(Data[guild]["ImageMoon"][xcord-75, ycord]) + "\n"
+
+                msg += str(Data[guild]["Image"][xcord,ycord]) + "\n"
+
                 for player in Data[guild]['Players'].keys():
                     try:
                         index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
@@ -2494,7 +2495,7 @@ async def setup(inData, chans, logchan, server):
             img = Image.open('map.png')
             img.load()
 
-            data = np.zeros((75, 75 +31, 4), dtype=np.uint8)
+            data = np.zeros((75+31, 75, 4), dtype=np.uint8)
             dataIMG = np.asarray(img).copy()
             for r in range(dataIMG.shape[0]):
                 for c in range(dataIMG.shape[1]):
@@ -2514,10 +2515,10 @@ async def setup(inData, chans, logchan, server):
             dataIMG = np.asarray(img).copy()
             for r in range(dataIMG.shape[0]):
                 for c in range(dataIMG.shape[1]):
-                    if dataIMG[r, c, 2] > 100:
-                        data[r, c + n + 1] = TILES['MOONDUST']
+                    if dataIMG[c, r, 2] > 100:
+                        data[r + n + 1, c] = TILES['MOONDUST']
                     else:
-                        data[r, c + n + 1] =  TILES['STARSEA']
+                        data[r + n + 1, c] =  TILES['STARSEA']
             Data[guild]['Image'] = data
         except ImportError:
             log(guild, "Error Initializing the Map: PIL and/or Numpy Not Available")
@@ -2715,7 +2716,7 @@ async def plotMap(channel, postReply=True):
                            left=True, right=True)
 
             plt.grid(color='k', linestyle='-', linewidth=0.25, alpha=0.5)
-            ax.imshow(Data[guild]['Image'][:,:75,:].transpose(1, 0, 2), interpolation='none')
+            ax.imshow(Data[guild]['Image'][:75,:,:].transpose(1, 0, 2), interpolation='none')
             plt.savefig('tmpgrid.png', format='png', dpi=500)  # , bbox_inches="tight")
             plt.close(fig)
             del fig
@@ -2826,7 +2827,7 @@ async def plotMoon(channel, postReply=True):
                            left=True, right=True)
 
             plt.grid(color='k', linestyle='-', linewidth=0.25, alpha=0.5)
-            ax.imshow(Data[guild]['Image'][:30,76:,:].transpose(1, 0, 2), interpolation='none')
+            ax.imshow(Data[guild]['Image'][76:,:30,:].transpose(1, 0, 2), interpolation='none')
             plt.savefig('tmpMoon.png', format='png', dpi=150)  # , bbox_inches="tight")
             plt.close(fig)
             del fig

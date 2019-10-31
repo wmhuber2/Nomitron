@@ -139,9 +139,13 @@ async def setup(inData, chans, logchan, guild):
         rules = response.read().decode("utf-8")
         ruletxt = rules.split("##")[1:]
         for rule in ruletxt:
-            rule = rule.strip()
-            rulenum = int(rule[:3])
-            Data[rulenum] = rule.replace('&nbsp;', ' ').replace('\\n', '\n')
+            try:
+                rule = rule.strip()
+                rulenum = int(rule[:3])
+                Data[rulenum] = rule.replace('&nbsp;', ' ').replace('\\n', '\n')
+            except:
+                print('ERROR')
+                print(rule)
     return saveData()
 
 #####################################################
