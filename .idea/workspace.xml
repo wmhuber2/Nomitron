@@ -211,20 +211,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00263" summary="New Rule and Info on tiles">
-      <created>1569694229896</created>
-      <option name="number" value="00263" />
-      <option name="presentableId" value="LOCAL-00263" />
-      <option name="project" value="LOCAL" />
-      <updated>1569694229896</updated>
-    </task>
-    <task id="LOCAL-00264" summary="New Rule and Info on tiles">
-      <created>1569694282290</created>
-      <option name="number" value="00264" />
-      <option name="presentableId" value="LOCAL-00264" />
-      <option name="project" value="LOCAL" />
-      <updated>1569694282290</updated>
-    </task>
     <task id="LOCAL-00265" summary="New Rule and Info on tiles">
       <created>1569699492006</created>
       <option name="number" value="00265" />
@@ -554,7 +540,21 @@
       <option name="project" value="LOCAL" />
       <updated>1572499122864</updated>
     </task>
-    <option name="localTasksCounter" value="312" />
+    <task id="LOCAL-00312" summary="SPEED I AM SPEED IN MAP UPDATE!!">
+      <created>1572553707984</created>
+      <option name="number" value="00312" />
+      <option name="presentableId" value="LOCAL-00312" />
+      <option name="project" value="LOCAL" />
+      <updated>1572553707984</updated>
+    </task>
+    <task id="LOCAL-00313" summary="SPEED I AM SPEED IN MAP UPDATE!!">
+      <created>1572553786785</created>
+      <option name="number" value="00313" />
+      <option name="presentableId" value="LOCAL-00313" />
+      <option name="project" value="LOCAL" />
+      <updated>1572553786785</updated>
+    </task>
+    <option name="localTasksCounter" value="314" />
     <servers />
   </component>
   <component name="TodoView">
@@ -593,7 +593,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="New Rule and Info on tiles" />
     <MESSAGE value="Speed Update" />
     <MESSAGE value="Bug Fix Fed Term Reset" />
     <MESSAGE value="Bug Fix Sell" />
@@ -618,7 +617,8 @@
     <MESSAGE value="Temp Fix 2" />
     <MESSAGE value="Moon Update part 1" />
     <MESSAGE value="Rules Fix." />
-    <option name="LAST_COMMIT_MESSAGE" value="Rules Fix." />
+    <MESSAGE value="SPEED I AM SPEED IN MAP UPDATE!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="SPEED I AM SPEED IN MAP UPDATE!!" />
   </component>
   <component name="masterDetails">
     <states>

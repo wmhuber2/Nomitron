@@ -29,22 +29,22 @@ UNIT_BASE = {
 }
 
 TECH_TREE = {
-    'granary update': {
+    'granary upgrade': {
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'granary'
     },
-    'mine update': {
+    'mine upgrade': {
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'mines'
     },
-    'oil update': {
+    'oil upgrade': {
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'oil'
     },
-    'powerplant update': {
+    'powerplant upgrade': {
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'powerplant'
@@ -2553,7 +2553,11 @@ async def setup(inData, chans, logchan, server):
             Data[guild]['Players'][player]['TechTree'] = {}
         for technode in TECH_TREE:
             if technode not in Data[guild]['Players'][player]['TechTree']:
-                Data[guild]['Players'][player]['TechTree'][technode] = 0
+                val = 0
+                if Data[guild]['Players'][player]['TechTree'].get(technode.replace('upgrade', 'update')) is not None:
+                    val  = int(Data[guild]['Players'][player]['TechTree'].get(technode.replace('upgrade', 'update')))
+                    del Data[guild]['Players'][player]['TechTree'][technode.replace('upgrade', 'update')]
+                Data[guild]['Players'][player]['TechTree'][technode] = val
 
 
         if player not in Data[guild]['Fed']['MemberHistory']:
@@ -2762,7 +2766,7 @@ async def plotMoon(channel, postReply=True):
 
                 obj = np.asarray(player['Markers']['Shape'])
                 obj[obj == 'Claim'] = 'None'
-                obj[obj == 'Capital'] = '*'
+                obj[obj == 'Colony'] = '*'
                 for unit in Data[guild]['Units'].keys():
                     obj[obj == unit] = Data[guild]['Units'][unit]['Marker']
 
