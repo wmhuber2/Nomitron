@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00266" summary="New Rule and Info on tiles">
-      <created>1569699663148</created>
-      <option name="number" value="00266" />
-      <option name="presentableId" value="LOCAL-00266" />
-      <option name="project" value="LOCAL" />
-      <updated>1569699663148</updated>
     </task>
     <task id="LOCAL-00267" summary="New Rule and Info on tiles">
       <created>1569703633718</created>
@@ -554,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572585554914</updated>
     </task>
-    <option name="localTasksCounter" value="315" />
+    <task id="LOCAL-00315" summary="Moon and claim updates.">
+      <created>1572667012729</created>
+      <option name="number" value="00315" />
+      <option name="presentableId" value="LOCAL-00315" />
+      <option name="project" value="LOCAL" />
+      <updated>1572667012729</updated>
+    </task>
+    <option name="localTasksCounter" value="316" />
     <servers />
   </component>
   <component name="TodoView">
@@ -593,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Bug Fix Fed Term Reset" />
     <MESSAGE value="Bug Fix Sell" />
     <MESSAGE value="Emabssy Except Trade all implemented. Restructured Units" />
     <MESSAGE value="Trade Diplomon." />
@@ -618,7 +615,8 @@
     <MESSAGE value="Rules Fix." />
     <MESSAGE value="SPEED I AM SPEED IN MAP UPDATE!!" />
     <MESSAGE value="Update to upgrade in tech tree" />
-    <option name="LAST_COMMIT_MESSAGE" value="Update to upgrade in tech tree" />
+    <MESSAGE value="Moon and claim updates." />
+    <option name="LAST_COMMIT_MESSAGE" value="Moon and claim updates." />
   </component>
   <component name="masterDetails">
     <states>

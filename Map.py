@@ -248,7 +248,7 @@ async def reaction(inData, action, user, messageid, emoji):
                 amount = 0
                 if str(emoji) == '💵':
                     cost = "BF"
-                    amount = 2 + Data[guild]['Players'][playerName]['BF Claimed Today'] * 2
+                    amount = 2 + Data[guild]['Players'][playerName]['BF Claimed Today']
                 elif str(emoji) == '🌮':
                     cost = "Food"
                     index = Data[guild]['Players'][playerName]['Markers']['Shape'].index("Capital")
@@ -644,7 +644,7 @@ async def run(inData, payload, message):
                             elif hasUnit(guild, payload['Author'], 'explorerguild') != 0:
                                 await message.add_reaction('💵')
                                 await message.add_reaction('🌮')
-                            elif addItem(guild, payload['Author'], 'BF', -2 * Data[guild]['Players'][payload['Author']]['BF Claimed Today']-2):
+                            elif addItem(guild, payload['Author'], 'BF', -2 - Data[guild]['Players'][payload['Author']]['BF Claimed Today']):
                                 properties = {}
                                 #for player in Data[guild]['Players'].keys():
                                 player = botName
@@ -665,7 +665,7 @@ async def run(inData, payload, message):
                             else:
                                 addMsgQueue(message.channel,
                                             "You Need " + str(Data[guild]['Players'][payload['Author']][
-                                                                  'BF Claimed Today'] * 2) + " Blemflarcks To Complete This Actions.")
+                                                                  'BF Claimed Today'] + 2) + " Blemflarcks To Complete This Actions.")
 
                         elif (not isTileType(Data[guild]['Image'], xcord, ycord, 'LAND')) \
                                 and isAdjacent(guild, payload['Author'], [xcord, ycord], False):
@@ -686,7 +686,7 @@ async def run(inData, payload, message):
                                 await message.add_reaction('🌮')
                                 '''
 
-                            elif addItem(guild, payload['Author'], 'BF', -2 * Data[guild]['Players'][payload['Author']]['BF Claimed Today']-2):
+                            elif addItem(guild, payload['Author'], 'BF', -2 - Data[guild]['Players'][payload['Author']]['BF Claimed Today']):
                                 properties = {}
                                 # for player in Data[guild]['Players'].keys():
                                 player = botName
@@ -705,7 +705,7 @@ async def run(inData, payload, message):
                                 addMsgQueue(message.channel, "You have claimed the location. ")
                             else:
                                 addMsgQueue(message.channel,
-                                            "You Need "+str(Data[guild]['Players'][payload['Author']]['Claimed Today']*2)+" Blemflarcks To Complete This Actions.")
+                                            "You Need "+str(Data[guild]['Players'][payload['Author']]['Claimed Today']+2)+" Blemflarcks To Complete This Actions.")
 
                         else:
                             addMsgQueue(message.channel,
@@ -2219,7 +2219,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         msg = player + ' : ' + Data[guild]['Players'][player]['Color'].upper() + '\n'
         msg += '-Claims Left Today: ' + str(1 + (hasUnit(guild, player, 'explorerguild') * 5) \
                                             - Data[guild]['Players'][player]['Claimed Today'])
-        msg += '\n-Next BF Claims Cost: ' + str(2 + 2*Data[guild]['Players'][player]['BF Claimed Today'])
+        msg += '\n-Next BF Claims Cost: ' + str(2 + Data[guild]['Players'][player]['BF Claimed Today'])
         msg += '\n-Times On Fed: '+str(Data[guild]['Fed']['MemberHistory'][player])
         msg += '\n-Tiles:'
         totalRenewableHarvests = 0
