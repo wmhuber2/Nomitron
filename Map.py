@@ -248,7 +248,7 @@ async def reaction(inData, action, user, messageid, emoji):
                 amount = 0
                 if str(emoji) == '💵':
                     cost = "BF"
-                    amount = Data[guild]['Players'][playerName]['Claimed Today'] + 2
+                    amount = 2 + Data[guild]['Players'][playerName]['BF Claimed Today'] * 2
                 elif str(emoji) == '🌮':
                     cost = "Food"
                     index = Data[guild]['Players'][playerName]['Markers']['Shape'].index("Capital")
@@ -265,6 +265,9 @@ async def reaction(inData, action, user, messageid, emoji):
                 if claimsLeft <= 0 and cost == "Food":
                     addMsgQueue(message.channel,
                                 "You have reached your limit of Non-BF claims. Please wait until tomorrow to claim again. Have a nice day. :v:")
+                elif not isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and cost == "Food":
+                    addMsgQueue(message.channel,"There is no capital found on the moon. Please use BF.")
+
                 elif addItem(guild, playerName, cost, -1 * amount):
                     if reactorName in ["Doby's Peri#6151", ]:
                         addMsgQueue(message.channel,
@@ -283,7 +286,8 @@ async def reaction(inData, action, user, messageid, emoji):
                     Data[guild]['Players'][playerName]['Markers']['Location'].append([xcord, ycord])
                     Data[guild]['Players'][playerName]['Markers']['Properties'].append(properties)
                     Data[guild]['Players'][playerName]['Markers']['Shape'].append('Claim')
-                    Data[guild]['Players'][playerName]['Claimed Today'] += 1
+                    if cost != 'BF': Data[guild]['Players'][playerName]['Claimed Today'] += 1
+                    if cost == 'BF': Data[guild]['Players'][playerName]['BF Claimed Today'] += 1
                     addMsgQueue(message.channel, "You have claimed the location. ")
                 else:
                     addMsgQueue(message.channel, "You Do Not Have " + str(amount) + ' ' + cost + " To Claim The Tile")
@@ -620,13 +624,12 @@ async def run(inData, payload, message):
                     coords = extractCoords(splitContent[1], message.channel)
                     if coords is not None:
                         xcord, xcordAlpha, ycord = coords
-                        claimsLeft = 1 + (hasUnit(guild, payload['Author'], 'explorerguild') * 5) \
-                                     - Data[guild]['Players'][payload['Author']]['Claimed Today']
 
                         if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER'):
                             addMsgQueue(message.channel, "Please seek more advanced technology to claim Water Tiles.")
 
-                        elif isAdjacent(guild, payload['Author'], [xcord, ycord], False):
+                        elif (isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') or isTileType(Data[guild]['Image'], xcord, ycord, 'MEAT'))\
+                                and isAdjacent(guild, payload['Author'], [xcord, ycord], False):
                             isClaimed = False
                             for player in Data[guild]['Players'].keys():
                                 if botName == player: continue
@@ -641,7 +644,7 @@ async def run(inData, payload, message):
                             elif hasUnit(guild, payload['Author'], 'explorerguild') != 0:
                                 await message.add_reaction('💵')
                                 await message.add_reaction('🌮')
-                            elif addItem(guild, payload['Author'], 'BF', -2):
+                            elif addItem(guild, payload['Author'], 'BF', -2 * Data[guild]['Players'][payload['Author']]['BF Claimed Today']-2):
                                 properties = {}
                                 #for player in Data[guild]['Players'].keys():
                                 player = botName
@@ -657,11 +660,52 @@ async def run(inData, payload, message):
                                 Data[guild]['Players'][payload['Author']]['Markers']['Properties'].append(properties)
                                 Data[guild]['Players'][payload['Author']]['Markers']['Shape'].append('Claim')
 
-                                Data[guild]['Players'][payload['Author']]['Claimed Today'] += 1
+                                Data[guild]['Players'][payload['Author']]['BF Claimed Today'] += 1
                                 addMsgQueue(message.channel, "You have claimed the location. ")
                             else:
                                 addMsgQueue(message.channel,
-                                            "You Have Insufficient Blemflarcks To Complete This Actions.")
+                                            "You Need " + str(Data[guild]['Players'][payload['Author']][
+                                                                  'BF Claimed Today'] * 2) + " Blemflarcks To Complete This Actions.")
+
+                        elif (not isTileType(Data[guild]['Image'], xcord, ycord, 'LAND')) \
+                                and isAdjacent(guild, payload['Author'], [xcord, ycord], False):
+                            isClaimed = False
+                            for player in Data[guild]['Players'].keys():
+                                if botName == player: continue
+                                if [xcord, ycord] not in Data[guild]['Players'][player]['Markers']['Location']: continue
+
+                                inde = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
+                                isClaimed = isClaimed or \
+                                            Data[guild]['Players'][player]['Markers']['Shape'][inde] in ['Claim',
+                                                                                                         'Colony']
+
+                            if isClaimed:
+                                addMsgQueue(message.channel, "You cannot claim this location. It is already claimed.")
+                                '''elif hasUnit(guild, payload['Author'], 'explorerguild') != 0:
+                                await message.add_reaction('💵')
+                                await message.add_reaction('🌮')
+                                '''
+
+                            elif addItem(guild, payload['Author'], 'BF', -2 * Data[guild]['Players'][payload['Author']]['BF Claimed Today']-2):
+                                properties = {}
+                                # for player in Data[guild]['Players'].keys():
+                                player = botName
+                                if [xcord, ycord] in Data[guild]['Players'][player]['Markers']['Location']:
+                                    index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
+                                    properties = dict(Data[guild]['Players'][player]['Markers']['Properties'][index])
+                                    Data[guild]['Players'][player]['Markers']['Location'].pop(index)
+                                    Data[guild]['Players'][player]['Markers']['Properties'].pop(index)
+                                    Data[guild]['Players'][player]['Markers']['Shape'].pop(index)
+
+                                Data[guild]['Players'][payload['Author']]['Markers']['Location'].append([xcord, ycord])
+                                Data[guild]['Players'][payload['Author']]['Markers']['Properties'].append(properties)
+                                Data[guild]['Players'][payload['Author']]['Markers']['Shape'].append('Claim')
+
+                                Data[guild]['Players'][payload['Author']]['BF Claimed Today'] += 1
+                                addMsgQueue(message.channel, "You have claimed the location. ")
+                            else:
+                                addMsgQueue(message.channel,
+                                            "You Need "+str(Data[guild]['Players'][payload['Author']]['Claimed Today']*2)+" Blemflarcks To Complete This Actions.")
 
                         else:
                             addMsgQueue(message.channel,
@@ -1741,6 +1785,26 @@ def onDayChange(server):
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
                                 'type'] == 'Non Perpetual':                    addItem(guild, player, 'Steel', 1 * modifier)
 
+
+                    if isTileType(Data[guild]['Image'], xcord, ycord, 'MOONDUST') and \
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                                'type'] == 'Perpetual':                    addItem(guild, player, 'Cheese', 3 * modifier)
+
+                    if isTileType(Data[guild]['Image'], xcord, ycord, 'MOONDUST') and \
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                                'type'] == 'Non Perpetual':                    addItem(guild, player, 'Silica',
+                                                                                       1 * modifier)
+                    if isTileType(Data[guild]['Image'], xcord, ycord, 'STARSEA') and \
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                                'type'] == 'Perpetual':                    addItem(guild, player, 'Starfish', 3 * modifier)
+
+                    if isTileType(Data[guild]['Image'], xcord, ycord, 'STARSEA') and \
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                                'type'] == 'Non Perpetual':                    addItem(guild, player, 'Aether',
+                                                                                       1 * modifier)
+
+
+
                     if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER') and \
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
                                 'type'] == 'Non Perpetual':                    addItem(guild, player, 'Oil', 1 * modifier)
@@ -2060,6 +2124,7 @@ def resetTimers(server, channel=None, playerid=None, mode=0):
         player = getPlayer(server, playerid, channel)
         if player is not None:
             Data[guild]['Players'][player]['Claimed Today'] = 0
+            Data[guild]['Players'][player]['BF Claimed Today'] = 0
             addMsgQueue(channel, "Resetting Claim Timer for " + player)
     print("resetTimers: ", time.time() - start)
 
@@ -2154,6 +2219,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         msg = player + ' : ' + Data[guild]['Players'][player]['Color'].upper() + '\n'
         msg += '-Claims Left Today: ' + str(1 + (hasUnit(guild, player, 'explorerguild') * 5) \
                                             - Data[guild]['Players'][player]['Claimed Today'])
+        msg += '\n-Next BF Claims Cost: ' + str(2 + 2*Data[guild]['Players'][player]['BF Claimed Today'])
         msg += '\n-Times On Fed: '+str(Data[guild]['Fed']['MemberHistory'][player])
         msg += '\n-Tiles:'
         totalRenewableHarvests = 0
@@ -2548,6 +2614,8 @@ async def setup(inData, chans, logchan, server):
         if Data[guild]['Players'][player].get('Inventory') is None:
             Data[guild]['Players'][player]['Inventory'] = {'BF': 0, }
 
+        if Data[guild]['Players'][player].get('BF Claimed Today') is None:
+            Data[guild]['Players'][player]['BF Claimed Today'] = 0
 
         if Data[guild]['Players'][player].get('TechTree') is None:
             Data[guild]['Players'][player]['TechTree'] = {}
@@ -2762,7 +2830,7 @@ async def plotMoon(channel, postReply=True):
 
                 if len(player['Markers']['Location']) == 0: continue
                 x, y = np.asarray(player['Markers']['Location']).T
-                x = x - 75
+                x = x - 76
 
                 obj = np.asarray(player['Markers']['Shape'])
                 obj[obj == 'Claim'] = 'None'

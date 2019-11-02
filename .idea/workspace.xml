@@ -193,8 +193,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.DiscordBot" />
-        <item itemvalue="Python.Test" />
         <item itemvalue="Python.Paint" />
+        <item itemvalue="Python.Test" />
         <item itemvalue="Python.Nomitron" />
         <item itemvalue="Python.Admin" />
       </list>
@@ -210,13 +210,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00265" summary="New Rule and Info on tiles">
-      <created>1569699492006</created>
-      <option name="number" value="00265" />
-      <option name="presentableId" value="LOCAL-00265" />
-      <option name="project" value="LOCAL" />
-      <updated>1569699492006</updated>
     </task>
     <task id="LOCAL-00266" summary="New Rule and Info on tiles">
       <created>1569699663148</created>
@@ -554,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572553786785</updated>
     </task>
-    <option name="localTasksCounter" value="314" />
+    <task id="LOCAL-00314" summary="Update to upgrade in tech tree">
+      <created>1572585554914</created>
+      <option name="number" value="00314" />
+      <option name="presentableId" value="LOCAL-00314" />
+      <option name="project" value="LOCAL" />
+      <updated>1572585554914</updated>
+    </task>
+    <option name="localTasksCounter" value="315" />
     <servers />
   </component>
   <component name="TodoView">
@@ -593,7 +593,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Speed Update" />
     <MESSAGE value="Bug Fix Fed Term Reset" />
     <MESSAGE value="Bug Fix Sell" />
     <MESSAGE value="Emabssy Except Trade all implemented. Restructured Units" />
@@ -618,7 +617,8 @@
     <MESSAGE value="Moon Update part 1" />
     <MESSAGE value="Rules Fix." />
     <MESSAGE value="SPEED I AM SPEED IN MAP UPDATE!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="SPEED I AM SPEED IN MAP UPDATE!!" />
+    <MESSAGE value="Update to upgrade in tech tree" />
+    <option name="LAST_COMMIT_MESSAGE" value="Update to upgrade in tech tree" />
   </component>
   <component name="masterDetails">
     <states>
