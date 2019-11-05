@@ -1776,8 +1776,8 @@ async def update(inData, server):
     # Do Stuff Here
 
     guild = server.id
-    if datetime.datetime.now().AddMinutes(60) .strftime("%Y-%m-%d")!= Data[guild]['Date']:
-        Data[guild]['Date'] = datetime.datetime.now().AddMinutes(60).strftime("%Y-%m-%d")
+    if (datetime.datetime.now()+ datetime.timedelta(hours=1)).strftime("%Y-%m-%d")!= Data[guild]['Date']:
+        Data[guild]['Date'] = (datetime.datetime.now()+ datetime.timedelta(hours=1)).strftime("%Y-%m-%d")
 
         await sendMapData(guild, channels[guild][logChannel])
         onDayChange(server)
