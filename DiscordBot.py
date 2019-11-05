@@ -222,7 +222,7 @@ class DiscordNomicBot():
     async def on_raw_reaction(self, payload, mode):
         user = self.client.get_user(payload.user_id)
         if user == self.client.user: return
-        print(user, self.client.user)
+
         channel = self.client.get_channel(payload.channel_id)
         msg = await channel.fetch_message(payload.message_id)
 

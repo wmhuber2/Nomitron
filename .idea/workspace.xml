@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DiscordBot.py" beforeDir="false" afterPath="$PROJECT_DIR$/DiscordBot.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -211,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00281" summary="Vinny Bug fix and Hail Satron">
-      <created>1570899819456</created>
-      <option name="number" value="00281" />
-      <option name="presentableId" value="LOCAL-00281" />
-      <option name="project" value="LOCAL" />
-      <updated>1570899819456</updated>
     </task>
     <task id="LOCAL-00282" summary="Vinny Bug fix.">
       <created>1570900548957</created>
@@ -555,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572923718497</updated>
     </task>
-    <option name="localTasksCounter" value="330" />
+    <task id="LOCAL-00330" summary="Update.">
+      <created>1572933638869</created>
+      <option name="number" value="00330" />
+      <option name="presentableId" value="LOCAL-00330" />
+      <option name="project" value="LOCAL" />
+      <updated>1572933638869</updated>
+    </task>
+    <option name="localTasksCounter" value="331" />
     <servers />
   </component>
   <component name="TodoView">
@@ -594,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Vinny Movement" />
     <MESSAGE value="Vinny Events ALL done. Finally." />
     <MESSAGE value="Vinny Bug fix and Hail Satron" />
     <MESSAGE value="Vinny Bug fix." />
@@ -619,7 +615,8 @@
     <MESSAGE value="Asset trouble" />
     <MESSAGE value="Asset Assholary. Finally fixed. bad var names was the bug and reset of the asset tracker between trades." />
     <MESSAGE value="Datetime" />
-    <option name="LAST_COMMIT_MESSAGE" value="Datetime" />
+    <MESSAGE value="Update." />
+    <option name="LAST_COMMIT_MESSAGE" value="Update." />
   </component>
   <component name="masterDetails">
     <states>
