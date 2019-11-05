@@ -448,6 +448,7 @@ async def reaction(inData, action, user, messageid, emoji):
                         if giver is not None and reciptient is not None:
                             #generate map to ensure all tiles are connected by adjacency
                             assetsToMap = list(assets)
+                            region = set()
                             for x,y,a in list(assets):
                                 if [x,y] in Data[guild]['Players'][giver]['Markers']['Location'] and (\
                                     [x+1, y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
@@ -500,6 +501,9 @@ async def reaction(inData, action, user, messageid, emoji):
                                 for x,y,a in set(assets):
                                     tile = [x,y,giver,reciptient]
                                     toSet.append(tile)
+                                region = set()
+                                assets = []
+                                badassets = []
                                 print('Done')
                         if linenum != len(msg)-1:
                             giver, reciptient = line.split('gives to')
