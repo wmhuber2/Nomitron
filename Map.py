@@ -182,6 +182,7 @@ async def reaction(inData, action, user, messageid, emoji):
     guild = message.guild.id
     splitContent = messageid.content.split(' ')
 
+
     if splitContent[0] == '!unit' and len(splitContent) == 3 and reactorName in Admins:
         coords, name = splitContent[1:]
         addMsgQueue(message.channel, "Mod Must Add Unit Manually.")
@@ -528,9 +529,19 @@ async def reaction(inData, action, user, messageid, emoji):
                         Data[guild]['Players'][g]['Markers']['Shape'].pop(index)
                         Data[guild]['Players'][g]['Markers']['Properties'].pop(index)
 
+    elif message.channel.name == 'changelog-live' and action == 'add':
+        print('reloading')
+        for r in message.reactions:
+            for u in await r.users().flatten():
+                await message.remove_reaction('🔄', u)
+
+        await updateInAnnouncements(message.guild)
+        await message.add_reaction('🔄')
+
+
     await sendMessages()
-    task1 = asyncio.ensure_future(
-        updateInAnnouncements(message.guild))
+    #task1 = asyncio.ensure_future(
+    #    updateInAnnouncements(message.guild))
     return saveData()
 
 
@@ -1491,8 +1502,8 @@ async def run(inData, payload, message):
 
         elif splitContent[0] == '!newDay':
             onDayChange(message.guild)
-            task1 = asyncio.ensure_future(
-                updateInAnnouncements(message.guild, postToSpam=True))
+            #task1 = asyncio.ensure_future(
+            #    updateInAnnouncements(message.guild, postToSpam=True))
 
         elif payload['Content'] == '!getData':
             await sendMapData(guild=message.guild.id, channel=message.channel)
@@ -1751,6 +1762,10 @@ async def run(inData, payload, message):
             else:
                 addMsgQueue(message.channel, 'Node Not Found')
 
+        elif splitContent[0] == '!postUpdate':
+            post = await channels[guild]['changelog-live'].send('Update Button')
+            await post.add_reaction('🔄')
+
         else: update[2] = False
 
     #  IF A DM CHANNEL
@@ -1758,10 +1773,10 @@ async def run(inData, payload, message):
         pass
 
     await sendMessages()
-    if '!' in payload['Content'] and 1 in update:
-        print("Run- " + payload['Content'] + ': ', time.time() - start)
-        asyncio.ensure_future(
-            updateInAnnouncements(message.guild))
+    #if '!' in payload['Content'] and 1 in update:
+    #    print("Run- " + payload['Content'] + ': ', time.time() - start)
+    #    asyncio.ensure_future(
+    #        updateInAnnouncements(message.guild))
 
 
     return saveData()
@@ -1781,8 +1796,7 @@ async def update(inData, server):
 
         await sendMapData(guild, channels[guild][logChannel])
         onDayChange(server)
-        asyncio.ensure_future(
-            updateInAnnouncements(server,postToSpam=True))
+        await updateInAnnouncements(server,postToSpam=True)
     await sendMessages()
     return saveData()
 
@@ -2504,7 +2518,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
     else:
         await post.edit(content='```' + msg + '```')
 
-    Data[guild]['ImgLock'] = 0
+    print('Update Saved')
 
 
 """
@@ -2733,8 +2747,7 @@ async def setup(inData, chans, logchan, server):
                 requirements[key] = data[key]
         Data[guild]['Units'][name.lower()] = requirements
 
-    asyncio.ensure_future(
-        updateInAnnouncements(server))
+    await updateInAnnouncements(server)
     await sendMessages()
     return saveData()
 
@@ -2857,7 +2870,6 @@ async def plotMap(channel, postReply=True):
             plt.savefig('tmpgrid.png', format='png', dpi=500)  # , bbox_inches="tight")
             plt.close(fig)
             del fig
-            print('Saved')
             delay = None
             if channel.id != channels[guild][logChannel].id:
                 delay = 60 * 2
@@ -2968,7 +2980,6 @@ async def plotMoon(channel, postReply=True):
             plt.savefig('tmpMoon.png', format='png', dpi=150)  # , bbox_inches="tight")
             plt.close(fig)
             del fig
-            print('Saved')
             delay = None
             if channel.id != channels[guild][logChannel].id:
                 delay = 60 * 2

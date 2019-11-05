@@ -210,7 +210,7 @@ class DiscordNomicBot():
                         try:
                             tmp = await mod.update(self.Data, server)
                             if tmp is not None: self.Data = tmp
-                            else:print("None Returned OnMessage", name)
+                            else: print("None Returned OnMessage", name)
                         except Exception as e:
                             print('Error:',mod,e)
             self.saveData()
@@ -222,20 +222,21 @@ class DiscordNomicBot():
     async def on_raw_reaction(self, payload, mode):
         user = self.client.get_user(payload.user_id)
         if user == self.client.user: return
+        print(user, self.client.user)
         channel = self.client.get_channel(payload.channel_id)
         msg = await channel.fetch_message(payload.message_id)
 
         reactorName = user.name + '#' + user.discriminator
         if str(payload.emoji) == str('🔄') and reactorName in Admins:
             await self.on_message(msg)
-        else:
-            tasks = []
-            for mod, name in zip(self.modules, self.moduleNames):
-                if name in self.Data['disabled'][msg.guild.id]: continue
-                if hasattr(mod, 'reaction'):
-                    tmp = await mod.reaction(self.Data, mode, user, msg, payload.emoji)
-                    if tmp is not None: self.Data = tmp
-                    else: print("None Returned OnMessage", name)
+
+        tasks = []
+        for mod, name in zip(self.modules, self.moduleNames):
+            if name in self.Data['disabled'][msg.guild.id]: continue
+            if hasattr(mod, 'reaction'):
+                tmp = await mod.reaction(self.Data, mode, user, msg, payload.emoji)
+                if tmp is not None: self.Data = tmp
+                else: print("None Returned OnMessage", name)
 
         sys.stdout.flush()
         self.saveData()
