@@ -4,8 +4,7 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="Asset trouble">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -209,13 +208,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00276" summary="Vinny Movement">
-      <created>1570585737746</created>
-      <option name="number" value="00276" />
-      <option name="presentableId" value="LOCAL-00276" />
-      <option name="project" value="LOCAL" />
-      <updated>1570585737746</updated>
     </task>
     <task id="LOCAL-00277" summary="Vinny Events ALL done. Finally.">
       <created>1570862672772</created>
@@ -553,7 +545,14 @@
       <option name="project" value="LOCAL" />
       <updated>1572922947291</updated>
     </task>
-    <option name="localTasksCounter" value="325" />
+    <task id="LOCAL-00325" summary="Asset Assholary. Finally fixed. bad var names was the bug and reset of the asset tracker between trades.">
+      <created>1572923098311</created>
+      <option name="number" value="00325" />
+      <option name="presentableId" value="LOCAL-00325" />
+      <option name="project" value="LOCAL" />
+      <updated>1572923098311</updated>
+    </task>
+    <option name="localTasksCounter" value="326" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +591,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Emabssy Except Trade all implemented. Restructured Units" />
     <MESSAGE value="Trade Diplomon." />
     <MESSAGE value="Vinny Movement" />
     <MESSAGE value="Vinny Events ALL done. Finally." />
@@ -617,7 +615,8 @@
     <MESSAGE value="Update to upgrade in tech tree" />
     <MESSAGE value="Moon and claim updates." />
     <MESSAGE value="Asset trouble" />
-    <option name="LAST_COMMIT_MESSAGE" value="Asset trouble" />
+    <MESSAGE value="Asset Assholary. Finally fixed. bad var names was the bug and reset of the asset tracker between trades." />
+    <option name="LAST_COMMIT_MESSAGE" value="Asset Assholary. Finally fixed. bad var names was the bug and reset of the asset tracker between trades." />
   </component>
   <component name="masterDetails">
     <states>
