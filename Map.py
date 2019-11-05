@@ -1416,6 +1416,9 @@ async def run(inData, payload, message):
                                     tile = [x, y, giver, reciptient]
                                     toSet.append(tile)
                                 print('Done')
+                                region = set()
+                                assets = []
+                                badassets = []
                         if linenum != len(msg) - 1:
                             giver, reciptient = line.split('gives to')
                             giver = getPlayer(message.guild, giver.strip())
