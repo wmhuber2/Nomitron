@@ -1356,6 +1356,7 @@ async def run(inData, payload, message):
                             # generate map to ensure all tiles are connected by adjacency
                             regionExpanded = True
                             assetsToMap = list(assets)
+                            region = set()
                             for x, y, a in assets:
                                 if [x, y] in Data[guild]['Players'][giver]['Markers']['Location'] and ( \
                                                 [x + 1, y + 1] in Data[guild]['Players'][reciptient]['Markers'][
@@ -1383,15 +1384,17 @@ async def run(inData, payload, message):
                                     region.add((x + 1, y - 1))
                                     region.add((x, y - 1))
                                     region.add((x - 1, y - 1))
+
                                     badassets.remove(a)
                                     assetsToMap.remove((x, y, a))
                                     print('Region Seed', x, y)
-                            print('Start ATM', assetsToMap)
+                            print('Start ATM', len(assetsToMap))
                             while regionExpanded:
                                 regionExpanded = False
-                                print(assetsToMap)
+                                print('Step:',len(assetsToMap))
                                 for x, y, a in set(assetsToMap):
                                     if (x, y) in region:
+                                        print('Mapped:',[x,y])
                                         assetsToMap.remove((x, y, a))
                                         badassets.remove(a)
                                         regionExpranded = True
