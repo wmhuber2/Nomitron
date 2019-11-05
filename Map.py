@@ -453,6 +453,7 @@ async def reaction(inData, action, user, messageid, emoji):
                                     [x+1, y  ] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
                                     [x+1, y-1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
                                     [x  , y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
+                                    [x   ,  y] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
                                     [x  , y-1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
                                     [x-1, y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
                                     [x-1, y  ] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
@@ -466,7 +467,7 @@ async def reaction(inData, action, user, messageid, emoji):
                                     region.add((x+1,y-1))
                                     region.add((x  ,y-1))
                                     region.add((x-1,y-1))
-                                    
+
                                     assetsToMap.remove((x, y, a))
                                     badassets.remove(a)
 
@@ -490,6 +491,7 @@ async def reaction(inData, action, user, messageid, emoji):
                                         region.add((x+1,y-1))
                                         region.add((x  ,y-1))
                                         region.add((x-1,y-1))
+                                        region.add((x  ,y  ))
                             print('End ATM', assetsToMap)
                             if len(assetsToMap) != 0:
                                 addMsgQueue(message.channel, "Error Trading Tiles:\n "+str('\n\t'.join(badassets)))
