@@ -591,6 +591,101 @@ async def run(inData, payload, message):
                             pass
                     addMsgQueue(message.channel, msg)
 
+            elif splitContent[0].lower() == '!asset':
+                msg = payload['Content'].split('\n')
+                giver, reciptient = None, None
+                region = set()
+                assets = []
+                badassets = []
+                failed = False
+                toSet = []
+                players = set()
+                for linenum in range(len(msg)):
+                    line = str(msg[linenum])
+                    print(linenum, line)
+                    if 'gives to' not in line and giver is not None and reciptient is not None and len(line) >= 3:
+                        asset = line.strip()
+                        coord = extractCoords(asset, message.channel)
+                        if coord == None:
+                            failed = True
+                            addMsgQueue(message.channel, 'Failed with bad coord')
+                            break
+                        else:
+                            assets.append((coord[0], coord[2], asset))
+                            badassets.append(asset)
+                            print('asset added', (coord[0], coord[2]))
+                    if 'gives to' in line or linenum == len(msg) - 1:
+                        if giver is not None and reciptient is not None:
+                            # generate map to ensure all tiles are connected by adjacency
+                            regionExpanded = True
+                            for x, y, a in assets:
+                                if [x, y] in Data[guild]['Players'][giver]['Markers']['Location'] and ( \
+                                                [x + 1, y + 1] in Data[guild]['Players'][reciptient]['Markers'][
+                                            'Location'] or \
+                                                [x + 1, y] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location'] or \
+                                                [x + 1, y - 1] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location'] or \
+                                                [x, y + 1] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location'] or \
+                                                [x, y - 1] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location'] or \
+                                                [x - 1, y + 1] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location'] or \
+                                                [x - 1, y] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location'] or \
+                                                [x - 1, y - 1] in Data[guild]['Players'][reciptient]['Markers'][
+                                                    'Location']):
+                                    region.add((x + 1, y + 1))
+                                    region.add((x, y + 1))
+                                    region.add((x - 1, y + 1))
+                                    region.add((x + 1, y))
+                                    region.add((x, y))
+                                    region.add((x - 1, y))
+                                    region.add((x + 1, y - 1))
+                                    region.add((x, y - 1))
+                                    region.add((x - 1, y - 1))
+                                    print('Region Seed', x, y)
+                            assetsToMap = list(assets)
+                            print('Start ATM', assetsToMap)
+                            while regionExpanded:
+                                regionExpanded = False
+                                print(assetsToMap)
+                                for x, y, a in set(assetsToMap):
+                                    if (x, y) in region:
+                                        assetsToMap.remove((x, y, a))
+                                        badassets.remove(a)
+                                        regionExpranded = True
+                                        region.add((x + 1, y + 1))
+                                        region.add((x, y + 1))
+                                        region.add((x - 1, y + 1))
+                                        region.add((x + 1, y))
+                                        region.add((x - 1, y))
+                                        region.add((x + 1, y - 1))
+                                        region.add((x, y - 1))
+                                        region.add((x - 1, y - 1))
+                            print('End ATM', assetsToMap)
+                            if len(assetsToMap) != 0:
+                                addMsgQueue(message.channel, "Error Trading Tiles:\n " + str('\n\t'.join(badassets)))
+                                failed = True
+                            else:
+                                for x, y, a in set(assets):
+                                    tile = [x, y, giver, reciptient]
+                                    toSet.append(tile)
+                                print('Done')
+                        if linenum != len(msg) - 1:
+                            giver, reciptient = line.split('gives to')
+                            giver = getPlayer(message.guild, giver.strip())
+                            reciptient = getPlayer(message.guild, reciptient.strip())
+                            players.add(giver)
+                            players.add(reciptient)
+                    else:
+                        print('Else:', line)
+                if not failed:
+                    addMsgQueue(message.channel, "Asset Trade Requires Approval of: \n" + str(' '.join(players)))
+                    await message.add_reaction('👍')
+                    await message.add_reaction('👎')
+
         if payload['Channel'].lower() in ['actions-map',] and len(splitContent) != 0:
             update[0] = 1
 
@@ -835,11 +930,14 @@ async def run(inData, payload, message):
                                     isTileType(Data[guild]['Image'], x, y - 1, 'WATER')
                             )
                     ): addMsgQueue(message.channel, "This Can Only Be Placed On A Beach")
+
                     elif name == 'diplomats' and hasUnit(guild,playerName,'diplomats') >= 3*hasUnit(guild,playerName,'embassy'):
                         addMsgQueue(message.channel, "You need more Embassies to make more Diplomats.")
 
-                    elif indexTile is not None:
+                    elif name == 'sailboat' and not Data[guild]['Players'][playerName]['TechTree']['sailing'] == 1:
+                        addMsgQueue(message.channel, "You dont have the Sailing Technology")
 
+                    elif indexTile is not None:
                         if Data[guild]['Players'][playerName]['Markers']['Shape'][indexTile] == "":
                             addMsgQueue(message.channel, "Units Must Be Upgraded On Your Claimed Tile")
 
@@ -858,13 +956,11 @@ async def run(inData, payload, message):
                             Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']={'Name': name}
                             if name == 'diplomats':
                                 Data[guild]['Players'][playerName]['Markers']['Properties'][indexTile]['Unit']['Originator'] = playerName
-
                             addMsgQueue(message.channel, name + "Unit Added On " + str(xa) + str(y + 1) + " ")
                         else:
                             addMsgQueue(message.channel, "Insufficent Funds You Need:" + missingItems)
 
                     elif indexTile is None:
-
                         if unit['UpgradeUnit'] != "" :
                             addMsgQueue(message.channel, "This location cannot be Upgraded To " + name)
                         elif unit['NeedAdminApproval']:
@@ -913,19 +1009,14 @@ async def run(inData, payload, message):
                         except ValueError:
                             pass
 
-                    if index1 is None:
-                        addMsgQueue(message.channel, "Nothing There To Move")
-                    elif 'Harvest' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
-                        toMove = 'Harvest'
-                    elif 'Unit' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
-                        toMove = 'Unit'
-                    else:
-                        addMsgQueue(message.channel, "Nothing There To Move")
+                    if index1 is None: addMsgQueue(message.channel, "Nothing There To Move")
+                    elif 'Harvest' in Data[guild]['Players'][player]['Markers']['Properties'][index1]: toMove = 'Harvest'
+                    elif 'Unit' in Data[guild]['Players'][player]['Markers']['Properties'][index1]: toMove = 'Unit'
+                    else: addMsgQueue(message.channel, "Nothing There To Move")
 
-                    if unitOccupied and toMove == 'Unit':
-                        addMsgQueue(message.channel, "2 Units cant exist in the same location")
-                    elif harvOccupied and toMove == 'Harvest':
-                        addMsgQueue(message.channel, "2 Harvests cant exist in the same location")
+                    if unitOccupied and toMove == 'Unit': addMsgQueue(message.channel, "2 Units cant exist in the same location")
+                    elif harvOccupied and toMove == 'Harvest': addMsgQueue(message.channel, "2 Harvests cant exist in the same location")
+
 
                     elif toMove == 'Unit' and Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']\
                             in ['town', 'village', 'digsite', 'mill', 'oil', 'mine', 'wall'] \
@@ -941,10 +1032,40 @@ async def run(inData, payload, message):
                     elif toMove == 'Unit' and Data[guild]['Units'][
                             Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']
                         ]['isMobile']:
-                        if abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2 > 2 or abs(x1 - x2) ** 2 + abs(y1 - y2) ** 2 == 0:
-                            addMsgQueue(message.channel, "Movement Must Be to Adjacent Tiles")
+
+                        def landInRange(x,y,r):
+                            dirs = [(-1, 0), (1, 0), (0, 1), (0, -1), (1,1), (-1,-1), (1,-1), (-1,1)]
+                            if r != 0:
+                                res = [ landInRange(x+d[0], y+d[1], r-1) for d in dirs ]
+                                res.append(isTileType(Data[guild]['Image'], x, y, 'LAND'))
+                                return max(res)
+                            if r == 0:
+                                return isTileType(Data[guild]['Image'], x, y, 'LAND')
+
+
+                        name = Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']
+                        dist = min(abs(x1 - x2), abs(y1 - y2)) +  abs(abs(x1 - x2) - abs(y1 - y2))
+
+                        print('Dist: ',dist)
+                        print( landInRange(x2,y2,1 + Data[guild]['Players'][player]['TechTree']['sailing upgrade']) )
+                        if Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'].get(
+                                    'MobileMoveCount') is None:
+                            Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'][
+                                'MobileMoveCount'] = 0
+                        if dist > 1 and name == 'sailboat':
+                            addMsgQueue(message.channel, "Movement Must Be Within Movement Dist")
+
+                        elif not landInRange(x2,y2,1 + Data[guild]['Players'][player]['TechTree']['sailing upgrade']) and name == 'sailboat':
+                            addMsgQueue(message.channel, "Movement Must Be Within Range Of Land")
+
                         elif 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
                             addMsgQueue(message.channel, "Unit Is Disabled")
+
+                        elif name =='sailboat' and \
+                                Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'][
+                                    'MobileMoveCount'] < Data[guild]['Units'][name]['MoveLimitPerDay']:
+                            addMsgQueue(message.channel, "You can only move this unit once per day")
+
                         else:
                             unit = Data[guild]['Units'][
                                 Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']
@@ -976,6 +1097,9 @@ async def run(inData, payload, message):
                                     del Data[guild]['Players'][player]['Markers']['Location'][index1]
                                     del Data[guild]['Players'][player]['Markers']['Shape'][index1]
                                     del Data[guild]['Players'][player]['Markers']['Properties'][index1]
+
+                                Data[guild]['Players'][player]['Markers']['Properties'][index1][toMove][
+                                    'MobileMoveCount'] += 1
                                 addMsgQueue(message.channel,
                                             "Moving Unit From " + x1a + str(y1 + 1) + " to " + x2a + str(y2 + 1))
 
@@ -1037,93 +1161,6 @@ async def run(inData, payload, message):
                 else:
                     addMsgQueue(message.channel, "You cannot disable this location.")
 
-            elif splitContent[0].lower() == '!asset':
-                msg = payload['Content'].split('\n')
-                giver, reciptient = None, None
-                region = set()
-                assets = []
-                badassets = []
-                failed = False
-                toSet = []
-                players = set()
-                for linenum in range(len(msg)):
-                    line = str(msg[linenum])
-                    print(linenum, line)
-                    if 'gives to' not in line and giver is not None and reciptient is not None and len(line) >= 3:
-                        asset = line.strip()
-                        coord = extractCoords(asset, message.channel)
-                        if coord == None:
-                            failed = True
-                            addMsgQueue(message.channel, 'Failed with bad coord')
-                            break
-                        else:
-                            assets.append((coord[0],coord[2],asset))
-                            badassets.append(asset)
-                            print('asset added',(coord[0],coord[2]) )
-                    if 'gives to' in line or linenum == len(msg)-1:
-                        if giver is not None and reciptient is not None:
-                            #generate map to ensure all tiles are connected by adjacency
-                            regionExpanded = True
-                            for x,y,a in assets:
-                                if [x,y] in Data[guild]['Players'][giver]['Markers']['Location'] and (\
-                                    [x+1, y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
-                                    [x+1, y  ] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
-                                    [x+1, y-1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
-                                    [x  , y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
-                                    [x  , y-1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
-                                    [x-1, y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
-                                    [x-1, y  ] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
-                                    [x-1, y-1] in Data[guild]['Players'][reciptient]['Markers']['Location']):
-                                    region.add((x+1,y+1))
-                                    region.add((x  ,y+1))
-                                    region.add((x-1,y+1))
-                                    region.add((x+1,y  ))
-                                    region.add((x  ,y  ))
-                                    region.add((x-1,y  ))
-                                    region.add((x+1,y-1))
-                                    region.add((x  ,y-1))
-                                    region.add((x-1,y-1))
-                                    print('Region Seed',x,y)
-                            assetsToMap = list(assets)
-                            print('Start ATM', assetsToMap)
-                            while regionExpanded:
-                                regionExpanded = False
-                                print(assetsToMap)
-                                for x,y,a in set(assetsToMap):
-                                    if (x,y) in region:
-                                        assetsToMap.remove((x,y,a))
-                                        badassets.remove(a)
-                                        regionExpranded = True
-                                        region.add((x+1,y+1))
-                                        region.add((x  ,y+1))
-                                        region.add((x-1,y+1))
-                                        region.add((x+1,y  ))
-                                        region.add((x-1,y  ))
-                                        region.add((x+1,y-1))
-                                        region.add((x  ,y-1))
-                                        region.add((x-1,y-1))
-                            print('End ATM', assetsToMap)
-                            if len(assetsToMap) != 0:
-                                addMsgQueue(message.channel, "Error Trading Tiles:\n "+str('\n\t'.join(badassets)))
-                                failed = True
-                            else:
-                                for x,y,a in set(assets):
-                                    tile = [x,y,giver,reciptient]
-                                    toSet.append(tile)
-                                print('Done')
-                        if linenum != len(msg)-1:
-                            giver, reciptient = line.split('gives to')
-                            giver      = getPlayer(message.guild, giver.strip()     )
-                            reciptient = getPlayer(message.guild, reciptient.strip())
-                            players.add(giver)
-                            players.add(reciptient)
-                    else:
-                        print('Else:', line)
-                if not failed:
-                    addMsgQueue(message.channel, "Asset Trade Requires Approval of: \n"+str(' '.join(players)))
-                    await message.add_reaction('👍')
-                    await message.add_reaction('👎')
-
             elif splitContent[0] == '!raze' and len(splitContent) == 3:
                 if splitContent[1] in ['claim', 'harvest', 'unit']:
                     coords = extractCoords(splitContent[2],message.channel)
@@ -1183,6 +1220,11 @@ async def run(inData, payload, message):
 
                                     del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit']
 
+                                    if Data[guild]['Players'][payload['Author']]['Markers']['Shape'][index] in ["", "None"]:
+                                        del Data[guild]['Players'][payload['Author']]['Markers']['Shape'][index]
+                                        del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]
+                                        del Data[guild]['Players'][payload['Author']]['Markers']['Location'][index]
+
                                     addMsgQueue(message.channel, "Unit Razed")
                                 else:
                                     addMsgQueue(message.channel, "You Need 2 BF to raze a unit")
@@ -1225,8 +1267,6 @@ async def run(inData, payload, message):
 
                 else:
                     addMsgQueue(message.channel, "Tech Node not Found.")
-
-
 
             else: update[0] = False
 
@@ -1825,6 +1865,11 @@ def onDayChange(server):
                     modifier = (1 - cursed * 0.5) * (double + 1)
                     if double: del \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Boost']
+
+                    if Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get(
+                                    'MobileMoveCount') is not None:
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['MobileMoveCount'] = 0
+
 
                     canAfford = True
                     for cost in unit['DailyCosts']:
