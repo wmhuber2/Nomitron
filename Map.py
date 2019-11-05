@@ -1397,7 +1397,7 @@ async def run(inData, payload, message):
                                         print('Mapped:',[x,y])
                                         assetsToMap.remove((x, y, a))
                                         badassets.remove(a)
-                                        regionExpranded = True
+                                        regionExpanded = True
                                         region.add((x + 1, y + 1))
                                         region.add((x, y + 1))
                                         region.add((x - 1, y + 1))
@@ -1406,6 +1406,7 @@ async def run(inData, payload, message):
                                         region.add((x + 1, y - 1))
                                         region.add((x, y - 1))
                                         region.add((x - 1, y - 1))
+                                print('Step:',len(assetsToMap))
                             print('End ATM', assetsToMap)
                             if len(assetsToMap) != 0:
                                 addMsgQueue(message.channel, "Error Trading Tiles:\n " + str('\n\t'.join(badassets)))
