@@ -447,6 +447,7 @@ async def reaction(inData, action, user, messageid, emoji):
                     if 'gives to' in line or linenum == len(msg)-1:
                         if giver is not None and reciptient is not None:
                             #generate map to ensure all tiles are connected by adjacency
+                            assetsToMap = list(assets)
                             for x,y,a in list(assets):
                                 if [x,y] in Data[guild]['Players'][giver]['Markers']['Location'] and (\
                                     [x+1, y+1] in Data[guild]['Players'][reciptient]['Markers']['Location'] or \
@@ -472,7 +473,6 @@ async def reaction(inData, action, user, messageid, emoji):
                                     badassets.remove(a)
 
                                     print('Region Seed',x,y)
-                            assetsToMap = list(assets)
                             print('Start ATM', assetsToMap)
                             regionExpanded = True
                             while regionExpanded:
