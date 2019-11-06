@@ -1029,13 +1029,20 @@ async def run(inData, payload, message):
                                 harvOccupied = True
                         except ValueError:
                             pass
-
+                    name = None
+                    unit = None
                     if index1 is None: addMsgQueue(message.channel, "Nothing There To Move")
                     elif 'Harvest' in Data[guild]['Players'][player]['Markers']['Properties'][index1]: toMove = 'Harvest'
-                    elif 'Unit' in Data[guild]['Players'][player]['Markers']['Properties'][index1]: toMove = 'Unit'
+
+                    elif 'Unit' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
+                        toMove = 'Unit'
+                        name = Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']
+                        unit = Data[guild]['Units'][name]
+
                     else: addMsgQueue(message.channel, "Nothing There To Move")
 
                     if unitOccupied and toMove == 'Unit': addMsgQueue(message.channel, "2 Units cant exist in the same location")
+
                     elif harvOccupied and toMove == 'Harvest': addMsgQueue(message.channel, "2 Harvests cant exist in the same location")
 
 
@@ -1049,6 +1056,23 @@ async def run(inData, payload, message):
 
                     elif toMove == 'Harvest' and (index2 is None or Data[guild]['Players'][player]['Markers']['Shape'][index2] != 'Claim'):
                         addMsgQueue(message.channel, "This Harvest Must be placed on a Claim")
+
+                    elif toMove == 'Unit' and (
+                            (unit['LandOnly'] and not isTileType(Data[guild]['Image'], x2, y2, 'LAND')) or \
+                            (unit['WaterOnly'] and not isTileType(Data[guild]['Image'], x2, y2, 'WATER')) or \
+                            (name in ['town', 'village', 'digsite', 'mill', 'oil', 'mine', 'wall'] \
+                                and isTileType(Data[guild]['Image'], x2, y2, 'MEAT')) or \
+                            (unit['BeachOnly'] and not ( isTileType(Data[guild]['Image'], x2, y2, 'LAND') \
+                                and (
+                                    isTileType(Data[guild]['Image'], x2 + 1, y2, 'WATER') or
+                                    isTileType(Data[guild]['Image'], x2 - 1, y2, 'WATER') or
+                                    isTileType(Data[guild]['Image'], x2, y2 + 1, 'WATER') or
+                                    isTileType(Data[guild]['Image'], x2, y2 - 1, 'WATER')
+                                )
+                            ))
+                    ):
+                        addMsgQueue(message.channel, "This Cant Be Placed On This Type Of Tile")
+
 
                     elif toMove == 'Unit' and Data[guild]['Units'][
                             Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']['Name']
@@ -1084,7 +1108,7 @@ async def run(inData, payload, message):
 
                         elif name =='sailboat' and \
                                 Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'][
-                                    'MobileMoveCount'] < Data[guild]['Units'][name]['MoveLimitPerDay']:
+                                    'MobileMoveCount'] >= Data[guild]['Units'][name]['MoveLimitPerDay']:
                             addMsgQueue(message.channel, "You can only move this unit once per day")
 
                         else:
@@ -1102,6 +1126,8 @@ async def run(inData, payload, message):
                                 for cost in unit['MobileCost']:
                                     amount, item = cost.split(' ')
                                     addItem(guild, payload['Author'], item, -float(amount))
+                                Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'][
+                                    'MobileMoveCount'] += 1
                                 if index2 is None:
                                     Data[guild]['Players'][player]['Markers']['Properties'].append({
                                         'Unit': Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit']
@@ -1119,8 +1145,6 @@ async def run(inData, payload, message):
                                     del Data[guild]['Players'][player]['Markers']['Shape'][index1]
                                     del Data[guild]['Players'][player]['Markers']['Properties'][index1]
 
-                                Data[guild]['Players'][player]['Markers']['Properties'][index1][toMove][
-                                    'MobileMoveCount'] += 1
                                 addMsgQueue(message.channel,
                                             "Moving Unit From " + x1a + str(y1 + 1) + " to " + x2a + str(y2 + 1))
 

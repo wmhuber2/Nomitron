@@ -108,7 +108,7 @@ async def run(inData, payload, message):
                     endTurnMessage = endTurnMessage + await giveReward(player, 0.2, 0.1,guild) + "\n"
                 elif playerData[player].get('hailed') is not None:
                     if playerData[player].get('razed'):
-                        endTurnMessage += 'Double '
+                        endTurnMessage += 'Unholy '
                     endTurnMessage += "Praise! The Dark Lord Has Gifted <@"+str(Players[player]['id'])+"> with "
                     c = random.randint(0,100)
                     if c < 66:
