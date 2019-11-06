@@ -144,7 +144,7 @@ async def run(inData, payload, message):
             if(endTurnMessage != ""): await channels[guild]["actions"].send(endTurnMessage)
 
             # Nomitron gives a new sermon
-            today = datetime.datetime.today()
+            today = datetime.datetime.today() + datetime.timedelta(hours=1)
             sermonSentence = random.choice(sentences)
             startTurnMessage = u"Welcome, players, to our sermon on this blessed day, {0}, {1} {2}{3}. I invite you all to open your Nomic rulebooks to a favorite quote of mine. “{4}” - {5} {6}:{7}. As you go about your day, think about this quote. Let it grant you wisdom and solace. Amen.".format \
             (
