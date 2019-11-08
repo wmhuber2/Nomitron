@@ -210,13 +210,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00289" summary="SetTile Fix/Update">
-      <created>1571159990319</created>
-      <option name="number" value="00289" />
-      <option name="presentableId" value="LOCAL-00289" />
-      <option name="project" value="LOCAL" />
-      <updated>1571159990319</updated>
-    </task>
     <task id="LOCAL-00290" summary="SetTile Fix/Update">
       <created>1571160100055</created>
       <option name="number" value="00290" />
@@ -553,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573233123080</updated>
     </task>
-    <option name="localTasksCounter" value="338" />
+    <task id="LOCAL-00338" summary="Moon items added to list">
+      <created>1573233822362</created>
+      <option name="number" value="00338" />
+      <option name="presentableId" value="LOCAL-00338" />
+      <option name="project" value="LOCAL" />
+      <updated>1573233822363</updated>
+    </task>
+    <option name="localTasksCounter" value="339" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +592,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Bug Fix On New Day Curse Error. Trade isssue fixxed" />
     <MESSAGE value="SetTiel Update" />
     <MESSAGE value="SetTile Fix/Update" />
     <MESSAGE value="Roll info in Vinny" />
@@ -617,7 +616,8 @@
     <MESSAGE value="Sailing and tech update from ian rule" />
     <MESSAGE value="Colony to addtile" />
     <MESSAGE value="Moon Added to item list" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moon Added to item list" />
+    <MESSAGE value="Moon items added to list" />
+    <option name="LAST_COMMIT_MESSAGE" value="Moon items added to list" />
   </component>
   <component name="masterDetails">
     <states>
