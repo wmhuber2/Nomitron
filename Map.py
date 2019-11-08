@@ -1586,7 +1586,7 @@ async def run(inData, payload, message):
 
             if not isinstance(properties, (dict,)):
                 addMsgQueue(message.channel, 'Properties Is Not Dict.')
-            elif shape not in ['Claim', 'Capital', 'None']:
+            elif shape not in ['Claim', 'Capital', 'None', 'Colony']:
                 addMsgQueue(message.channel, 'Shape is Not Claim or Capital')
             elif coords is not None and playerName is not None:
                 if shape == 'None':shape = ""
