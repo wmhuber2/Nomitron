@@ -29,22 +29,22 @@ UNIT_BASE = {
 }
 
 TECH_TREE = {
-    'granary upgrade': {
+    'granary': {
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'granary'
     },
-    'mine upgrade': {
+    'mine': {
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'mines'
     },
-    'oil upgrade': {
+    'oil': {
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'oil'
     },
-    'powerplant upgrade': {
+    'powerplant': {
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'powerplant'
@@ -55,11 +55,6 @@ TECH_TREE = {
         'AddResource': 'university'
     },
     'sailing': {
-        'MaxLevel': 1,
-        'BaseCost': '40 Technology',
-        'AddResource': 'None'
-    },
-    'sailing upgrade': {
         'MaxLevel': 10,
         'BaseCost': '15 Technology',
         'AddResource': 'None'
@@ -1092,16 +1087,16 @@ async def run(inData, payload, message):
                         dist = min(abs(x1 - x2), abs(y1 - y2)) +  abs(abs(x1 - x2) - abs(y1 - y2))
 
                         print('Dist: ',dist)
-                        print( landInRange(x2,y2,1 + Data[guild]['Players'][player]['TechTree']['sailing upgrade']) )
+                        print( landInRange(x2,y2,1 + Data[guild]['Players'][player]['TechTree']['sailing']) )
 
                         if Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'].get(
                                     'MobileMoveCount') is None:
                             Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'][
                                 'MobileMoveCount'] = 0
-                        if dist > 1 + Data[guild]['Players'][player]['TechTree']['sailing upgrade'] and name == 'sailboat':
+                        if dist > 1 + Data[guild]['Players'][player]['TechTree']['sailing'] and name == 'sailboat':
                             addMsgQueue(message.channel, "Movement Must Be Within Movement Dist")
 
-                        elif not landInRange(x2,y2,1 + Data[guild]['Players'][player]['TechTree']['sailing upgrade']) and name == 'sailboat':
+                        elif not landInRange(x2,y2,1 + Data[guild]['Players'][player]['TechTree']['sailing']) and name == 'sailboat':
                             addMsgQueue(message.channel, "Movement Must Be Within Range Of Land")
 
                         elif 'DisabledAndPermanent' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
@@ -2725,9 +2720,9 @@ async def setup(inData, chans, logchan, server):
         for technode in TECH_TREE:
             if technode not in Data[guild]['Players'][player]['TechTree']:
                 val = 0
-                if Data[guild]['Players'][player]['TechTree'].get(technode.replace('upgrade', 'update')) is not None:
-                    val  = int(Data[guild]['Players'][player]['TechTree'].get(technode.replace('upgrade', 'update')))
-                    del Data[guild]['Players'][player]['TechTree'][technode.replace('upgrade', 'update')]
+                if Data[guild]['Players'][player]['TechTree'].get(technode+' upgrade') is not None:
+                    val  = int(Data[guild]['Players'][player]['TechTree'].get(technode+' upgrade'))
+                    del Data[guild]['Players'][player]['TechTree'][technode+ ' upgrade']
                 Data[guild]['Players'][player]['TechTree'][technode] = val
 
 
