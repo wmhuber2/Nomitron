@@ -128,7 +128,7 @@ async def run(inData, payload, message):
                             addItem(guild, player, 'Curse', 1)
                             endTurnMessage += "a Terrible Curse."
                         elif c < 66 + 13 + 3 + 6 + 6 + 6:
-                            endTurnMessage += "to destroy any unit/harvest on the map."
+                            endTurnMessage += "the power to destroy any one unit/harvest on the map."
                     else:
                         endTurnMessage += "Nothing"
                     endTurnMessage += '\n'

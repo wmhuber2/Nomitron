@@ -2409,6 +2409,14 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                 deltaplus += totalRenewableHarvests * 3.0
             if item == 'Steel':
                 deltaplus += totalNonRenewableHarvests
+            if item == 'Cheese':
+                deltaplus += totalRenewableHarvests * 3.0
+            if item == 'Silica':
+                deltaplus += totalNonRenewableHarvests
+            if item == 'Starfish':
+                deltaplus += totalRenewableHarvests * 3.0
+            if item == 'Aether':
+                deltaplus += totalNonRenewableHarvests
             if item in Data[guild]['Players'][player]['Inventory'].keys():
                 amount = float(Data[guild]['Players'][player]['Inventory'][item])
             if item in itemDelta.keys():
