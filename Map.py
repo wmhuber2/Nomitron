@@ -2471,7 +2471,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             tmpmsg = "\n " + item
             tmpmsg += (17 - len(tmpmsg) - len(str(int(amount)))) * ' ' + str(int(amount))
             tmpmsg += (18 - len(tmpmsg)) * ' ' + '|+'+str(int(deltaplus))
-            tmpmsg += (22 - len(tmpmsg)) * ' ' + ' -' + str(int(deltaloss))
+            tmpmsg += (23 - len(tmpmsg)) * ' ' + ' -' + str(int(deltaloss))
             tmpmsg += (28 - len(tmpmsg)) * ' ' + '= ' +sign + str(int(delta))
             msg    += tmpmsg
         if postToSpam: log(guild,"```"+msg+"```")
