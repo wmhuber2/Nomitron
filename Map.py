@@ -2320,8 +2320,14 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
         msg += '\n-Next BF Claims Cost: ' + str(2 + Data[guild]['Players'][player]['BF Claimed Today'])
         msg += '\n-Times On Fed: '+str(Data[guild]['Fed']['MemberHistory'][player])
         msg += '\n-Tiles:'
-        totalRenewableHarvests = 0
-        totalNonRenewableHarvests = 0
+        totalCornHarvests = 0
+        totalSteelHarvests = 0
+
+        totalStarfishHarvests = 0
+        totalCheeseHarvests = 0
+        totalAetherHarvests = 0
+        totalSilicaHarvests = 0
+
         Total = 0
         itemDelta = {
             'BF': {'-': 0.0, '+': 0.0},
@@ -2334,6 +2340,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             # if isTileType(Data[guild]['Image'],x , y, 'WATER'): totalWater+=1
             Total += 1
             for prop in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].keys():
+                xcord, ycord = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
                 if prop == 'Unit' and \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get(
                             'DisabledAndPermanent') is None:
@@ -2375,16 +2382,47 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
                         itemDelta[itm]['+'] += float(a) * modifier
-                elif prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                    'type'] == 'Perpetual' and 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]:
-                    totalRenewableHarvests += 1
-                elif prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
-                    'type'] == 'Non Perpetual' and 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]:
-                    totalNonRenewableHarvests += 1
 
-        msg += "\n  Total Tiles:" + str(Total) + \
-               '\n  Renewable Harvests:' + str(totalRenewableHarvests) + \
-               '\n  Non-Renewable Harvests:' + str(totalNonRenewableHarvests)
+                elif prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                    'type'] == 'Perpetual' and 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] \
+                        and isTileType(Data[guild]['Image'], xcord, ycord, 'LAND'):
+                    totalCornHarvests += 1
+                elif prop == 'Harvest' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                    'type'] == 'Non Perpetual' and 'Unit' not in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]\
+                        and isTileType(Data[guild]['Image'], xcord, ycord, 'LAND'):
+                    totalSteelHarvests += 1
+
+                elif prop == 'Harvest' and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                            'type'] == 'Perpetual' and 'Unit' not in \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] \
+                        and isTileType(Data[guild]['Image'], xcord, ycord, 'MOONDUST'):
+                    totalCheeseHarvests += 1
+                elif prop == 'Harvest' and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                            'type'] == 'Non Perpetual' and 'Unit' not in \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]\
+                        and isTileType(Data[guild]['Image'], xcord, ycord, 'MOONDUST'):
+                    totalSilicaHarvests += 1
+
+                elif prop == 'Harvest' and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                            'type'] == 'Perpetual' and 'Unit' not in \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]\
+                        and isTileType(Data[guild]['Image'], xcord, ycord, 'STARSEA'):
+                    totalStarfishHarvests += 1
+                elif prop == 'Harvest' and \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                            'type'] == 'Non Perpetual' and 'Unit' not in \
+                        Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]\
+                        and isTileType(Data[guild]['Image'], xcord, ycord, 'STARSEA'):
+                    totalAetherHarvests += 1
+
+
+
+        msg += "\n  Total Tiles:" + str(Total) #+ \
+               #'\n  Renewable Harvests:' + str(totalRenewableHarvests) + \
+               #'\n  Non-Renewable Harvests:' + str(totalNonRenewableHarvests)
 
         msg += '\n-Tech Tree Levels:'
 
@@ -2406,17 +2444,17 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             deltaloss = 0.0
             sign = '+'
             if item == 'Corn':
-                deltaplus += totalRenewableHarvests * 3.0
+                deltaplus += totalCornHarvests * 3.0
             if item == 'Steel':
-                deltaplus += totalNonRenewableHarvests
+                deltaplus += totalSteelHarvests
             if item == 'Cheese':
-                deltaplus += totalRenewableHarvests * 3.0
+                deltaplus += totalCheeseHarvests * 3.0
             if item == 'Silica':
-                deltaplus += totalNonRenewableHarvests
+                deltaplus += totalSilicaHarvests
             if item == 'Starfish':
-                deltaplus += totalRenewableHarvests * 3.0
+                deltaplus += totalStarfishHarvests * 3.0
             if item == 'Aether':
-                deltaplus += totalNonRenewableHarvests
+                deltaplus += totalAetherHarvests
             if item in Data[guild]['Players'][player]['Inventory'].keys():
                 amount = float(Data[guild]['Players'][player]['Inventory'][item])
             if item in itemDelta.keys():
