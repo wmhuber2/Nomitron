@@ -1093,7 +1093,7 @@ async def run(inData, payload, message):
                                     'MobileMoveCount') is None:
                             Data[guild]['Players'][player]['Markers']['Properties'][index1]['Unit'][
                                 'MobileMoveCount'] = 0
-                        if dist > 1 + Data[guild]['Players'][player]['TechTree']['sailing'] and name == 'sailboat':
+                        if dist > Data[guild]['Players'][player]['TechTree']['sailing'] and name == 'sailboat':
                             addMsgQueue(message.channel, "Movement Must Be Within Movement Dist")
 
                         elif not landInRange(x2,y2,1 + Data[guild]['Players'][player]['TechTree']['sailing']) and name == 'sailboat':
