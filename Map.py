@@ -1962,6 +1962,10 @@ def onDayChange(server):
                                 Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
                                     'Artifact'] = True
 
+                        if name == 'saiboat' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]\
+                            ['Unit']['MobileMoveCount'] == 0:
+                            addItem(guild, player, 'Oil', 2.0)
+
                         for cost in unit['DailyCosts']:
                             if ' ' in cost:
                                 amount, item = cost.split(' ')

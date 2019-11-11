@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -209,13 +210,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00292" summary="SetTile Fix/Update">
-      <created>1571278393651</created>
-      <option name="number" value="00292" />
-      <option name="presentableId" value="LOCAL-00292" />
-      <option name="project" value="LOCAL" />
-      <updated>1571278393651</updated>
     </task>
     <task id="LOCAL-00293" summary="SetTile Fix/Update">
       <created>1571375122230</created>
@@ -553,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573234082526</updated>
     </task>
-    <option name="localTasksCounter" value="341" />
+    <task id="LOCAL-00341" summary="Sailing DIst Fixed">
+      <created>1573276711345</created>
+      <option name="number" value="00341" />
+      <option name="presentableId" value="LOCAL-00341" />
+      <option name="project" value="LOCAL" />
+      <updated>1573276711346</updated>
+    </task>
+    <option name="localTasksCounter" value="342" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +593,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="SetTiel Update" />
     <MESSAGE value="SetTile Fix/Update" />
     <MESSAGE value="Roll info in Vinny" />
     <MESSAGE value="Sermon updated" />
@@ -617,7 +617,8 @@
     <MESSAGE value="Colony to addtile" />
     <MESSAGE value="Moon Added to item list" />
     <MESSAGE value="Moon items added to list" />
-    <option name="LAST_COMMIT_MESSAGE" value="Moon items added to list" />
+    <MESSAGE value="Sailing DIst Fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sailing DIst Fixed" />
   </component>
   <component name="masterDetails">
     <states>
