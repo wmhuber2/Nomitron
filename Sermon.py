@@ -95,7 +95,7 @@ async def run(inData, payload, message):
         playerData = Data[guild]['Players']
         authorData = playerData[payload['Author']]
     
-        if payload['Content'] == '!newTurn':
+        if payload['Content'] in ['!newTurn','!runSermon']:
             endTurnMessage = ""
             players = list(Players.keys())
             random.shuffle(players)
