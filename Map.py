@@ -105,10 +105,11 @@ TIERLIST = [
 
 playerOrder = [
         'Alekosen#8467',
+        'Paum#7183',
         'Boolacha#4539',
         'Krozr#0878',
         'Crorem#6962',
-        'AJuulPodNamedDesire#4155',
+        'Jaekon#4155',
         'Fenris Wolf#6136',
         'Rabz12#9343',
         'Steam:HaphStealth Bnet#1191#5187',
@@ -1549,6 +1550,18 @@ async def run(inData, payload, message):
                 if player is not None:
                     del Data[guild]['Players'][player]
                     addMsgQueue(message.channel, 'Player ' + player + ' is removed from the Map.')
+
+        elif splitContent[0] == '!setPlayer' and len(splitContent) == 3:
+
+            player1 = getPlayer(message.guild, splitContent[1], message.channel)
+            player2 = getPlayer(message.guild, splitContent[2], message.channel)
+
+            if player1 not in Data[guild]['Players']:
+                addMsgQueue(message.channel, 'Player cannot be found. Sorry.')
+            elif player1 is not None and player2 is not None:
+                Data[guild]['Players'][player2] = dict(Data[guild]['Players'][player1])
+                del Data[guild]['Players'][player1]
+                addMsgQueue(message.channel, 'Player ' + player1 + ' is now ' +player2)
 
         elif splitContent[0] == '!setColor' and len(splitContent) == 3:
             if splitContent[1].lower() in mcd.CSS4_COLORS:

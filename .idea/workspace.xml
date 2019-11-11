@@ -6,7 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/players.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/players.yaml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,20 +210,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00294" summary="Roll info in Vinny">
-      <created>1571461432745</created>
-      <option name="number" value="00294" />
-      <option name="presentableId" value="LOCAL-00294" />
-      <option name="project" value="LOCAL" />
-      <updated>1571461432746</updated>
-    </task>
-    <task id="LOCAL-00295" summary="Roll info in Vinny">
-      <created>1571461524441</created>
-      <option name="number" value="00295" />
-      <option name="presentableId" value="LOCAL-00295" />
-      <option name="project" value="LOCAL" />
-      <updated>1571461524441</updated>
     </task>
     <task id="LOCAL-00296" summary="Roll info in Vinny">
       <created>1571537482941</created>
@@ -553,7 +540,21 @@
       <option name="project" value="LOCAL" />
       <updated>1573433806016</updated>
     </task>
-    <option name="localTasksCounter" value="343" />
+    <task id="LOCAL-00343" summary="Fed New Memeber bugs">
+      <created>1573452713321</created>
+      <option name="number" value="00343" />
+      <option name="presentableId" value="LOCAL-00343" />
+      <option name="project" value="LOCAL" />
+      <updated>1573452713321</updated>
+    </task>
+    <task id="LOCAL-00344" summary="Fed New Memeber bugs">
+      <created>1573452764335</created>
+      <option name="number" value="00344" />
+      <option name="presentableId" value="LOCAL-00344" />
+      <option name="project" value="LOCAL" />
+      <updated>1573452764335</updated>
+    </task>
+    <option name="localTasksCounter" value="345" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +593,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Roll info in Vinny" />
     <MESSAGE value="Sermon updated" />
     <MESSAGE value="Harvest Move Update" />
     <MESSAGE value="Tech Tree" />
@@ -617,7 +617,8 @@
     <MESSAGE value="Moon items added to list" />
     <MESSAGE value="Sailing DIst Fixed" />
     <MESSAGE value="Oil For Boats" />
-    <option name="LAST_COMMIT_MESSAGE" value="Oil For Boats" />
+    <MESSAGE value="Fed New Memeber bugs" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fed New Memeber bugs" />
   </component>
   <component name="masterDetails">
     <states>
