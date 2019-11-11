@@ -2199,7 +2199,9 @@ async def onTurnChange(server):
                     minList = [member]
                 elif Data[guild]['Fed']['MemberHistory'][member] == minVal:
                     minList.append(member)
+            print('MinList',minList)
             newMember = random.choice(minList)
+            print(newMember)
             newMembers.append(newMember)
             newMembersNames.append(server.get_member_named(newMember).mention)
             await server.get_member_named(newMember).add_roles(role)
