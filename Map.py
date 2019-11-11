@@ -1553,8 +1553,8 @@ async def run(inData, payload, message):
 
         elif splitContent[0] == '!setPlayer' and len(splitContent) == 3:
 
-            player1 = getPlayer(message.guild, splitContent[1], message.channel)
-            player2 = getPlayer(message.guild, splitContent[2], message.channel)
+            player1 = splitContent[1]
+            player2 = splitContent[2]
 
             if player1 not in Data[guild]['Players']:
                 addMsgQueue(message.channel, 'Player cannot be found. Sorry.')
