@@ -30,31 +30,37 @@ UNIT_BASE = {
 
 TECH_TREE = {
     'granary': {
+        'InitCost':None,
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'granary'
     },
     'mine': {
+        'InitCost':None,
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'mines'
     },
     'oil': {
+        'InitCost':None,
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'oil'
     },
     'powerplant': {
+        'InitCost':None,
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'powerplant'
     },
     'university': {
+        'InitCost':None,
         'MaxLevel': 10,
         'BaseCost': '5 Technology',
         'AddResource': 'university'
     },
     'sailing': {
+        'InitCost': '15 Technology',
         'MaxLevel': 10,
         'BaseCost': '15 Technology',
         'AddResource': 'None'
@@ -586,11 +592,25 @@ async def run(inData, payload, message):
                     msg = '\n\n'+technode.title()
                     msg += '\n  Max Level   : ' + str(TECH_TREE[technode]['MaxLevel'])
                     msg += '\n  Base Cost   : ' + str(TECH_TREE[technode]['BaseCost'])
+
                     if Data[guild]['Players'][payload['Author']]['TechTree'].get(technode) == TECH_TREE[technode]['MaxLevel']:
                         msg += '\n  Upgrade Cost: At Max Level'
                     else:
-                        msg += '\n  Upgrade Cost: ' + str(amount * \
-                            (2 ** Data[guild]['Players'][payload['Author']]['TechTree'].get(technode))) +' '+ str(item)
+                        if TECH_TREE[technode]['InitCost'] is not None:
+                            if Data[guild]['Players'][payload['Author']]['TechTree'].get(technode) == 0:
+                                amount, item = TECH_TREE[technode]['InitCost'].split(' ')
+                            else:
+                                amount, item = TECH_TREE[technode]['BaseCost'].split(' ')
+                                amount = int(amount) * (
+                                        2 ** (Data[guild]['Players'][payload['Author']]['TechTree'].get(technode)-1))
+                            print(amount, item)
+                        else:
+                            amount, item = TECH_TREE[technode]['BaseCost'].split(' ')
+                            amount = int(amount) * (
+                                        2 ** Data[guild]['Players'][payload['Author']]['TechTree'].get(technode))
+                            print(amount, item)
+
+                        msg += '\n  Upgrade Cost: ' + str(amount) +' '+ str(item)
                     msgt += msg
                 addMsgQueue(message.channel, '```' + msgt + '```')
 
@@ -1292,11 +1312,20 @@ async def run(inData, payload, message):
 
             elif splitContent[0] == '!tech' and len(splitContent) >=2:
                 technode = ' '.join(splitContent[1:]).lower()
+                amount, item = 0, None
                 if technode in TECH_TREE:
-
-                    amount, item = TECH_TREE[technode]['BaseCost'].split(' ')
-                    amount = int(amount) * (2 ** Data[guild]['Players'][payload['Author']]['TechTree'].get(technode))
-                    print(amount, item)
+                    if TECH_TREE[technode]['InitCost'] is not None:
+                        if Data[guild]['Players'][payload['Author']]['TechTree'].get(technode) == 0:
+                            amount, item = TECH_TREE[technode]['InitCost'].split(' ')
+                        else:
+                            amount, item = TECH_TREE[technode]['BaseCost'].split(' ')
+                            amount = int(amount) * (
+                                        2 ** (Data[guild]['Players'][payload['Author']]['TechTree'].get(technode)-1))
+                        print(amount, item)
+                    else:
+                        amount, item = TECH_TREE[technode]['BaseCost'].split(' ')
+                        amount = int(amount) * (2 ** Data[guild]['Players'][payload['Author']]['TechTree'].get(technode))
+                        print(amount, item)
 
                     if addItem(guild, payload['Author'], item, -float(amount), testOnly=True):
                         addItem(guild, payload['Author'], item, -float(amount))
