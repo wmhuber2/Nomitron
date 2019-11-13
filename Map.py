@@ -557,7 +557,6 @@ async def run(inData, payload, message):
     start = time.time()
     # Do Stuff Here
 
-    print(message.content)
 
     guild = message.guild.id
     splitContent = payload['Content'].split(' ')
