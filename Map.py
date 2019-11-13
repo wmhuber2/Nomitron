@@ -2005,8 +2005,10 @@ def onDayChange(server):
                                     'Artifact'] = True
 
                         if name == 'saiboat' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]\
-                            ['Unit']['MobileMoveCount'] == 0:
+                            ['Unit'].get('MobileMoveCount') in [0,None]:
                             addItem(guild, player, 'Oil', 2.0)
+                        elif name == 'saiboat' :
+                           Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['MobileMoveCount'] = 0
 
                         for cost in unit['DailyCosts']:
                             if ' ' in cost:
@@ -2413,6 +2415,18 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                         if itemDelta.get(itm) is None:
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
                         itemDelta[itm]['+'] += float(1) * modifier
+
+                    if name == 'saiboat' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] \
+                            ['Unit'].get('MobileMoveCount') in [0, None]:
+                        itm  = 'Oil'
+                        if itm == None:
+                            itm = random.choice(rawMaterialsList)
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
+                                'VillageItem'] = itm
+                        if itemDelta.get(itm) is None:
+                            itemDelta[itm] = {'-': 0.0, '+': 0.0}
+                        itemDelta[itm]['+'] += float(2) * modifier
+
 
                     for cst in Data[guild]['Units'][unit]['DailyCosts']:
                         a, itm = cst.split(' ')
