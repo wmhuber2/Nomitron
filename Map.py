@@ -557,6 +557,8 @@ async def run(inData, payload, message):
     start = time.time()
     # Do Stuff Here
 
+    print(message.content)
+
     guild = message.guild.id
     splitContent = payload['Content'].split(' ')
     update = [0,0,0,]
@@ -2004,10 +2006,10 @@ def onDayChange(server):
                                 Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
                                     'Artifact'] = True
 
-                        if name == 'saiboat' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]\
+                        if name == 'sailboat' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]\
                             ['Unit'].get('MobileMoveCount') in [0,None]:
                             addItem(guild, player, 'Oil', 2.0)
-                        elif name == 'saiboat' :
+                        elif name == 'sailboat' :
                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['MobileMoveCount'] = 0
 
                         for cost in unit['DailyCosts']:
@@ -2416,7 +2418,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                             itemDelta[itm] = {'-': 0.0, '+': 0.0}
                         itemDelta[itm]['+'] += float(1) * modifier
 
-                    if unit == 'saiboat' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] \
+                    if unit == 'sailboat' and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex] \
                             ['Unit'].get('MobileMoveCount') in [0, None]:
                         itm  = 'Oil'
                         if itemDelta.get(itm) is None:
