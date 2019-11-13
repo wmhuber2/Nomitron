@@ -2490,7 +2490,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             if level not in [None, 0]:
                 msg += "\n  " + technode.title() + ' : ' + str(level)
 
-        msg += "\n\nInventory:       |   Change "
+        msg += "\n\nInventory:   |   Change "
 
         itemListtmp = list(itemList)
         playerItemSet = set(Data[guild]['Players'][player]['Inventory'].keys())
@@ -2527,11 +2527,11 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             #deltaplus = int(deltaplus)
             #delta     = int(delta)
 
-            tmpmsg = "\n " + item
-            tmpmsg += (17 - len(tmpmsg) - len(str(int(amount)))) * ' ' + str(int(amount))
-            tmpmsg += (18 - len(tmpmsg)) * ' ' + '|+'+str(int(deltaplus))
-            tmpmsg += (23 - len(tmpmsg)) * ' ' + ' -' + str(int(deltaloss))
-            tmpmsg += (28 - len(tmpmsg)) * ' ' + '= ' +sign + str(int(delta))
+            tmpmsg = "\n " + item.replace('Technology','Tech.')
+            tmpmsg += (14 - len(tmpmsg) - len(str(int(amount)))) * ' ' + str(int(amount))
+            tmpmsg += (14 - len(tmpmsg)) * ' ' + '|+'+str(int(deltaplus))
+            tmpmsg += (20 - len(tmpmsg)) * ' ' + ' -' + str(int(deltaloss))
+            tmpmsg += (26 - len(tmpmsg)) * ' ' + '= ' +sign + str(int(delta))
             msg    += tmpmsg
         if postToSpam: log(guild,"```"+msg+"```")
 
