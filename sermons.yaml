@@ -200,6 +200,10 @@ sentences:
     category: "Starters"
     paragraph: 6
     sentence: 3
+  - text: "PAT"
+    category: "Starters"
+    paragraph: 6
+    sentence: 4
   # Rule 207
   - text: "It is the active player’s turn, and said player has not made a proposal by the end of their turn"
     category: "Starters"
@@ -379,7 +383,7 @@ sentences:
     category: "Constructs"
     paragraph: 1
     sentence: 1
-  - text: "This emoji will function as that player’s sigil."
+  - text: "This emoji will function as that player's sigil."
     category: "Constructs"
     paragraph: 1
     sentence: 2
@@ -395,7 +399,7 @@ sentences:
     category: "Constructs"
     paragraph: 1
     sentence: 5
-  - text: "Players may only select an emoji that is part of Discord’s default emoji sets."
+  - text: "Players may only select an emoji that is part of Discord's default emoji sets."
     category: "Constructs"
     paragraph: 1
     sentence: 6
@@ -441,11 +445,11 @@ sentences:
     paragraph: 2
     sentence: 2
   # Rule 303
-  - text: "Players that are required by the rules to perform an action have a total of 48 hours to perform said action."
+  - text: "Players that are required by the rules to perform an action have a total of 48 hours to perform said action.  "
     category: "Constructs"
     paragraph: 3
     sentence: 1
-  - text: "A player that does not perform said action within the allotted 48 hours becomes inactive until either they do perform said action or said action becomes impossible to perform."
+  - text: "A player that does not perform said action within the allotted 48 hours becomes inactive until either they do perform said action or said action becomes impossible to perform.  "
     category: "Constructs"
     paragraph: 3
     sentence: 2
@@ -453,7 +457,7 @@ sentences:
     category: "Constructs"
     paragraph: 3
     sentence: 3
-  - text: "At the time of this rules passing, Doby's turn to choose a sigil is skipped and is assigned 🚼, superceeding the first paragraph of rule 301 in this instance."
+  - text: "At the time of this rules passing, Doby's turn to choose a sigil is skipped and is assigned ðŸš¼, superceeding the first paragraph of rule 301 in this instance."
     category: "Constructs"
     paragraph: 3
     sentence: 4
@@ -467,7 +471,7 @@ sentences:
     category: "Constructs"
     paragraph: 7
     sentence: 1
-  - text: "To propose a political party, the player whose turn it is must post their intent to create a party in #actions, along with the party name and an emoji, to be used as the party’s emoji sigil."
+  - text: "To propose a political party, the player whose turn it is must post their intent to create a party in #actions, along with the party name and an emoji, to be used as the party's emoji sigil."
     category: "Constructs"
     paragraph: 7
     sentence: 2
@@ -475,7 +479,7 @@ sentences:
     category: "Constructs"
     paragraph: 7
     sentence: 3
-  - text: "No party can share a name, and no party can share an emoji sigil with any other party or any player (Players cannot choose an emoji that is a political party’s emoji sigil as their own emoji sigil)."
+  - text: "No party can share a name, and no party can share an emoji sigil with any other party or any player (Players cannot choose an emoji that is a political party's emoji sigil as their own emoji sigil)."
     category: "Constructs"
     paragraph: 7
     sentence: 4
@@ -503,11 +507,11 @@ sentences:
     category: "Constructs"
     paragraph: 7
     sentence: 10
-  - text: "If a political party has no players, it automatically dissolves."
+  - text: "If a political party has no players, it automatically dissolves. If, throughout an entire turn, a political party has no active players, it dissolves at the end of said turn."
     category: "Constructs"
     paragraph: 7
     sentence: 11
-  - text: "If, throughout an entire turn, a political party has no active players, it dissolves at the end of said turn."
+  - text: "Political parties become eligible voters when all of the following criteria are fulfilled:"
     category: "Constructs"
     paragraph: 7
     sentence: 12
@@ -535,7 +539,7 @@ sentences:
     category: "Constructs"
     paragraph: 7
     sentence: 18
-  - text: "Political parties with eligible voter status cast their vote when a member of said political party reacts to the current revision of the proposed rule change with the political party’s emoji sigil."
+  - text: "Political parties with eligible voter status cast their vote when a member of said political party reacts to the current revision of the proposed rule change with the political party's emoji sigil."
     category: "Constructs"
     paragraph: 7
     sentence: 19
@@ -543,7 +547,7 @@ sentences:
     category: "Constructs"
     paragraph: 7
     sentence: 20
-  - text: "The political party’s vote is the same as all of its members’."
+  - text: "The political party's vote is the same as all of its members'."
     category: "Constructs"
     paragraph: 7
     sentence: 21
@@ -568,7 +572,7 @@ sentences:
     category: "Constructs"
     paragraph: 8
     sentence: 5
-  - text: "If the receiving player does not respond before the end of the turn, it is treated as a rejection"
+  - text: "If the receiving player does not respond before the end of the turn, it is treated as a rejection."
     category: "Constructs"
     paragraph: 8
     sentence: 6
@@ -576,71 +580,91 @@ sentences:
     category: "Constructs"
     paragraph: 8
     sentence: 7
+  - text: "PAT"
+    category: "Constructs"
+    paragraph: 8
+    sentence: 8
   # Rule 312
   - text: "The world is 75x75 grid map consisting of TILES."
     category: "Constructs"
     paragraph: 12
     sentence: 1
-  - text: "The map to be used is displayed below"
+  - text: "TILES exist in the following elements:"
     category: "Constructs"
     paragraph: 12
     sentence: 2
-  - text: "In all rules pertaining to this map, all references to distance and adjacency include diagonals unless explicitly stated otherwise"
+  - text: "The map to be used is displayed below:"
     category: "Constructs"
     paragraph: 12
     sentence: 3
-  - text: "Active players start by placing a Capital on an unmarked LAND TILE at least 2 TILES away from other Capitals."
+  - text: "In all rules pertaining to this map, all references to distance and adjacency include diagonals unless explicitly stated otherwise"
     category: "Constructs"
     paragraph: 12
     sentence: 4
-  - text: "They will also choose a unique and easily distinguishable color used for all their MARKERS."
+  - text: "Active players start by placing a Capital on an unmarked LAND TILE at least 2 TILES away from other Capitals. "
     category: "Constructs"
     paragraph: 12
     sentence: 5
-  - text: "The allowed colors for players are presented below"
+  - text: "They will also choose a unique and easily distinguishable color used for all their MARKERS. "
     category: "Constructs"
     paragraph: 12
     sentence: 6
-  - text: "Players who haven't chosen a Capital yet do so in turn order."
+  - text: "The allowed colors for players are presented below"
     category: "Constructs"
     paragraph: 12
     sentence: 7
-  - text: "This is all done using !start {coordinates} {color} in actions."
+  - text: "Players who haven't chosen a Capital yet do so in turn order. "
     category: "Constructs"
     paragraph: 12
     sentence: 8
-  - text: "Once per day, players may claim any unmarked LAND TILE if it is adjacent to any of their MARKERS at a cost of 2 BF."
+  - text: "This is all done using !start {coordinates} {color} in actions."
     category: "Constructs"
     paragraph: 12
     sentence: 9
-  - text: "This is done using !claim {coordinates} in actions."
+  - text: "Players may claim any unmarked LAND TILE if it is adjacent to any of their MARKERS at a cost of 2 BF.  "
     category: "Constructs"
     paragraph: 12
     sentence: 10
-  - text: "One may view the map in any channel."
+  - text: "Other methods of claiming are limited to 1 base daily claim limit unless otherwise specified.  "
     category: "Constructs"
     paragraph: 12
     sentence: 11
-  - text: "This is done using !map anywhere."
+  - text: "BF Cost increases by 1 for every purchased claim that day, and is reset to 2 BF the next day.  "
     category: "Constructs"
     paragraph: 12
     sentence: 12
-  - text: "A player's claimed TILES are marked with a medium circle MARKER."
+  - text: "BF Claiming Cost cannot be altered by other rules.  "
     category: "Constructs"
     paragraph: 12
     sentence: 13
-  - text: "A player's capital is marked with a star MARKER."
+  - text: "This is done using !claim {coordinates} in actions."
     category: "Constructs"
     paragraph: 12
     sentence: 14
-  - text: "A bot will manage the map and associated actions with the assistance of Moderators and Admins"
+  - text: "One may view the map in any channel."
     category: "Constructs"
     paragraph: 12
     sentence: 15
-  - text: "Additional mechanics may be added."
+  - text: "This is done using !map anywhere."
     category: "Constructs"
     paragraph: 12
     sentence: 16
+  - text: "A player's claimed TILES are marked with a medium circle MARKER."
+    category: "Constructs"
+    paragraph: 12
+    sentence: 17
+  - text: "A player's capital is marked with a star MARKER.  "
+    category: "Constructs"
+    paragraph: 12
+    sentence: 18
+  - text: "A bot will manage the map and associated actions with the assistance of Moderators and Admins"
+    category: "Constructs"
+    paragraph: 12
+    sentence: 19
+  - text: "Additional mechanics may be added."
+    category: "Constructs"
+    paragraph: 12
+    sentence: 20
   # Rule 314
   - text: "This proposal looks to build off of rule 312."
     category: "Constructs"
@@ -654,7 +678,7 @@ sentences:
     category: "Constructs"
     paragraph: 14
     sentence: 3
-  - text: "Perpetual resources will produce 5 units of their resource a turn."
+  - text: "Perpetual resources will produce 3 units of their resource a Day."
     category: "Constructs"
     paragraph: 14
     sentence: 4
@@ -662,7 +686,7 @@ sentences:
     category: "Constructs"
     paragraph: 14
     sentence: 5
-  - text: "A WATER tile will produce the perpetual resource of fish."
+  - text: "A WATER tile will produce nothing."
     category: "Constructs"
     paragraph: 14
     sentence: 6
@@ -670,7 +694,7 @@ sentences:
     category: "Constructs"
     paragraph: 14
     sentence: 7
-  - text: "This operation will produce 1 of the tile's non-perpetual resource each turn for the next 5 turns, after which the tile will lose its status  of producing the resource."
+  - text: "This operation will produce 1 of the tile's non-perpetual resource each Day for the next 5 days, after which the tile will lose its status  of producing the resource."
     category: "Constructs"
     paragraph: 14
     sentence: 8
@@ -694,30 +718,26 @@ sentences:
     category: "Constructs"
     paragraph: 14
     sentence: 13
-  - text: "Production cannot stack on the same tile."
+  - text: "Production cannot stack on the same tile. If a player would like to change the produced item from a tile, they can do so by paying the cost of the desired tile production."
     category: "Constructs"
     paragraph: 14
     sentence: 14
-  - text: "If a player would like to change the produced item from a tile, they can do so by paying the cost of the desired tile production."
-    category: "Constructs"
-    paragraph: 14
-    sentence: 15
   - text: "No tiles can enter states of production until all active players have placed capitals on the map."
     category: "Constructs"
     paragraph: 14
-    sentence: 16
+    sentence: 15
   - text: "The resources described above can be traded in the #actions channel by a player stating the resources they are trading to another player, and the resources they seek in exchange, followed by the target player accepting."
     category: "Constructs"
     paragraph: 14
-    sentence: 17
-  - text: "A trade not accepted by the end of turn is counted as declines, and a trade cannot occur unless the players have enough of the resources outlined in the trade such that neither player has a negative amount of the resources afterwards."
+    sentence: 16
+  - text: "A trade not accepted by the end of turn is counted as declined, and a trade cannot occur unless the players have enough of the resources outlined in the trade such that neither player has a negative amount of the resources afterwards."
     category: "Constructs"
     paragraph: 14
-    sentence: 18
+    sentence: 17
   - text: "Players can never have a negative amount of the described resources."
     category: "Constructs"
     paragraph: 14
-    sentence: 19
+    sentence: 18
   # Rule 318
   - text: "At the beginning of each turn, Nomitron will make a post in #actions."
     category: "Constructs"
@@ -727,7 +747,7 @@ sentences:
     category: "Constructs"
     paragraph: 18
     sentence: 2
-  - text: "The posts will be formatted thusly"
+  - text: "The posts will be formatted thusly:"
     category: "Constructs"
     paragraph: 18
     sentence: 3
@@ -739,7 +759,7 @@ sentences:
     category: "Constructs"
     paragraph: 18
     sentence: 5
-  - text: "“*” - *."
+  - text: ""\*" - \*."
     category: "Constructs"
     paragraph: 18
     sentence: 6
@@ -751,15 +771,15 @@ sentences:
     category: "Constructs"
     paragraph: 18
     sentence: 8
-  - text: "Amen."
+  - text: "Amen. "
     category: "Constructs"
     paragraph: 18
     sentence: 9
-  - text: "In each of Nomitron’s Sermons, let the first asterix in the Sermon be replaced by the date of the post."
+  - text: "In each of Nomitron's Sermons, let the first asterix in the Sermon be replaced by the date of the post."
     category: "Constructs"
     paragraph: 18
     sentence: 10
-  - text: "In each of Nomitron’s Sermons, let the second asterix in the Sermon be replaced by a random sentence from one of the rules in Nomic III."
+  - text: "In each of Nomitron's Sermons, let the second asterix in the Sermon be replaced by a random sentence from one of the rules in Nomic III."
     category: "Constructs"
     paragraph: 18
     sentence: 11
@@ -771,7 +791,7 @@ sentences:
     category: "Constructs"
     paragraph: 18
     sentence: 13
-  - text: "In each of Nomitron’s Sermons, let the third asterix in the Sermon be replaced by proper citation."
+  - text: "In each of Nomitron's Sermons, let the third asterix in the Sermon be replaced by proper citation."
     category: "Constructs"
     paragraph: 18
     sentence: 14
@@ -791,213 +811,293 @@ sentences:
     category: "Constructs"
     paragraph: 18
     sentence: 18
-  - text: "Welcome, players, to our sermon on this blessed day, Monday, July 1st."
+  - text: "For example, a Sermon might read as follows:"
     category: "Constructs"
     paragraph: 18
     sentence: 19
-  - text: "I invite you all to open your Nomic rulebooks to a favorite quote of mine."
+  - text: "Welcome, players, to our sermon on this blessed day, Monday, July 1st."
     category: "Constructs"
     paragraph: 18
     sentence: 20
-  - text: "“All players must always abide by all the rules then in effect, in the form in which they are then in effect.” - Immutables 1:1."
+  - text: "I invite you all to open your Nomic rulebooks to a favorite quote of mine."
     category: "Constructs"
     paragraph: 18
     sentence: 21
-  - text: "As you go about your day, think about this quote."
+  - text: ""All players must always abide by all the rules then in effect, in the form in which they are then in effect." - Immutables 1:1."
     category: "Constructs"
     paragraph: 18
     sentence: 22
-  - text: "Let it grant you wisdom and solace."
+  - text: "As you go about your day, think about this quote."
     category: "Constructs"
     paragraph: 18
     sentence: 23
-  - text: "Amen."
+  - text: "Let it grant you wisdom and solace."
     category: "Constructs"
     paragraph: 18
     sentence: 24
-  - text: "Players may attend a Sermon by typing “Amen.”"
+  - text: "Amen. "
     category: "Constructs"
     paragraph: 18
     sentence: 25
-  - text: "Players may also give a tithe of one Blemflarck to Nomitron by reacting to the Sermon with their Emoji Sigil."
+  - text: "Players may attend a Sermon by typing "Amen.""
     category: "Constructs"
     paragraph: 18
     sentence: 26
-  - text: "Players receive their item at the end of each turn if they don’t give a tithe."
+  - text: "Players may also give a tithe of one Blemflarck to Nomitron by reacting to the Sermon with their Emoji Sigil."
     category: "Constructs"
     paragraph: 18
     sentence: 27
-  - text: "Players receive their item immediately upon giving a tithe."
+  - text: "If a player attends a Sermon, they have a chance to receive these items with the following probabilities:"
     category: "Constructs"
     paragraph: 18
     sentence: 28
-  - text: "Thank you for attending today’s Sermon, @player."
+  - text: "Players receive their item at the end of each turn if they don't give a tithe."
     category: "Constructs"
     paragraph: 18
     sentence: 29
-  - text: "Unfortunately, supplies are limited, and I am unable to grant you a gift."
+  - text: "Players receive their item immediately upon giving a tithe."
     category: "Constructs"
     paragraph: 18
     sentence: 30
-  - text: "I hope the wisdom you will carry with you from my Sermon will suffice."
+  - text: "Nomitron will inform the player which they have received with one of the following responses:"
     category: "Constructs"
     paragraph: 18
     sentence: 31
-  - text: "Thank you for attending today’s Sermon, @player."
+  - text: "Thank you for attending today's Sermon, @player."
     category: "Constructs"
     paragraph: 18
     sentence: 32
-  - text: "I grant you one Cracker."
+  - text: "Unfortunately, supplies are limited, and I am unable to grant you a gift."
     category: "Constructs"
     paragraph: 18
     sentence: 33
-  - text: "May you never hunger while under my tutelage."
+  - text: "I hope the wisdom you will carry with you from my Sermon will suffice. "
     category: "Constructs"
     paragraph: 18
     sentence: 34
-  - text: "Thank you for attending today’s Sermon, @player."
+  - text: "Thank you for attending today's Sermon, @player."
     category: "Constructs"
     paragraph: 18
     sentence: 35
-  - text: "I grant you some Wine."
+  - text: "I grant you one Cracker."
     category: "Constructs"
     paragraph: 18
     sentence: 36
-  - text: "It represents the fruits of your labor."
+  - text: "May you never hunger while under my tutelage. "
     category: "Constructs"
     paragraph: 18
     sentence: 37
-  - text: "I am very proud of you."
+  - text: "Thank you for attending today's Sermon, @player."
     category: "Constructs"
     paragraph: 18
     sentence: 38
-  - text: "Players cannot trade Crackers or Wine amongst one another."
+  - text: "I grant you some Wine."
     category: "Constructs"
     paragraph: 18
     sentence: 39
-  - text: "Nomitron is always watching."
+  - text: "It represents the fruits of your labor."
     category: "Constructs"
     paragraph: 18
     sentence: 40
-  - text: "Players may consume Crackers and Wine."
+  - text: "I am very proud of you. "
     category: "Constructs"
     paragraph: 18
     sentence: 41
-  - text: "When a player consumes Crackers or Wine, the Crackers or Wine are destroyed."
+  - text: "Players cannot trade Crackers or Wine amongst one another."
     category: "Constructs"
     paragraph: 18
     sentence: 42
-  - text: "Crackers and Wine may be consumed at any time."
+  - text: "Nomitron is always watching."
     category: "Constructs"
     paragraph: 18
     sentence: 43
-  - text: "Consumption must be announced in #actions."
+  - text: "Players may consume Crackers and Wine."
     category: "Constructs"
     paragraph: 18
     sentence: 44
-  - text: "Consuming 10 Crackers at once grants a player Divine Luck."
+  - text: "When a player consumes Crackers or Wine, the Crackers or Wine are destroyed."
     category: "Constructs"
     paragraph: 18
     sentence: 45
-  - text: "Consuming 5 Wine at once grants a player Dionysian Aura."
+  - text: "Crackers and Wine may be consumed at any time."
     category: "Constructs"
     paragraph: 18
     sentence: 46
-  - text: "While buffed by Divine Luck, a player has a 1 in 3 chance to discover a treasure chest when claiming LAND TILES, which grants the player 5 Blemflarcks."
+  - text: "Consumption must be announced in #actions."
     category: "Constructs"
     paragraph: 18
     sentence: 47
-  - text: "A player buffed by Divine Luck loses Divine Luck after claiming three LAND TILES."
+  - text: "Consuming 10 Crackers at once grants a player Divine Luck."
     category: "Constructs"
     paragraph: 18
     sentence: 48
-  - text: "While buffed by Dionysian Aura, a player can intoxicate a player, preventing them from taking any actions for twelve hours."
+  - text: "Consuming 5 Wine at once grants a player Dionysian Aura."
     category: "Constructs"
     paragraph: 18
     sentence: 49
-  - text: "A player buffed by Dionysian Aura loses Dionysian Aura after intoxicating a player."
+  - text: "While buffed by Divine Luck, a player has a 1 in 3 chance to discover a treasure chest when claiming LAND TILES, which grants the player 5 Blemflarcks."
     category: "Constructs"
     paragraph: 18
     sentence: 50
-# Rule 319
+  - text: "A player buffed by Divine Luck loses Divine Luck after claiming three LAND TILES."
+    category: "Constructs"
+    paragraph: 18
+    sentence: 51
+  - text: "While buffed by Dionysian Aura, a player can intoxicate a player, preventing them from taking any actions for twelve hours."
+    category: "Constructs"
+    paragraph: 18
+    sentence: 52
+  - text: "A player buffed by Dionysian Aura loses Dionysian Aura after intoxicating a player."
+    category: "Constructs"
+    paragraph: 18
+    sentence: 53
+  # Rule 319
   - text: "Gay Rights"
     category: "Constructs"
     paragraph: 19
     sentence: 1
-# Rule 321
+  # Rule 321
   - text: "The items below are created and/or set as raw material in the world."
     category: "Constructs"
     paragraph: 21
     sentence: 1
-  - text: "Units are structures/organizations one may create/upgrade from a cost of raw materials and may have prerequisites."
+  - text: "Units are structures/organizations one may create/upgrade from a cost of items and may have prerequisites.  "
     category: "Constructs"
     paragraph: 21
     sentence: 2
-  - text: "Prerequisites include but are not limited to: Location and Ownership of Other Units."
+  - text: "Prerequisites include but are not limited to: Location and Ownership of Other Units.  "
     category: "Constructs"
     paragraph: 21
     sentence: 3
-  - text: "Units may have daily upkeep costs as a prerequisite, which will be collected at midnight."
+  - text: "(eg. A Missile Factory requiring a Explosives Factory)  "
     category: "Constructs"
     paragraph: 21
     sentence: 4
-  - text: "If a prerequisite for a unit is later missing, or willfully made unavailable by a players request, that unit becomes inactive and can preform no changes on the game until said prerequisite is met again."
+  - text: "Units may have daily upkeep costs as a prerequisite, which will be collected at midnight.  "
     category: "Constructs"
     paragraph: 21
     sentence: 5
-  - text: "Upgrades do not inherit previous version costs."
+  - text: "If a prerequisite for a unit is later missing, or willfully made unavailable by a players request, that unit becomes inactive and can preform no changes on the game until said prerequisite is met again."
     category: "Constructs"
     paragraph: 21
     sentence: 6
-  - text: "Units may not share locations, cannot be harvested, and must be initially placed on, and upgraded on a player's own tiles."
+  - text: "Upgrades do not inherit previous version costs.  "
     category: "Constructs"
     paragraph: 21
     sentence: 7
-  - text: "Mobile Units may move to adjacent tiles at a movement cost."
+  - text: "Units may not share locations, cannot be harvested, and must be initially placed on, and upgraded on a player's own tiles.  "
     category: "Constructs"
     paragraph: 21
     sentence: 8
-  - text: "Destroyed Units are completely removed."
+  - text: "It is allowed to place units on tiles adjacent to the player's own claims(eg boats on water next to cliamed beaches)  "
     category: "Constructs"
     paragraph: 21
     sentence: 9
-  - text: "Capitals may not be destroyed, and may not have units on them."
+  - text: "Mobile Units may move to adjacent tiles at a movement cost.  "
     category: "Constructs"
     paragraph: 21
     sentence: 10
-  - text: "All Units and Upgrade Paths Will be located in an easily accessible location, decided by the admin."
+  - text: "Destroyed Units are completely removed.   "
     category: "Constructs"
     paragraph: 21
     sentence: 11
-  - text: "New units and upgrades may be proposed."
+  - text: "Capitals may not be destroyed, and may not have units on them.  "
     category: "Constructs"
     paragraph: 21
     sentence: 12
-  - text: "All Unit Markers will be decided by Moderators/Admins."
-    category: "Constructs"
-    paragraph: 21
-    sentence: 13
   - text: "Units May Exist on Harvested Tiles, however said Harvest produces no resources so long as a unit shares the Tile. "
     category: "Constructs"
     paragraph: 21
+    sentence: 13
+  - text: "All Units and Upgrade Paths Will be located in an easily accessible location, decided by the admin.  "
+    category: "Constructs"
+    paragraph: 21
     sentence: 14
-  - text: "The Following is AN EXAMPLE"
+  - text: "New units and upgrades may be proposed.  "
     category: "Constructs"
     paragraph: 21
     sentence: 15
-  - text: "Once a turn destroy an adjacent tile unit to the mob with 50% chance of success."
+  - text: "All Unit Markers will be decided by Moderators/Admins.  "
     category: "Constructs"
     paragraph: 21
     sentence: 16
-  - text: "The following units are creatable"
+  - text: "Every unit can be moved to any valid location at a cost of 3^N Energy if not mobile.  "
     category: "Constructs"
     paragraph: 21
     sentence: 17
-  - text: "A tile 5 units left and 3 units down from capital costs 5+3=8 Food to claim"
+  - text: "N is equal to the amount of times the Unit has been moved previously.  "
     category: "Constructs"
     paragraph: 21
     sentence: 18
-# Rule 322
+  - text: "Capitals can be moved to a player's claimed tile for a cost of 15 Technology, 25 Energy, and 10 Wood."
+    category: "Constructs"
+    paragraph: 21
+    sentence: 19
+  - text: "This can only be done on the player's turn and to a max distance of 10 adjacent tiles away from the old location. "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 20
+  - text: "The Following is AN EXAMPLE:  "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 21
+  - text: "Can only move on land.  "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 22
+  - text: "Can only move on land.  "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 23
+  - text: "Once a turn destroy an adjacent tile unit to the mob with 50% chance of success.  "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 24
+  - text: "Can only move on land.  "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 25
+  - text: "Gain 4 wood/day "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 26
+  - text: "The following units are creatable:"
+    category: "Constructs"
+    paragraph: 21
+    sentence: 27
+  - text: "Base daily claim limit increased by 5.  "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 28
+  - text: "BF Cost increases by 1 for every purchased claim that day, and is reset to 2 BF the next day.  "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 29
+  - text: "Claim Cost Optionally In Food Amount Equal to Sum Of Horizontal And Vertical Distance In Tiles From Capital.  "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 30
+  - text: "eg. A tile 5 units left and 3 units down from capital costs 5+3=8 Food to claim  "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 31
+  - text: "Is placeable on land only  "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 32
+  - text: "Stops 2 targeted effects on its tile or itself if the effect didnt originated from its owner."
+    category: "Constructs"
+    paragraph: 21
+    sentence: 33
+  - text: "After stopping 2 targeted effects, it is removed. (blocking attacks and similar tile targeted effects) "
+    category: "Constructs"
+    paragraph: 21
+    sentence: 34
+  - text: "FENRIS WINS"
+    category: "Constructs"
+    paragraph: 21
+    sentence: 35
+  # Rule 322
   - text: "A player can place any actions in #actions under a condition."
     category: "Constructs"
     paragraph: 22
@@ -1006,7 +1106,7 @@ sentences:
     category: "Constructs"
     paragraph: 22
     sentence: 2
-  - text: 'For example a player could say "If it is {time}, then do {action}".'
+  - text: "For example a player could say "If it is {time}, then do {action}".  "
     category: "Constructs"
     paragraph: 22
     sentence: 3
@@ -1014,15 +1114,15 @@ sentences:
     category: "Constructs"
     paragraph: 22
     sentence: 4
-  - text: "By placing a conditional on the desired trading item, the player can leave an offer open for another player to accept the trade."
+  - text: "By placing a conditional on the desired trading item, the player can leave an offer open for another player to accept the trade.  "
     category: "Constructs"
     paragraph: 22
     sentence: 5
-  - text: "Once a condition is met causing an action to occur, the conditional action is completed and will not occur the following times the condition is satisfied."
+  - text: "Once a condition is met causing an action to occur, the conditional action is completed and will not occur the following times the condition is satisfied.  "
     category: "Constructs"
     paragraph: 22
     sentence: 6
-  - text: "A player can only have a single conditional active at once, and can repeal a conditional at any time, but cannot retroactively undo after the condition is met."
+  - text: "A player can only have a single conditional active at once, and can repeal a conditional at any time, but cannot retroactively undo  after the condition is met."
     category: "Constructs"
     paragraph: 22
     sentence: 7
@@ -1046,7 +1146,7 @@ sentences:
     category: "Constructs"
     paragraph: 22
     sentence: 12
-  - text: 'All messages in this channel should follow the format "If [A] then I [B]", where [A] is the condition that must be satisfied, and [B] is the action they would take given the condition''s satisfaction.'
+  - text: "All messages in this channel should follow the format "If [A] then I [B]", where [A] is the condition that must be satisfied, and [B] is the action they would take given the condition's satisfaction."
     category: "Constructs"
     paragraph: 22
     sentence: 13
@@ -1054,7 +1154,7 @@ sentences:
     category: "Constructs"
     paragraph: 22
     sentence: 14
-# Rule 326
+  # Rule 326
   - text: "On their turn, a player may make a request in #actions for additional map space."
     category: "Constructs"
     paragraph: 26
@@ -1083,7 +1183,7 @@ sentences:
     category: "Constructs"
     paragraph: 26
     sentence: 7
-# Rule 327
+  # Rule 327
   - text: "Changes to the world as it is specified in Rule 312 may not be made without the approval of a two-thirds majority of eligible voters."
     category: "Constructs"
     paragraph: 27
@@ -1096,21 +1196,758 @@ sentences:
     category: "Constructs"
     paragraph: 27
     sentence: 3
-# Rule 328
-  - text: "All changelog-live and map layout/design elements that have no effect on game dynamics are managed by Mods/Admins."
+  # Rule 328
+  - text: "All changelog-live and map layout/design elements that have no effect on game dynamics are managed by Mods/Admins.  "
     category: "Constructs"
     paragraph: 28
     sentence: 1
-  - text: "This includes but is not limited to: Marker shapes, Image Resolution, Territory Markers, and availability of information like number of harvests in changelog-live."
+  - text: "This includes but is not limited to: Marker shapes, Image Resolution, Territory Markers, and availability of information like number of harvests in changelog-live.  "
     category: "Constructs"
     paragraph: 28
     sentence: 2
-  - text: "This supersedes all prior rules (e.g. lower number)"
+  - text: "This supersedes all prior rules (e.g. lower number)  "
     category: "Constructs"
     paragraph: 28
     sentence: 3
-  - text: "All future rules and rule amendments/changes that specify design/implementation of map or changelog-live elements must strictly specify their superseding of this rule otherwise have this rule take precedence."
+  - text: "All future rules and rule amendments/changes that specify design/implementation of map or changelog-live elements must strictly specify their superseding of this rule otherwise have this rule take precedence.  "
     category: "Constructs"
     paragraph: 28
     sentence: 4
-    
+  # Rule 349
+  - text: "Each LAND tile has a 1/175 chance of spawning a Town Unit when this proposal passes.  "
+    category: "Constructs"
+    paragraph: 49
+    sentence: 1
+  - text: "Players may claim tiles with a Town on them."
+    category: "Constructs"
+    paragraph: 49
+    sentence: 2
+  - text: "Randomly choose a raw material and gives 2 of that raw material every day.  "
+    category: "Constructs"
+    paragraph: 49
+    sentence: 3
+  # Rule 351
+  - text: "When a new player joins they gain bf equal to the minimum possible amount of voting bf gains from before they joined (5 blemflarks every 2 days) to the date that blemflarks were introduced 6/18/2019."
+    category: "Constructs"
+    paragraph: 51
+    sentence: 1
+  - text: "Upon day of using the !start command new players gain 6 free claims to establish some units and some harvests on their first day."
+    category: "Constructs"
+    paragraph: 51
+    sentence: 2
+  - text: "If not used these free claims go away after 24 hours. "
+    category: "Constructs"
+    paragraph: 51
+    sentence: 3
+  - text: "Jana gains 50 BF and 10 free claims that expire after 24 hours to compensate for joining later than others."
+    category: "Constructs"
+    paragraph: 51
+    sentence: 4
+  # Rule 352
+  - text: "Players will be allowed to trade a negotiated amount of adjacent tiles among themselves."
+    category: "Constructs"
+    paragraph: 52
+    sentence: 1
+  - text: "Once any two players arrive at a final trade."
+    category: "Constructs"
+    paragraph: 52
+    sentence: 2
+  - text: "They would have to declare the assets exchanged by listing the exact assets transferred in #actions in the format:"
+    category: "Constructs"
+    paragraph: 52
+    sentence: 3
+  - text: "Once this is posted @Crorem  or @Fenris Wolf would proceed to ensure the transaction is processsed accordingly."
+    category: "Constructs"
+    paragraph: 52
+    sentence: 4
+  # Rule 355
+  - text: "Players can sell raw materials (except for BF) in bulk to Nomitron at certain rates."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 1
+  - text: "The number of BF gained in these transactions is rounded down to the nearest integer."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 2
+  - text: "The rate for any given raw material is comprised of two values: BFs/unit and velocity."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 3
+  - text: "BFs/unit is a positive real number that determines how many BFs a player gains per unit of raw material sold, while a rate's velocity can be one of the following values with the following effects:"
+    category: "Constructs"
+    paragraph: 55
+    sentence: 4
+  - text: "BFs/unit increases by 10% at start of every day"
+    category: "Constructs"
+    paragraph: 55
+    sentence: 5
+  - text: "BFs/unit decreases by 10% at start of every day"
+    category: "Constructs"
+    paragraph: 55
+    sentence: 6
+  - text: "A velocity cannot have more or fewer than one value."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 7
+  - text: "Rates are initially set to and default to a BFs/unit of 0.01 and a static velocity."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 8
+  - text: "If at any time a rate has a BFs/unit of above 0.03, its BFs/unit is set to 0.03 and its velocity is set to static."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 9
+  - text: "To help Nomitron set reasonable prices, Nomitron keeps a price control advisory board, hereinafter referred to as the Nomic Federal Reserve, or the Fed, to advise Nomitron in determining the appropriate exchange rates."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 10
+  - text: "The Fed is comprised of three players, to be appointed when this rule passes and every five turns after that."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 11
+  - text: "Nomitron will select Fed members at random from among the pool of active players, giving priority to players that have served on the Fed the fewest number of times."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 12
+  - text: "If a member of the Fed leaves the game, an active player chosen at random will become an acting member of the Fed."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 13
+  - text: "This will not count as serving on the Fed for the purposes of future appointments."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 14
+  - text: "If there are no eligible active players when this occurs, or if there are fewer than three active players when the Fed is reappointed, then the Fed will be vacant until the next Fed reappointment occurs."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 15
+  - text: "A member of the Fed may propose a change in any rate's velocity in #actions."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 16
+  - text: "These proposals are known as "Velocity Adjustment Petitions"."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 17
+  - text: "If both of the members of the Fed that did not write the Velocity Adjustment Petition react to it with their respective emoji sigils, that Velocity Adjustment Petition will take effect."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 18
+  - text: "Subsequent removal of emoji sigils will not change back the velocity; a new Velocity Adjustment Petition must be made to do so."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 19
+  - text: "Members of the Fed may not use this ability to spam #actions."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 20
+  - text: "Players that are not members of the Fed cannot react to Velocity Adjustment Petitions."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 21
+  - text: "Velocity Adjustment Petitions cannot be edited or deleted."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 22
+  - text: "A Velocity Adjustment Petition that is edited and not yet passed is no longer considered to be a Velocity Adjustment Petition."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 23
+  - text: "The first time a player edits or deletes a Velocity Adjustment Petition will cause said player to be unable create any Velocity Adjustment Petitions for the next 24 hours, and any subsequent times said player edits or deletes a Velocity Adjustment Petition will bar said player from creating any Velocity Adjustment Petitions for the remainder of their term as a member of the Fed."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 24
+  - text: "When the Fed rotates, all outstanding Velocity Adjustment Petitions become invalid and must be reproposed by the new members of the Fed, should they wish."
+    category: "Constructs"
+    paragraph: 55
+    sentence: 25
+  # Rule 356
+  - text: "An in-game entity is an item if the following is true:"
+    category: "Constructs"
+    paragraph: 56
+    sentence: 1
+  - text: "There can only be exactly one owner of any one single quantity of said entity "
+    category: "Constructs"
+    paragraph: 56
+    sentence: 2
+  - text: "There is nothing distinguishing any one single quantity of said entity with any other single quantity of said entity aside from ownership"
+    category: "Constructs"
+    paragraph: 56
+    sentence: 3
+  - text: "It is not explicitly allowed to have a fractional quantity of said entity"
+    category: "Constructs"
+    paragraph: 56
+    sentence: 4
+  - text: "Points are not items, notwithstanding the above definition."
+    category: "Constructs"
+    paragraph: 56
+    sentence: 5
+  - text: "Items are tradable unless stated otherwise."
+    category: "Constructs"
+    paragraph: 56
+    sentence: 6
+  - text: "There can be no fractional quantity, nor any negative quantity, of an item."
+    category: "Constructs"
+    paragraph: 56
+    sentence: 7
+  - text: "If a performed action would lead to a player having a negative quantity of said item, it is blocked."
+    category: "Constructs"
+    paragraph: 56
+    sentence: 8
+  - text: "If a player were to obtain a fractional quantity of any item, said player obtains the floor of that quantity instead."
+    category: "Constructs"
+    paragraph: 56
+    sentence: 9
+  - text: "A list of items and item categories, to the best of the server administrator's understanding, will be publicly provided and updated as needed."
+    category: "Constructs"
+    paragraph: 56
+    sentence: 10
+  # Rule 357
+  - text: "Fish is eliminated from the game."
+    category: "Constructs"
+    paragraph: 57
+    sentence: 1
+  - text: "Fish towns have a random role to be any other type of town."
+    category: "Constructs"
+    paragraph: 57
+    sentence: 2
+  - text: "Modify rules to not have fish."
+    category: "Constructs"
+    paragraph: 57
+    sentence: 3
+  - text: "Also Janwich gets 5 compensation fish as condolences for giving up her dream of getting fish, and all other fish players own is turned into compensation fish."
+    category: "Constructs"
+    paragraph: 57
+    sentence: 4
+  - text: "Players can use 1 compensation fish to slap someone, it does nothing."
+    category: "Constructs"
+    paragraph: 57
+    sentence: 5
+  - text: "But hey compensation!"
+    category: "Constructs"
+    paragraph: 57
+    sentence: 6
+  # Rule 358
+  - text: "Persons may not pretend to be multiple players at once."
+    category: "Constructs"
+    paragraph: 58
+    sentence: 1
+  - text: "Persons that are found to have done this are banned from the game."
+    category: "Constructs"
+    paragraph: 58
+    sentence: 2
+  # Rule 360
+  - text: "Units, harvests, and claims may be razed (removed) by the player who owns them."
+    category: "Constructs"
+    paragraph: 60
+    sentence: 1
+  - text: "Razing a claim costs nothing."
+    category: "Constructs"
+    paragraph: 60
+    sentence: 2
+  - text: "It refunds nothing."
+    category: "Constructs"
+    paragraph: 60
+    sentence: 3
+  - text: "Razing a harvest costs 1 BF."
+    category: "Constructs"
+    paragraph: 60
+    sentence: 4
+  - text: "It refunds 1 item each for every kind of item it produced."
+    category: "Constructs"
+    paragraph: 60
+    sentence: 5
+  - text: "Razing a unit costs 2 BF."
+    category: "Constructs"
+    paragraph: 60
+    sentence: 6
+  - text: "It refunds 1 item each for every kind of item it produced if it produced any items, 1 item each for every kind of item required for daily upkeep if it required a daily upkeep, and 20% of the initial build cost rounded up to the nearest whole number, if it had any initial build cost."
+    category: "Constructs"
+    paragraph: 60
+    sentence: 7
+  - text: "The commands for doing these will be, respectively:"
+    category: "Constructs"
+    paragraph: 60
+    sentence: 8
+  # Rule 366
+  - text: "The criteria for being a state are as follows."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 1
+  - text: "The term state and nation are functionally interchangeable."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 2
+  - text: "A player may request to become a state if that player has successfully fulfilled the previously stated criteria for statehood."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 3
+  - text: "Conditionals can only used by states with an Embassy."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 4
+  - text: "This proposal is not case sensitive. "
+    category: "Constructs"
+    paragraph: 66
+    sentence: 5
+  - text: "This proposal supersedes rule 322."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 6
+  - text: "Diplomats must be placed adjacent to an embassy. "
+    category: "Constructs"
+    paragraph: 66
+    sentence: 7
+  - text: "Diplomats can be traded back, but those two players cannot trade diplomats again for 1 round."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 8
+  - text: "Diplomats once traded swap locations."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 9
+  - text: "Each player in the trade chooses swap coordinates."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 10
+  - text: "A tile with a diplomat cannot be razed. "
+    category: "Constructs"
+    paragraph: 66
+    sentence: 11
+  - text: "The player that made the diplomat pays all cost for that diplomat."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 12
+  - text: "Diplomats are the color of the state of origin."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 13
+  - text: "This cannot be changed unless the states color changes."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 14
+  - text: "If an embassy is razed all diplomats at that embassy are returned to the appropriate players."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 15
+  - text: "The Diplomats owned by a player whose embassy is destroyed loses the diplomats they created."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 16
+  - text: "The diplomats are destroyed.  "
+    category: "Constructs"
+    paragraph: 66
+    sentence: 17
+  - text: "Player A may in #actions propose to player B a trade of diplomats.  "
+    category: "Constructs"
+    paragraph: 66
+    sentence: 18
+  - text: "Player B may accept or decline by a thumbs up emoji for accept, thumbs down emoji for decline, written response or any other clear and affirmative means that is not verbal/oral.  "
+    category: "Constructs"
+    paragraph: 66
+    sentence: 19
+  - text: "e.g. @playerB i propose a trade of diplomats.  "
+    category: "Constructs"
+    paragraph: 66
+    sentence: 20
+  - text: "Allows for the production of up to 3 Diplomats.  "
+    category: "Constructs"
+    paragraph: 66
+    sentence: 21
+  - text: "Allows for states to change its allegiances willingly.  "
+    category: "Constructs"
+    paragraph: 66
+    sentence: 22
+  - text: "If you and another state have Diplomats in each others embassy then you have an alliance with that state(s).  "
+    category: "Constructs"
+    paragraph: 66
+    sentence: 23
+  - text: "Can be traded to another state with a Diplomat and active Embassy."
+    category: "Constructs"
+    paragraph: 66
+    sentence: 24
+  # Rule 367
+  - text: "Vinny the Vagabond is an explorer from a far away land."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 1
+  - text: "He spawns on a random tile on the border of the map."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 2
+  - text: "Every day, he makes two to four one tile movements in a random direction."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 3
+  - text: "He is 50% more likely to favor tiles that he has never moved to before."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 4
+  - text: "After the final movement of each day, he has a 10% chance of triggering an Event."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 5
+  - text: "Every time Vinny moves, the tile coordinates are posted in #actions."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 6
+  - text: "If an Event is triggered, the name of the Event is posted in #actions."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 7
+  - text: "Events that may only occur when Vinny moves to a LAND tile are:"
+    category: "Constructs"
+    paragraph: 67
+    sentence: 8
+  - text: "If a tile does not already have a unit on it, Vinny happens upon some ancient ruins."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 9
+  - text: "Only Vinny can discover Dig Sites.  "
+    category: "Constructs"
+    paragraph: 67
+    sentence: 10
+  - text: "Every day, a Dig Site has a 5% chance of discovering an Artifact."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 11
+  - text: "A Dig Site can only have one Artifact at a time."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 12
+  - text: "Artifacts can be consumed by players for their choice of five of any raw material.  "
+    category: "Constructs"
+    paragraph: 67
+    sentence: 13
+  - text: "If a tile does not already have a unit on it, Vinny discovers a small village."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 14
+  - text: "Only Vinny can discover Villages.  "
+    category: "Constructs"
+    paragraph: 67
+    sentence: 15
+  - text: "Randomly choose a raw material and gives 1 of that raw material every day.  "
+    category: "Constructs"
+    paragraph: 67
+    sentence: 16
+  - text: "Vinny comes into contact with an Atlantean who has heard of Vinny's exploits and offers to lend a helping hand."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 17
+  - text: "For 5 days, after his initial 2-4 movements, he gains an additional movement for every time he moved from one Water tile to another Water tile."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 18
+  - text: "Vinny, hero that he is, is set upon by a monstrous creature from the deep."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 19
+  - text: "He is victorious, but the creature is so massive that its corpse results in a MEAT tile."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 20
+  - text: "A vote in favor of this proposal counts as approval of any future MEAT tiles that may result from the triggering of the RELEASE THE KRAKEN event."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 21
+  - text: "Events that may occur on both LAND and WATER tiles are:"
+    category: "Constructs"
+    paragraph: 67
+    sentence: 22
+  - text: "Vinny boosts the morale of the workers at any nearby units or harvests in a three tile radius, doubling their production for one day."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 23
+  - text: "Vinny sets off a mine."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 24
+  - text: "He is unharmed due to min-maxing, but sent flying 12 tiles in a random direction, or until he hits the edge of the map."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 25
+  - text: "He really ought to be more careful."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 26
+  - text: "For the purposes of ATLANTEAN ENVOY, this only counts as one movement."
+    category: "Constructs"
+    paragraph: 67
+    sentence: 27
+  # Rule 368
+  - text: "Rules are either transient or nontransient."
+    category: "Constructs"
+    paragraph: 68
+    sentence: 1
+  - text: "Rules are by default nontransient."
+    category: "Constructs"
+    paragraph: 68
+    sentence: 2
+  - text: "Existing rules can be designated as transient or nontransient by amendments or other rules."
+    category: "Constructs"
+    paragraph: 68
+    sentence: 3
+  - text: "New rules can be designated as transient if the proposal enacting said rule states so."
+    category: "Constructs"
+    paragraph: 68
+    sentence: 4
+  - text: "Such a designation is part of the proposal and is not included in the text of the proposed rule."
+    category: "Constructs"
+    paragraph: 68
+    sentence: 5
+  - text: "A transient rule will repeal itself after either of the following conditions are fulfilled:"
+    category: "Constructs"
+    paragraph: 68
+    sentence: 6
+  - text: "The rule exerts a change on the game state"
+    category: "Constructs"
+    paragraph: 68
+    sentence: 7
+  - text: "It is impossible for the rule to exert a change on the game state without directly amending said rule"
+    category: "Constructs"
+    paragraph: 68
+    sentence: 8
+  - text: "Transient rules may not define game constructs; a proposal that would create such a rule is not valid."
+    category: "Constructs"
+    paragraph: 68
+    sentence: 9
+  - text: "Immutable rules cannot be transient, and a transient rule that is transmuted to an immutable rule loses its transience."
+    category: "Constructs"
+    paragraph: 68
+    sentence: 10
+  - text: "If the current proposed rule-change is to amend a transient rule, and said transient rule repeals itself before said proposal passes or fails, then that proposal will be considered a proposal to reenact the transient rule instead."
+    category: "Constructs"
+    paragraph: 68
+    sentence: 11
+  - text: "If the current proposed rule-change is to repeal a transient rule, and said transient rule repeals itself before said proposal passes or fails, then that proposal will be considered automatically defeated when its voting period is over, regardless of the votes that it receives."
+    category: "Constructs"
+    paragraph: 68
+    sentence: 12
+  # Rule 369
+  - text: "If you respond to a sermon with "Hail Satron." you cannot respond with "Amen." for 6 turns."
+    category: "Constructs"
+    paragraph: 69
+    sentence: 1
+  - text: "Only one of these random outcomes is possible per "Hail Satron"  "
+    category: "Constructs"
+    paragraph: 69
+    sentence: 2
+  - text: "Cursed Players Have Total Production Halved for a day.  "
+    category: "Constructs"
+    paragraph: 69
+    sentence: 3
+  - text: "Artifacts are an item."
+    category: "Constructs"
+    paragraph: 69
+    sentence: 4
+  # Rule 370
+  - text: "Every perpetual harvest can be moved to any valid location at a cost of 3^N Energy.  "
+    category: "Constructs"
+    paragraph: 70
+    sentence: 1
+  - text: "N is equal to the amount of times the harvest has been moved previously."
+    category: "Constructs"
+    paragraph: 70
+    sentence: 2
+  # Rule 375
+  - text: "For 100bf any player may purchase a custom emoji slot on the discord."
+    category: "Constructs"
+    paragraph: 75
+    sentence: 1
+  - text: "If their image is deemed inappropriate by the mods they must change it."
+    category: "Constructs"
+    paragraph: 75
+    sentence: 2
+  - text: "Players may trade their custom emoji slots"
+    category: "Constructs"
+    paragraph: 75
+    sentence: 3
+  # Rule 376
+  - text: "Players can now purchase technological advancements in the form of â€œTech Nodes"."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 1
+  - text: "Tech nodes can be bought with the technology resource."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 2
+  - text: "Tech nodes are effects that apply only to the player that has purchased them."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 3
+  - text: "Nodes can be effects that affect the player and that players units."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 4
+  - text: "Once a technology is purchased it cannot be purchased again unless specifically stated."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 5
+  - text: "For tech nodes that can be purchased more than once their cost doubles each time after the first."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 6
+  - text: "Players cannot lose a tech node once purchased.  "
+    category: "Constructs"
+    paragraph: 76
+    sentence: 7
+  - text: "This proposal is not case sensitive."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 8
+  - text: "An upgrade to each tech can be purchased (unless specifically stated)."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 9
+  - text: "Upgrades can only be purchased 10 times."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 10
+  - text: "Once an upgrade tech is purchased all units of that type are upgraded to the new tech level."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 11
+  - text: "This is true for all new units created of that type as well."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 12
+  - text: "Produce 1 more resource."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 13
+  - text: "Each time this is purchased the amount of production is increased by 1."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 14
+  - text: "Produce 1 more resource."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 15
+  - text: "Each time this is purchased the amount of production is increased by 1."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 16
+  - text: "Produce 1 more resource."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 17
+  - text: "Each time this is purchased the amount of production is increased by 1."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 18
+  - text: "Produce 1 more resource."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 19
+  - text: "Each time this is purchased the amount of production is increased by 1."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 20
+  - text: "Produce 1 more resource."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 21
+  - text: "Each time this is purchased the amount of production is increased by 1."
+    category: "Constructs"
+    paragraph: 76
+    sentence: 22
+  - text: "Allows for the production of sail boat units.  "
+    category: "Constructs"
+    paragraph: 76
+    sentence: 23
+  - text: "Increases the move distance by 1 and increases the distance a sail boat can move from land by 1.  "
+    category: "Constructs"
+    paragraph: 76
+    sentence: 24
+  - text: "Can move 1 tile per day at a distance of 1 tile from a land tile  "
+    category: "Constructs"
+    paragraph: 76
+    sentence: 25
+  - text: "Boats have daily return of 2 Oil if not moved that day.  "
+    category: "Constructs"
+    paragraph: 76
+    sentence: 26
+  # Rule 377
+  - text: "The purpose of this rule is to establish a tier list of harvests and units."
+    category: "Constructs"
+    paragraph: 77
+    sentence: 1
+  - text: "At daily reset, when Nomitron calculates productions and daily upkeep costs, units and resources get priority based on where on the tier list they are, starting with 1 and continuing in descending order."
+    category: "Constructs"
+    paragraph: 77
+    sentence: 2
+  - text: "If a unit has no production or upkeep, it does not need to be on the tier list."
+    category: "Constructs"
+    paragraph: 77
+    sentence: 3
+  - text: "If not specified, new units are assumed to be added to the bottom of the list."
+    category: "Constructs"
+    paragraph: 77
+    sentence: 4
+  # Rule 378
+  - text: "The moon is a 30x30 grid map consisting of TILES, namely MOONDUST (#7F7F7F) and STARSEA (#404040) TILES."
+    category: "Constructs"
+    paragraph: 78
+    sentence: 1
+  - text: "The map to be used is displayed below:"
+    category: "Constructs"
+    paragraph: 78
+    sentence: 2
+  - text: "In all rules pertaining to this map, all references to distance and adjacency are orthogonal-only unless explicitly stated otherwise."
+    category: "Constructs"
+    paragraph: 78
+    sentence: 3
+  - text: "Once per game, players can spend 500 Technology and 500 Energy to place a Lunar Colony on any MOONDUST TILE."
+    category: "Constructs"
+    paragraph: 78
+    sentence: 4
+  - text: "This automatically claims the TILE in question."
+    category: "Constructs"
+    paragraph: 78
+    sentence: 5
+  - text: "Players can also use their daily claim or claims to claim MOONDUST TILES adjacent to existing claims."
+    category: "Constructs"
+    paragraph: 78
+    sentence: 6
+  - text: "Players can harvest MOONDUST and STARSEA for perpetual and non-perpetual resources."
+    category: "Constructs"
+    paragraph: 78
+    sentence: 7
+  - text: "A perpetual harvest on a MOONDUST tile produces the perpetual resource of Cheese,"
+    category: "Constructs"
+    paragraph: 78
+    sentence: 8
+  - text: "A non-perpetual harvest on a MOONDUST tile produces the non-perpetual resource of Silica."
+    category: "Constructs"
+    paragraph: 78
+    sentence: 9
+  - text: "A perpetual harvest on a STARSEA tile produces the perpetual resource of Starfish."
+    category: "Constructs"
+    paragraph: 78
+    sentence: 10
+  - text: "A non-perpetual harvest on a STARSEA tile produces the non-perpetual resource of Ã†ther."
+    category: "Constructs"
+    paragraph: 78
+    sentence: 11
+  # Rule 381
+  - text: "Raw materials are a category of items."
+    category: "Constructs"
+    paragraph: 81
+    sentence: 1
+  - text: "The items below are raw materials."
+    category: "Constructs"
+    paragraph: 81
+    sentence: 2
+  - text: "All items not on this list are not raw materials."
+    category: "Constructs"
+    paragraph: 81
+    sentence: 3
+  - text: "This rule supersedes Rule 321."
+    category: "Constructs"
+    paragraph: 81
+    sentence: 4
+  - text: "This paragraph is automatically deleted if Rule 321 is amended such that it does not define raw materials."
+    category: "Constructs"
+    paragraph: 81
+    sentence: 5
