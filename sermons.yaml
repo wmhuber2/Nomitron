@@ -759,7 +759,10 @@ sentences:
     category: "Constructs"
     paragraph: 18
     sentence: 5
-
+  - text: "\"*\" - *."
+    category: "Constructs"
+    paragraph: 18
+    sentence: 6
   - text: "As you go about your day, think about this quote."
     category: "Constructs"
     paragraph: 18
