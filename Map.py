@@ -2321,7 +2321,10 @@ async def sendMapData(guild, channel):
 Is The Tile Of Type as x,y in image
 """
 def isTileType(image, x, y, type):
-    return np.all(image[x, y] == TILES[type.upper()])
+    try:
+        return np.all(image[x, y] == TILES[type.upper()])
+    except IndexError:
+        return False
 
 
 '''
