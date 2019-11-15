@@ -759,10 +759,7 @@ sentences:
     category: "Constructs"
     paragraph: 18
     sentence: 5
-  - text: ""\*" - \*."
-    category: "Constructs"
-    paragraph: 18
-    sentence: 6
+
   - text: "As you go about your day, think about this quote."
     category: "Constructs"
     paragraph: 18
@@ -823,7 +820,7 @@ sentences:
     category: "Constructs"
     paragraph: 18
     sentence: 21
-  - text: ""All players must always abide by all the rules then in effect, in the form in which they are then in effect." - Immutables 1:1."
+  - text: "All players must always abide by all the rules then in effect, in the form in which they are then in effect."
     category: "Constructs"
     paragraph: 18
     sentence: 22
@@ -839,7 +836,7 @@ sentences:
     category: "Constructs"
     paragraph: 18
     sentence: 25
-  - text: "Players may attend a Sermon by typing "Amen.""
+  - text: "Players may attend a Sermon by typing \"Amen.\""
     category: "Constructs"
     paragraph: 18
     sentence: 26
@@ -1106,7 +1103,7 @@ sentences:
     category: "Constructs"
     paragraph: 22
     sentence: 2
-  - text: "For example a player could say "If it is {time}, then do {action}".  "
+  - text: "For example a player could say \"If it is {time}, then do {action}\".  "
     category: "Constructs"
     paragraph: 22
     sentence: 3
@@ -1146,7 +1143,7 @@ sentences:
     category: "Constructs"
     paragraph: 22
     sentence: 12
-  - text: "All messages in this channel should follow the format "If [A] then I [B]", where [A] is the condition that must be satisfied, and [B] is the action they would take given the condition's satisfaction."
+  - text: "All messages in this channel should follow the format \"If [A] then I [B]\", where [A] is the condition that must be satisfied, and [B] is the action they would take given the condition's satisfaction."
     category: "Constructs"
     paragraph: 22
     sentence: 13
@@ -1325,7 +1322,7 @@ sentences:
     category: "Constructs"
     paragraph: 55
     sentence: 16
-  - text: "These proposals are known as "Velocity Adjustment Petitions"."
+  - text: "These proposals are known as \"Velocity Adjustment Petitions\"."
     category: "Constructs"
     paragraph: 55
     sentence: 17
@@ -1725,11 +1722,11 @@ sentences:
     paragraph: 68
     sentence: 12
   # Rule 369
-  - text: "If you respond to a sermon with "Hail Satron." you cannot respond with "Amen." for 6 turns."
+  - text: "If you respond to a sermon with \"Hail Satron.\" you cannot respond with \"Amen.\" for 6 turns."
     category: "Constructs"
     paragraph: 69
     sentence: 1
-  - text: "Only one of these random outcomes is possible per "Hail Satron"  "
+  - text: "Only one of these random outcomes is possible per \"Hail Satron\"  "
     category: "Constructs"
     paragraph: 69
     sentence: 2
@@ -1764,7 +1761,7 @@ sentences:
     paragraph: 75
     sentence: 3
   # Rule 376
-  - text: "Players can now purchase technological advancements in the form of â€œTech Nodes"."
+  - text: "Players can now purchase technological advancements in the form of â€œTech Nodes."
     category: "Constructs"
     paragraph: 76
     sentence: 1
