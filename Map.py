@@ -972,7 +972,7 @@ async def run(inData, payload, message):
                     elif name == 'diplomats' and hasUnit(guild,playerName,'diplomats') >= 3*hasUnit(guild,playerName,'embassy'):
                         addMsgQueue(message.channel, "You need more Embassies to make more Diplomats.")
 
-                    elif name == 'sailboat' and not Data[guild]['Players'][playerName]['TechTree']['sailing'] == 1:
+                    elif name == 'sailboat' and not Data[guild]['Players'][playerName]['TechTree']['sailing'] >= 1:
                         addMsgQueue(message.channel, "You dont have the Sailing Technology")
 
                     elif indexTile is not None:

@@ -211,13 +211,6 @@
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
     </task>
-    <task id="LOCAL-00304" summary="Temp Fix">
-      <created>1572412932584</created>
-      <option name="number" value="00304" />
-      <option name="presentableId" value="LOCAL-00304" />
-      <option name="project" value="LOCAL" />
-      <updated>1572412932584</updated>
-    </task>
     <task id="LOCAL-00305" summary="Temp Fix">
       <created>1572413582242</created>
       <option name="number" value="00305" />
@@ -554,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573659954220</updated>
     </task>
-    <option name="localTasksCounter" value="353" />
+    <task id="LOCAL-00353" summary="Changelog Formatting">
+      <created>1573665768805</created>
+      <option name="number" value="00353" />
+      <option name="presentableId" value="LOCAL-00353" />
+      <option name="project" value="LOCAL" />
+      <updated>1573665768805</updated>
+    </task>
+    <option name="localTasksCounter" value="354" />
     <servers />
   </component>
   <component name="TodoView">
@@ -593,7 +593,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Tech Tree" />
     <MESSAGE value="Tier List" />
     <MESSAGE value="coord formatting fix" />
     <MESSAGE value="Temp Fix" />
@@ -618,7 +617,8 @@
     <MESSAGE value="Fed New Memeber bugs" />
     <MESSAGE value="Aded Paum and new plater commad" />
     <MESSAGE value="Sailing Fix" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sailing Fix" />
+    <MESSAGE value="Changelog Formatting" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changelog Formatting" />
   </component>
   <component name="masterDetails">
     <states>
