@@ -2920,6 +2920,10 @@ async def plotMap(channel, postReply=True):
                     outline = 'black'
                     if color == 'black': outline = 'white'
 
+                    if obj[i] == '$$$':
+                        print('Error: $$$',x,y)
+                        obj[i] = "$?$"
+
                     if obj[i] != "" and player != botName:
                         ax.scatter(x[i], y[i], c="none", edgecolors=color,
                                    linewidths=0.3, s=11, marker='s', alpha=0.7)
@@ -3050,6 +3054,9 @@ async def plotMoon(channel, postReply=True):
                         ax.scatter(x[i], y[i], c="none", edgecolors=color,
                                    linewidths=0.9, s=11*8, marker='s', alpha=0.7)
 
+                    if obj[i] == '$$$':
+                        print('Error: $$$',x,y)
+                        obj[i] = "$?$"
                     alpha = 1.0
                     if 'Unit' in player['Markers']['Properties'][i] and 'DisabledAndPermanent' in player['Markers']['Properties'][i]['Unit']:
                         alpha = 0.25
