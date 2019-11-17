@@ -2936,6 +2936,9 @@ async def plotMap(channel, postReply=True):
                         obj[i] = Data[guild]['Units'][unit]['Marker']
                         if obj[i][0] == '"' and obj[i][-1] == '"':
                             obj[i] = '$' + obj[i][1:-1] + '$'
+                            if obj[i] == '$$$':
+                                print('Error: $$$', x, y)
+                                obj[i] = "$?$"
                         if player['Markers']['Properties'][i]['Unit'].get('Boost'):
                             outline = 'Gold'
                     elif player['Markers']['Properties'][i].get('Harvest') is not None:
@@ -3057,6 +3060,7 @@ async def plotMoon(channel, postReply=True):
                     if obj[i] == '$$$':
                         print('Error: $$$',x,y)
                         obj[i] = "$?$"
+
                     alpha = 1.0
                     if 'Unit' in player['Markers']['Properties'][i] and 'DisabledAndPermanent' in player['Markers']['Properties'][i]['Unit']:
                         alpha = 0.25
@@ -3065,6 +3069,9 @@ async def plotMoon(channel, postReply=True):
                         obj[i] = Data[guild]['Units'][unit]['Marker']
                         if obj[i][0] == '"' and obj[i][-1] == '"':
                             obj[i] = '$' + obj[i][1:-1] + '$'
+                            if obj[i] == '$$$':
+                                print('Error: $$$', x, y)
+                                obj[i] = "$?$"
                         if player['Markers']['Properties'][i]['Unit'].get('Boost'):
                             outline = 'Gold'
                     elif player['Markers']['Properties'][i].get('Harvest') is not None:
