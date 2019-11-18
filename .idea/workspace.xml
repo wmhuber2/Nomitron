@@ -4,7 +4,7 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="Village">
+    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
@@ -193,8 +193,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.DiscordBot" />
-        <item itemvalue="Python.Test" />
         <item itemvalue="Python.Paint" />
+        <item itemvalue="Python.Test" />
         <item itemvalue="Python.Nomitron" />
         <item itemvalue="Python.Admin" />
       </list>
@@ -210,13 +210,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00309" summary="Moon Update part 1">
-      <created>1572497523667</created>
-      <option name="number" value="00309" />
-      <option name="presentableId" value="LOCAL-00309" />
-      <option name="project" value="LOCAL" />
-      <updated>1572497523667</updated>
     </task>
     <task id="LOCAL-00310" summary="Rules Fix.">
       <created>1572497767822</created>
@@ -554,7 +547,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573967410539</updated>
     </task>
-    <option name="localTasksCounter" value="358" />
+    <task id="LOCAL-00358" summary="Marker Error">
+      <created>1573968705018</created>
+      <option name="number" value="00358" />
+      <option name="presentableId" value="LOCAL-00358" />
+      <option name="project" value="LOCAL" />
+      <updated>1573968705018</updated>
+    </task>
+    <option name="localTasksCounter" value="359" />
     <servers />
   </component>
   <component name="TodoView">
@@ -593,7 +593,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Temp Fix" />
     <MESSAGE value="Temp Fix 2" />
     <MESSAGE value="Moon Update part 1" />
     <MESSAGE value="Rules Fix." />
@@ -618,7 +617,8 @@
     <MESSAGE value="Changelog Formatting" />
     <MESSAGE value="Sailboat and sermon fixes" />
     <MESSAGE value="Village" />
-    <option name="LAST_COMMIT_MESSAGE" value="Village" />
+    <MESSAGE value="Marker Error" />
+    <option name="LAST_COMMIT_MESSAGE" value="Marker Error" />
   </component>
   <component name="masterDetails">
     <states>

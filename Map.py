@@ -581,7 +581,7 @@ async def run(inData, payload, message):
                 for unit in Data[guild]['Units'].keys():
                     msg = unit + ':\n'
                     for k in Data[guild]['Units'][unit]:
-                        msg += '\t' + k + ': ' + str(Data[guild]['Units'][unit][k]) + '\n'
+                        msg += '\t' + k + ': ' + repr(str(Data[guild]['Units'][unit][k])) + '\n'
                     addMsgQueue(message.channel, '```' + msg + '```')
 
             if payload['Content'].lower() in ['!tech', '!techs']:
@@ -2913,18 +2913,15 @@ async def plotMap(channel, postReply=True):
                 obj = np.asarray(player['Markers']['Shape'])
                 obj[obj == 'Claim'] = 'None'
                 obj[obj == 'Capital'] = '*'
-                for unit in Data[guild]['Units'].keys():
-                    obj[obj == unit] = Data[guild]['Units'][unit]['Marker']
+                obj[obj == ''] = " "
+                obj[obj == ""] = " "
 
                 for i in range(obj.shape[0]):
                     outline = 'black'
+                    objMarker = str(obj[i])
                     if color == 'black': outline = 'white'
 
-                    if obj[i] == '$$$':
-                        print('Error: $$$',x,y)
-                        obj[i] = "$?$"
-
-                    if obj[i] != "" and player != botName:
+                    if objMarker != " " and player != botName:
                         ax.scatter(x[i], y[i], c="none", edgecolors=color,
                                    linewidths=0.3, s=11, marker='s', alpha=0.7)
 
@@ -2932,13 +2929,11 @@ async def plotMap(channel, postReply=True):
                     if 'Unit' in player['Markers']['Properties'][i] and 'DisabledAndPermanent' in player['Markers']['Properties'][i]['Unit']:
                         alpha = 0.25
                     if player['Markers']['Properties'][i].get('Unit') is not None:
-                        unit = player['Markers']['Properties'][i]['Unit']['Name']
-                        obj[i] = Data[guild]['Units'][unit]['Marker']
-                        if obj[i][0] == '"' and obj[i][-1] == '"':
-                            obj[i] = '$' + obj[i][1:-1] + '$'
-                            if obj[i] == '$$$':
-                                print('Error: $$$', x, y)
-                                obj[i] = "$?$"
+                        unit = player['Markers']['Properties'][i]['Unit']['Name'].lower()
+                        objMarker = str(Data[guild]['Units'][unit]['Marker'])
+                        if objMarker[0] == '\"' and objMarker[-1] == '\"':
+                            objMarker = str('$' + str(Data[guild]['Units'][unit]['Marker'])[1:-1] + '$')
+
                         if player['Markers']['Properties'][i]['Unit'].get('Boost'):
                             outline = 'Gold'
                     elif player['Markers']['Properties'][i].get('Harvest') is not None:
@@ -2955,26 +2950,22 @@ async def plotMap(channel, postReply=True):
                                        alpha=0.7)
 
                     try:
-                        if len(obj[i]) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
-                                       marker=obj[i])
+                        if len(objMarker) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
+                                       marker=objMarker)
                         else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
-                                       marker=obj[i])
+                                       marker=objMarker)
                     except:
                         try:
-                            if len(obj[i]) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
-                                           marker='$' + obj[i] + '$')
+                            if len(objMarker) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
+                                           marker='$' + objMarker + '$')
                             else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
-                                           marker='$' + obj[i] + '$')
+                                           marker='$' + objMarker + '$')
                         except:
-                            if len(obj[i]) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
+                            print(repr( objMarker),player['Markers']['Properties'][i]['Unit']['Name'].lower(), Data[guild]['Units'][player['Markers']['Properties'][i]['Unit']['Name'].lower()]['Marker'],player['Markers']['Properties'][i].get('Unit'),'$' + objMarker[1:-1] + '$')
+                            if len(objMarker) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075, edgecolors=outline,
                                            marker='$?$')
                             else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06, edgecolors=outline,
                                            marker='$?$')
-                    '''
-                    if 'DisabledAndPermanent' in player['Markers']['Properties'][i]:
-                        if player['Markers']['Properties'][i]['DisabledAndPermanent']: color = 'red'
-                        ax.scatter(x[i], y[i], c=color, alpha='1.0', s=8.0, marker='$X$', edgecolors='None')
-                    '''
 
                     if player['Markers']['Properties'][i].get('Unit') is not None:
                         if player['Markers']['Properties'][i]['Unit'].get('Artifact'):
@@ -3042,36 +3033,30 @@ async def plotMoon(channel, postReply=True):
                 if len(player['Markers']['Location']) == 0: continue
                 x, y = np.asarray(player['Markers']['Location']).T
                 x = x - 76
-
                 obj = np.asarray(player['Markers']['Shape'])
                 obj[obj == 'Claim'] = 'None'
                 obj[obj == 'Colony'] = '*'
+                obj[obj == ''] = ""
                 for unit in Data[guild]['Units'].keys():
                     obj[obj == unit] = Data[guild]['Units'][unit]['Marker']
 
                 for i in range(obj.shape[0]):
+                    objMarker = str(obj[i])
                     outline = 'black'
                     if color == 'black': outline = 'white'
 
-                    if obj[i] != "" and player != botName:
+                    if objMarker != "" and player != botName:
                         ax.scatter(x[i], y[i], c="none", edgecolors=color,
                                    linewidths=0.9, s=11*8, marker='s', alpha=0.7)
-
-                    if obj[i] == '$$$':
-                        print('Error: $$$',x,y)
-                        obj[i] = "$?$"
 
                     alpha = 1.0
                     if 'Unit' in player['Markers']['Properties'][i] and 'DisabledAndPermanent' in player['Markers']['Properties'][i]['Unit']:
                         alpha = 0.25
                     if player['Markers']['Properties'][i].get('Unit') is not None:
                         unit = player['Markers']['Properties'][i]['Unit']['Name']
-                        obj[i] = Data[guild]['Units'][unit]['Marker']
-                        if obj[i][0] == '"' and obj[i][-1] == '"':
-                            obj[i] = '$' + obj[i][1:-1] + '$'
-                            if obj[i] == '$$$':
-                                print('Error: $$$', x, y)
-                                obj[i] = "$?$"
+                        objMarker = Data[guild]['Units'][unit]['Marker']
+                        if objMarker[0] == '"' and objMarker[-1] == '"':
+                            objMarker = '$' + objMarker[1:-1] + '$'
                         if player['Markers']['Properties'][i]['Unit'].get('Boost'):
                             outline = 'Gold'
                     elif player['Markers']['Properties'][i].get('Harvest') is not None:
@@ -3088,15 +3073,20 @@ async def plotMoon(channel, postReply=True):
                                        alpha=0.7)
 
                     try:
-                        if len(obj[i]) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0*8, linewidths=0.075*3, edgecolors=outline,
-                                       marker=obj[i])
+                        if len(objMarker) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0*8, linewidths=0.075*3, edgecolors=outline,
+                                       marker=objMarker)
                         else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0*8, linewidths=0.06*3, edgecolors=outline,
-                                       marker=obj[i])
+                                       marker=objMarker)
                     except:
-                        if len(obj[i]) <= 3: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0*8, linewidths=0.075*3, edgecolors=outline,
-                                       marker='$' + obj[i] + '$')
-                        else: ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0*8, linewidths=0.06*3, edgecolors=outline,
-                                       marker='$' + obj[i] + '$')
+                        if len(objMarker) <= 3:
+                            ax.scatter(x[i], y[i], c=color, alpha=alpha, s=5.0, linewidths=0.075,
+                                       edgecolors=outline,
+                                       marker='$' + objMarker + '$')
+                        else:
+                            ax.scatter(x[i], y[i], c=color, alpha=alpha, s=10.0, linewidths=0.06,
+                                       edgecolors=outline,
+                                       marker='$' + objMarker + '$')
+
 
 
 
