@@ -2237,6 +2237,7 @@ async def onTurnChange(server):
             minList = []
             minVal = 10000
             for member in Data[guild]['Fed']['MemberHistory'].keys():
+                if server.get_member_named(member) is None: continue
                 id = server.get_member_named(member)
                 if member in Inactives or member in newMembers: continue
                 if Data[guild]['Fed']['MemberHistory'][member] < minVal:
