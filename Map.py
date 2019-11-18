@@ -2030,6 +2030,9 @@ def onDayChange(server):
         vel = Data[guild]['Fed']['Velocity'][item]+100
         if vel != 0:
             Data[guild]['Fed']['Rates'][item] = 100.0/vel * Data[guild]['Fed']['Rates'][item]
+        if Data[guild]['Fed']['Rates'][item] < 1.0/0.03:
+            Data[guild]['Fed']['Rates'][item] = 1.0/0.03
+            Data[guild]['Fed']['Velocity'][item] = 0
 
     dir = random.randint(0,3)
     stepsize = random.randint(2,4)
