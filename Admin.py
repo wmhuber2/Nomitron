@@ -104,6 +104,13 @@ async def run(inData, payload, message):
                     file=discord.File(open('DiscordBot_Data.pickle', 'br')))
             await log("Going For Restart...",guild)
             sys.exit(0)
+
+        if len(splitPayload) == 2 and payload['Channel Type'] == 'Text' \
+                and splitPayload[1].lower() == "die" and splitPayload[0] == botCharacter:
+            await channels[message.guild.id][logChannel].send('Save File Backup:',
+                                                              file=discord.File(open('DiscordBot_Data.pickle', 'br')))
+            await log("Going For Death...", guild)
+            os.system("pkill python")
     return saveData()
 
 

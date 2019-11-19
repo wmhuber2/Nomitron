@@ -6,7 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/Admin.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -209,13 +209,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00313" summary="SPEED I AM SPEED IN MAP UPDATE!!">
-      <created>1572553786785</created>
-      <option name="number" value="00313" />
-      <option name="presentableId" value="LOCAL-00313" />
-      <option name="project" value="LOCAL" />
-      <updated>1572553786785</updated>
     </task>
     <task id="LOCAL-00314" summary="Update to upgrade in tech tree">
       <created>1572585554914</created>
@@ -553,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574112173387</updated>
     </task>
-    <option name="localTasksCounter" value="362" />
+    <task id="LOCAL-00362" summary="bug? remove react?">
+      <created>1574176108367</created>
+      <option name="number" value="00362" />
+      <option name="presentableId" value="LOCAL-00362" />
+      <option name="project" value="LOCAL" />
+      <updated>1574176108367</updated>
+    </task>
+    <option name="localTasksCounter" value="363" />
     <servers />
   </component>
   <component name="TodoView">
@@ -592,7 +592,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="SPEED I AM SPEED IN MAP UPDATE!!" />
     <MESSAGE value="Update to upgrade in tech tree" />
     <MESSAGE value="Moon and claim updates." />
     <MESSAGE value="Asset trouble" />
@@ -617,7 +616,8 @@
     <MESSAGE value="MAP UPDATE REEEE. dumb numpy string types" />
     <MESSAGE value="Fed update" />
     <MESSAGE value="Fed update with limit now" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fed update with limit now" />
+    <MESSAGE value="bug? remove react?" />
+    <option name="LAST_COMMIT_MESSAGE" value="bug? remove react?" />
   </component>
   <component name="masterDetails">
     <states>
