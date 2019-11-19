@@ -4,10 +4,9 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="Fed update">
+    <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -210,13 +209,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00312" summary="SPEED I AM SPEED IN MAP UPDATE!!">
-      <created>1572553707984</created>
-      <option name="number" value="00312" />
-      <option name="presentableId" value="LOCAL-00312" />
-      <option name="project" value="LOCAL" />
-      <updated>1572553707984</updated>
     </task>
     <task id="LOCAL-00313" summary="SPEED I AM SPEED IN MAP UPDATE!!">
       <created>1572553786785</created>
@@ -554,7 +546,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574059900187</updated>
     </task>
-    <option name="localTasksCounter" value="361" />
+    <task id="LOCAL-00361" summary="Fed update with limit now">
+      <created>1574112173387</created>
+      <option name="number" value="00361" />
+      <option name="presentableId" value="LOCAL-00361" />
+      <option name="project" value="LOCAL" />
+      <updated>1574112173387</updated>
+    </task>
+    <option name="localTasksCounter" value="362" />
     <servers />
   </component>
   <component name="TodoView">
@@ -593,7 +592,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Rules Fix." />
     <MESSAGE value="SPEED I AM SPEED IN MAP UPDATE!!" />
     <MESSAGE value="Update to upgrade in tech tree" />
     <MESSAGE value="Moon and claim updates." />
@@ -618,7 +616,8 @@
     <MESSAGE value="Marker Error" />
     <MESSAGE value="MAP UPDATE REEEE. dumb numpy string types" />
     <MESSAGE value="Fed update" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fed update" />
+    <MESSAGE value="Fed update with limit now" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fed update with limit now" />
   </component>
   <component name="masterDetails">
     <states>

@@ -535,7 +535,9 @@ async def reaction(inData, action, user, messageid, emoji):
         print('reloading')
         for r in message.reactions:
             for u in await r.users().flatten():
-                await message.remove_reaction('🔄', u)
+                try: await message.remove_reaction('🔄', u)
+                except:
+                    print('Error Removing Reaction')
 
         await updateInAnnouncements(message.guild)
         await message.add_reaction('🔄')
