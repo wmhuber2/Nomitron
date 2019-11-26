@@ -38,6 +38,8 @@ ActionCommands:        Allowed Channels: actions
 +         Displays Coordinate Data
 -    !tech name
 +         Tech Tree Display/Buy - Rule 374
+-    !artifact #amount item
++         Consume a artifact for an amount of item
 
 +###########################################
 -  !admin

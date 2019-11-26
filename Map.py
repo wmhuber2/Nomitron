@@ -1831,6 +1831,30 @@ async def run(inData, payload, message):
             post = await channels[guild]['changelog-live'].send('Update Button')
             await post.add_reaction('🔄')
 
+
+        elif splitContent[0] in ['!artifact','!artifacts'] and len(splitContent) == 3:
+            print('consume artifact')
+            amount = None
+            item = splitContent[-1]
+            try:
+                amount = float(splitContent[-2])/5.0
+            except:
+                addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
+            if amount < 0:
+                addMsgQueue(message.channel, 'U A FOOL.')
+            elif amount % 1 != 0:
+                addMsgQueue(message.channel, "Artifacts Must Return Items in Multiples of 5's")
+            elif item not in rawMaterialsList:
+                addMsgQueue(message.channel, 'Artifacts are not convertable to that item.')
+            elif amount is not None \
+                    and addItem(guild, payload['Author'], 'Artifact', -amount, testOnly=True):
+                addItem(guild, payload['Author'],'Artifact', -amount,)
+                addItem(guild, payload['Author'],item, amount*5)
+                addMsgQueue(message.channel, "You Now Have " + str(5*amount) + ' '+item+'. Enjoy.')
+            else:
+                addMsgQueue(message.channel, 'Insufficient Artifacts')
+
+
         else: update[2] = False
 
     #  IF A DM CHANNEL
@@ -2037,7 +2061,7 @@ def onDayChange(server):
             Data[guild]['Fed']['Velocity'][item] = 0
 
     dir = random.randint(0,3)
-    stepsize = random.randint(2,4)
+    stepsize = random.randint(4,8)
     atlantean = 'ATLANTEAN' in Data[guild]['Vinny']
     if atlantean: Data[guild]['Vinny']['ATLANTEAN'] -= 1
     if atlantean and Data[guild]['Vinny']['ATLANTEAN'] <=0 : del Data[guild]['Vinny']['ATLANTEAN']
@@ -2053,7 +2077,7 @@ def onDayChange(server):
             Data[guild]['Vinny']['Position'][1] + action[1]*stepsize,
         ]
         if ncoords[0] < 0 or ncoords[1] < 0 or ncoords[0] >= 75 or ncoords[1] >= 75: continue
-        elif ncoords in Data[guild]['Vinny']['History'] and random.randint(0,1) and i != 3:
+        elif ncoords in Data[guild]['Vinny']['History'] and random.randint(0,3)==0 and i != 3:
             print("Skipping Past Place")
             continue
         else:
@@ -2086,9 +2110,9 @@ def onDayChange(server):
 
     vx, vy = Data[guild]['Vinny']['Position'] # Process Vinny Events Here
     Data[guild]['Vinny']['History'].append([vx,vy])
-    if event < 10 and not isTileType(Data[guild]['Image'], vx, vy, 'MEAT'):
+    if event <= 12 and not isTileType(Data[guild]['Image'], vx, vy, 'MEAT'):
         for i in range(6):
-            event = (event + 1) % 6
+            event = random.randint(0, 6)
             if event == 1:
                 addMsgQueue(channels[guild]['actions'], "Vinny has triggered an event: ARCHAEOLOGICAL DISCOVERY")
                 isOnPlayer = False
