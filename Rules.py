@@ -41,8 +41,9 @@ async def run(inData, payload, message):
     # Do Stuff Here
 
     splitPayload = payload['Content'].split()
+    if len(splitPayload) == 0: pass
 
-    if(splitPayload[0] == "!rule" and len(splitPayload) == 2):
+    elif(splitPayload[0] == "!rule" and len(splitPayload) == 2):
         rulequery = int(splitPayload[1])
         if(rulequery not in Data.keys()):
             await channels[payload['Channel']].send("I couldn't find that rule.")
@@ -67,7 +68,7 @@ async def run(inData, payload, message):
             #print(response)
             await channels[payload['Channel']].send(response)
 
-    if (splitPayload[0] == "!search" or splitPayload[0] == "!find"or splitPayload[0] == "!f"):
+    elif (splitPayload[0] == "!search" or splitPayload[0] == "!find"or splitPayload[0] == "!f"):
         text = ' '.join(splitPayload[1:]).lower()
         if text[0] == '"': text = text[1:]
         if text[-1] == '"': text = text[:-1]

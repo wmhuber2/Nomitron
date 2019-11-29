@@ -7,7 +7,7 @@
     <list default="true" id="cd5ed841-9e68-4d68-b65e-2fd0023da41c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Map.py" beforeDir="false" afterPath="$PROJECT_DIR$/Map.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/PlayerREADME.md" beforeDir="false" afterPath="$PROJECT_DIR$/PlayerREADME.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Rules.py" beforeDir="false" afterPath="$PROJECT_DIR$/Rules.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tmpgrid.png" beforeDir="false" afterPath="$PROJECT_DIR$/tmpgrid.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -211,13 +211,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1558151697432</updated>
-    </task>
-    <task id="LOCAL-00315" summary="Moon and claim updates.">
-      <created>1572667012729</created>
-      <option name="number" value="00315" />
-      <option name="presentableId" value="LOCAL-00315" />
-      <option name="project" value="LOCAL" />
-      <updated>1572667012729</updated>
     </task>
     <task id="LOCAL-00316" summary="Moon and claim updates.">
       <created>1572667512969</created>
@@ -555,7 +548,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574199599903</updated>
     </task>
-    <option name="localTasksCounter" value="364" />
+    <task id="LOCAL-00364" summary="artifact thingy command.">
+      <created>1574738191602</created>
+      <option name="number" value="00364" />
+      <option name="presentableId" value="LOCAL-00364" />
+      <option name="project" value="LOCAL" />
+      <updated>1574738191602</updated>
+    </task>
+    <option name="localTasksCounter" value="365" />
     <servers />
   </component>
   <component name="TodoView">
@@ -594,7 +594,6 @@
     <ignored-roots>
       <path value="$PROJECT_DIR$/tmp" />
     </ignored-roots>
-    <MESSAGE value="Moon and claim updates." />
     <MESSAGE value="Asset trouble" />
     <MESSAGE value="Asset Assholary. Finally fixed. bad var names was the bug and reset of the asset tracker between trades." />
     <MESSAGE value="Datetime" />
@@ -619,7 +618,8 @@
     <MESSAGE value="Fed update with limit now" />
     <MESSAGE value="bug? remove react?" />
     <MESSAGE value="Death Command" />
-    <option name="LAST_COMMIT_MESSAGE" value="Death Command" />
+    <MESSAGE value="artifact thingy command." />
+    <option name="LAST_COMMIT_MESSAGE" value="artifact thingy command." />
   </component>
   <component name="masterDetails">
     <states>

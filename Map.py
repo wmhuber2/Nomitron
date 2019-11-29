@@ -799,8 +799,7 @@ async def run(inData, payload, message):
                                 addMsgQueue(message.channel, "You have claimed the location. ")
                             else:
                                 addMsgQueue(message.channel,
-                                            "You Need " + str(Data[guild]['Players'][payload['Author']][
-                                                                  'BF Claimed Today'] + 2) + " Blemflarcks To Complete This Actions.")
+                                            "You Need More Blemflarcks To Complete This Actions.")
 
                         elif (not isTileType(Data[guild]['Image'], xcord, ycord, 'LAND')) \
                                 and isAdjacent(guild, payload['Author'], [xcord, ycord], False):
@@ -1226,6 +1225,28 @@ async def run(inData, payload, message):
                 else:
                     addMsgQueue(message.channel, "You cannot disable this location.")
 
+            elif splitContent[0].lower() == '!toggleall' and len(splitContent) == 3:
+                unitType = splitContent[1]
+                state = splitContent[2]
+                if state in ['on',]: state = 1
+                elif state in ['off',]: state = 0
+                else: addMsgQueue(message.channel, "Unknown Setting")
+
+                count = 0
+
+                for index in range(len(Data[guild]['Players'][payload['Author']]['Markers']['Location'])):
+                    xcord, ycord = Data[guild]['Players'][payload['Author']]['Markers']['Location'][index]
+                    if 'Unit' not in Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]:continue
+                    unit = Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit']
+
+                    if 'DisabledAndPermanent' in unit and unit['Name'] == unitType and state:
+                        del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit'][
+                            'DisabledAndPermanent']
+                        count+=1
+                    elif not state and unit['Name'] == unitType and unit.get('DisabledAndPermanent') is False:
+                        count+=1
+                addMsgQueue(message.channel, str(count)+' Units States Changed')
+
             elif splitContent[0] == '!raze' and len(splitContent) == 3:
                 if splitContent[1] in ['claim', 'harvest', 'unit']:
                     coords = extractCoords(splitContent[2],message.channel)
@@ -1515,11 +1536,33 @@ async def run(inData, payload, message):
                 elif amount is not None \
                         and addItem(guild, payload['Author'], item, -amount, testOnly=True):
                     addItem(guild, payload['Author'], item, -amount)
-                    amount = math.floor(amount / Data[guild]['Fed']['Rates'][item])
+                    amount = math.floor(amount / Data[guild]['Fed']['Rates'][item] + 0.0001)
                     addItem(guild, payload['Author'], 'BF', amount)
                     addMsgQueue(message.channel, "Here is "+str(amount)+' BF. Enjoy.')
                 else:
                     addMsgQueue(message.channel, 'Insufficient Items to Sell')
+
+            elif splitContent[0] in ['!artifact', '!artifacts'] and len(splitContent) == 3:
+                print('consume artifact')
+                amount = None
+                item = splitContent[-1]
+                try:
+                    amount = float(splitContent[-2]) / 5.0
+                except:
+                    addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
+                if amount < 0:
+                    addMsgQueue(message.channel, 'U A FOOL.')
+                elif amount % 1 != 0:
+                    addMsgQueue(message.channel, "Artifacts Must Return Items in Multiples of 5's")
+                elif item not in rawMaterialsList:
+                    addMsgQueue(message.channel, 'Artifacts are not convertable to that item.')
+                elif amount is not None \
+                        and addItem(guild, payload['Author'], 'Artifact', -amount, testOnly=True):
+                    addItem(guild, payload['Author'], 'Artifact', -amount, )
+                    addItem(guild, payload['Author'], item, amount * 5)
+                    addMsgQueue(message.channel, "You Now Have " + str(5 * amount) + ' ' + item + '. Enjoy.')
+                else:
+                    addMsgQueue(message.channel, 'Insufficient Artifacts')
 
             else: update[1] = False
 
@@ -1831,29 +1874,8 @@ async def run(inData, payload, message):
             post = await channels[guild]['changelog-live'].send('Update Button')
             await post.add_reaction('🔄')
 
-
-        elif splitContent[0] in ['!artifact','!artifacts'] and len(splitContent) == 3:
-            print('consume artifact')
-            amount = None
-            item = splitContent[-1]
-            try:
-                amount = float(splitContent[-2])/5.0
-            except:
-                addMsgQueue(message.channel, splitContent[-2] + ' cannot be quantified into an amount.')
-            if amount < 0:
-                addMsgQueue(message.channel, 'U A FOOL.')
-            elif amount % 1 != 0:
-                addMsgQueue(message.channel, "Artifacts Must Return Items in Multiples of 5's")
-            elif item not in rawMaterialsList:
-                addMsgQueue(message.channel, 'Artifacts are not convertable to that item.')
-            elif amount is not None \
-                    and addItem(guild, payload['Author'], 'Artifact', -amount, testOnly=True):
-                addItem(guild, payload['Author'],'Artifact', -amount,)
-                addItem(guild, payload['Author'],item, amount*5)
-                addMsgQueue(message.channel, "You Now Have " + str(5*amount) + ' '+item+'. Enjoy.')
-            else:
-                addMsgQueue(message.channel, 'Insufficient Artifacts')
-
+        elif splitContent[0] == '!echo':
+            addMsgQueue(message.channel, ' '.join(splitContent[1:]))
 
         else: update[2] = False
 
@@ -1885,7 +1907,12 @@ async def update(inData, server):
 
         await sendMapData(guild, channels[guild][logChannel])
         onDayChange(server)
+
+        if (datetime.datetime.now().weekday() == 6):
+            addMsgQueue(channels[guild]['actions'],'@everyone - TOWN MEETING INVITATION. RSVP with SYGIL')
+
         await updateInAnnouncements(server,postToSpam=True)
+
     await sendMessages()
     return saveData()
 
@@ -2373,6 +2400,8 @@ def addItem(guild, player, item, count, testOnly=False):
         return True
     else:
         Data[guild]['Players'][player]['Inventory'][item] += count
+        #if count > 0: Data[guild]['Players'][player]['GDP']['ItemPos'] += abs(count)
+        #if count < 0: Data[guild]['Players'][player]['GDP']['ItemNeg'] += abs(count)
     if inv[item] == 0 and item != 'BF':
         del Data[guild]['Players'][player]['Inventory'][item]
     return True
