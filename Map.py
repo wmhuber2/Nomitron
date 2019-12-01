@@ -136,9 +136,14 @@ savefile = str(__name__)  # + '_Data.pickle'
 print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
 
-itemList = ['BF', 'Cheese', 'Silica','Starfish','Aether', 'Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy', 'C-Fish', 'Artifact', 'Curse']
-rawMaterialsList = ['BF','Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy']
+itemList = ['BF', 'Cheese', 'Silica','Starfish','Aether', 'Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology',
+            'Energy', 'C-Fish', 'Artifact', 'Curse', 'Tortilla','Lettuce','Beef','S-Cheese']
+
+rawMaterialsList = ['BF','Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy', 'Tortilla',
+    'Lettuce','Beef','S-Cheese']
+
 resourceList = ['Corn', 'Cheese', 'Silica','Starfish','Aether','Steel', 'Oil']
+
 FedMaterialList = list(rawMaterialsList)
 FedMaterialList.remove('BF')
 
@@ -625,7 +630,7 @@ async def run(inData, payload, message):
                     for player in Data[guild]['Players'].keys():
                         try:
                             index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
-                            msg += '-' + player + ": " + str(Data[guild]['Players'][player]['Markers']['Shape'][index])
+                            msg += '\n-' + player + ": " + str(Data[guild]['Players'][player]['Markers']['Shape'][index])
                             msg += '\n EXTRA INFO: ' + str(Data[guild]['Players'][player]['Markers']['Properties'][index])
                         except ValueError:
                             pass
@@ -762,6 +767,9 @@ async def run(inData, payload, message):
 
                         if isTileType(Data[guild]['Image'], xcord, ycord, 'WATER'):
                             addMsgQueue(message.channel, "Please seek more advanced technology to claim Water Tiles.")
+
+                        elif isTileType(Data[guild]['Image'], xcord, ycord, 'STARSEA'):
+                            addMsgQueue(message.channel, "Please seek more advanced technology to claim STARSEA Tiles.")
 
                         elif (isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') or isTileType(Data[guild]['Image'], xcord, ycord, 'MEAT'))\
                                 and isAdjacent(guild, payload['Author'], [xcord, ycord], False):
@@ -1243,7 +1251,9 @@ async def run(inData, payload, message):
                         del Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit'][
                             'DisabledAndPermanent']
                         count+=1
-                    elif not state and unit['Name'] == unitType and unit.get('DisabledAndPermanent') is False:
+                    elif not state and unit['Name'] == unitType:
+                        Data[guild]['Players'][payload['Author']]['Markers']['Properties'][index]['Unit'][
+                            'DisabledAndPermanent'] = True
                         count+=1
                 addMsgQueue(message.channel, str(count)+' Units States Changed')
 
@@ -1660,7 +1670,7 @@ async def run(inData, payload, message):
                 for player in Data[guild]['Players'].keys():
                     try:
                         index = Data[guild]['Players'][player]['Markers']['Location'].index([xcord, ycord])
-                        msg += '-' + player + ": " + str(Data[guild]['Players'][player]['Markers']['Shape'][index])
+                        msg += '\n-' + player + ": " + str(Data[guild]['Players'][player]['Markers']['Shape'][index])
                         msg += '\n' + str(Data[guild]['Players'][player]['Markers']['Properties'][index])
                     except ValueError:
                         pass
@@ -1908,8 +1918,8 @@ async def update(inData, server):
         await sendMapData(guild, channels[guild][logChannel])
         onDayChange(server)
 
-        if (datetime.datetime.now().weekday() == 6):
-            addMsgQueue(channels[guild]['actions'],'@everyone - TOWN MEETING INVITATION. RSVP with SYGIL')
+        if (datetime.datetime.now().weekday() == 5):
+            addMsgQueue(channels[guild]['actions'],'@here - TOWN MEETING INVITATION. RSVP with SYGIL')
 
         await updateInAnnouncements(server,postToSpam=True)
 
@@ -1936,6 +1946,8 @@ def onDayChange(server):
     for player in Data[guild]['Players']:
 
         cursed = not Data[guild]['Players'][player]['Inventory'].get('Curse') in [0, None]
+        tacoed = Data[guild]['Players'][player]['Inventory'].get('Taco-Active')
+        if tacoed == None: tacoed = 0
 
         if Data[guild]['Players'][player]['Inventory'].get('Curse') not in [0,None]:
             del Data[guild]['Players'][player]['Inventory']['Curse']
@@ -1961,7 +1973,8 @@ def onDayChange(server):
                         and Data[guild]['Players'][player]['Markers']['Properties'][tileIndex].get('Unit') is None:
                     xcord, ycord = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
                     double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']
-                    modifier = (1 - cursed * 0.5) * (double + 1)
+
+                    modifier = (1 - cursed * 0.5) * (double + 1) * 2**tacoed
 
                     if double:
                         del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['Boost']
@@ -2011,7 +2024,8 @@ def onDayChange(server):
                     unit = dict(Data[guild]['Units'][name])
 
                     double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
-                    modifier = (1 - cursed * 0.5) * (double + 1)
+                    modifier = (1 - cursed * 0.5) * (double + 1) * 2 ** tacoed
+
                     if double: del \
                         Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Boost']
 
@@ -2323,13 +2337,14 @@ def resetTimers(server, channel=None, playerid=None, mode=0):
     if playerid is None:
         for player in Data[guild]['Players']:
             Data[guild]['Players'][player]['Claimed Today'] = mode
+            Data[guild]['Players'][player]['BF Claimed Today'] = 0
 
         addMsgQueue(channel, "Resetting Claim Timer for Everyone")
 
     else:
         player = getPlayer(server, playerid, channel)
         if player is not None:
-            Data[guild]['Players'][player]['Claimed Today'] = 0
+            Data[guild]['Players'][player]['Claimed Today'] = mode
             Data[guild]['Players'][player]['BF Claimed Today'] = 0
             addMsgQueue(channel, "Resetting Claim Timer for " + player)
     print("resetTimers: ", time.time() - start)
@@ -2446,6 +2461,8 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             'BF': {'-': 0.0, '+': 0.0},
         }
         cursed = not Data[guild]['Players'][player]['Inventory'].get('Curse') in [0, None]
+        tacoed = Data[guild]['Players'][player]['Inventory'].get('Taco-Active')
+        if tacoed == None: tacoed = 0
 
         for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
             x, y = Data[guild]['Players'][player]['Markers']['Location'][tileIndex]
@@ -2460,7 +2477,8 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
                     unit = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']['Name']
                     double = 'Boost' in Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit']
 
-                    modifier = (1 - cursed * 0.5) * (double + 1)
+                    modifier = (1 - cursed * 0.5) * (double + 1) * 2 ** tacoed
+
                     if unit == 'town':
                         itm = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get('TownItem')
                         if itm == None:
@@ -2581,7 +2599,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             if item in itemDelta.keys():
                 deltaplus += float(itemDelta[item]['+'])
                 deltaloss += float(itemDelta[item]['-'])
-            delta = deltaplus - deltaloss
+            delta = (deltaplus * (2**tacoed)) - deltaloss
             if delta < 0:  sign = ""
             if delta == 0 and amount == 0: continue
 
@@ -3195,7 +3213,10 @@ async def sendMessages():
         print('Sending Msg #', len(msgQueue),'to', msg['channel'].name)
         msg['text'] = msg['text'].replace('@Krozr#0878','\"The Oracle\"')
         msg['text'] = msg['text'].replace('@392883201061814282','\"The Oracle\"')
-        await msg['channel'].send(msg['text'])
+        try:
+            await msg['channel'].send(msg['text'])
+        except:
+            print('Oops. MSG Send fail. '+msg['text'])
 
 
 def addMsgQueue(channel, msg):
