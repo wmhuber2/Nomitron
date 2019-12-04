@@ -2,6 +2,10 @@
 # Map Module For Discord Bot
 ################################
 import pickle, sys, datetime, os, discord, math, re, socket, time, random, asyncio
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
 np, plt, ticker, mcd = None,None,None,None
 n = 75
 
@@ -11,21 +15,28 @@ TILES = {
     'MEAT': [200, 110, 110, 255],
     'MOONDUST': [127, 127, 127, 255],
     'STARSEA': [64, 64, 64, 255],
+    'CAVE': [64, 64, 64, 25],
+    'BASALT': [64, 64, 64, 25],
+    'LAVA': [64, 64, 64, 25],
+    'FOREST': [64, 64, 64, 25],
+    'PLAINS': [64, 64, 64, 25],
 }
 
 UNIT_BASE = {
     'Costs': [],
     'DailyCosts': [],
+    'DailyReturn': [],
     'NeedAdminApproval': False,
     'UpgradeUnit': "",
     'Marker': "",
     'isMobile': False,
     'MobileCost': [],
     'MoveLimitPerDay': 0,
-    'DailyReturn': [],
     'LandOnly': False,
     'WaterOnly': False,
-    'BeachOnly': False
+    'BeachOnly': False,
+    'MoondustOnly': False,
+    'StarseaOnly': False,
 }
 
 TECH_TREE = {
@@ -137,12 +148,12 @@ print(savefile)
 Admins = ['Fenris Wolf#6136', 'Crorem#6962', 'iann39#8298']
 
 itemList = ['BF', 'Cheese', 'Silica','Starfish','Aether', 'Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology',
-            'Energy', 'C-Fish', 'Artifact', 'Curse', 'Tortilla','Lettuce','Beef','S-Cheese']
+            'Energy', 'C-Fish', 'Artifact', 'Curse', 'Tortilla','Lettuce','Beef','S-Cheese','Seaweed', 'Coral']
 
 rawMaterialsList = ['BF','Corn', 'Food', 'Steel', 'Oil', 'Wood', 'Technology', 'Energy', 'Tortilla',
     'Lettuce','Beef','S-Cheese']
 
-resourceList = ['Corn', 'Cheese', 'Silica','Starfish','Aether','Steel', 'Oil']
+resourceList = ['Corn', 'Cheese', 'Silica','Starfish','Aether','Steel', 'Oil','Seaweed', 'Coral']
 
 FedMaterialList = list(rawMaterialsList)
 FedMaterialList.remove('BF')
@@ -273,7 +284,7 @@ async def reaction(inData, action, user, messageid, emoji):
                 if claimsLeft <= 0 and cost == "Food":
                     addMsgQueue(message.channel,
                                 "You have reached your limit of Non-BF claims. Please wait until tomorrow to claim again. Have a nice day. :v:")
-                elif not isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and cost == "Food":
+                elif xcord > 75 and cost == "Food":
                     addMsgQueue(message.channel,"There is no capital found on the moon. Please use BF.")
 
                 elif addItem(guild, playerName, cost, -1 * amount):
@@ -586,9 +597,14 @@ async def run(inData, payload, message):
 
             if payload['Content'].lower() in ['!units', '!unit']:
                 for unit in Data[guild]['Units'].keys():
-                    msg = unit + ':\n'
-                    for k in Data[guild]['Units'][unit]:
-                        msg += '\t' + k + ': ' + repr(str(Data[guild]['Units'][unit][k])) + '\n'
+                    msg = unit + '('+Data[guild]['Units'][unit]['Marker']+')'+':\n'
+                    for k in UNIT_BASE.keys():
+                        if k == 'Marker': continue
+                        if 'Only' in k and not Data[guild]['Units'][unit][k]: continue
+                        if 'UpgradeUnit' == k and not Data[guild]['Units'][unit][k] == []: continue
+                        if 'NeedAdminApproval' == k and not Data[guild]['Units'][unit][k] == []: continue
+                        if not Data[guild]['Units'][unit]['isMobile'] and k in ['MobileCost','MoveLimitPerDay']: continue
+                        msg += '\t' + k + ': ' + str(Data[guild]['Units'][unit][k]) + '\n'
                     addMsgQueue(message.channel, '```' + msg + '```')
 
             if payload['Content'].lower() in ['!tech', '!techs']:
@@ -771,6 +787,12 @@ async def run(inData, payload, message):
                         elif isTileType(Data[guild]['Image'], xcord, ycord, 'STARSEA'):
                             addMsgQueue(message.channel, "Please seek more advanced technology to claim STARSEA Tiles.")
 
+                        elif isTileType(Data[guild]['Image'], xcord, ycord, 'CAVE'):
+                            addMsgQueue(message.channel, "Please seek more advanced technology to claim CAVE Tiles.")
+
+                        elif isTileType(Data[guild]['Image'], xcord, ycord, 'LAVA'):
+                            addMsgQueue(message.channel, "Please seek more advanced technology to claim STARSEA Tiles.")
+
                         elif (isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') or isTileType(Data[guild]['Image'], xcord, ycord, 'MEAT'))\
                                 and isAdjacent(guild, payload['Author'], [xcord, ycord], False):
                             isClaimed = False
@@ -870,6 +892,13 @@ async def run(inData, payload, message):
 
                         if isTileType(Data[guild]['Image'], xcord, ycord, 'MEAT'):
                             addMsgQueue(message.channel, "You Cannot Harvest A Meat Tile.")
+                        elif isTileType(Data[guild]['Image'], xcord, ycord, 'PLAINS') and splitContent[2] in ['non-perpetual', 'n',]:
+                                addMsgQueue(message.channel, "You Cannot NonPerp Harvest A Plains Tile.")
+                        elif isTileType(Data[guild]['Image'], xcord, ycord, 'FOREST') and splitContent[2] in ['perpetual', 'p',]:
+                            addMsgQueue(message.channel, "You Cannot Perp Harvest A FORREST Tile.")
+                        elif isTileType(Data[guild]['Image'], xcord, ycord, 'BASALT'):
+                            addMsgQueue(message.channel, "You Cannot Harvest A Basalt Tile.")
+
                         elif [xcord, ycord] in Data[guild]['Players'][payload['Author']]['Markers']['Location']:
                             index = Data[guild]['Players'][payload['Author']]['Markers']['Location'].index(
                                 [xcord, ycord])
@@ -963,11 +992,21 @@ async def run(inData, payload, message):
                         addMsgQueue(message.channel, "You Do Not Own An Ajacent Location")
                     elif unit['LandOnly'] and not isTileType(Data[guild]['Image'], x, y, 'LAND'):
                         addMsgQueue(message.channel, "This Can Only Be Placed On Land")
+                    elif unit['MoondustOnly'] and not isTileType(Data[guild]['Image'], x, y, 'MOONDUST'):
+                        addMsgQueue(message.channel, "This Can Only Be Placed On Moondust")
+                    elif unit['StarseaOnly'] and not isTileType(Data[guild]['Image'], x, y, 'STARSEA'):
+                        addMsgQueue(message.channel, "This Can Only Be Placed On Starsea")
                     elif unit['WaterOnly'] and not isTileType(Data[guild]['Image'], x, y, 'WATER'):
                         addMsgQueue(message.channel, "This Can Only Be Placed On Water")
                     elif name in ['town', 'village', 'digsite', 'mill', 'oil', 'mine', 'wall']\
                             and isTileType(Data[guild]['Image'], x, y, 'MEAT'):
                         addMsgQueue(message.channel, "This Unit Cannot Be Placed On A Meat Tile")
+                    elif name in ['mill',] \
+                         and isTileType(Data[guild]['Image'], x, y, 'PLAINS'):
+                        addMsgQueue(message.channel, "This Unit Cannot Be Placed On A Plains Tile")
+                    elif name in ['granary', 'mill', 'oil', 'mines', 'digsite']\
+                         and isTileType(Data[guild]['Image'], x, y, 'BASALT'):
+                        addMsgQueue(message.channel, "This Unit Cannot Be Placed On A BASALT Tile")
                     elif unit['BeachOnly'] and not (
                             isTileType(Data[guild]['Image'], x, y, 'LAND')
                             and (
@@ -1057,8 +1096,11 @@ async def run(inData, payload, message):
                             pass
                     name = None
                     unit = None
+                    harv = None
                     if index1 is None: addMsgQueue(message.channel, "Nothing There To Move")
-                    elif 'Harvest' in Data[guild]['Players'][player]['Markers']['Properties'][index1]: toMove = 'Harvest'
+                    elif 'Harvest' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
+                        toMove = 'Harvest'
+                        harv = Data[guild]['Players'][player]['Markers']['Properties'][index1]['Harvest']
 
                     elif 'Unit' in Data[guild]['Players'][player]['Markers']['Properties'][index1]:
                         toMove = 'Unit'
@@ -1079,6 +1121,12 @@ async def run(inData, payload, message):
 
                     elif toMove == 'Harvest' and isTileType(Data[guild]['Image'], x2, y2, 'MEAT'):
                         addMsgQueue(message.channel, "This Harvest Cannot Be Placed On A Meat Tile")
+                    elif toMove == 'Harvest' and isTileType(Data[guild]['Image'], x2, y2, 'BASALT'):
+                        addMsgQueue(message.channel, "This Harvest Cannot Be Placed On A Basalt Tile")
+                    elif toMove == 'Harvest' and isTileType(Data[guild]['Image'], x2, y2, 'FOREST') and harv['type'] == 'Perpetual':
+                        addMsgQueue(message.channel, "This Harvest Cannot Be Placed On A Forest Tile")
+                    elif toMove == 'Harvest' and isTileType(Data[guild]['Image'], x2, y2, 'PLAINS') and harv['type'] == 'Non Perpetual':
+                        addMsgQueue(message.channel, "This Harvest Cannot Be Placed On A Plains Tile")
 
                     elif toMove == 'Harvest' and (index2 is None or Data[guild]['Players'][player]['Markers']['Shape'][index2] != 'Claim'):
                         addMsgQueue(message.channel, "This Harvest Must be placed on a Claim")
@@ -1086,8 +1134,14 @@ async def run(inData, payload, message):
                     elif toMove == 'Unit' and (
                             (unit['LandOnly'] and not isTileType(Data[guild]['Image'], x2, y2, 'LAND')) or \
                             (unit['WaterOnly'] and not isTileType(Data[guild]['Image'], x2, y2, 'WATER')) or \
+                            (unit['MoondustOnly'] and not isTileType(Data[guild]['Image'], x2, y2, 'MOONDUST')) or \
+                            (unit['StarseaOnly'] and not isTileType(Data[guild]['Image'], x2, y2, 'STARSEA')) or \
+                            (name in ['Mill',] \
+                             and isTileType(Data[guild]['Image'], x2, y2, 'PLAINS')) or \
                             (name in ['town', 'village', 'digsite', 'mill', 'oil', 'mine', 'wall'] \
-                                and isTileType(Data[guild]['Image'], x2, y2, 'MEAT')) or \
+                             and isTileType(Data[guild]['Image'], x2, y2, 'MEAT')) or \
+                            (name in ['granary', 'mill', 'oil', 'mines', 'digsite'] \
+                             and isTileType(Data[guild]['Image'], x2, y2, 'BASALT')) or \
                             (unit['BeachOnly'] and not ( isTileType(Data[guild]['Image'], x2, y2, 'LAND') \
                                 and (
                                     isTileType(Data[guild]['Image'], x2 + 1, y2, 'WATER') or
@@ -1920,6 +1974,7 @@ async def update(inData, server):
 
         if (datetime.datetime.now().weekday() == 5):
             addMsgQueue(channels[guild]['actions'],'@here - TOWN MEETING INVITATION. RSVP with SYGIL')
+            addMsgQueue(channels[guild]['actions'],'Times: \nA:(9am-12am) B:(1pm-4pm) C:(5pm-8pm) D:(8pm-12pm)')
 
         await updateInAnnouncements(server,postToSpam=True)
 
@@ -1946,7 +2001,7 @@ def onDayChange(server):
     for player in Data[guild]['Players']:
 
         cursed = not Data[guild]['Players'][player]['Inventory'].get('Curse') in [0, None]
-        tacoed = Data[guild]['Players'][player]['Inventory'].get('Taco-Active')
+        tacoed = Data[guild]['Players'][player]['Inventory'].get('Taco-Act.')
         if tacoed == None: tacoed = 0
 
         if Data[guild]['Players'][player]['Inventory'].get('Curse') not in [0,None]:
@@ -1978,6 +2033,12 @@ def onDayChange(server):
 
                     if double:
                         del Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest']['Boost']
+
+
+                    if isTileType(Data[guild]['Image'], xcord, ycord, 'PLAINS') and \
+                            Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
+                                'type'] == 'Perpetual':                    addItem(guild, player, 'Corn', 1 * modifier)
+
 
                     if isTileType(Data[guild]['Image'], xcord, ycord, 'LAND') and \
                             Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Harvest'][
@@ -2058,6 +2119,10 @@ def onDayChange(server):
                                     'TownItem'] = gift
                             addItem(guild, player, gift, float(2) * modifier)
 
+                        if name == 'mill':
+                            if isTileType(Data[guild]['Image'], xcord, ycord, 'FOREST') :
+                                addItem(guild, player, 'Wood', 1 * modifier)
+
                         if name == 'village':
                             gift = Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'].get(
                                 'VillageItem')
@@ -2065,6 +2130,11 @@ def onDayChange(server):
                                 gift = random.choice(rawMaterialsList)
                                 Data[guild]['Players'][player]['Markers']['Properties'][tileIndex]['Unit'][
                                     'VillageItem'] = gift
+                            addItem(guild, player, gift, float(1) * modifier)
+
+                        if name == 'lottery':
+                            gift = random.choice(itemList)
+                            addMsgQueue(channels[guild]['actions'], player + " Won 1 "+gift+ " from the Lottery")
                             addItem(guild, player, gift, float(1) * modifier)
 
                         if name == 'digsite':
@@ -2280,6 +2350,12 @@ def isAdjacent(guild, player, coord, claimAdjacencyOnly = True):
             [xcord - 1, ycord + 1] in loc or \
             [xcord - 1, ycord    ] in loc or \
             [xcord - 1, ycord - 1] in loc
+
+    if xcord>75:
+        isadj = [xcord + 1, ycord] in loc or \
+                [xcord, ycord + 1] in loc or \
+                [xcord, ycord - 1] in loc or \
+                [xcord - 1, ycord] in loc
     return  isadj
 
 
@@ -2393,6 +2469,9 @@ async def sendMapData(guild, channel):
 Is The Tile Of Type as x,y in image
 """
 def isTileType(image, x, y, type):
+    if type == 'LAND':
+        for i in ['PLAINS','FOREST']:
+            if isTileType(image, x, y, i): return 1
     try:
         return np.all(image[x, y] == TILES[type.upper()])
     except IndexError:
@@ -2461,7 +2540,7 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             'BF': {'-': 0.0, '+': 0.0},
         }
         cursed = not Data[guild]['Players'][player]['Inventory'].get('Curse') in [0, None]
-        tacoed = Data[guild]['Players'][player]['Inventory'].get('Taco-Active')
+        tacoed = Data[guild]['Players'][player]['Inventory'].get('Taco-Act.')
         if tacoed == None: tacoed = 0
 
         for tileIndex in range(len(Data[guild]['Players'][player]['Markers']['Shape'])):
@@ -2583,23 +2662,23 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
             deltaloss = 0.0
             sign = '+'
             if item == 'Corn':
-                deltaplus += totalCornHarvests * 3.0
+                deltaplus += totalCornHarvests * 3.0 * (2**tacoed)
             if item == 'Steel':
-                deltaplus += totalSteelHarvests
+                deltaplus += totalSteelHarvests * (2**tacoed)
             if item == 'Cheese':
-                deltaplus += totalCheeseHarvests * 3.0
+                deltaplus += totalCheeseHarvests * 3.0 * (2**tacoed)
             if item == 'Silica':
-                deltaplus += totalSilicaHarvests
+                deltaplus += totalSilicaHarvests * (2**tacoed)
             if item == 'Starfish':
-                deltaplus += totalStarfishHarvests * 3.0
+                deltaplus += totalStarfishHarvests * 3.0 * (2**tacoed)
             if item == 'Aether':
-                deltaplus += totalAetherHarvests
+                deltaplus += totalAetherHarvests * (2**tacoed)
             if item in Data[guild]['Players'][player]['Inventory'].keys():
                 amount = float(Data[guild]['Players'][player]['Inventory'][item])
             if item in itemDelta.keys():
                 deltaplus += float(itemDelta[item]['+'])
                 deltaloss += float(itemDelta[item]['-'])
-            delta = (deltaplus * (2**tacoed)) - deltaloss
+            delta = (deltaplus) - deltaloss
             if delta < 0:  sign = ""
             if delta == 0 and amount == 0: continue
 
@@ -2647,8 +2726,11 @@ async def updateInAnnouncements(server, reload=True, postToSpam = False):
 
         task2 = asyncio.ensure_future(
             plotMoon(channels[guild][logChannel], False))
-        await task1
-        await task2
+        try:
+            await task1
+            await task2
+        except:
+            print("Task MAP Error")
     # Update Map
     junkmsg = await channels[server.id][logChannel].send(
         'World Map:', file=discord.File(open('tmpgrid.png', 'br')))
@@ -2952,7 +3034,7 @@ async def setup(inData, chans, logchan, server):
                 requirements[key] = data[key]
         Data[guild]['Units'][name.lower()] = requirements
 
-    await updateInAnnouncements(server)
+    #await updateInAnnouncements(server)
     await sendMessages()
     return saveData()
 

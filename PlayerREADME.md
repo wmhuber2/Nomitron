@@ -1,49 +1,40 @@
 Hi. It looks like you need some help. Some commands are listed below.
 
 Global Commands: Allowed Channels: ALL   
--   !rule $num          
-+        Display Rule Number $num if it exists.
--   !help       
-+        Display This Help Text
--   !find "text" OR !search "text" OR !f "text" 
-+        Display rules that contain text.
--   !map
-+        Display Current Map.
-+        Rule: 312
+-   !rule $num  Display Rule Number $num if it exists.
+-   !help       Display This Help Text
+-   !f "text"   Display rules that contain text.
+-   !map        Display Current Map.
+-   !admin      Post the ADMIN help screen
 
-ActionCommands:        Allowed Channels: actions
+ActionCommands:        Allowed Channels: actions-map/actions
 -    !start {coordinates} {color name} 
-+        Add Capital to map at desired coordiantes and declare your color.
-+        (Rule: 312)
++        Add Capital to map and declare your color.
 -    !claim {coordinates}
-+        Claim Coordinates (Rule: 312)
--    !harvest {coordinates} {mode}
-+        Harvests a tile with mode ['perpetual', 'non-perpetual', 'p', 'n']
-+        (Rule: 314)
++        Claim Coordinates
+-    !harvest {coordinates} {p/n}
++        Harvests a tile with mode p:perpetual or n:non-perpetual
 -    !unit {coords} $name OR !unit
-+        Buy Unit at coords, if just !unit, display all units (Rule: 321)
++        Buy Unit at coords, if just !unit, display all units
 -    !move {coord1} {coord2}
-+        move unit form coord1 to coord2 (Rule: 321)
++        move unit form coord1 to coord2
 -    !toggle {coord}
-+         disables/enables output of a unit. (Rule 321)
++         disables/enables output of a unit.
+-    !toggleall {unit} {on/off}
++         disables/enables output of units.
 -    !trade @player amount item
-+         give a player resources if they accept. (Rule 314)
++         give a player resources if they accept.
 -    !asset + Proposal 351 formatting
 +         Trade Tiles (Rule 351)
 -    !sell #amount item
-+         Sell at fed rate (Rule 351)
++         Sell at fed rate
 -    !raze @object {coord}
 +         removes a object from map (See rule 360)
 -    !tile {coord}
 +         Displays Coordinate Data
 -    !tech name
-+         Tech Tree Display/Buy - Rule 374
++         Tech Tree Display/Buy
 -    !artifact #amount item
-+         Consume a artifact for an amount of item
++         Consume an artifact for amount of item
 
-+###########################################
--  !admin
--     This will post the ADMIN help screen
-+###########################################
-This Bot's Code May Be Found At:
-https://github.com/wmhuber2/Nomitron/
+This Bot's Code May Be Found At: https://github.com/wmhuber2/Nomitron/
